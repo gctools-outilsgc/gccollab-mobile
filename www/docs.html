@@ -1,0 +1,49 @@
+<div data-page="docs" class="page navbar-fixed">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="left sliding"><a href="#" class="link back"><i class="icon icon-back"></i></a></div>
+      <div class="center" data-translate="docs">Docs</div>
+      <div class="right sliding"><a href="#" class="link icon-only open-popup" data-popup=".popup-filters"><i class="fa fa-filter"></i></a></div>
+    </div>
+  </div>
+  <div class="page-content hide-bars-on-scroll pull-to-refresh-content">
+    <div class="pull-to-refresh-layer">
+      <div class="preloader"></div>
+      <div class="pull-to-refresh-arrow"></div>
+    </div>
+
+    <div id="docs-all" class="context"></div>
+    <a id="docs-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+  </div>
+
+  <div class="popup popup-filters">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="left"><a href="#" class="link close-popup"><i class="icon icon-close"></i></a></div>
+        <div class="center" data-translate="filter-docs">Filter Docs</div>
+      </div>
+    </div>
+    <div class="content-block">
+      <div class="list-block no-margin">
+        <ul>
+          <li class="no-padding-bottom">
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="name">Name</div>
+                <div class="item-input">
+                  <input type="text" data-translate="name" data-translate-target="placeholder" placeholder="Name" id="doc-name" />
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="content-block">
+        <div class="buttons-row">
+          <a href="#" id="clear-filters" class="button button-big button-raised close-popup" data-translate="clear-filters">Clear Filters</a>
+          <a href="#" id="save-filters" class="button button-big button-fill close-popup" data-translate="save-filters">Save Filters</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

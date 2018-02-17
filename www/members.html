@@ -1,0 +1,90 @@
+<div data-page="members" class="page navbar-fixed">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="left sliding"><a href="#" class="link back"><i class="icon icon-back"></i></a></div>
+      <div class="center" data-translate="members">Members</div>
+      <div class="right sliding"><a href="#" class="link icon-only open-popup" data-popup=".popup-filters"><i class="fa fa-filter"></i></a></div>
+    </div>
+  </div>
+  <div class="toolbar tabbar">
+    <div class="toolbar-inner">
+      <a href="#tab-all" class="button active tab-link">All</a>
+      <a href="#tab-colleagues" class="button tab-link">My Colleagues</a>
+    </div>
+  </div>
+  <div class="page-content hide-bars-on-scroll pull-to-refresh-content">
+    <div class="pull-to-refresh-layer">
+      <div class="preloader"></div>
+      <div class="pull-to-refresh-arrow"></div>
+    </div>
+    <div class="tabs">
+      <div id="tab-all" class="tab page-content active">
+        <div id="members-all" class="context"></div>
+        <a id="members-all-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+      </div>
+      <div id="tab-colleagues" class="tab page-content">
+        <div id="members-colleagues" class="context"></div>
+        <a id="members-colleagues-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup popup-filters">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="left"><a href="#" class="link close-popup"><i class="icon icon-close"></i></a></div>
+        <div class="center" data-translate="filter-members">Filter Members</div>
+      </div>
+    </div>
+    <div class="content-block">
+      <div class="list-block no-margin">
+        <ul>
+          <li class="no-padding-bottom">
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="name">Name</div>
+                <div class="item-input">
+                  <input type="text" data-translate="name" data-translate-target="placeholder" placeholder="Name" id="member-name" />
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="list-block no-margin" style="display: none;"> <!-- Temp display:none until functionality is working -->
+        <ul>
+          <li class="no-padding-bottom">
+            <a href="#" class="item-link smart-select" data-back-on-select="true">
+              <select id="member-filters" name="member-filters">
+                <option value="" data-translate="none">None</option>
+                <option value="academic" data-translate="user-type-academic">Academic</option>
+                <option value="student" data-translate="user-type-student">Student</option>
+                <option value="federal" data-translate="user-type-federal">Federal Government</option>
+                <option value="provincial" data-translate="user-type-provincial">Provincial/Territorial Government</option>
+                <option value="municipal" data-translate="user-type-municipal">Municipal Government</option>
+                <option value="international" data-translate="user-type-international">International/Foreign Government</option>
+                <option value="ngo" data-translate="user-type-ngo">Non-Governmental Organization</option>
+                <option value="community" data-translate="user-type-community">Community/Non-profit</option>
+                <option value="business" data-translate="user-type-business">Business</option>
+                <option value="media" data-translate="user-type-media">Media</option>
+                <option value="retired" data-translate="user-type-retired">Retired Public Servant</option>
+                <option value="other" data-translate="user-type-other">Other</option>
+              </select>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title" data-translate="member-type">Member Type</div>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="content-block">
+        <div class="buttons-row">
+          <a href="#" id="clear-filters" class="button button-big button-raised close-popup" data-translate="clear-filters">Clear Filters</a>
+          <a href="#" id="save-filters" class="button button-big button-fill close-popup" data-translate="save-filters">Save Filters</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

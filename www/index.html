@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#46246A">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>GCcollab</title>
+
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/framework7.material.min.css">
+    <link rel="stylesheet" href="css/framework7.material.colors.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <link rel="stylesheet" href="css/gccollab.css">
+
+    <!-- Scripts -->
+    <script src="phonegap.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/Lang.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/js.cookie.js"></script>
+    <script type="text/javascript" src="js/GCT.js"></script>
+    <script type="text/javascript" src="js/swiper.min.js"></script>
+    <!--<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>-->
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16">
+    <link rel="shortcut icon" href="img/favicon.ico">
+</head>
+<body class="theme">
+<div class="statusbar-overlay"></div>
+<div class="panel-overlay"></div>
+
+<div class="panel panel-left panel-cover sidebar">
+  <div class="buttonbar row no-gutter">
+    <a id="logoutBtn" class="button button-fill col-100" data-translate="logout">Logout</a>
+  </div>
+  <div class="view">
+    <div class=" ">
+      <div data-page="panel-left" class="sidemenu leftmenusmall gradient">
+        <div class="item-content userprofile">
+          <div class="item-media"><a href="#" class="item-link close-panel" onclick="ShowProfile();"><img src="" width="44" alt="" id="imgUserProfilePic"/></a></div>
+          <div class="item-inner">
+            <div class="item-title-row">
+              <div class="item-title" id="divUserProfileName"></div>
+            </div>
+            <div class="item-subtitle" id="divUserProfileOrg"></div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="list-block accordion-list">
+            <ul class="menu">
+              <li>
+                <a href="home.html" class="item-link close-panel item-content">
+                  <div class="itemmeniinner">
+                    <div class="item-title"><i class="fa fa-home"></i><span data-translate="home">Home</span></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="wire.html" class="item-link close-panel item-content">
+                  <div class="itemmeniinner">
+                    <div class="item-title"><i class="fa fa-feed"></i><span data-translate="the-wire">The Wire</span></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="groups.html" class="item-link close-panel item-content">
+                  <div class="itemmeniinner">
+                    <div class="item-title"><i class="fa fa-users"></i><span data-translate="groups">Groups</span></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="blog.html" class="item-link close-panel item-content">
+                  <div class="itemmeniinner">
+                    <div class="item-title"><i class="fa fa-pencil-square-o"></i><span data-translate="blogs">Blogs</span></div>
+                  </div>
+                </a>
+              </li>
+
+              <li>
+                <a href="members.html" class="item-link close-panel item-content">
+                  <div class="itemmeniinner">
+                    <div class="item-title"><i class="fa fa-user"></i><span data-translate="members">Members</span></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="docs.html" class="item-link close-panel item-content">
+                  <div class="itemmeniinner">
+                    <div class="item-title"><i class="fa fa-file-text-o"></i><span data-translate="docs">Docs</span></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="events.html" class="item-link close-panel item-content">
+                  <div class="itemmeniinner">
+                    <div class="item-title"><i class="fa fa-calendar"></i><span data-translate="event-calendar">Event Calendar</span></div>
+                  </div>
+                </a>
+              </li>
+              <li id="liMenuChat">
+                <a href="chat.html" class="item-link close-panel item-content">
+                  <div class="itemmeniinner">
+                    <div class="item-title"><i class="fa fa-comments"></i><span data-translate="chat">Chat</span></div>
+                  </div>
+                </a>
+              </li>
+              <li style="display: none;">
+                <a href="geds.html" class="item-link close-panel item-content">
+                  <div class="itemmeniinner">
+                    <div class="item-title"><i class="fa fa-search"></i><span data-translate="geds">GEDS</span></div>
+                  </div>
+                </a>
+              </li>
+              <li class="accordion-item">
+                <a href="#" class="item-content item-link">
+                  <div class="item-inner">
+                    <div class="item-title"><i class="fa fa-briefcase"></i><span data-translate="careers">Careers</span></div>
+                  </div>
+                </a>
+                <div class="accordion-item-content">
+                  <div class="content-block">
+                    <ul>
+                      <li><a href="opportunities.html" class="item-link close-panel" ><span data-translate="opportunities-platform">Opportunities Platform (Beta)</span></a></li>
+                      <li data-translate="jobs-link"><a href="http://jobs-emplois.gc.ca/index-eng.htm" class="item-link close-panel external">jobs.gc.ca</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <!-- <li class="accordion-item">
+                <a href="#" class="item-content item-link">
+                  <div class="item-inner">
+                    <div class="item-title"><i class="fa fa-ellipsis-h"></i><span data-translate="more">More...</span></div>
+                  </div>
+                </a>
+                <div class="accordion-item-content">
+                  <div class="content-block">
+                    <ul>
+                      <li><a href="#" class="item-link close-panel"><span data-translate="activity">Activity</span></a></li>
+                      <li><a href="#" class="item-link close-panel"><span data-translate="bookmarks">Bookmarks</span></a></li>
+                      <li><a href="#" class="item-link close-panel"><span data-translate="files">Files</span></a></li>
+                      <li><a href="gallery.html" class="item-link close-panel"><span data-translate="images">Images</span></a></li>
+                      <li><a href="messages.html" class="item-link close-panel">Messages</a></li>
+                      <li><a href="#" class="item-link close-panel"><span data-translate="polls">Polls</span></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </li> -->
+              <li class="accordion-item">
+                <a href="#" class="item-content item-link">
+                  <div class="item-inner">
+                    <div class="item-title"><i class="fa fa-question-circle"></i><span data-translate="help">Help</span></div>
+                  </div>
+                </a>
+                <div class="accordion-item-content">
+                  <div class="content-block">
+                    <ul>
+                      <li><a href="about.html" class="item-link close-panel"><span data-translate="about-gccollab">About GCcollab</span></a></li>
+                      <li><a href="faqs.html" class="item-link close-panel"><span data-translate="faqs">Frequently Asked Questions</span></a></li>
+                      <li><a href="contactus.html" class="item-link close-panel"><span data-translate="contact-feedback">Contact / Feedback</span></a></li>
+                      <li><a href="privacy.html" class="item-link close-panel"><span data-translate="privacy-policy">Privacy Policy</span></a></li>
+                      <li><a href="terms.html" class="item-link close-panel"><span data-translate="terms-and-conditions">Terms and Conditions of Use</span></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <a href="#" onclick="GCTLang.ToggleLang(true);" class="item-link close-panel item-content">
+                  <div class="itemmeniinner">
+                    <div class="item-title"><i class="fa fa-language"></i><span data-translate="language">Français</span></div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-right panel-cover sidebar">
+  <div class="buttonbar row no-gutter">
+    <a class="button button-fill col-100 close-panel" data-translate="close">Close</a>
+  </div>
+  <div class="view">
+    <div class=" ">
+      <div data-page="panel-right" class="sidemenu leftmenusmall gradient">
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="left"><a href="#" class="link close-panel"><i class="icon icon-close"></i></a></div>
+            <div class="center" data-translate="message-centre">Message Centre</div>
+            <div class="right"><a href="#" id="colleague-requests" class="link icon-only"><i class="fa fa-users badge-wrapper"></i></a></div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="toolbar tabbar">
+            <div class="toolbar-inner">
+              <a id="notifications-tab" href="#tab-notifications" class="button tab-link active"><span data-translate="notifications">Notifications</span><span class="count"></span></a>
+              <a id="messages-tab" href="#tab-messages" class="button tab-link"><span data-translate="messages">Messages</span><span class="count"></span></a>
+              <!-- <a id="sent-tab" href="#tab-sent" class="button tab-link"><span data-translate="sent">Sent</span><span class="count"></span></a> -->
+            </div>
+          </div>
+          <div class="tabs">
+            <div id="tab-message" class="tab page-content">
+              <div class="list-block media-list">
+                <ul id="user-message"><span class="loading" data-translate="loading">Loading...</span></ul>
+              </div>
+            </div>
+
+            <div id="tab-notifications" class="tab page-content active">
+              <div class="list-block media-list">
+                <ul id="user-notifications"><span class="loading" data-translate="loading">Loading...</span></ul>
+              </div>
+            </div>
+
+            <div id="tab-messages" class="tab page-content">
+              <div class="list-block media-list">
+                <ul id="user-messages"><span class="loading" data-translate="loading">Loading...</span></ul>
+              </div>
+            </div>
+
+            <!-- <div id="tab-sent" class="tab page-content">
+              <div class="list-block media-list">
+                <ul id="user-sent"><span class="loading" data-translate="loading">Loading...</span></ul>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="views pageview">
+  <div class="view view-main">
+    <div class="pages">
+      <div data-page="index" class="page">
+        <div class="page-content landingpage">
+          <div class="logo main col12"><img src="img/icon.png" alt=""></div>
+          <div class="buttonbar row no-gutter">
+            <a id="aEN" href="sign-in.html" class="button button-fill col-50" style="display:none;" onclick="GCTLang.SetAsEnglish();">English</a>
+            <a id="aFR" href="sign-in.html" class="button color2 col-50" style="display:none;" onclick="GCTLang.SetAsFrench();">Français</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Context Popover -->
+<div class="popover popover-links">
+  <div class="popover-angle"></div>
+  <div class="popover-inner">
+    <div class="list-block">
+      <ul>
+        <li><a id="gccollab-context-option" class="list-button item-link close-popover" onclick="GCTUser.SetContextAsGCcollab();">GCcollab</a></li>
+        <li><a id="gcconnex-context-option" class="list-button item-link close-popover" onclick="GCTUser.SetContextAsGCconnex();">GCconnex</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Generic Popup -->
+<div class="popup popup-generic">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="left"><a href="#" class="link close-popup"><i class="icon icon-close"></i></a></div>
+      <div class="popup-title center"></div>
+    </div>
+  </div>
+  <div class="popup-content"></div>
+</div>
+
+<!-- JS link goes here --> 
+<script type="text/javascript" src="js/framework7.min.js"></script> 
+<script type="text/javascript" src="js/masonry.pkgd.min.js"></script>
+<script type="text/javascript" src="js/gccollab.js"></script>
+<script>GCTUser.AppOpen();</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<div data-page="home" class="page navbar-fixed">
+  <div class="navbar main-navbar">
+    <div class="navbar-inner">
+      <div class="left sliding"><a href="#" data-panel="left" class="open-panel link icon-only"><i class="icon icon-bars"></i></a></div>
+      <div class="center">GCCollab</div>
+      <div class="right sliding"><a href="#" data-panel="right" class="open-panel link icon-only"><i class="fa fa-bell badge-wrapper"></i></a></div>
+    </div>
+  </div>
+  <div class="page-content hide-bars-on-scroll pull-to-refresh-content" style="overflow-x: hidden;">
+    <div class="pull-to-refresh-layer">
+      <div class="preloader"></div>
+      <div class="pull-to-refresh-arrow"></div>
+    </div>
+
+    <div class="content-block small">
+      <div class="row">
+        <div class="col-66"><h2 class="no-margin" data-translate="the-wire">The Wire</h2></div>
+        <div class="col-33"><a href="wire.html" class="button button-fill pull-right" data-translate="view-all">VIEW ALL</a></div>
+      </div>
+    </div>
+    <div class="swiper-container swiper-wires context home-section">
+      <div class="swiper-wrapper" id="GCcollabUserWireContent"><span class="loading" data-translate="loading">Loading...</span></div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="content-block small">
+      <div class="row">
+        <div class="col-66"><h2 class="no-margin" data-translate="newsfeed">Newsfeed</h2></div>
+        <div class="col-33"><a href="newsfeed.html" class="button button-fill pull-right" data-translate="view-all">VIEW ALL</a></div>
+      </div>
+    </div>
+    <div class="swiper-container swiper-newsfeed context home-section">
+      <div class="swiper-wrapper" id="GCcollabUserNewsfeedContent"><span class="loading" data-translate="loading">Loading...</span></div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="content-block small">
+      <div class="row">
+        <div class="col-66"><h2 class="no-margin" data-translate="blogs">Blogs</h2></div>
+        <div class="col-33"><a href="blog.html" class="button button-fill pull-right" data-translate="view-all">VIEW ALL</a></div>
+      </div>
+    </div>
+    <div class="swiper-container swiper-blogs context home-section">
+      <div class="swiper-wrapper" id="GCcollabUserBlogContent"><span class="loading" data-translate="loading">Loading...</span></div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="content-block">
+      <h2 class="center" data-translate="connect-with-us">Connect With Us</h2>
+      <ul class="socials">
+        <li><a href="https://github.com/gctools-outilsgc/gccollab" class="gh external"><i class="fa fa-github"></i></a></li>
+        <li><a href="https://twitter.com/gccollab" class="tw external"><i class="fa fa-twitter"></i></a></li>
+        <li><a href="mailto:jeff.outram@tbs-sct.gc.ca" class="env external"><i class="fa fa-envelope"></i></a></li>
+      </ul>
+    </div>
+
+    <hr />
+
+    <div class="content-block center">
+      <span class="" data-translate="credit">This App Brought To You By the GCTools Team</span>
+    </div>
+  </div>
+  <div class="speed-dial">
+    <a href="#" class="floating-button">
+      <i class="icon icon-plus"></i>
+      <i class="icon icon-close"></i>
+    </a>
+    <div class="speed-dial-buttons">
+      <!-- <a onclick="GCTUser.NewMessage();"><i class="fa fa-envelope"></i></a> -->
+      <!-- <a onclick="GCTUser.NewBlogPost();"><i class="fa fa-pencil-square-o"></i></a> -->
+      <a onclick="GCTUser.PostWirePost();"> <i class="fa fa-comment"></i></a>
+    </div>
+  </div>
+</div>

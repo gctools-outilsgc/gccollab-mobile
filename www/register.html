@@ -1,0 +1,1391 @@
+<div data-page="register" class="page navbar-fixed">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="left sliding"><a href="#" class="link back"><i class="icon icon-back"></i></a></div>
+      <div class="center" data-translate="register">Register</div>
+    </div>
+  </div>
+  <div class="page-content hide-bars-on-scroll">
+    <div class="loginsimag row" style="margin-top: 40px;"><img src="img/icon.png" alt=""></div>
+    <div class="card-content-inner" style="padding-top: 0;">
+      <p data-translate="register-p1">GCcollab, hosted by the Government of Canada, facilitates collaboration between academics, students, Canadian public servants, as well as other key communities.</p>
+      <h4 data-translate="register-h1">Who can register?</h4>
+      <ul>
+        <li data-translate="register-li1">Canadian public servants (federal, provincial and territorial) can register by using their government email addresses.</li>
+        <li data-translate="register-li2">Academics and students of all Canadian universities and colleges can register using their institution email addresses.</li>
+      </ul>
+      <p data-translate="register-p2">Not part of these groups? Canadians are able to join GCcollab by invitation! Existing GCcollab members can invite their stakeholders and partners on to GCcollab, making it a truly collaborative environment.</p>
+    </div>
+
+    <div class="clear separator-intro"></div>
+
+    <form id="registerForm">
+      <div class="list-block">
+        <ul>
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label">Occupation</div>
+                <div class="item-input">
+                  <select id="user_type" name="user_type">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="academic" data-translate="user-type-academic">Academic</option>
+                    <option value="student" data-translate="user-type-student">Student</option>
+                    <option value="federal" data-translate="user-type-federal">Federal Government</option>
+                    <option value="provincial" data-translate="user-type-provincial">Provincial/Territorial Government</option>
+                    <option value="municipal" data-translate="user-type-municipal">Municipal Government</option>
+                    <option value="international" data-translate="user-type-international">International/Foreign Government</option>
+                    <option value="ngo" data-translate="user-type-ngo">Non-Governmental Organization</option>
+                    <option value="community" data-translate="user-type-community">Community/Non-profit</option>
+                    <option value="business" data-translate="user-type-business">Business</option>
+                    <option value="media" data-translate="user-type-media">Media</option>
+                    <option value="retired" data-translate="user-type-retired">Retired Public Servant</option>
+                    <option value="other" data-translate="user-type-other">Other</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="institution-wrapper" class="occupation-choices">
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label">Institution</div>
+                <div class="item-input">
+                  <select id="institution" name="institution">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="university" data-translate="university">University</option>
+                    <option value="college" data-translate="college">College</option>
+                    <option value="highschool" data-translate="highschool">High School</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="university-wrapper" class="occupation-choices student-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="university">University</div>
+                <div class="item-input">
+                  <select id="university" name="university">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Acadia University">Acadia University</option>
+                    <option value="Algoma University">Algoma University</option>
+                    <option value="Athabasca University">Athabasca University</option>
+                    <option value="Bishop's University">Bishop's University</option>
+                    <option value="Brandon University">Brandon University</option>
+                    <option value="Brescia University College">Brescia University College</option>
+                    <option value="Brock University">Brock University</option>
+                    <option value="Campion College">Campion College</option>
+                    <option value="Canada Mennonite University">Canada Mennonite University</option>
+                    <option value="Canadian Forces College">Canadian Forces College</option>
+                    <option value="Cape Breton University">Cape Breton University</option>
+                    <option value="Carleton University">Carleton University</option>
+                    <option value="Concordia University">Concordia University</option>
+                    <option value="Concordia University of Edmonton">Concordia University of Edmonton</option>
+                    <option value="Dalhousie University">Dalhousie University</option>
+                    <option value="Dominican University College">Dominican University College</option>
+                    <option value="École Polytechnique de Montréal">École Polytechnique de Montréal</option>
+                    <option value="École de technologie supérieure">École de technologie supérieure</option>
+                    <option value="École des Hautes Études Commerciales de Montréal (HEC Montréal)">École des Hautes Études Commerciales de Montréal (HEC Montréal)</option>
+                    <option value="École nationale d'administration publique (ENAP)">École nationale d'administration publique (ENAP)</option>
+                    <option value="Emily Carr University of Art and Design">Emily Carr University of Art and Design</option>
+                    <option value="First Nations University of Canada">First Nations University of Canada</option>
+                    <option value="Glendon College (York University)">Glendon College (York University)</option>
+                    <option value="Huron University College">Huron University College</option>
+                    <option value="Institut national de la recherche scientifique">Institut national de la recherche scientifique</option>
+                    <option value="King's University College">King's University College</option>
+                    <option value="Kwantlen Polytechnic University">Kwantlen Polytechnic University</option>
+                    <option value="Lakehead University">Lakehead University</option>
+                    <option value="Laurentian University">Laurentian University</option>
+                    <option value="Luther College">Luther College</option>
+                    <option value="MacEwan University">MacEwan University</option>
+                    <option value="McGill University">McGill University</option>
+                    <option value="McMaster University">McMaster University</option>
+                    <option value="Memorial University">Memorial University</option>
+                    <option value="Mount Allison University">Mount Allison University</option>
+                    <option value="Mount Royal University">Mount Royal University</option>
+                    <option value="Mount Saint Vincent University">Mount Saint Vincent University</option>
+                    <option value="Nipissing University">Nipissing University</option>
+                    <option value="Nova Scotia College of Art and Design University">Nova Scotia College of Art and Design University</option>
+                    <option value="Ontario College of Art and Design University">Ontario College of Art and Design University</option>
+                    <option value="Queen's University">Queen's University</option>
+                    <option value="Redeemer University College">Redeemer University College</option>
+                    <option value="Royal Military College">Royal Military College</option>
+                    <option value="Royal Military College Saint-Jean">Royal Military College Saint-Jean</option>
+                    <option value="Royal Roads University">Royal Roads University</option>
+                    <option value="Ryerson University">Ryerson University</option>
+                    <option value="Saint Mary's University">Saint Mary's University</option>
+                    <option value="Saint Paul University">Saint Paul University</option>
+                    <option value="Simon Fraser University">Simon Fraser University</option>
+                    <option value="St. Francis Xavier University">St. Francis Xavier University</option>
+                    <option value="St. Jerome's University">St. Jerome's University</option>
+                    <option value="St. Paul's College">St. Paul's College</option>
+                    <option value="St. Thomas More College">St. Thomas More College</option>
+                    <option value="St. Thomas University">St. Thomas University</option>
+                    <option value="The King's University">The King's University</option>
+                    <option value="Thompson Rivers University">Thompson Rivers University</option>
+                    <option value="Trent University">Trent University</option>
+                    <option value="Trinity Western University">Trinity Western University</option>
+                    <option value="Télé-université (TÉLUQ)">Télé-université (TÉLUQ)</option>
+                    <option value="University of Alberta">University of Alberta</option>
+                    <option value="University of British Columbia">University of British Columbia</option>
+                    <option value="University of Calgary">University of Calgary</option>
+                    <option value="University of Guelph">University of Guelph</option>
+                    <option value="University of King's College">University of King's College</option>
+                    <option value="University of Lethbridge">University of Lethbridge</option>
+                    <option value="University of Manitoba">University of Manitoba</option>
+                    <option value="University of New Brunswick">University of New Brunswick</option>
+                    <option value="University of Northern British Columbia">University of Northern British Columbia</option>
+                    <option value="University of Ontario Institute of Technology">University of Ontario Institute of Technology</option>
+                    <option value="University of Ottawa">University of Ottawa</option>
+                    <option value="University of Prince Edward Island">University of Prince Edward Island</option>
+                    <option value="University of Regina">University of Regina</option>
+                    <option value="University of Saskatchewan">University of Saskatchewan</option>
+                    <option value="University of St. Michael's College">University of St. Michael's College</option>
+                    <option value="University of Sudbury">University of Sudbury</option>
+                    <option value="University of Toronto">University of Toronto</option>
+                    <option value="University of Trinity College">University of Trinity College</option>
+                    <option value="University of Victoria">University of Victoria</option>
+                    <option value="University of Waterloo">University of Waterloo</option>
+                    <option value="University of Western Ontario">University of Western Ontario</option>
+                    <option value="University of Windsor">University of Windsor</option>
+                    <option value="University of Winnipeg">University of Winnipeg</option>
+                    <option value="University of the Fraser Valley">University of the Fraser Valley</option>
+                    <option value="Université Laval">Université Laval</option>
+                    <option value="Université Sainte‑Anne">Université Sainte‑Anne</option>
+                    <option value="Université de Moncton">Université de Moncton</option>
+                    <option value="Université de Montréal">Université de Montréal</option>
+                    <option value="Université de Saint-Boniface">Université de Saint-Boniface</option>
+                    <option value="Université de Sherbrooke">Université de Sherbrooke</option>
+                    <option value="Université du Québec">Université du Québec</option>
+                    <option value="Université du Québec en Abitibi‑Témiscamingue">Université du Québec en Abitibi‑Témiscamingue</option>
+                    <option value="Université du Québec en Outaouais">Université du Québec en Outaouais</option>
+                    <option value="Université du Québec à Chicoutimi">Université du Québec à Chicoutimi</option>
+                    <option value="Université du Québec à Montréal">Université du Québec à Montréal</option>
+                    <option value="Université du Québec à Rimouski">Université du Québec à Rimouski</option>
+                    <option value="Université du Québec à Trois‑Rivières">Université du Québec à Trois‑Rivières</option>
+                    <option value="Vancouver Island University">Vancouver Island University</option>
+                    <option value="Victoria University">Victoria University</option>
+                    <option value="Wilfrid Laurier University">Wilfrid Laurier University</option>
+                    <option value="York University">York University</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="college-wrapper" class="occupation-choices student-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="college">College</div>
+                <div class="item-input">
+                  <select id="college" name="college">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Alberta College of Art and Design">Alberta College of Art and Design</option>
+                    <option value="Algonquin College">Algonquin College</option>
+                    <option value="Assiniboine Community College">Assiniboine Community College</option>
+                    <option value="Aurora College">Aurora College</option>
+                    <option value="Bow Valley College">Bow Valley College</option>
+                    <option value="British Columbia Institute of Technology">British Columbia Institute of Technology</option>
+                    <option value="Cambrian College of Applied Arts and Technology">Cambrian College of Applied Arts and Technology</option>
+                    <option value="Camosun College">Camosun College</option>
+                    <option value="Canadore College of Applied Arts and Technology">Canadore College of Applied Arts and Technology</option>
+                    <option value="Capilano University">Capilano University</option>
+                    <option value="Carlton Trail College">Carlton Trail College</option>
+                    <option value="Centennial College">Centennial College</option>
+                    <option value="Centre for Nursing Studies">Centre for Nursing Studies</option>
+                    <option value="Champlain Regional College">Champlain Regional College</option>
+                    <option value="College of New Caledonia">College of New Caledonia</option>
+                    <option value="College of the North Atlantic (CNA)">College of the North Atlantic (CNA)</option>
+                    <option value="College of the Rockies">College of the Rockies</option>
+                    <option value="Collège Acadie Î.-P.-É.">Collège Acadie Î.-P.-É.</option>
+                    <option value="Collège André-Grasset">Collège André-Grasset</option>
+                    <option value="Collège Boréal">Collège Boréal</option>
+                    <option value="Collège LaSalle">Collège LaSalle</option>
+                    <option value="Collège Lionel-Groulx">Collège Lionel-Groulx</option>
+                    <option value="Collège Mathieu">Collège Mathieu</option>
+                    <option value="Collège Montmorency">Collège Montmorency</option>
+                    <option value="Collège Shawinigan">Collège Shawinigan</option>
+                    <option value="Collège communautaire du Nouveau-Brunswick">Collège communautaire du Nouveau-Brunswick</option>
+                    <option value="Collège de Maisonneuve">Collège de Maisonneuve</option>
+                    <option value="Collège nordique francophone">Collège nordique francophone</option>
+                    <option value="Collège Éducacentre">Collège Éducacentre</option>
+                    <option value="Conestoga College Institute of Technology and Advanced Learning">Conestoga College Institute of Technology and Advanced Learning</option>
+                    <option value="Confederation College">Confederation College</option>
+                    <option value="Cumberland College">Cumberland College</option>
+                    <option value="Cégep André-Laurendeau">Cégep André-Laurendeau</option>
+                    <option value="Cégep Garneau">Cégep Garneau</option>
+                    <option value="Cégep Heritage College">Cégep Heritage College</option>
+                    <option value="Cégep John Abbott College">Cégep John Abbott College</option>
+                    <option value="Cégep Limoilou">Cégep Limoilou</option>
+                    <option value="Cégep Marie-Victorin">Cégep Marie-Victorin</option>
+                    <option value="Cégep Saint-Jean-sur-Richelieu">Cégep Saint-Jean-sur-Richelieu</option>
+                    <option value="Cégep de Chicoutimi">Cégep de Chicoutimi</option>
+                    <option value="Cégep de Jonquière">Cégep de Jonquière</option>
+                    <option value="Cégep de La Pocatière">Cégep de La Pocatière</option>
+                    <option value="Cégep de Matane">Cégep de Matane</option>
+                    <option value="Cégep de Rimouski">Cégep de Rimouski</option>
+                    <option value="Cégep de Rivière-du-Loup">Cégep de Rivière-du-Loup</option>
+                    <option value="Cégep de Saint-Félicien">Cégep de Saint-Félicien</option>
+                    <option value="Cégep de Saint-Laurent">Cégep de Saint-Laurent</option>
+                    <option value="Cégep de Sainte-Foy">Cégep de Sainte-Foy</option>
+                    <option value="Cégep de Sept-Îles">Cégep de Sept-Îles</option>
+                    <option value="Cégep de Sherbrooke">Cégep de Sherbrooke</option>
+                    <option value="Cégep de Thetford">Cégep de Thetford</option>
+                    <option value="Cégep de Trois-Rivières">Cégep de Trois-Rivières</option>
+                    <option value="Cégep de Victoriaville">Cégep de Victoriaville</option>
+                    <option value="Cégep de la Gaspésie et des Îles">Cégep de la Gaspésie et des Îles</option>
+                    <option value="Cégep de l'Abitibi-Témiscamingue">Cégep de l'Abitibi-Témiscamingue</option>
+                    <option value="Cégep régional de Lanaudière">Cégep régional de Lanaudière</option>
+                    <option value="Cégep Édouard-Montpetit">Cégep Édouard-Montpetit</option>
+                    <option value="Dalhousie Agricultural Campus of Dalhousie University">Dalhousie Agricultural Campus of Dalhousie University</option>
+                    <option value="Douglas College">Douglas College</option>
+                    <option value="Dumont Technical Institute">Dumont Technical Institute</option>
+                    <option value="Durham College">Durham College</option>
+                    <option value="École technique et professionnelle, Université de Saint-Boniface">École technique et professionnelle, Université de Saint-Boniface</option>
+                    <option value="Emily Carr University of Art and Design">Emily Carr University of Art and Design</option>
+                    <option value="Fanshawe College of Applied Arts and Technology">Fanshawe College of Applied Arts and Technology</option>
+                    <option value="First Nations Technical Institute">First Nations Technical Institute</option>
+                    <option value="Fleming College">Fleming College</option>
+                    <option value="George Brown College">George Brown College</option>
+                    <option value="Georgian College of Applied Arts and Technology">Georgian College of Applied Arts and Technology</option>
+                    <option value="Grande Prairie Regional College">Grande Prairie Regional College</option>
+                    <option value="Great Plains College">Great Plains College</option>
+                    <option value="Holland College">Holland College</option>
+                    <option value="Humber College Institute of Technology &amp; Advanced Learning">Humber College Institute of Technology &amp; Advanced Learning</option>
+                    <option value="Institut de tourisme et d'hôtellerie du Québec">Institut de tourisme et d'hôtellerie du Québec</option>
+                    <option value="Justice Institute of British Columbia">Justice Institute of British Columbia</option>
+                    <option value="Kenjgewin Teg Educational Institute (KTEI)">Kenjgewin Teg Educational Institute (KTEI)</option>
+                    <option value="Keyano College">Keyano College</option>
+                    <option value="Kwantlen Polytechnic University">Kwantlen Polytechnic University</option>
+                    <option value="La Cité">La Cité</option>
+                    <option value="Lakeland College">Lakeland College</option>
+                    <option value="Lambton College of Applied Arts and Technology">Lambton College of Applied Arts and Technology</option>
+                    <option value="Langara College">Langara College</option>
+                    <option value="Lethbridge College">Lethbridge College</option>
+                    <option value="Loyalist College">Loyalist College</option>
+                    <option value="Manitoba Institute of Trades and Technology">Manitoba Institute of Trades and Technology</option>
+                    <option value="Marine Institute">Marine Institute</option>
+                    <option value="Medicine Hat College">Medicine Hat College</option>
+                    <option value="Michener Institute of Education at UHN">Michener Institute of Education at UHN</option>
+                    <option value="Mohawk College">Mohawk College</option>
+                    <option value="Native Education College">Native Education College</option>
+                    <option value="New Brunswick College of Craft and Design">New Brunswick College of Craft and Design</option>
+                    <option value="New Brunswick Community College">New Brunswick Community College</option>
+                    <option value="Niagara College">Niagara College</option>
+                    <option value="Nicola Valley Institute of Technology">Nicola Valley Institute of Technology</option>
+                    <option value="NorQuest College">NorQuest College</option>
+                    <option value="North Island College">North Island College</option>
+                    <option value="North West College">North West College</option>
+                    <option value="Northern Alberta Institute of Technology (NAIT)">Northern Alberta Institute of Technology (NAIT)</option>
+                    <option value="Northern College">Northern College</option>
+                    <option value="Northern Lakes College">Northern Lakes College</option>
+                    <option value="Northern Lights College">Northern Lights College</option>
+                    <option value="Northlands College">Northlands College</option>
+                    <option value="Northwest Community College">Northwest Community College</option>
+                    <option value="Nova Scotia Community College (NSCC)">Nova Scotia Community College (NSCC)</option>
+                    <option value="Nunavut Arctic College">Nunavut Arctic College</option>
+                    <option value="Okanagan College">Okanagan College</option>
+                    <option value="Olds College">Olds College</option>
+                    <option value="Parkland College">Parkland College</option>
+                    <option value="Portage College">Portage College</option>
+                    <option value="Red Deer College">Red Deer College</option>
+                    <option value="Red River College of Applied Arts, Science and Technology">Red River College of Applied Arts, Science and Technology</option>
+                    <option value="Saskatchewan Indian Institute of Technologies (SIIT)">Saskatchewan Indian Institute of Technologies (SIIT)</option>
+                    <option value="Saskatchewan Polytechnic">Saskatchewan Polytechnic</option>
+                    <option value="Sault College">Sault College</option>
+                    <option value="Selkirk College">Selkirk College</option>
+                    <option value="Seneca College of Applied Arts and Technology">Seneca College of Applied Arts and Technology</option>
+                    <option value="Southeast College">Southeast College</option>
+                    <option value="Southern Alberta Institute of Technology (SAIT)">Southern Alberta Institute of Technology (SAIT)</option>
+                    <option value="St. Clair College">St. Clair College</option>
+                    <option value="St. Lawrence College">St. Lawrence College</option>
+                    <option value="TAV College">TAV College</option>
+                    <option value="University College of the North">University College of the North</option>
+                    <option value="University of the Fraser Valley">University of the Fraser Valley</option>
+                    <option value="Université Sainte-Anne, Collège de l'Acadie">Université Sainte-Anne, Collège de l'Acadie</option>
+                    <option value="Vancouver Community College">Vancouver Community College</option>
+                    <option value="Vancouver Island University">Vancouver Island University</option>
+                    <option value="Vanier College">Vanier College</option>
+                    <option value="Yukon College">Yukon College</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="highschool-wrapper" class="occupation-choices student-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="highschool">High School</div>
+                <div class="item-input">
+                  <input id="highschool" name="highschool" type="text" placeholder=""/>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="federal-wrapper" class="occupation-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="organization">Organization</div>
+                <div class="item-input">
+                  <select id="federal" name="federal">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Aboriginal Business Canada">Aboriginal Business Canada</option>
+                    <option value="Administrative Tribunals Support Service of Canada">Administrative Tribunals Support Service of Canada</option>
+                    <option value="Agriculture and Agri-Food Canada">Agriculture and Agri-Food Canada</option>
+                    <option value="Atlantic Canada Opportunities Agency">Atlantic Canada Opportunities Agency</option>
+                    <option value="Atlantic Pilotage Authority Canada">Atlantic Pilotage Authority Canada</option>
+                    <option value="Atomic Energy of Canada Limited">Atomic Energy of Canada Limited</option>
+                    <option value="Auditor General of Canada (Office of the)">Auditor General of Canada (Office of the)</option>
+                    <option value="Bank of Canada">Bank of Canada</option>
+                    <option value="Blue Water Bridge Canada">Blue Water Bridge Canada</option>
+                    <option value="Business Development Bank of Canada">Business Development Bank of Canada</option>
+                    <option value="CORCAN">CORCAN</option>
+                    <option value="Canada Agricultural Review Tribunal">Canada Agricultural Review Tribunal</option>
+                    <option value="Canada Agriculture and Food Museum">Canada Agriculture and Food Museum</option>
+                    <option value="Canada Aviation and Space Museum">Canada Aviation and Space Museum</option>
+                    <option value="Canada Border Services Agency">Canada Border Services Agency</option>
+                    <option value="Canada Centre for Inland Waters">Canada Centre for Inland Waters</option>
+                    <option value="Canada Council for the Arts">Canada Council for the Arts</option>
+                    <option value="Canada Deposit Insurance Corporation">Canada Deposit Insurance Corporation</option>
+                    <option value="Canada Development Investment Corporation">Canada Development Investment Corporation</option>
+                    <option value="Canada Economic Development for Quebec Regions">Canada Economic Development for Quebec Regions</option>
+                    <option value="Canada Employment Insurance Commission">Canada Employment Insurance Commission</option>
+                    <option value="Canada Firearms Centre">Canada Firearms Centre</option>
+                    <option value="Canada Gazette">Canada Gazette</option>
+                    <option value="Canada Industrial Relations Board">Canada Industrial Relations Board</option>
+                    <option value="Canada Lands Company Limited">Canada Lands Company Limited</option>
+                    <option value="Canada Mortgage and Housing Corporation">Canada Mortgage and Housing Corporation</option>
+                    <option value="Canada Pension Plan Investment Board">Canada Pension Plan Investment Board</option>
+                    <option value="Canada Post">Canada Post</option>
+                    <option value="Canada Research Chairs">Canada Research Chairs</option>
+                    <option value="Canada Revenue Agency">Canada Revenue Agency</option>
+                    <option value="Canada School of Public Service">Canada School of Public Service</option>
+                    <option value="Canada Science and Technology Museum Corporation">Canada Science and Technology Museum Corporation</option>
+                    <option value="Canadian Air Transport Security Authority">Canadian Air Transport Security Authority</option>
+                    <option value="Canadian Army">Canadian Army</option>
+                    <option value="Canadian Cadet Organizations">Canadian Cadet Organizations</option>
+                    <option value="Canadian Centre for Occupational Health and Safety">Canadian Centre for Occupational Health and Safety</option>
+                    <option value="Canadian Coast Guard">Canadian Coast Guard</option>
+                    <option value="Canadian Commercial Corporation">Canadian Commercial Corporation</option>
+                    <option value="Canadian Conservation Institute">Canadian Conservation Institute</option>
+                    <option value="Canadian Cultural Property Export Review Board">Canadian Cultural Property Export Review Board</option>
+                    <option value="Canadian Dairy Commission">Canadian Dairy Commission</option>
+                    <option value="Canadian Environmental Assessment Agency">Canadian Environmental Assessment Agency</option>
+                    <option value="Canadian Food Inspection Agency">Canadian Food Inspection Agency</option>
+                    <option value="Canadian Forces Housing Agency">Canadian Forces Housing Agency</option>
+                    <option value="Canadian General Standards Board">Canadian General Standards Board</option>
+                    <option value="Canadian Grain Commission">Canadian Grain Commission</option>
+                    <option value="Canadian Heritage">Canadian Heritage</option>
+                    <option value="Canadian Heritage Information Network">Canadian Heritage Information Network</option>
+                    <option value="Canadian Human Rights Commission">Canadian Human Rights Commission</option>
+                    <option value="Canadian Institutes of Health Research">Canadian Institutes of Health Research</option>
+                    <option value="Canadian Intellectual Property Office">Canadian Intellectual Property Office</option>
+                    <option value="Canadian Intergovernmental Conference Secretariat">Canadian Intergovernmental Conference Secretariat</option>
+                    <option value="Canadian International Trade Tribunal">Canadian International Trade Tribunal</option>
+                    <option value="Canadian Judicial Council">Canadian Judicial Council</option>
+                    <option value="Canadian Museum for Human Rights">Canadian Museum for Human Rights</option>
+                    <option value="Canadian Museum of Contemporary Photography">Canadian Museum of Contemporary Photography</option>
+                    <option value="Canadian Museum of History">Canadian Museum of History</option>
+                    <option value="Canadian Museum of Immigration at Pier 21">Canadian Museum of Immigration at Pier 21</option>
+                    <option value="Canadian Museum of Nature">Canadian Museum of Nature</option>
+                    <option value="Canadian Northern Economic Development Agency">Canadian Northern Economic Development Agency</option>
+                    <option value="Canadian Nuclear Safety Commission">Canadian Nuclear Safety Commission</option>
+                    <option value="Canadian Pari-Mutuel Agency">Canadian Pari-Mutuel Agency</option>
+                    <option value="Canadian Police College">Canadian Police College</option>
+                    <option value="Canadian Race Relations Foundation">Canadian Race Relations Foundation</option>
+                    <option value="Canadian Radio-Television and Telecommunications Commission">Canadian Radio-Television and Telecommunications Commission</option>
+                    <option value="Canadian Security Intelligence Service">Canadian Security Intelligence Service</option>
+                    <option value="Canadian Space Agency">Canadian Space Agency</option>
+                    <option value="Canadian Tourism Commission">Canadian Tourism Commission</option>
+                    <option value="Canadian Trade Commissioner Service">Canadian Trade Commissioner Service</option>
+                    <option value="Canadian Transportation Agency">Canadian Transportation Agency</option>
+                    <option value="Canadian War Museum">Canadian War Museum</option>
+                    <option value="Chief Electoral Officer (Office of the)">Chief Electoral Officer (Office of the)</option>
+                    <option value="Civilian Review and Complaints Commission for the RCMP">Civilian Review and Complaints Commission for the RCMP</option>
+                    <option value="Clerk of the Privy Council">Clerk of the Privy Council</option>
+                    <option value="Commissioner for Federal Judicial Affairs Canada (Office of the)">Commissioner for Federal Judicial Affairs Canada (Office of the)</option>
+                    <option value="Commissioner of Lobbying of Canada (Office of the)">Commissioner of Lobbying of Canada (Office of the)</option>
+                    <option value="Commissioner of Official Languages (Office of the)">Commissioner of Official Languages (Office of the)</option>
+                    <option value="Communications Research Centre Canada">Communications Research Centre Canada</option>
+                    <option value="Communications Security Establishment Canada">Communications Security Establishment Canada</option>
+                    <option value="Communications Security Establishment Commissioner (Office of the)">Communications Security Establishment Commissioner (Office of the)</option>
+                    <option value="Competition Bureau Canada">Competition Bureau Canada</option>
+                    <option value="Competition Tribunal">Competition Tribunal</option>
+                    <option value="Conflict of Interest and Ethics Commissioner (Office of the)">Conflict of Interest and Ethics Commissioner (Office of the)</option>
+                    <option value="Copyright Board Canada">Copyright Board Canada</option>
+                    <option value="Correctional Investigator Canada">Correctional Investigator Canada</option>
+                    <option value="Correctional Service Canada">Correctional Service Canada</option>
+                    <option value="Courts Administration Service">Courts Administration Service</option>
+                    <option value="Currency Museum">Currency Museum</option>
+                    <option value="Defence Construction Canada">Defence Construction Canada</option>
+                    <option value="Defence Research and Development Canada">Defence Research and Development Canada</option>
+                    <option value="Democratic Institutions">Democratic Institutions</option>
+                    <option value="Elections Canada">Elections Canada</option>
+                    <option value="Employment and Social Development Canada">Employment and Social Development Canada</option>
+                    <option value="Environment and Climate Change Canada">Environment and Climate Change Canada</option>
+                    <option value="Environmental Protection Review Canada">Environmental Protection Review Canada</option>
+                    <option value="Export Development Canada">Export Development Canada</option>
+                    <option value="Farm Credit Canada">Farm Credit Canada</option>
+                    <option value="Farm Products Council of Canada">Farm Products Council of Canada</option>
+                    <option value="Federal Bridge Corporation">Federal Bridge Corporation</option>
+                    <option value="Federal Court of Appeal">Federal Court of Appeal</option>
+                    <option value="Federal Court of Canada">Federal Court of Canada</option>
+                    <option value="Federal Economic Development Agency for Southern Ontario">Federal Economic Development Agency for Southern Ontario</option>
+                    <option value="Federal Economic Development Initiative for Northern Ontario (FedNor)">Federal Economic Development Initiative for Northern Ontario (FedNor)</option>
+                    <option value="Federal Ombudsman for Victims Of Crime (Office of the)">Federal Ombudsman for Victims Of Crime (Office of the)</option>
+                    <option value="Finance Canada (Department of)">Finance Canada (Department of)</option>
+                    <option value="Financial Consumer Agency of Canada">Financial Consumer Agency of Canada</option>
+                    <option value="Financial Transactions and Reports Analysis Centre of Canada">Financial Transactions and Reports Analysis Centre of Canada</option>
+                    <option value="Fisheries and Oceans Canada">Fisheries and Oceans Canada</option>
+                    <option value="Freshwater Fish Marketing Corporation">Freshwater Fish Marketing Corporation</option>
+                    <option value="Geographical Names Board of Canada">Geographical Names Board of Canada</option>
+                    <option value="Geomatics Canada">Geomatics Canada</option>
+                    <option value="Global Affairs Canada">Global Affairs Canada</option>
+                    <option value="Governor General of Canada">Governor General of Canada</option>
+                    <option value="Great Lakes Pilotage Authority Canada">Great Lakes Pilotage Authority Canada</option>
+                    <option value="Health Canada">Health Canada</option>
+                    <option value="Historic Sites and Monuments Board of Canada">Historic Sites and Monuments Board of Canada</option>
+                    <option value="House of Commons">House of Commons</option>
+                    <option value="Human Rights Tribunal of Canada">Human Rights Tribunal of Canada</option>
+                    <option value="Immigration and Refugee Board of Canada">Immigration and Refugee Board of Canada</option>
+                    <option value="Immigration, Refugees and Citizenship Canada">Immigration, Refugees and Citizenship Canada</option>
+                    <option value="Indian Oil and Gas Canada">Indian Oil and Gas Canada</option>
+                    <option value="Indian Residential Schools Truth and Reconciliation Commission">Indian Residential Schools Truth and Reconciliation Commission</option>
+                    <option value="Indigenous and Northern Affairs Canada">Indigenous and Northern Affairs Canada</option>
+                    <option value="Industrial Technologies Office">Industrial Technologies Office</option>
+                    <option value="Information Commissioner (Office of the)">Information Commissioner (Office of the)</option>
+                    <option value="Infrastructure Canada">Infrastructure Canada</option>
+                    <option value="Innovation, Science and Economic Development Canada">Innovation, Science and Economic Development Canada</option>
+                    <option value="Intergovernmental Affairs (Department of)">Intergovernmental Affairs (Department of)</option>
+                    <option value="International Development Research Centre">International Development Research Centre</option>
+                    <option value="Jacques Cartier and Champlain Bridges Inc.">Jacques Cartier and Champlain Bridges Inc.</option>
+                    <option value="Justice Canada (Department of)">Justice Canada (Department of)</option>
+                    <option value="Labour Program">Labour Program</option>
+                    <option value="Laurentian Pilotage Authority Canada">Laurentian Pilotage Authority Canada</option>
+                    <option value="Leader of the Government in the House of Commons">Leader of the Government in the House of Commons</option>
+                    <option value="Library and Archives Canada">Library and Archives Canada</option>
+                    <option value="Marine Atlantic">Marine Atlantic</option>
+                    <option value="Measurement Canada">Measurement Canada</option>
+                    <option value="Military Grievances External Review Committee">Military Grievances External Review Committee</option>
+                    <option value="Military Police Complaints Commission of Canada">Military Police Complaints Commission of Canada</option>
+                    <option value="National Arts Centre">National Arts Centre</option>
+                    <option value="National Battlefields Commission">National Battlefields Commission</option>
+                    <option value="National Capital Commission">National Capital Commission</option>
+                    <option value="National Defence">National Defence</option>
+                    <option value="National Defence and the Canadian Forces Ombudsperson (Office of the)">National Defence and the Canadian Forces Ombudsperson (Office of the)</option>
+                    <option value="National Energy Board">National Energy Board</option>
+                    <option value="National Film Board">National Film Board</option>
+                    <option value="National Gallery of Canada">National Gallery of Canada</option>
+                    <option value="National Museum of Science and Technology">National Museum of Science and Technology</option>
+                    <option value="National Research Council Canada">National Research Council Canada</option>
+                    <option value="National Search and Rescue Secretariat">National Search and Rescue Secretariat</option>
+                    <option value="National Seniors Council">National Seniors Council</option>
+                    <option value="Natural Resources Canada">Natural Resources Canada</option>
+                    <option value="Natural Sciences and Engineering Research Canada">Natural Sciences and Engineering Research Canada</option>
+                    <option value="Northern Pipeline Agency Canada">Northern Pipeline Agency Canada</option>
+                    <option value="Occupational Health and Safety Tribunal Canada">Occupational Health and Safety Tribunal Canada</option>
+                    <option value="PPP Canada">PPP Canada</option>
+                    <option value="Pacific Pilotage Authority Canada">Pacific Pilotage Authority Canada</option>
+                    <option value="Parks Canada">Parks Canada</option>
+                    <option value="Parliament of Canada">Parliament of Canada</option>
+                    <option value="Parole Board of Canada">Parole Board of Canada</option>
+                    <option value="Passport Canada">Passport Canada</option>
+                    <option value="Patented Medicine Prices Review Board Canada">Patented Medicine Prices Review Board Canada</option>
+                    <option value="Polar Knowledge Canada">Polar Knowledge Canada</option>
+                    <option value="Policy Horizons Canada">Policy Horizons Canada</option>
+                    <option value="Prime Minister of Canada">Prime Minister of Canada</option>
+                    <option value="Privacy Commissioner (Office of the)">Privacy Commissioner (Office of the)</option>
+                    <option value="Privy Council Office">Privy Council Office</option>
+                    <option value="Procurement Ombudsman (Office of the)">Procurement Ombudsman (Office of the)</option>
+                    <option value="Public Health Agency of Canada">Public Health Agency of Canada</option>
+                    <option value="Public Prosecution Service of Canada">Public Prosecution Service of Canada</option>
+                    <option value="Public Safety Canada">Public Safety Canada</option>
+                    <option value="Public Sector Integrity Commissioner of Canada (Office of the)">Public Sector Integrity Commissioner of Canada (Office of the)</option>
+                    <option value="Public Sector Pension Investment Board">Public Sector Pension Investment Board</option>
+                    <option value="Public Servants Disclosure Protection Tribunal Canada">Public Servants Disclosure Protection Tribunal Canada</option>
+                    <option value="Public Service Commission of Canada">Public Service Commission of Canada</option>
+                    <option value="Public Service Labour Relations and Employment Board">Public Service Labour Relations and Employment Board</option>
+                    <option value="Public Services and Procurement Canada">Public Services and Procurement Canada</option>
+                    <option value="Receiver General for Canada">Receiver General for Canada</option>
+                    <option value="Registry of the Specific Claims Tribunal of Canada">Registry of the Specific Claims Tribunal of Canada</option>
+                    <option value="Ridley Terminals Inc.">Ridley Terminals Inc.</option>
+                    <option value="Royal Canadian Air Force">Royal Canadian Air Force</option>
+                    <option value="Royal Canadian Mint">Royal Canadian Mint</option>
+                    <option value="Royal Canadian Mounted Police">Royal Canadian Mounted Police</option>
+                    <option value="Royal Canadian Mounted Police External Review Committee">Royal Canadian Mounted Police External Review Committee</option>
+                    <option value="Royal Canadian Navy">Royal Canadian Navy</option>
+                    <option value="Royal Military College Saint-Jean">Royal Military College Saint-Jean</option>
+                    <option value="Royal Military College of Canada">Royal Military College of Canada</option>
+                    <option value="Secretary to the Governor General (Office of the)">Secretary to the Governor General (Office of the)</option>
+                    <option value="Security Intelligence Review Committee">Security Intelligence Review Committee</option>
+                    <option value="Senate of Canada">Senate of Canada</option>
+                    <option value="Seniors">Seniors</option>
+                    <option value="Service Canada">Service Canada</option>
+                    <option value="Shared Services Canada">Shared Services Canada</option>
+                    <option value="Ship-Source Oil Pollution Fund">Ship-Source Oil Pollution Fund</option>
+                    <option value="Social Sciences and Humanities Research Council of Canada">Social Sciences and Humanities Research Council of Canada</option>
+                    <option value="Social Security Tribunal of Canada">Social Security Tribunal of Canada</option>
+                    <option value="Sport Canada">Sport Canada</option>
+                    <option value="Standards Council of Canada">Standards Council of Canada</option>
+                    <option value="Statistics Canada">Statistics Canada</option>
+                    <option value="Status of Women Canada">Status of Women Canada</option>
+                    <option value="Superintendent of Bankruptcy Canada (Office of the)">Superintendent of Bankruptcy Canada (Office of the)</option>
+                    <option value="Superintendent of Financial Institutions Canada (Office of the)">Superintendent of Financial Institutions Canada (Office of the)</option>
+                    <option value="Supreme Court of Canada">Supreme Court of Canada</option>
+                    <option value="Tax Court of Canada">Tax Court of Canada</option>
+                    <option value="Taxpayers' Ombudsman (Office of the)">Taxpayers' Ombudsman (Office of the)</option>
+                    <option value="Telefilm Canada">Telefilm Canada</option>
+                    <option value="Translation Bureau">Translation Bureau</option>
+                    <option value="Transport Canada">Transport Canada</option>
+                    <option value="Transportation Appeal Tribunal of Canada">Transportation Appeal Tribunal of Canada</option>
+                    <option value="Transportation Safety Board of Canada">Transportation Safety Board of Canada</option>
+                    <option value="Treasury Board of Canada Secretariat">Treasury Board of Canada Secretariat</option>
+                    <option value="VIA Rail Canada Inc.">VIA Rail Canada Inc.</option>
+                    <option value="Veterans Affairs Canada">Veterans Affairs Canada</option>
+                    <option value="Veterans Review and Appeal Board Canada">Veterans Review and Appeal Board Canada</option>
+                    <option value="Veterans' Ombudsman (Office of the)">Veterans' Ombudsman (Office of the)</option>
+                    <option value="Virtual Museum of Canada">Virtual Museum of Canada</option>
+                    <option value="Western Economic Diversification Canada">Western Economic Diversification Canada</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="provincial-wrapper" class="occupation-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="province">Province/Territory</div>
+                <div class="item-input">
+                  <select id="provincial" name="provincial">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Alberta">Alberta</option>
+                    <option value="British Columbia">British Columbia</option>
+                    <option value="Manitoba">Manitoba</option>
+                    <option value="New Brunswick">New Brunswick</option>
+                    <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+                    <option value="Northwest Territories">Northwest Territories</option>
+                    <option value="Nova Scotia">Nova Scotia</option>
+                    <option value="Nunavut">Nunavut</option>
+                    <option value="Ontario">Ontario</option>
+                    <option value="Prince Edward Island">Prince Edward Island</option>
+                    <option value="Quebec">Quebec</option>
+                    <option value="Saskatchewan">Saskatchewan</option>
+                    <option value="Yukon">Yukon</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="alberta-wrapper" class="occupation-choices provincial-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="ministry">Ministry</div>
+                <div class="item-input">
+                  <select id="alberta" name="ministry">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Advanced Education">Advanced Education</option>
+                    <option value="Agriculture and Forestry">Agriculture and Forestry</option>
+                    <option value="Corporate Human Resourcing">Corporate Human Resourcing</option>
+                    <option value="Culture and Tourism">Culture and Tourism</option>
+                    <option value="Economic Development and Trade">Economic Development and Trade</option>
+                    <option value="Education">Education</option>
+                    <option value="Energy">Energy</option>
+                    <option value="Environment and Parks">Environment and Parks</option>
+                    <option value="Health">Health</option>
+                    <option value="Human Services">Human Services</option>
+                    <option value="Indigenous Relations">Indigenous Relations</option>
+                    <option value="Infrastructure">Infrastructure</option>
+                    <option value="Justice and Solicitor General">Justice and Solicitor General</option>
+                    <option value="Labour">Labour</option>
+                    <option value="Municipal Affairs">Municipal Affairs</option>
+                    <option value="Seniors and Housing">Seniors and Housing</option>
+                    <option value="Service Alberta">Service Alberta</option>
+                    <option value="Status of Women">Status of Women</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Treasury Board and Finance">Treasury Board and Finance</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="british-columbia-wrapper" class="occupation-choices provincial-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="ministry">Ministry</div>
+                <div class="item-input">
+                  <select id="british-columbia" name="ministry">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Aboriginal Relations &amp; Reconciliation">Aboriginal Relations &amp; Reconciliation</option>
+                    <option value="Advanced Education">Advanced Education</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Children &amp; Family Development">Children &amp; Family Development</option>
+                    <option value="Community, Sport &amp; Cultural Development">Community, Sport &amp; Cultural Development</option>
+                    <option value="Education">Education</option>
+                    <option value="Energy &amp; Mines">Energy &amp; Mines</option>
+                    <option value="Environment">Environment</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Forests, Lands &amp; Natural Resource Operations">Forests, Lands &amp; Natural Resource Operations</option>
+                    <option value="Health">Health</option>
+                    <option value="International Trade">International Trade</option>
+                    <option value="Jobs, Tourism &amp; Skills Training">Jobs, Tourism &amp; Skills Training</option>
+                    <option value="Justice">Justice</option>
+                    <option value="Natural Gas Development">Natural Gas Development</option>
+                    <option value="Public Safety &amp; Solicitor General">Public Safety &amp; Solicitor General</option>
+                    <option value="Small Business, Red Tape Reduction">Small Business, Red Tape Reduction</option>
+                    <option value="Social Development &amp; Social Innovation">Social Development &amp; Social Innovation</option>
+                    <option value="Technology, Innovation &amp; Citizens' Services">Technology, Innovation &amp; Citizens' Services</option>
+                    <option value="Transportation &amp; Infrastructure">Transportation &amp; Infrastructure</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="manitoba-wrapper" class="occupation-choices provincial-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="ministry">Ministry</div>
+                <div class="item-input">
+                  <select id="manitoba" name="ministry">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Civil Service Commission">Civil Service Commission</option>
+                    <option value="Crown Services">Crown Services</option>
+                    <option value="Education and Training">Education and Training</option>
+                    <option value="Families">Families</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Growth, Enterprise and Trade">Growth, Enterprise and Trade</option>
+                    <option value="Health, Seniors and Active Living">Health, Seniors and Active Living</option>
+                    <option value="Indigenous and Municipal Relations">Indigenous and Municipal Relations</option>
+                    <option value="Infrastructure">Infrastructure</option>
+                    <option value="Intergovernmental Affairs and International Relations">Intergovernmental Affairs and International Relations</option>
+                    <option value="Justice">Justice</option>
+                    <option value="Sport, Culture and Heritage">Sport, Culture and Heritage</option>
+                    <option value="Sustainable Development">Sustainable Development</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="new-brunswick-wrapper" class="occupation-choices provincial-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="ministry">Ministry</div>
+                <div class="item-input">
+                  <select id="new-brunswick" name="ministry">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Aboriginal Affairs">Aboriginal Affairs</option>
+                    <option value="Agriculture, Aquaculture and Fisheries">Agriculture, Aquaculture and Fisheries</option>
+                    <option value="Education and Early Childhood Development">Education and Early Childhood Development</option>
+                    <option value="Emergency Measures Organization">Emergency Measures Organization</option>
+                    <option value="Energy and Resource Development">Energy and Resource Development</option>
+                    <option value="Environment and Local Government">Environment and Local Government</option>
+                    <option value="Executive Council Office">Executive Council Office</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Health">Health</option>
+                    <option value="Intergovernmental Affairs">Intergovernmental Affairs</option>
+                    <option value="Justice and Public Safety">Justice and Public Safety</option>
+                    <option value="Office of the Attorney General">Office of the Attorney General</option>
+                    <option value="Office of the Premier">Office of the Premier</option>
+                    <option value="Opportunities New Brunswick">Opportunities New Brunswick</option>
+                    <option value="Post-Secondary Education, Training and Labour">Post-Secondary Education, Training and Labour</option>
+                    <option value="Regional Development Corporation">Regional Development Corporation</option>
+                    <option value="Service New Brunswick">Service New Brunswick</option>
+                    <option value="Social Development">Social Development</option>
+                    <option value="Tourism, Heritage and Culture">Tourism, Heritage and Culture</option>
+                    <option value="Transportation and Infrastructure">Transportation and Infrastructure</option>
+                    <option value="Treasury Board">Treasury Board</option>
+                    <option value="Women's Equality">Women's Equality</option>
+                    <option value="WorkSafe New Brunswick">WorkSafe New Brunswick</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="newfoundland-and-labrador-wrapper" class="occupation-choices provincial-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="ministry">Ministry</div>
+                <div class="item-input">
+                  <select id="newfoundland-and-labrador" name="ministry">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Advanced Education, Skills and Labour">Advanced Education, Skills and Labour</option>
+                    <option value="Board of Commissioners of Public Utilities">Board of Commissioners of Public Utilities</option>
+                    <option value="Business, Tourism, Culture and Rural Development">Business, Tourism, Culture and Rural Development</option>
+                    <option value="Children, Seniors and Social Development">Children, Seniors and Social Development</option>
+                    <option value="Commissioner for Legislative Standards">Commissioner for Legislative Standards</option>
+                    <option value="Eastern Health of Newfoundland and Labrador">Eastern Health of Newfoundland and Labrador</option>
+                    <option value="Education and Early Childhood Development">Education and Early Childhood Development</option>
+                    <option value="Electoral Districts Boundaries Commission">Electoral Districts Boundaries Commission</option>
+                    <option value="Environment and Climate Change">Environment and Climate Change</option>
+                    <option value="Executive Council">Executive Council</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Fisheries, Forestry and Agrifoods">Fisheries, Forestry and Agrifoods</option>
+                    <option value="Government Purchasing Agency">Government Purchasing Agency</option>
+                    <option value="Health and Community Services">Health and Community Services</option>
+                    <option value="Human Rights Commission">Human Rights Commission</option>
+                    <option value="Justice and Public Safety">Justice and Public Safety</option>
+                    <option value="Labour Relations Board">Labour Relations Board</option>
+                    <option value="Multi-Materials Stewardship Board">Multi-Materials Stewardship Board</option>
+                    <option value="Municipal Affairs">Municipal Affairs</option>
+                    <option value="Natural Resources">Natural Resources</option>
+                    <option value="Newfoundland and Labrador Film Development Corporation">Newfoundland and Labrador Film Development Corporation</option>
+                    <option value="Newfoundland and Labrador Housing Corporation">Newfoundland and Labrador Housing Corporation</option>
+                    <option value="Newfoundland and Labrador Hydro">Newfoundland and Labrador Hydro</option>
+                    <option value="Newfoundland and Labrador Medical Care Plan - MCP">Newfoundland and Labrador Medical Care Plan - MCP</option>
+                    <option value="Office of the Auditor General">Office of the Auditor General</option>
+                    <option value="Office of the Chief Electoral Officer">Office of the Chief Electoral Officer</option>
+                    <option value="Office of the Child and Youth Advocate">Office of the Child and Youth Advocate</option>
+                    <option value="Office of the Citizens' Representative">Office of the Citizens' Representative</option>
+                    <option value="Office of the Information and Privacy Commissioner">Office of the Information and Privacy Commissioner</option>
+                    <option value="Provincial Information and Library Resources Board">Provincial Information and Library Resources Board</option>
+                    <option value="Public Service Commission">Public Service Commission</option>
+                    <option value="Research &amp; Development Corporation">Research &amp; Development Corporation</option>
+                    <option value="Royal Newfoundland Constabulary">Royal Newfoundland Constabulary</option>
+                    <option value="Service NL">Service NL</option>
+                    <option value="Transportation and Works">Transportation and Works</option>
+                    <option value="Workplace Health Safety and Compensation Commission">Workplace Health Safety and Compensation Commission</option>
+                    <option value="Workplace Health, Safety and Compensation Review Division">Workplace Health, Safety and Compensation Review Division</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="northwest-territories-wrapper" class="occupation-choices provincial-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="ministry">Ministry</div>
+                <div class="item-input">
+                  <select id="northwest-territories" name="ministry">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Aboriginal Affairs and Intergovernmental Relations">Aboriginal Affairs and Intergovernmental Relations</option>
+                    <option value="Education, Culture and Employment">Education, Culture and Employment</option>
+                    <option value="Environment and Natural Resources">Environment and Natural Resources</option>
+                    <option value="Executive">Executive</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Health and Social Services">Health and Social Services</option>
+                    <option value="Human Resources">Human Resources</option>
+                    <option value="Industry, Tourism and Investment">Industry, Tourism and Investment</option>
+                    <option value="Justice">Justice</option>
+                    <option value="Lands">Lands</option>
+                    <option value="Legislative Assembly">Legislative Assembly</option>
+                    <option value="Municipal and Community Affairs">Municipal and Community Affairs</option>
+                    <option value="Public Works &amp; Services">Public Works &amp; Services</option>
+                    <option value="Transportation">Transportation</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="nova-scotia-wrapper" class="occupation-choices provincial-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="ministry">Ministry</div>
+                <div class="item-input">
+                  <select id="nova-scotia" name="ministry">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Aboriginal Affairs">Aboriginal Affairs</option>
+                    <option value="Acadian Affairs">Acadian Affairs</option>
+                    <option value="African Nova Scotian Affairs">African Nova Scotian Affairs</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Business">Business</option>
+                    <option value="Communications Nova Scotia">Communications Nova Scotia</option>
+                    <option value="Communities, Culture and Heritage">Communities, Culture and Heritage</option>
+                    <option value="Community Services">Community Services</option>
+                    <option value="Education and Early Childhood Development">Education and Early Childhood Development</option>
+                    <option value="Energy">Energy</option>
+                    <option value="Environment">Environment</option>
+                    <option value="Executive Council Office">Executive Council Office</option>
+                    <option value="Finance and Treasury Board">Finance and Treasury Board</option>
+                    <option value="Fisheries and Aquaculture">Fisheries and Aquaculture</option>
+                    <option value="Gaelic Affairs">Gaelic Affairs</option>
+                    <option value="Health and Wellness">Health and Wellness</option>
+                    <option value="Immigration">Immigration</option>
+                    <option value="Intergovernmental Affairs">Intergovernmental Affairs</option>
+                    <option value="Internal Services">Internal Services</option>
+                    <option value="Justice">Justice</option>
+                    <option value="Labour and Advanced Education">Labour and Advanced Education</option>
+                    <option value="Municipal Affairs">Municipal Affairs</option>
+                    <option value="Natural Resources">Natural Resources</option>
+                    <option value="Public Service Commission">Public Service Commission</option>
+                    <option value="Seniors">Seniors</option>
+                    <option value="Service Nova Scotia">Service Nova Scotia</option>
+                    <option value="Transportation and Infrastructure Renewal">Transportation and Infrastructure Renewal</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="nunavut-wrapper" class="occupation-choices provincial-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="ministry">Ministry</div>
+                <div class="item-input">
+                  <select id="nunavut" name="ministry">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Community and Government Services">Community and Government Services</option>
+                    <option value="Culture and Heritage">Culture and Heritage</option>
+                    <option value="Economic Development and Transportation">Economic Development and Transportation</option>
+                    <option value="Education">Education</option>
+                    <option value="Environment">Environment</option>
+                    <option value="Executive and Intergovernmental Affairs">Executive and Intergovernmental Affairs</option>
+                    <option value="Family Services">Family Services</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Health">Health</option>
+                    <option value="Justice">Justice</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="ontario-wrapper" class="occupation-choices provincial-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="ministry">Ministry</div>
+                <div class="item-input">
+                  <select id="ontario" name="ministry">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Accessibility Directorate of Ontario">Accessibility Directorate of Ontario</option>
+                    <option value="Advanced Education and Skills Development">Advanced Education and Skills Development</option>
+                    <option value="Agriculture, Food and Rural Affairs">Agriculture, Food and Rural Affairs</option>
+                    <option value="Attorney General">Attorney General</option>
+                    <option value="Cabinet Office">Cabinet Office</option>
+                    <option value="Children and Youth Services">Children and Youth Services</option>
+                    <option value="Citizenship and Immigration">Citizenship and Immigration</option>
+                    <option value="Community Safety and Correctional Services">Community Safety and Correctional Services</option>
+                    <option value="Community and Social Services">Community and Social Services</option>
+                    <option value="Economic Development and Growth">Economic Development and Growth</option>
+                    <option value="Education">Education</option>
+                    <option value="Energy">Energy</option>
+                    <option value="Environment and Climate Change">Environment and Climate Change</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Francophone Affairs">Francophone Affairs</option>
+                    <option value="Government and Consumer Services">Government and Consumer Services</option>
+                    <option value="Health and Long-Term Care">Health and Long-Term Care</option>
+                    <option value="Housing">Housing</option>
+                    <option value="Indigenous Relations and Reconciliation">Indigenous Relations and Reconciliation</option>
+                    <option value="Infrastructure">Infrastructure</option>
+                    <option value="Intergovernmental Affairs">Intergovernmental Affairs</option>
+                    <option value="International Trade">International Trade</option>
+                    <option value="Labour">Labour</option>
+                    <option value="Municipal Affairs">Municipal Affairs</option>
+                    <option value="Natural Resources and Forestry">Natural Resources and Forestry</option>
+                    <option value="Northern Development and Mines">Northern Development and Mines</option>
+                    <option value="Research, Innovation and Science">Research, Innovation and Science</option>
+                    <option value="Seniors Affairs">Seniors Affairs</option>
+                    <option value="Tourism, Culture and Sport">Tourism, Culture and Sport</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Treasury Board Secretariat">Treasury Board Secretariat</option>
+                    <option value="Women's Issues">Women's Issues</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="prince-edward-island-wrapper" class="occupation-choices provincial-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="ministry">Ministry</div>
+                <div class="item-input">
+                  <select id="prince-edward-island" name="ministry">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Agriculture and Fisheries">Agriculture and Fisheries</option>
+                    <option value="Communities, Land and Environment">Communities, Land and Environment</option>
+                    <option value="Economic Development and Tourism">Economic Development and Tourism</option>
+                    <option value="Education, Early Learning and Culture">Education, Early Learning and Culture</option>
+                    <option value="Family and Human Services">Family and Human Services</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Health and Wellness">Health and Wellness</option>
+                    <option value="Justice and Public Safety">Justice and Public Safety</option>
+                    <option value="Transportation, Infrastructure and Energy">Transportation, Infrastructure and Energy</option>
+                    <option value="Workforce and Advanced Learning">Workforce and Advanced Learning</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="quebec-wrapper" class="occupation-choices provincial-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="ministry">Ministry</div>
+                <div class="item-input">
+                  <select id="quebec" name="ministry">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Agence de la santé et des services sociaux de Chaudière-Appalaches">Agence de la santé et des services sociaux de Chaudière-Appalaches</option>
+                    <option value="Agence de la santé et des services sociaux de Lanaudière">Agence de la santé et des services sociaux de Lanaudière</option>
+                    <option value="Agence de la santé et des services sociaux de Laval">Agence de la santé et des services sociaux de Laval</option>
+                    <option value="Agence de la santé et des services sociaux de Montréal">Agence de la santé et des services sociaux de Montréal</option>
+                    <option value="Agence de la santé et des services sociaux de l'Abitibi-Témiscamingue">Agence de la santé et des services sociaux de l'Abitibi-Témiscamingue</option>
+                    <option value="Agence de la santé et des services sociaux de l'Estrie">Agence de la santé et des services sociaux de l'Estrie</option>
+                    <option value="Agence de la santé et des services sociaux de l'Outaouais">Agence de la santé et des services sociaux de l'Outaouais</option>
+                    <option value="Agence de la santé et des services sociaux de la Capitale-Nationale">Agence de la santé et des services sociaux de la Capitale-Nationale</option>
+                    <option value="Agence de la santé et des services sociaux de la Côte-Nord">Agence de la santé et des services sociaux de la Côte-Nord</option>
+                    <option value="Agence de la santé et des services sociaux de la Gaspésie-Iles-de-la-Madeleine">Agence de la santé et des services sociaux de la Gaspésie-Iles-de-la-Madeleine</option>
+                    <option value="Agence de la santé et des services sociaux de la Mauricie et du Centre-du-Québecc">Agence de la santé et des services sociaux de la Mauricie et du Centre-du-Québecc</option>
+                    <option value="Agence de la santé et des services sociaux des Laurentides">Agence de la santé et des services sociaux des Laurentides</option>
+                    <option value="Agence de la santé et des services sociaux du Bas-Saint-Laurent">Agence de la santé et des services sociaux du Bas-Saint-Laurent</option>
+                    <option value="Agence de la santé et des services sociaux du Saguenay–Lac-Saint-Jean">Agence de la santé et des services sociaux du Saguenay–Lac-Saint-Jean</option>
+                    <option value="Agence métropolitaine de transport">Agence métropolitaine de transport</option>
+                    <option value="Aide financière aux études">Aide financière aux études</option>
+                    <option value="Assemblée nationale du Québec">Assemblée nationale du Québec</option>
+                    <option value="Autorité des marchés financiers">Autorité des marchés financiers</option>
+                    <option value="Bibliothèque et Archives nationales du Québec">Bibliothèque et Archives nationales du Québec</option>
+                    <option value="Bureau d'audiences publiques sur l'environnement">Bureau d'audiences publiques sur l'environnement</option>
+                    <option value="Bureau de normalisation du Québec">Bureau de normalisation du Québec</option>
+                    <option value="Bureau des infractions et amendes">Bureau des infractions et amendes</option>
+                    <option value="Bureau du coroner">Bureau du coroner</option>
+                    <option value="Bureau du forestier en chef">Bureau du forestier en chef</option>
+                    <option value="Caisse de dépôt et placement du Québec">Caisse de dépôt et placement du Québec</option>
+                    <option value="Centre d'expertise des grands organismes">Centre d'expertise des grands organismes</option>
+                    <option value="Centre d'expertise hydrique du Québec">Centre d'expertise hydrique du Québec</option>
+                    <option value="Centre d'étude sur la pauvreté et l'exclusion sociale">Centre d'étude sur la pauvreté et l'exclusion sociale</option>
+                    <option value="Centre de Conservation du Québec">Centre de Conservation du Québec</option>
+                    <option value="Centre de gestion de l'équipement roulant">Centre de gestion de l'équipement roulant</option>
+                    <option value="Centre de la francophonie des Amériques">Centre de la francophonie des Amériques</option>
+                    <option value="Centre de recherche industrielle du Québec">Centre de recherche industrielle du Québec</option>
+                    <option value="Centre de services partagés du Québec">Centre de services partagés du Québec</option>
+                    <option value="Centre de toxicologie du Québec">Centre de toxicologie du Québec</option>
+                    <option value="Centre intégré de santé et de services sociaux de la Montérégie-Centre">Centre intégré de santé et de services sociaux de la Montérégie-Centre</option>
+                    <option value="Centre intégré de santé et de services sociaux de la Montérégie-Ouest">Centre intégré de santé et de services sociaux de la Montérégie-Ouest</option>
+                    <option value="Centre intégré de santé et de services sociaux de la Montérégie–Centre">Centre intégré de santé et de services sociaux de la Montérégie–Centre</option>
+                    <option value="Centre intégré de santé et de services sociaux des Îles">Centre intégré de santé et de services sociaux des Îles</option>
+                    <option value="Centre intégré universitaire de santé et de services sociaux du Nord-de-l'Île-de-Montréal">Centre intégré universitaire de santé et de services sociaux du Nord-de-l'Île-de-Montréal</option>
+                    <option value="Centre intégré universitaire de santé et services sociaux de l'Est-de-l'Île-de-Montréal">Centre intégré universitaire de santé et services sociaux de l'Est-de-l'Île-de-Montréal</option>
+                    <option value="Centre intégré universitaire du Centre-Est-de-l'Île-de-Montréal">Centre intégré universitaire du Centre-Est-de-l'Île-de-Montréal</option>
+                    <option value="Centre intégré universitaire du Centre-Ouest-de-l'Île-de-Montréal">Centre intégré universitaire du Centre-Ouest-de-l'Île-de-Montréal</option>
+                    <option value="Centre local de services communautaires">Centre local de services communautaires</option>
+                    <option value="Centre régional de santé et de services sociaux de la Baie-James">Centre régional de santé et de services sociaux de la Baie-James</option>
+                    <option value="Comité consultatif du travail et de la main-d'œuvre">Comité consultatif du travail et de la main-d'œuvre</option>
+                    <option value="Comité consultatif sur l'accessibilité financière aux études">Comité consultatif sur l'accessibilité financière aux études</option>
+                    <option value="Comité de déontologie policière">Comité de déontologie policière</option>
+                    <option value="Comité pour la prestation des services de santé et des services sociaux aux personnes issues des communautés ethnoculturelles">Comité pour la prestation des services de santé et des services sociaux aux personnes issues des communautés ethnoculturelles</option>
+                    <option value="Commissaire au lobbyisme">Commissaire au lobbyisme</option>
+                    <option value="Commissaire à l'éthique et à la déontologie">Commissaire à l'éthique et à la déontologie</option>
+                    <option value="Commissaire à la déontologie policière">Commissaire à la déontologie policière</option>
+                    <option value="Commissaire à la lutte contre la corruption">Commissaire à la lutte contre la corruption</option>
+                    <option value="Commissaire à la santé et au bien-être">Commissaire à la santé et au bien-être</option>
+                    <option value="Commission consultative de l'enseignement privé">Commission consultative de l'enseignement privé</option>
+                    <option value="Commission d'accès à l'information">Commission d'accès à l'information</option>
+                    <option value="Commission d'enquête sur l'octroi et la gestion des contrats publics dans l'industrie de la construction">Commission d'enquête sur l'octroi et la gestion des contrats publics dans l'industrie de la construction</option>
+                    <option value="Commission d'évaluation de l'enseignement collégial">Commission d'évaluation de l'enseignement collégial</option>
+                    <option value="Commission de l'éducation en langue anglaise">Commission de l'éducation en langue anglaise</option>
+                    <option value="Commission de l'éthique de la science et de la technologie">Commission de l'éthique de la science et de la technologie</option>
+                    <option value="Commission de la capitale nationale du Québec">Commission de la capitale nationale du Québec</option>
+                    <option value="Commission de la construction du Québec">Commission de la construction du Québec</option>
+                    <option value="Commission de la fonction publique">Commission de la fonction publique</option>
+                    <option value="Commission de la qualité de l'environnement Kativik">Commission de la qualité de l'environnement Kativik</option>
+                    <option value="Commission de la représentation électorale">Commission de la représentation électorale</option>
+                    <option value="Commission de protection du territoire agricole du Québec">Commission de protection du territoire agricole du Québec</option>
+                    <option value="Commission de toponymie">Commission de toponymie</option>
+                    <option value="Commission des droits de la personne et des droits de la jeunesse">Commission des droits de la personne et des droits de la jeunesse</option>
+                    <option value="Commission des normes, de l'équité, de la santé et de la sécurité du travail">Commission des normes, de l'équité, de la santé et de la sécurité du travail</option>
+                    <option value="Commission des partenaires du marché du travail">Commission des partenaires du marché du travail</option>
+                    <option value="Commission des services juridiques">Commission des services juridiques</option>
+                    <option value="Commission des transports du Québec">Commission des transports du Québec</option>
+                    <option value="Commission des valeurs mobilières du Québec (voir Autorité des marchés financiers)">Commission des valeurs mobilières du Québec (voir Autorité des marchés financiers)</option>
+                    <option value="Commission municipale du Québec">Commission municipale du Québec</option>
+                    <option value="Commission québécoise des libérations conditionnelles">Commission québécoise des libérations conditionnelles</option>
+                    <option value="Conseil consultatif de la lecture et du livre">Conseil consultatif de la lecture et du livre</option>
+                    <option value="Conseil cri de la santé et des services sociaux de la Baie James">Conseil cri de la santé et des services sociaux de la Baie James</option>
+                    <option value="Conseil de gestion de l'assurance parentale">Conseil de gestion de l'assurance parentale</option>
+                    <option value="Conseil de l'Ordre du Québec">Conseil de l'Ordre du Québec</option>
+                    <option value="Conseil de la justice administrative">Conseil de la justice administrative</option>
+                    <option value="Conseil de la magistrature du Québec">Conseil de la magistrature du Québec</option>
+                    <option value="Conseil des appellations réservées et des termes valorisants">Conseil des appellations réservées et des termes valorisants</option>
+                    <option value="Conseil des arts et des lettres du Québec">Conseil des arts et des lettres du Québec</option>
+                    <option value="Conseil du statut de la femme">Conseil du statut de la femme</option>
+                    <option value="Conseil supérieur de l'éducation">Conseil supérieur de l'éducation</option>
+                    <option value="Conseil supérieur de la langue française">Conseil supérieur de la langue française</option>
+                    <option value="Conseils régionaux des partenaires du marché du travail">Conseils régionaux des partenaires du marché du travail</option>
+                    <option value="Conservatoire de musique et d'art dramatique du Québec">Conservatoire de musique et d'art dramatique du Québec</option>
+                    <option value="Corporation d'urgence-santé">Corporation d'urgence-santé</option>
+                    <option value="Cour d'appel du Québec">Cour d'appel du Québec</option>
+                    <option value="Cour du Québec">Cour du Québec</option>
+                    <option value="Cour supérieure du Québec">Cour supérieure du Québec</option>
+                    <option value="Curateur public du Québec">Curateur public du Québec</option>
+                    <option value="Directeur de l'état civil">Directeur de l'état civil</option>
+                    <option value="Directeur des poursuites criminelles et pénales">Directeur des poursuites criminelles et pénales</option>
+                    <option value="Directeur général des élections du Québec">Directeur général des élections du Québec</option>
+                    <option value="Emploi-Québec">Emploi-Québec</option>
+                    <option value="Financière agricole du Québec">Financière agricole du Québec</option>
+                    <option value="Fondation de la faune du Québec">Fondation de la faune du Québec</option>
+                    <option value="Fonds d'aide aux recours collectifs">Fonds d'aide aux recours collectifs</option>
+                    <option value="Fonds de la recherche en santé du Québec">Fonds de la recherche en santé du Québec</option>
+                    <option value="Fonds de recherche du Québec – Scientifique en chef">Fonds de recherche du Québec – Scientifique en chef</option>
+                    <option value="Fonds québécois de la recherche sur la nature et les technologies">Fonds québécois de la recherche sur la nature et les technologies</option>
+                    <option value="Fonds québécois de la recherche sur la société et la culture">Fonds québécois de la recherche sur la société et la culture</option>
+                    <option value="Hydro-Québec">Hydro-Québec</option>
+                    <option value="Héma-Québec">Héma-Québec</option>
+                    <option value="Indemnisation des victimes d'actes criminels">Indemnisation des victimes d'actes criminels</option>
+                    <option value="Institut de la statistique du Québec">Institut de la statistique du Québec</option>
+                    <option value="Institut de tourisme et d'hôtellerie du Québec">Institut de tourisme et d'hôtellerie du Québec</option>
+                    <option value="Institut national d'excellence en santé et en services sociaux">Institut national d'excellence en santé et en services sociaux</option>
+                    <option value="Institut national de santé publique du Québec">Institut national de santé publique du Québec</option>
+                    <option value="Institut national des mines">Institut national des mines</option>
+                    <option value="Investissement Québec">Investissement Québec</option>
+                    <option value="La Financière agricole du Québec - Développement international">La Financière agricole du Québec - Développement international</option>
+                    <option value="Les Publications du Québec">Les Publications du Québec</option>
+                    <option value="Ministère de l'Agriculture, des Pêcheries et de l'Alimentation">Ministère de l'Agriculture, des Pêcheries et de l'Alimentation</option>
+                    <option value="Ministère de l'Immigration, de la Diversité et de l'Inclusion">Ministère de l'Immigration, de la Diversité et de l'Inclusion</option>
+                    <option value="Ministère de l'Économie, de la Science et de l'Innovation">Ministère de l'Économie, de la Science et de l'Innovation</option>
+                    <option value="Ministère de l'Énergie et des Ressources naturelles">Ministère de l'Énergie et des Ressources naturelles</option>
+                    <option value="Ministère de la Culture et des Communications">Ministère de la Culture et des Communications</option>
+                    <option value="Ministère de la Famille">Ministère de la Famille</option>
+                    <option value="Ministère de la Justice">Ministère de la Justice</option>
+                    <option value="Ministère de la Santé et des Services sociaux">Ministère de la Santé et des Services sociaux</option>
+                    <option value="Ministère de la Sécurité publique">Ministère de la Sécurité publique</option>
+                    <option value="Ministère de l'Éducation et de l'Enseignement supérieur">Ministère de l'Éducation et de l'Enseignement supérieur</option>
+                    <option value="Ministère des Affaires municipales et de l'Occupation du territoire">Ministère des Affaires municipales et de l'Occupation du territoire</option>
+                    <option value="Ministère des Finances">Ministère des Finances</option>
+                    <option value="Ministère des Forêts, de la Faune et des Parcs">Ministère des Forêts, de la Faune et des Parcs</option>
+                    <option value="Ministère des Relations internationales et de la Francophonie">Ministère des Relations internationales et de la Francophonie</option>
+                    <option value="Ministère des Transports, de la Mobilité durable et de l'Électrification des transports">Ministère des Transports, de la Mobilité durable et de l'Électrification des transports</option>
+                    <option value="Ministère du Conseil exécutif">Ministère du Conseil exécutif</option>
+                    <option value="Ministère du Développement durable, de l'Environnement et de la Lutte contre les changements climatiques">Ministère du Développement durable, de l'Environnement et de la Lutte contre les changements climatiques</option>
+                    <option value="Ministère du Tourisme">Ministère du Tourisme</option>
+                    <option value="Ministère du Travail, de l'Emploi et de la Solidarité sociale">Ministère du Travail, de l'Emploi et de la Solidarité sociale</option>
+                    <option value="Musée d'art contemporain de Montréal">Musée d'art contemporain de Montréal</option>
+                    <option value="Musée de l'Amérique francophone">Musée de l'Amérique francophone</option>
+                    <option value="Musée de la Place royale">Musée de la Place royale</option>
+                    <option value="Musée de la civilisation">Musée de la civilisation</option>
+                    <option value="Musée national des beaux-arts du Québec">Musée national des beaux-arts du Québec</option>
+                    <option value="Office Québec-Monde pour la jeunesse">Office Québec-Monde pour la jeunesse</option>
+                    <option value="Office de la Sécurité du revenu des chasseurs et piégeurs cris">Office de la Sécurité du revenu des chasseurs et piégeurs cris</option>
+                    <option value="Office de la protection du consommateur">Office de la protection du consommateur</option>
+                    <option value="Office des personnes handicapées du Québec">Office des personnes handicapées du Québec</option>
+                    <option value="Office des professions du Québec">Office des professions du Québec</option>
+                    <option value="Office franco-québécois pour la jeunesse">Office franco-québécois pour la jeunesse</option>
+                    <option value="Office québécois de la langue française">Office québécois de la langue française</option>
+                    <option value="Palais des congrès de Montréal">Palais des congrès de Montréal</option>
+                    <option value="Protecteur du citoyen">Protecteur du citoyen</option>
+                    <option value="RECYC-QUÉBEC">RECYC-QUÉBEC</option>
+                    <option value="Registraire des entreprises">Registraire des entreprises</option>
+                    <option value="Registre des droits personnels et réels mobiliers">Registre des droits personnels et réels mobiliers</option>
+                    <option value="Registre des lobbyistes">Registre des lobbyistes</option>
+                    <option value="Registre foncier du Québec">Registre foncier du Québec</option>
+                    <option value="Retraite Québec">Retraite Québec</option>
+                    <option value="Revenu Québec">Revenu Québec</option>
+                    <option value="Régie de l'assurance maladie du Québec">Régie de l'assurance maladie du Québec</option>
+                    <option value="Régie de l'assurance-dépôts du Québec (voir Autorité des marchés financiers)">Régie de l'assurance-dépôts du Québec (voir Autorité des marchés financiers)</option>
+                    <option value="Régie de l'énergie">Régie de l'énergie</option>
+                    <option value="Régie des alcools, des courses et des jeux">Régie des alcools, des courses et des jeux</option>
+                    <option value="Régie des installations olympiques">Régie des installations olympiques</option>
+                    <option value="Régie des marchés agricoles et alimentaires du Québec">Régie des marchés agricoles et alimentaires du Québec</option>
+                    <option value="Régie du Cinéma">Régie du Cinéma</option>
+                    <option value="Régie du bâtiment du Québec">Régie du bâtiment du Québec</option>
+                    <option value="Régie du logement">Régie du logement</option>
+                    <option value="Secrétariat aux affaires autochtones">Secrétariat aux affaires autochtones</option>
+                    <option value="Secrétariat aux affaires intergouvernementales canadiennes">Secrétariat aux affaires intergouvernementales canadiennes</option>
+                    <option value="Secrétariat aux aînés">Secrétariat aux aînés</option>
+                    <option value="Secrétariat de l'Ordre national du Québec">Secrétariat de l'Ordre national du Québec</option>
+                    <option value="Secrétariat du Conseil du trésor">Secrétariat du Conseil du trésor</option>
+                    <option value="Secrétariat du travail">Secrétariat du travail</option>
+                    <option value="Secrétariat à l'accès à l'information et à la réforme des institutions démocratiques">Secrétariat à l'accès à l'information et à la réforme des institutions démocratiques</option>
+                    <option value="Secrétariat à la condition féminine">Secrétariat à la condition féminine</option>
+                    <option value="Secrétariat à la jeunesse">Secrétariat à la jeunesse</option>
+                    <option value="Secrétariat à la politique linguistique">Secrétariat à la politique linguistique</option>
+                    <option value="Société d'habitation du Québec">Société d'habitation du Québec</option>
+                    <option value="Société de développement de la Baie-James">Société de développement de la Baie-James</option>
+                    <option value="Société de développement des entreprises culturelles">Société de développement des entreprises culturelles</option>
+                    <option value="Société de financement des infrastructures locales du Québec">Société de financement des infrastructures locales du Québec</option>
+                    <option value="Société de l'assurance automobile du Québec">Société de l'assurance automobile du Québec</option>
+                    <option value="Société de la Place des Arts">Société de la Place des Arts</option>
+                    <option value="Société de télédiffusion du Québec (Télé-Québec)">Société de télédiffusion du Québec (Télé-Québec)</option>
+                    <option value="Société des alcools du Québec">Société des alcools du Québec</option>
+                    <option value="Société des loteries du Québec (Loto-Québec)">Société des loteries du Québec (Loto-Québec)</option>
+                    <option value="Société des traversiers du Québec">Société des traversiers du Québec</option>
+                    <option value="Société des établissements de plein air du Québec">Société des établissements de plein air du Québec</option>
+                    <option value="Société du Centre des congrès de Québec">Société du Centre des congrès de Québec</option>
+                    <option value="Société du Grand Théâtre de Québec">Société du Grand Théâtre de Québec</option>
+                    <option value="Société du Palais des congrès de Montréal">Société du Palais des congrès de Montréal</option>
+                    <option value="Société du Plan Nord">Société du Plan Nord</option>
+                    <option value="Société du parc industriel et portuaire de Bécancour">Société du parc industriel et portuaire de Bécancour</option>
+                    <option value="Société québécoise d'information juridique">Société québécoise d'information juridique</option>
+                    <option value="Société québécoise des infrastructures">Société québécoise des infrastructures</option>
+                    <option value="Tribunal administratif des marchés financiers">Tribunal administratif des marchés financiers</option>
+                    <option value="Tribunal administratif du Québec">Tribunal administratif du Québec</option>
+                    <option value="Tribunal administratif du travail">Tribunal administratif du travail</option>
+                    <option value="Tribunal des droits de la personne">Tribunal des droits de la personne</option>
+                    <option value="Vérificateur général du Québec">Vérificateur général du Québec</option>
+                    <option value="École nationale de police du Québec">École nationale de police du Québec</option>
+                    <option value="École nationale des pompiers du Québec">École nationale des pompiers du Québec</option>
+                    <option value="Épargne Placements Québec">Épargne Placements Québec</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="saskatchewan-wrapper" class="occupation-choices provincial-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="ministry">Ministry</div>
+                <div class="item-input">
+                  <select id="saskatchewan" name="ministry">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Advanced Education">Advanced Education</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Central Services">Central Services</option>
+                    <option value="Economy">Economy</option>
+                    <option value="Education">Education</option>
+                    <option value="Energy and Resources">Energy and Resources</option>
+                    <option value="Environment">Environment</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Government Relations">Government Relations</option>
+                    <option value="Health">Health</option>
+                    <option value="Highways and Infrastructure">Highways and Infrastructure</option>
+                    <option value="Justice">Justice</option>
+                    <option value="Labour Relations and Workplace Safety">Labour Relations and Workplace Safety</option>
+                    <option value="Parks, Culture and Sport">Parks, Culture and Sport</option>
+                    <option value="Social Services">Social Services</option>
+                    <option value="eHealth Saskatchewan">eHealth Saskatchewan</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="yukon-wrapper" class="occupation-choices provincial-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="ministry">Ministry</div>
+                <div class="item-input">
+                  <select id="yukon" name="ministry">
+                    <option value="" data-translate="default-select">Please make a selection</option>
+                    <option value="Community Services">Community Services</option>
+                    <option value="Economic Development">Economic Development</option>
+                    <option value="Education">Education</option>
+                    <option value="Energy, Mines and Resources">Energy, Mines and Resources</option>
+                    <option value="Environment">Environment</option>
+                    <option value="Executive Council Office">Executive Council Office</option>
+                    <option value="Finance">Finance</option>
+                    <option value="French Language Services Directorate">French Language Services Directorate</option>
+                    <option value="Health and Social Services">Health and Social Services</option>
+                    <option value="Highways and Public Works">Highways and Public Works</option>
+                    <option value="Justice">Justice</option>
+                    <option value="Public Service Commission">Public Service Commission</option>
+                    <option value="Tourism and Culture">Tourism and Culture</option>
+                    <option value="Women's Directorate">Women's Directorate</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="municipal-wrapper" class="occupation-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="organization">Organization</div>
+                <div class="item-input">
+                  <input id="municipal" name="municipal" type="text" placeholder=""/>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="international-wrapper" class="occupation-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="organization">Organization</div>
+                <div class="item-input">
+                  <input id="international" name="international" type="text" placeholder=""/>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="ngo-wrapper" class="occupation-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="organization">Organization</div>
+                <div class="item-input">
+                  <input id="ngo" name="ngo" type="text" placeholder=""/>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="community-wrapper" class="occupation-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="organization">Organization</div>
+                <div class="item-input">
+                  <input id="community" name="community" type="text" placeholder=""/>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="business-wrapper" class="occupation-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="organization">Organization</div>
+                <div class="item-input">
+                  <input id="business" name="business" type="text" placeholder=""/>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="media-wrapper" class="occupation-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="organization">Organization</div>
+                <div class="item-input">
+                  <input id="media" name="media" type="text" placeholder=""/>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="retired-wrapper" class="occupation-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="organization">Organization</div>
+                <div class="item-input">
+                  <input id="retired" name="retired" type="text" placeholder=""/>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li id="other-wrapper" class="occupation-choices" hidden>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="organization">Organization</div>
+                <div class="item-input">
+                  <input id="other" name="other" type="text" placeholder=""/>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="display-name">Display Name</div>
+                <div class="item-input">
+                  <input id="name" name="name" type="text" placeholder=""/>
+                </div>
+                <p><em><small data-translate="display-name-info">Please enter your first and last name, as you are known in the workplace/school. As per the <a class="terms" href="#">Terms and Conditions of Use</a>, your display name must reflect your real name. Pseudonyms are not allowed.</small></em></p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="email">Email</div>
+                <div class="item-input">
+                  <input id="reg-email" name="email" type="email" placeholder=""/>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label" data-translate="password">Password</div>
+                <div class="item-input">
+                  <input id="password" name="password" type="password" placeholder=""/>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <p><label for="toc"><input id="toc" name="toc" type="checkbox" value="1" /> <em data-translate="toc" >I have read, understood, and agree to the <a class="terms" href="#">Terms and Conditions of Use</a>.</em></label></p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <a id="registerBtn" href="#" class="button-fill button-big button col-100" data-translate="register">Register</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+
+    <div id="terms-content-en">
+        <h3>Welcome to GCcollab!</h3>
+        <p>GCcollab is a the Government of Canada's collaborative tool designed to facilitate communication and knowledge sharing between public servants, academics and students of select Canadian universities.</p>
+        <p>GCcollab is jointly administered by the Chief Information Officer Branch and the Corporate Services Sector of the Treasury Board of Canada on behalf of the Public Service of Canada. GCcollab is a pilot project created to determine the benefits and risks to hosting a collaborative tool between Canada's academic sector and federal government.</p>
+        
+        <h3>Interacting on GCcollab</h3>
+        <p>GCcollab is your professional collaboration platform, connecting you to the people and information across the Government of Canada and participating Canadian universities and colleges.</p>
+        <p>Please be respectful and make sure your content is professional and relevant to the subject matter where it is posted. A good rule of thumb is to treat communication on GCcollab the same way you would a meeting or professional email.</p>
+        <p>If you are a public servant, remember that you are responsible to conduct yourself in accordance with the <a class="external" href="http://tbs-sct.gc.ca/pol/doc-eng.aspx?section=text&amp;id=25049"><em>the Values and Ethics Code for the Public Sector</em></a> at all times. If you are looking for examples or further information, please refer to <a class="external" href="http://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=27122&amp;section=text"><em>The Policy on Acceptable Network and Device Use</em> (PANDU)</a>, which provides examples of acceptable and unacceptable use of the tools.</p>
+        <p>If you are student or academic from a participating university or college, you are expected to adhere to the policy or code of conduct administered by your organization.</p>
+        <p>All participants are asked to behave in a respectful manner and only post appropriate content. If you believe you are experiencing an inappropriate interaction with a colleague or would like go flag inappropriate content, you are strongly encouraged to <a class="external" href="https://gccollab.ca/mod/contactform/">contact us</a>. The GCcollab Team reserves the right to remove any content it deems inappropriate and/or ban participation of any registered users.</p>
+
+        <h3>Effectively Managing Your Content</h3>
+        <p>GCcollab best meets its objectives when it is open and users add valuable content for the free use and re-use of all other users.</p>
+        <p>All content on GCcollab is subject to disclosure under the <a class="external" href="http://laws-lois.justice.gc.ca/eng/acts/A-1/"><em>Access to Information Act</em></a> and <a class="external" href="http://laws-lois.justice.gc.ca/eng/acts/P-21/index.html"><em>Privacy Act</em></a>.</p>
+        <p>Note that GCcollab can be accessed by members of the public pursuant to an Access to Information request, by the Members of Parliament, the Senate and their staff in both the Government and Opposition, and that non-Government of Canada users may be invited to access GCcollab in the future.</p>
+        <p>Public Servants, if you are not comfortable sharing specific content, then GCcollab may not be the best choice for your project. If this is the case, you are welcome to <a class="external" href="https://gccollab.ca/mod/contactform/">contact the GCcollab Team</a> to help you determine appropriateness of your project/materials for GCcollab. Also remember that when you share an opinion, it is your opinion and not that of the Government of Canada.</p>
+        <p>All information stored on the GC Tools is considered transitory. As such, any information of business value that you share on GCcollab must also be saved in a corporate repository and managed according to your organizational information management and other appropriate policies.</p>
+
+        <h3>Respecting Canada's Official Languages</h3>
+        <p>We respect <a class="external" href="http://laws-lois.justice.gc.ca/eng/acts/O-3.01/"><em>the Official Languages Act</em></a> and are committed to providing all functionalities of GCcollab in both official languages.</p>
+        <p>When posting content, you should consider your role within your organization, your work responsibilities and your intended audience. We recommend that content be provided in both official languages as a best practice.</p>
+        
+        <h3>Requirements of the Communications Policy and the Copyright Act</h3>
+        <p>Any information that you post is subject to <a class="external" href="http://www.tbs-sct.gc.ca/pol/doc-eng.aspx?section=text&amp;id=12316"><em>the Communications Policy</em></a>, <a class="external" href="http://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=12314"><em>the Federal Identify Program (FIP) Policy</em></a>, and the <a class="external" href="http://laws-lois.justice.gc.ca/eng/acts/C-42/index.html"><em>Copyright Act</em></a>.</p>
+        
+        <h3>Our Commitment to Accessibility</h3>
+        <p>We are committed to achieving a high standard of accessibility as defined in <a class="external" href="http://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=23601"><em>the Standard on Web Accessibility</em></a> and the <a class="external" href="http://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=23601"><em>Standard on Optimizing Web sites and Applications for Mobile Devices</em></a>. Users are encouraged to make their content as accessible as possible.</p>
+
+        <h4>Your Privacy and GCcollab</h4>
+        <p>We are committed to respecting your privacy in our provision of GCcollab. Our collection of personal information is governed by <a class="external" href="http://laws-lois.justice.gc.ca/eng/acts/P-21/index.html"><em>the Privacy Act</em></a>.</p>
+        <p>We are in the process of conducting the Privacy Impact Assessment (to be published), that will inform you of potential privacy impacts of using GCcollab.</p>
+
+        <h4>Privacy and Analytics</h4>
+        <p>In administering GCcollab, we use web-analytics programs such as Google Analytics, and Apache to perform collection, analysis, measurement, and reporting of data about GCcollab traffic and visits for purposes of understanding and optimizing the use of the tool. Additionally, anonymized and/or aggregate data from GCcollab will be made openly published on the Government of Canada's Open Data platform. For more information on how your privacy is safeguarded in relation to web analytics, see <a class="external" href="http://www.tbs-sct.gc.ca/pol/doc-eng.aspx?section=text&amp;id=26761">the Standard on Privacy and Web Analytics</a>.</p>
+
+        <h4>Protecting the Security of GCcollab</h4>
+        <p>We routinely monitor network traffic to identify unauthorized attempts to upload or change information, or otherwise cause damage. We track network traffic information e.g. the Internet Protocol (IP) address of the computer, the date and time of visits, and the pages visited. We make no attempt to link the information with the identity of individuals unless an attempt to damage the site has been detected.</p>
+
+        <h4>Your GCcollab Team and Help Centre</h4>
+        <p>Finally, GCcollab is your digital workspace and we hope you take as much pride in it as we do. The GCcollab Team is here to support you! If you have general questions or have technical issues, please contact the <a class="external" href="https://gccollab.ca/mod/contactform/">GCcollab Help Desk</a>.</p>
+
+        <p><a href="#" class="button-fill button-big button col-100 close-popup" onclick="document.getElementById('toc').checked=true;">I agree to the Terms and Conditions</a></p>
+    </div>
+
+    <div id="terms-content-fr">
+        <h3>Bienvenue à GCcollab!</h3>
+        <p>GCcollab est un outil de collaboration du gouvernement du Canada qui a été conçu pour faciliter la communication et le partage d'informations entre les fonctionnaires, les universitaires et les étudiants d'universités canadiennes choisies.</p>
+        <p>GCcollab est administré conjointement par la Direction du dirigeant principal de l'information et le Secteur des services ministériels du Conseil du Trésor du Canada pour le compte de la fonction publique du Canada. GCcollab est un projet pilote créé pour déterminer les avantages et les risques de l'hébergement d'un outil de collaboration entre le milieu universitaire du Canada et le gouvernement fédéral.</p>
+        
+        <h3>Interaction au moyen de GCcollab</h3>
+        <p>GCcollab est votre plate‑forme de collaboration professionnelle qui vous relie aux personnes et à l'information dans l'ensemble du gouvernement du Canada et des universités et collèges canadiens participants.</p>
+        <p>Nous vous demandons de faire preuve de respect et de vous assurer que votre contenu est professionnel et a un rapport avec la matière là où il est publié. Une bonne règle générale est de traiter la communication au moyen de GCcollab de la même façon que vous aborderiez une réunion ou un courriel professionnel.</p>
+        <p>Si vous êtes un fonctionnaire, rappelez‑vous que vous êtes responsable de vous conduire en tout temps en conformité avec le <a class="external" href="http://tbs-sct.gc.ca/pol/doc-fra.aspx?id=25049"><em>Code de valeurs et d'éthique pour le secteur public</em></a> Si vous cherchez des exemples ou de plus amples renseignements, veuillez consulter la <a class="external" href="http://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=27122"><em>Politique sur l'utilisation acceptable des dispositifs et des réseaux</em> (PANDU)</a>, qui donne des exemples d'utilisation acceptable et inacceptable des outils.</p>
+        <p>Si vous êtes un étudiant ou un universitaire d'une université ou d'un collège participant, on s'attend à ce que vous vous conformiez à la politique ou au code de conduite administré par votre organisation.</p>
+        <p>Nous demandons à tous les participants de se comporter de façon respectueuse et de publier seulement du contenu approprié. Si vous croyez que votre interaction avec un collègue est inappropriée ou si vous voulez signaler un contenu inapproprié, nous vous encourageons fortement à <a class="external" href="https://gccollab.ca/mod/contactform/">communiquer avec nous</a>. L'équipe de GCcollab se réserve le droit de retirer tout contenu qu'il juge inapproprié ou d'interdire la participation de tout utilisateur inscrit.</p>
+
+        <h3>Gestion efficace de votre contenu</h3>
+        <p>GCcollab atteint le mieux ses objectifs lorsqu'il est ouvert et que les utilisateurs y ajoutent du contenu utile que tous les autres utilisateurs peuvent utiliser et réutiliser gratuitement.</p>
+        <p>Tout le contenu dans GCcollab peut être divulgué en vertu de la <a class="external" href="http://laws-lois.justice.gc.ca/fra/lois/A-1/"><em>Loi sur l'accès à l'information</em></a> et de la <a class="external" href="http://laws-lois.justice.gc.ca/fra/lois/P-21/index.html"><em>Loi sur la protection des renseignements personnels</em></a>.</p>
+        <p>Veuillez noter que les membres du public peuvent accéder à GCcollab à la suite d'une demande d'accès à l'information, de même que les députés, les sénateurs et leur personnel du gouvernement et de l'Opposition, et qu'il se peut que des utilisateurs autres que du gouvernement du Canada soient invités à accéder à GCcollab à l'avenir.
+        <p>Si vous êtes un fonctionnaire et que vous n'êtes pas à l'aise de partager un contenu particulier, alors GCcollab pourrait ne pas être le meilleur choix pour votre projet. Dans un tel cas, nous vous invitons à communiquer avec l'équipe de GCcollab pour vous aider à déterminer le caractère approprié de votre projet ou de votre matériel pour GCcollab. Rappelez‑vous aussi que lorsque vous partagez une opinion, il s'agit de votre opinion et non pas de celle du gouvernement du Canada.</p>
+        <p>Tous les renseignements sauvegardés dans les outils GC sont considérés comme éphémères. Par conséquent, toutes les informations ayant une valeur opérationnelle que vous partagez sur GCcollab doivent aussi être sauvegardées dans un dépôt ministériel et gérées en conformité avec les politiques de votre organisation sur la gestion de l'information et les autres politiques appropriées.</p>
+
+        <h3>Respect des langues officielles du Canada</h3>
+        <p>Nous respectons la <a class="external" href="http://laws-lois.justice.gc.ca/fra/lois/O-3.01/"><em>Loi sur les langues officielles</em></a> et nous nous engageons à offrir toutes les fonctionnalités de GCcollab dans les deux langues officielles.</p>
+        <p>Lorsque vous publiez du contenu, vous devez tenir compte de votre rôle au sein de votre organisation, de vos responsabilités professionnelles et du public que vous visez. Nous recommandons, à titre de pratique exemplaire, que le contenu soit fourni dans les deux langues officielles.</p>
+        
+        <h3>Exigences de la <em>Politique de communication du gouvernement du Canada</em> et de la <em>Loi sur le droit d'auteur</em></h3>
+        <p>Toutes les informations que vous publiez sont assujetties à la <a class="external" href="http://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=12316"><em>Politique de communication du gouvernement</em></a>, à la <a class="external" href="http://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=12314"><em>Politique sur le programme de coordination de l'image de marque</em></a> et à la <a class="external" href="http://laws-lois.justice.gc.ca/fra/lois/C-42/index.html"><em>Loi sur le droit d'auteur</em></a>.</p>
+        
+        <h3>Notre engagement à l'égard de l'accessibilité</h3>
+        <p>Nous nous sommes engagés à atteindre une norme élevée d'accessibilité telle que définie dans la <a class="external" href="http://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=23601"><em>Norme sur l'accessibilité des sites Web</em></a> et la <a class="external" href="https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=27088"><em>Norme sur l'optimisation des sites Web et des applications pour appareils mobiles</em></a>. Nous encourageons les utilisateurs à rendre leur contenu aussi accessible que possible.</p>
+
+        <h4>Votre vie privée et GCcollab</h4>
+        <p>Nous sommes déterminés à respecter votre vie privée en vous offrant GCcollab. Notre collecte de renseignements personnels est régie par la <a class="external" href="http://laws-lois.justice.gc.ca/fra/lois/P-21/index.html"><em>Loi sur la protection des renseignements personnels</em></a>.</p>
+        <p>Nous procédons actuellement à une évaluation des facteurs relatifs à la vie privée (à paraître) qui vous renseignera sur les répercussions possibles de l'utilisation de GCollab sur la vie privée.</p>
+
+        <h4>Protection de la vie privée et analytique</h4>
+        <p>Pour administrer GCcollab, nous utilisons des programmes d'analytique Web comme Google Analytics et Apache pour recueillir, analyser, mesurer et communiquer des données concernant le trafic et les visites de GCcollab, le tout dans le but de comprendre et d'optimiser l'utilisation de l'outil. En plus, anonymisation et/ou l'agrégation des données de GCcollab seront publiées en libre accès sur la plateforme des données ouvertes du gouvernement du Canada. Pour de plus amples renseignements sur la façon dont vos renseignements personnels sont protégés dans le cadre de l'analytique Web, consultez la <a class="external" href="http://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=26761">Norme sur la protection de la vie privée et le Web analytique</a>.</p>
+
+        <h4>Protection de la sécurité de GCcollab</h4>
+        <p>Nous surveillons systématiquement le trafic sur le réseau pour repérer les tentatives non autorisées visant à télécharger ou à modifier l'information ou à causer d'autres dommages. Nous faisons un suivi des renseignements sur le trafic, comme l'adresse de protocole Internet (adresse IP) de l'ordinateur, la date et l'heure des visites et les pages visitées. Nous ne tentons aucunement de relier les informations à l'identité des personnes, à moins que nous ayons décelé une tentative d'endommager le site.</p>
+
+        <h4>Votre équipe du GCcollab et votre centre d'aide</h4>
+        <p>Enfin, GCcollab est votre espace de travail numérique et nous espérons que vous en serez aussi fier que nous. L'équipe de GCcollab est ici pour vous aider. Si vous avez des questions générales ou des problèmes techniques, veuillez communiquer avec le <a class="external" href="https://gccollab.ca/mod/contactform/">Service de dépannage de GCcollab</a>.</p>
+
+        <p><a href="#" class="button-fill button-big button col-100 close-popup">J'accepte les conditions d'utilisation</a></p>
+    </div>
+
+</div>
