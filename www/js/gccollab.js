@@ -9,6 +9,8 @@ var myApp = new Framework7({
     tapHold: true
 });
 
+//API key
+
 // Expose Internal DOM library
 var $$ = Dom7;
 
@@ -70,7 +72,7 @@ function EnterCode() {
         GCTUser.SendValidationCode(value, function (success) {
             console.log(success);
             var txt = "";
-            if (success.status > 0) {
+            if (success.result == true) {
                 GCTUser.SetAPIKey(success.message);
                 GCTUser.SetUserProfile();
                 mainView.router.loadPage({ url: 'home.html' });
@@ -933,7 +935,7 @@ myApp.onPageInit('sign-in', function (page) {
 
         if( email != "" && password != "" ){
             GCTUser.Login(email, password, function (success) {
-                if (success.status > 0) {
+                if (success.result == true) {
                     GCTUser.SaveLoginEmail(email);
                     GCTUser.SetAPIKey(success.message);
                     GCTUser.SetUserProfile();
@@ -1340,6 +1342,7 @@ var TransIcon = "";
 
 function Translate(obj) {
     $.ajax({
+        api_key: api_key_gccollab,
         url: 'https://translation.googleapis.com/language/translate/v2?key=AIzaSyAp-fbFDY5wKlfP9jGFF40B2IhlDWLwVZU',
         dataType: 'jsonp',
         data: {
@@ -4211,6 +4214,7 @@ myApp.onPageInit('register', function (page) {
         var formValues = getFormData($('#registerForm'));
 
         $$.ajax({
+            api_key: api_key_gccollab,
             method: 'POST',
             url: GCT.RegisterURL,
             data: { email: formValues.email, userdata: JSON.stringify(formValues) },
