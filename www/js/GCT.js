@@ -2402,6 +2402,36 @@ GCTEach = {
             image: img
         });
         return content;
+    },
+    Blog: function (value) {
+        var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
+        if (value.groupURL.indexOf("/groups/profile/") > -1) {
+            var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
+        } else {
+            var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+        }
+        var replied = (value.replied) ? "replied" : "";
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_blog_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+
+        var content = GCTLang.txtBlog({
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            date: prettyDate(value.time_created),
+            group: group,
+            description: text.trunc(150),
+            title: value.title,
+            all_text: 'all_text',
+            action: action,
+            owner: value.owner_guid,
+            guid: value.guid,
+            type: "gccollab_blog_post",
+            replied: replied,
+            liked: liked,
+            likes: likes
+        });
+        return content;
     }
 }
 

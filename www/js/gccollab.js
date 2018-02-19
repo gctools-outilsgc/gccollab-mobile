@@ -1081,35 +1081,7 @@ myApp.onPageInit('home', function (page) {
 
         if(blogs.length > 0){
             $.each(blogs, function (key, value) {
-                // Removes HTML components from Blog
-                var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
-                if (value.groupURL.indexOf("/groups/profile/") > -1) {
-                    var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
-                } else {
-                    var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
-                }
-                var replied = (value.replied) ? "replied" : "";
-                var liked = (value.liked) ? "liked" : "";
-                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_blog_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                var content = GCTLang.txtBlog({
-                    icon: value.userDetails.iconURL,
-                    name: value.userDetails.displayName,
-                    date: prettyDate(value.time_created),
-                    group: group,
-                    description: text.trunc(150),
-                    title: value.title,
-                    all_text: 'all_text',
-                    action: action,
-                    owner: value.owner_guid,
-                    guid: value.guid,
-                    type: "gccollab_blog_post",
-                    replied: replied,
-                    liked: liked,
-                    likes: likes
-                });
-                
+                var content = GCTEach.Blog(value);
                 //### I think fades cause significant performance hits on devices when we have 30 concurrent ones like we do.
                 //### The below makes it so that it only fades the first, visible, post in the list.
                 if (key == 0) {
@@ -1208,34 +1180,7 @@ myApp.onPageInit('home', function (page) {
             var content = "";
             if(blogs.length > 0){
                 $.each(blogs, function (key, value) {
-                    // Removes HTML components from Blog
-                    var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
-                    if (value.groupURL.indexOf("/groups/profile/") > -1) {
-                        var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
-                    } else {
-                        var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
-                    }
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_blog_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    content += GCTLang.txtBlog({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        group: group,
-                        description: text.trunc(150),
-                        title: value.title,
-                        all_text: 'all_text',
-                        action: action,
-                        owner: value.owner_guid,
-                        guid: value.guid,
-                        type: "gccollab_blog_post",
-                        replied: replied,
-                        liked: liked,
-                        likes: likes
-                    });
+                    content += GCTEach.Blog(value);
                 });
 
                 $(content).hide().appendTo('#GCcollabUserBlogContent').fadeIn(1000);
@@ -2382,34 +2327,7 @@ myApp.onPageInit('discussion', function (page) {
                 $('#discussions-more').show();
                 var content = "";
                 $.each(blogs, function (key, value) {
-                    // Removes HTML components from discussion
-                    var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
-                    if (value.groupURL.indexOf("/groups/profile/") > -1) {
-                        var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
-                    } else {
-                        var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
-                    }
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    content = GCTLang.txtDiscussion({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        group: group,
-                        description: text.trunc(150),
-                        title: value.title,
-                        all_text: 'all_text',
-                        action: action,
-                        owner: value.owner_guid,
-                        guid: value.guid,
-                        type: "gccollab_discussion_post",
-                        replied: replied,
-                        liked: liked,
-                        likes: likes
-                    });
+                    var content = GCTEach.Blog(value);
                 });
                 $('#discussions-all').html('');
                 $(content).hide().appendTo('#discussions-all').fadeIn(1000);
@@ -2446,36 +2364,7 @@ myApp.onPageInit('blog', function (page) {
             if(blogs.length > 0){
                 $('#blogs-more').show();
                 $.each(blogs, function (key, value) {
-                    // Removes HTML components from Blog
-                    var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
-                   
-                    if (value.groupURL.indexOf("/groups/profile/") > -1) {
-                        var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
-                    } else {
-                        var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
-                    }
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_blog_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtBlog({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        group: group,
-                        description: text.trunc(150),
-                        title: value.title,
-                        all_text: 'all_text',
-                        action: action,
-                        owner: value.owner_guid,
-                        guid: value.guid,
-                        type: "gccollab_blog_post",
-                        replied: replied,
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Blog(value);
                     $(content).hide().appendTo('#blogs-all').fadeIn(1000);
                 });
             } else {
@@ -2503,36 +2392,7 @@ myApp.onPageInit('blog', function (page) {
             if(blogs.length > 0){
                 $('#blogs-more').show();
                 $.each(blogs, function (key, value) {
-                    // Removes HTML components from Blog
-                    
-                    var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
-                    if (value.groupURL.indexOf("/groups/profile/") > -1) {
-                        var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
-                    } else {
-                        var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
-                    }
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_blog_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtBlog({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        group: group,
-                        description: text.trunc(150),
-                        title: value.title,
-                        all_text: 'all_text',
-                        action: action,
-                        owner: value.owner_guid,
-                        guid: value.guid,
-                        type: "gccollab_blog_post",
-                        replied: replied,
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Blog(value);
                     $(content).hide().appendTo('#blogs-all').fadeIn(1000);
                 });
             } else {
@@ -2553,36 +2413,7 @@ myApp.onPageInit('blog', function (page) {
             if(blogs.length > 0){
                 $('#blogs-more').show();
                 $.each(blogs, function (key, value) {
-                    // Removes HTML components from Blog
-                    
-                    var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
-                    if (value.groupURL.indexOf("/groups/profile/") > -1) {
-                        var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
-                    } else {
-                        var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
-                    }
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_blog_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtBlog({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        group: group,
-                        description: text.trunc(150),
-                        title: value.title,
-                        all_text: 'all_text',
-                        action: action,
-                        owner: value.owner_guid,
-                        guid: value.guid,
-                        type: "gccollab_blog_post",
-                        replied: replied,
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Blog(value);
                     $(content).hide().appendTo('#blogs-all').fadeIn(1000);
                 });
             } else {
@@ -2602,36 +2433,7 @@ myApp.onPageInit('blog', function (page) {
             if(blogs.length > 0){
                 $('#blogs-more').show();
                 $.each(blogs, function (key, value) {
-                    // Removes HTML components from Blog
-                   
-                    var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
-                    if (value.groupURL.indexOf("/groups/profile/") > -1) {
-                        var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
-                    } else {
-                        var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
-                    }
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_blog_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtBlog({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        group: group,
-                        description: text.trunc(150),
-                        title: value.title,
-                        all_text: 'all_text',
-                        action: action,
-                        owner: value.owner_guid,
-                        guid: value.guid,
-                        type: "gccollab_blog_post",
-                        replied: replied,
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Blog(value);
                     $(content).hide().appendTo('#blogs-all').fadeIn(1000);
                 });
             } else {
@@ -2654,35 +2456,7 @@ myApp.onPageInit('blog', function (page) {
                 $('#blogs-more').show();
                 var content = "";
                 $.each(blogs, function (key, value) {
-                    // Removes HTML components from Blog
-                 
-                    var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
-                    if (value.groupURL.indexOf("/groups/profile/") > -1) {
-                        var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
-                    } else {
-                        var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
-                    }
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_blog_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    content = GCTLang.txtBlog({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        group: group,
-                        description: text.trunc(150),
-                        title: value.title,
-                        all_text: 'all_text',
-                        action: action,
-                        owner: value.owner_guid,
-                        guid: value.guid,
-                        type: "gccollab_blog_post",
-                        replied: replied,
-                        liked: liked,
-                        likes: likes
-                    });
+                    content += GCTEach.Blog(value);
                 });
                 $('#blogs-all').html('');
                 $(content).hide().appendTo('#blogs-all').fadeIn(1000);
