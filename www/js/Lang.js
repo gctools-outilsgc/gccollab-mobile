@@ -82,6 +82,7 @@
     "filter-opportunities": "Filter Opportunities",
     "filter-blogs": "Filter Blogs",
     "filter-docs": "Filter Docs",
+    "filter-bookmarks": "Filter Bookmarks",
 
     "message-centre": "Message Centre",
     "colleague-requests": "Colleague Requests",
@@ -284,6 +285,7 @@ French = {
     "filter-opportunities": "Filtrer les possibilités",
     "filter-blogs": "Filtrer les blogues",
     "filter-docs": "Filtrer les Docs",
+    "filter-bookmarks": "Filtrer les Signets",
     
     "message-centre": "Centre de message",
     "colleague-requests": "Demande de collègues",
