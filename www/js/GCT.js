@@ -2361,6 +2361,47 @@ GCTEach = {
             organization: value.organization
         });
         return content;
+    },
+    Wire: function (value) {
+        //var imgs = [];
+        if (Cookies.get("blocked") == value.userDetails.displayName)
+            return;
+        // Removes HTML components from Wire
+        var text = urlify(value.description);
+
+        var source = "";
+        if (value.shareText && value.shareURL) {
+            source = "<blockquote>" + GCTLang.Trans("source") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_wire_post' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
+        }
+
+        var img = '';
+        if (value.Image) {
+            img = "<br /><img class='WireImage' onclick='ShowImage(this)' id='img" + value.guid + "' src='" + value.Image + "' style='' />";
+            //imgs.push(value.guid);
+        }
+
+        var replied = (value.replied) ? "replied" : "";
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        // var action = (value.thread) ? "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>" : "";
+
+        var content = GCTLang.txtWire({
+            guid: value.guid,
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            date: prettyDate(value.time_created),
+            description: text,
+            source: source,
+            type: "gccollab_wire_post",
+            replied: replied,
+            action: action,
+            owner: value.owner_guid,
+            liked: liked,
+            likes: likes,
+            image: img
+        });
+        return content;
     }
 }
 

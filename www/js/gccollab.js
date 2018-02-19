@@ -981,45 +981,7 @@ myApp.onPageInit('home', function (page) {
 
         if(wires.length > 0){
             $.each(wires, function (key, value) {
-                
-                if (Cookies.get("blocked") == value.userDetails.displayName)
-                    return;
-                // Removes HTML components from Wire
-                var text = urlify(value.description);
-
-                var source = "";
-                if (value.shareText && value.shareURL) {
-                    source = "<blockquote>" + GCTLang.Trans("source") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_wire_post' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
-                }
-
-                var img = '';
-                if (value.Image) {
-                    img = "<br /><img class='WireImage' onclick='ShowImage(this)' id='img" + value.guid + "' src='" + value.Image + "' style='' />";
-                    imgs.push(value.guid);
-                }
-
-                var replied = (value.replied) ? "replied" : "";
-                var liked = (value.liked) ? "liked" : "";
-                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-                // var action = (value.thread) ? "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>" : "";
-
-                var content = GCTLang.txtWire({
-                    guid: value.guid,
-                    icon: value.userDetails.iconURL,
-                    name: value.userDetails.displayName,
-                    date: prettyDate(value.time_created),
-                    description: text,
-                    source: source,
-                    type: "gccollab_wire_post",
-                    replied: replied,
-                    action: action,
-                    owner: value.owner_guid,
-                    liked: liked,
-                    likes: likes,
-                    image: img
-                });
-
+                var content = GCTEach.Wire(value);
                 //### I think fades cause significant performance hits on devices when we have 30 concurrent ones like we do.
                 //### The below makes it so that it only fades the first, visible, post in the list.
                 if (key == 0) {
@@ -1199,40 +1161,7 @@ myApp.onPageInit('home', function (page) {
             var content = "";
             if(wires.length > 0){
                 $.each(wires, function (key, value) {
-                    // Removes HTML components from Wire
-                    var text = urlify(value.description);
-
-                    var source = "";
-                    if( value.shareText && value.shareURL ){
-                        source = "<blockquote>" + GCTLang.Trans("source") + "<a onclick='GCT.FireLink(this);' data-type='source?' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
-                    }
-
-                    var img = '';
-                    if (value.Image) {
-                        img = "<br /><img class='WireImage' onclick='ShowImage(this)' id='img" + value.guid + "' src='" + value.Image + "' style='' />";
-                    }
-
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-                    // var action = (value.thread) ? "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>" : "";
-
-                    content += GCTLang.txtWire({
-                        guid: value.guid,
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        description: text,
-                        source: source,
-                        type: "gccollab_wire_post",
-                        replied: replied,
-                        action: action,
-                        owner: value.owner_guid,
-                        liked: liked,
-                        likes: likes,
-                        image: img
-                    });
+                    content += GCTEach.Wire(value);
                 });
 
                 $(content).hide().appendTo('#GCcollabUserWireContent').fadeIn(1000);
@@ -1367,44 +1296,8 @@ myApp.onPageInit('wire', function (page) {
         var wires = data.result;
         var imgs = [];
         $.each(wires, function (key, value) {
-            // Removes HTML components from Blog
-            var text = urlify(value.description);
-            
-            var source = "";
-            if( value.shareText && value.shareURL ){
-                source = "<blockquote>" + GCTLang.Trans("source") + "<a onclick='GCT.FireLink(this);' data-type='gccollab_source?' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
-            }
-
-            var img = '';
-            if (value.Image) {
-                img = "<br /><img class='WireImage' onclick='ShowImage(this)' id='img2" + value.guid + "' src='" + value.Image + "' style='height:100px;width:auto;float:right;' />";
-                imgs.push(value.guid);
-            }
-
-            var replied = (value.replied) ? "replied" : "";
-            var liked = (value.liked) ? "liked" : "";
-            var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-            var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-            var content = GCTLang.txtWire({
-                guid: value.guid,
-                icon: value.userDetails.iconURL,
-                name: value.userDetails.displayName,
-                date: prettyDate(value.time_created),
-                description: text,
-                source: source,
-                type: "gccollab_wire_post",
-                replied: replied,
-                action: action,
-                owner: value.owner_guid,
-                liked: liked,
-                likes: likes,
-                image: img
-            });
-
+            var content = GCTEach.Wire(value);
             $(content).hide().appendTo('#wires-all').fadeIn(1000);
-
-
         });
     }, function(jqXHR, textStatus, errorThrown){
         console.log(jqXHR, textStatus, errorThrown);
@@ -1414,43 +1307,8 @@ myApp.onPageInit('wire', function (page) {
         var wires = data.result;
         var imgs = [];
         $.each(wires, function (key, value) {
-            // Removes HTML components from Blog
-            var text = urlify(value.description);
-            
-            var source = "";
-            if( value.shareText && value.shareURL ){
-                source = "<blockquote>" + GCTLang.Trans("source") + "<a onclick='GCT.FireLink(this);' data-type='gccollab_source?' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
-            }
-
-            var img = '';
-            if (value.Image) {
-                img = "<br /><img class='WireImage' onclick='ShowImage(this)' id='img3" + value.guid + "' src='" + value.Image + "' style='height:100px;width:auto;float:none;' />";
-                imgs.push(value.guid);
-            }
-
-            var replied = (value.replied) ? "replied" : "";
-            var liked = (value.liked) ? "liked" : "";
-            var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-            var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-            var content = GCTLang.txtWire({
-                guid: value.guid,
-                icon: value.userDetails.iconURL,
-                name: value.userDetails.displayName,
-                date: prettyDate(value.time_created),
-                description: text,
-                source: source,
-                type: "gccollab_wire_post",
-                replied: replied,
-                action: action,
-                owner: value.owner_guid,
-                liked: liked,
-                likes: likes,
-                image: img
-            });
-
+            var content = GCTEach.Wire(value);
             $(content).hide().appendTo('#wires-colleagues').fadeIn(1000);
-
         });
     }, function(jqXHR, textStatus, errorThrown){
         console.log(jqXHR, textStatus, errorThrown);
@@ -1460,44 +1318,8 @@ myApp.onPageInit('wire', function (page) {
         var wires = data.result;
 
         $.each(wires, function (key, value) {
-            // Removes HTML components from Blog
-            var text = urlify(value.description);
-            var imgs = [];
-            var source = "";
-            if( value.shareText && value.shareURL ){
-                source = "<blockquote>" + GCTLang.Trans("source") + "<a onclick='GCT.FireLink(this);' data-type='gccollab_source?' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
-            }
-
-            var img = '';
-            if (value.Image) {
-                img = "<br /><img class='WireImage' onclick='ShowImage(this)' id='img4" + value.guid + "' src='" + value.Image + "' style='height:100px;width:auto;float:right;' />";
-                imgs.push(value.guid);
-            }
-
-            var replied = (value.replied) ? "replied" : "";
-            var liked = (value.liked) ? "liked" : "";
-            var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-            var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-            var content = GCTLang.txtWire({
-                guid: value.guid,
-                icon: value.userDetails.iconURL,
-                name: value.userDetails.displayName,
-                date: prettyDate(value.time_created),
-                description: text,
-                source: source,
-                type: "gccollab_wire_post",
-                replied: replied,
-                action: action,
-                owner: value.owner_guid,
-                liked: liked,
-                likes: likes,
-                image: img
-            });
-
+            var content = GCTEach.Wire(value);
             $(content).hide().appendTo('#wires-mine').fadeIn(1000);
-
-
         });
     }, function(jqXHR, textStatus, errorThrown){
         console.log(jqXHR, textStatus, errorThrown);
@@ -1509,40 +1331,7 @@ myApp.onPageInit('wire', function (page) {
             var wires = data.result;
 
             $.each(wires, function (key, value) {
-                // Removes HTML components from Blog
-                var text = urlify(value.description);
-                
-                var source = "";
-                if( value.shareText && value.shareURL ){
-                    source = "<blockquote>" + GCTLang.Trans("source") + "<a onclick='GCT.FireLink(this);' data-type='gccollab_source?' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
-                }
-
-                var img = '';
-                if (value.Image) {
-                    img = "<br /><img class='WireImage' onclick='ShowImage(this)' id='img" + value.guid + "' src='" + value.Image + "' style='' />";
-                }
-
-                var replied = (value.replied) ? "replied" : "";
-                var liked = (value.liked) ? "liked" : "";
-                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                var content = GCTLang.txtWire({
-                    guid: value.guid,
-                    icon: value.userDetails.iconURL,
-                    name: value.userDetails.displayName,
-                    date: prettyDate(value.time_created),
-                    description: text,
-                    source: source,
-                    type: "gccollab_wire_post",
-                    replied: replied,
-                    action: action,
-                    owner: value.owner_guid,
-                    liked: liked,
-                    likes: likes,
-                    image: img
-                });
-
+                var content = GCTEach.Wire(value);
                 $(content).hide().appendTo('#wires-all').fadeIn(1000);
             });
 
@@ -1558,40 +1347,7 @@ myApp.onPageInit('wire', function (page) {
             var wires = data.result;
 
             $.each(wires, function (key, value) {
-                // Removes HTML components from Blog
-                var text = urlify(value.description);
-                
-                var source = "";
-                if( value.shareText && value.shareURL ){
-                    source = "<blockquote>" + GCTLang.Trans("source") + "<a onclick='GCT.FireLink(this);' data-type='gccollab_source?' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
-                }
-
-                var img = '';
-                if (value.Image) {
-                    img = "<br /><img class='WireImage' onclick='ShowImage(this)' id='img" + value.guid + "' src='" + value.Image + "' style='' />";
-                }
-
-                var replied = (value.replied) ? "replied" : "";
-                var liked = (value.liked) ? "liked" : "";
-                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                var content = GCTLang.txtWire({
-                    guid: value.guid,
-                    icon: value.userDetails.iconURL,
-                    name: value.userDetails.displayName,
-                    date: prettyDate(value.time_created),
-                    description: text,
-                    source: source,
-                    type: "gccollab_wire_post",
-                    replied: replied,
-                    action: action,
-                    owner: value.owner_guid,
-                    liked: liked,
-                    likes: likes,
-                    image: img
-                });
-
+                var content = GCTEach.Wire(value);
                 $(content).hide().appendTo('#wires-colleagues').fadeIn(1000);
             });
 
@@ -1607,40 +1363,7 @@ myApp.onPageInit('wire', function (page) {
             var wires = data.result;
 
             $.each(wires, function (key, value) {
-                // Removes HTML components from Blog
-                var text = urlify(value.description);
-                
-                var source = "";
-                if( value.shareText && value.shareURL ){
-                    source = "<blockquote>" + GCTLang.Trans("source") + "<a onclick='GCT.FireLink(this);' data-type='gccollab_source?' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
-                }
-
-                var img = '';
-                if (value.Image) {
-                    img = "<br /><img class='WireImage' onclick='ShowImage(this)' id='img" + value.guid + "' src='" + value.Image + "' style='' />";
-                }
-
-                var replied = (value.replied) ? "replied" : "";
-                var liked = (value.liked) ? "liked" : "";
-                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                var content = GCTLang.txtWire({
-                    guid: value.guid,
-                    icon: value.userDetails.iconURL,
-                    name: value.userDetails.displayName,
-                    date: prettyDate(value.time_created),
-                    description: text,
-                    source: source,
-                    type: "gccollab_wire_post",
-                    replied: replied,
-                    action: action,
-                    owner: value.owner_guid,
-                    liked: liked,
-                    likes: likes,
-                    image: img
-                });
-
+                var content = GCTEach.Wire(value);
                 $(content).hide().appendTo('#wires-mines').fadeIn(1000);
             });
 
@@ -1658,39 +1381,7 @@ myApp.onPageInit('wire', function (page) {
 
             var content = "";
             $.each(wires, function (key, value) {
-                // Removes HTML components from Blog
-                var text = urlify(value.description);
-                
-                var source = "";
-                if( value.shareText && value.shareURL ){
-                    source = "<blockquote>" + GCTLang.Trans("source") + "<a onclick='GCT.FireLink(this);' data-type='gccollab_source' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
-                }
-
-                var img = '';
-                if (value.Image) {
-                    img = "<br /><img class='WireImage' onclick='ShowImage(this)' id='img" + value.guid + "' src='" + value.Image + "' style='' />";
-                }
-
-                var replied = (value.replied) ? "replied" : "";
-                var liked = (value.liked) ? "liked" : "";
-                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                content += GCTLang.txtWire({
-                    guid: value.guid,
-                    icon: value.userDetails.iconURL,
-                    name: value.userDetails.displayName,
-                    date: prettyDate(value.time_created),
-                    description: text,
-                    source: source,
-                    type: "gccollab_wire_post",
-                    replied: replied,
-                    action: action,
-                    owner: value.owner_guid,
-                    liked: liked,
-                    likes: likes,
-                    image: img
-                });
+                content += GCTEach.Wire(value);
             });
             $(content).hide().appendTo('#wires-all').fadeIn(1000);
         }, function(jqXHR, textStatus, errorThrown){
@@ -1703,39 +1394,7 @@ myApp.onPageInit('wire', function (page) {
 
             var content = "";
             $.each(wires, function (key, value) {
-                // Removes HTML components from Blog
-                var text = urlify(value.description);
-                
-                var source = "";
-                if( value.shareText && value.shareURL ){
-                    source = "<blockquote>" + GCTLang.Trans("source") + "<a onclick='GCT.FireLink(this);' data-type='gccollab_source?' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
-                }
-
-                var img = '';
-                if (value.Image) {
-                    img = "<br /><img class='WireImage' onclick='ShowImage(this)' id='img" + value.guid + "' src='" + value.Image + "' style='' />";
-                }
-
-                var replied = (value.replied) ? "replied" : "";
-                var liked = (value.liked) ? "liked" : "";
-                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                content += GCTLang.txtWire({
-                    guid: value.guid,
-                    icon: value.userDetails.iconURL,
-                    name: value.userDetails.displayName,
-                    date: prettyDate(value.time_created),
-                    description: text,
-                    source: source,
-                    type: "gccollab_wire_post",
-                    replied: replied,
-                    action: action,
-                    owner: value.owner_guid,
-                    liked: liked,
-                    likes: likes,
-                    image: img
-                });
+                content += GCTEach.Wire(value);
             });
             $(content).hide().appendTo('#wires-colleagues').fadeIn(1000);
         }, function(jqXHR, textStatus, errorThrown){
@@ -1748,39 +1407,7 @@ myApp.onPageInit('wire', function (page) {
 
             var content = "";
             $.each(wires, function (key, value) {
-                // Removes HTML components from Blog
-                var text = urlify(value.description);
-                
-                var source = "";
-                if( value.shareText && value.shareURL ){
-                    source = "<blockquote>" + GCTLang.Trans("source") + "<a onclick='GCT.FireLink(this);' data-type='gccollab_source?' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
-                }
-
-                var img = '';
-                if (value.Image) {
-                    img = "<br /><img class='WireImage' onclick='ShowImage(this)' id='img" + value.guid + "' src='" + value.Image + "' style='' />";
-                }
-
-                var replied = (value.replied) ? "replied" : "";
-                var liked = (value.liked) ? "liked" : "";
-                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                content += GCTLang.txtWire({
-                    guid: value.guid,
-                    icon: value.userDetails.iconURL,
-                    name: value.userDetails.displayName,
-                    date: prettyDate(value.time_created),
-                    description: text,
-                    source: source,
-                    type: "gccollab_wire_post",
-                    replied: replied,
-                    action: action,
-                    owner: value.owner_guid,
-                    liked: liked,
-                    likes: likes,
-                    image: img
-                });
+                content += GCTEach.Wire(value);
             });
             $('#wires-mine').html(content);
             $('#wires-mine').hide().fadeIn(1000);
