@@ -2529,6 +2529,26 @@ GCTEach = {
             likes: likes
         });
         return content;
+
+    },
+    Doc: function (value) {
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var action = "<a class='link' data-title='" + value.title + "' data-guid='" + value.guid + "' data-type='gccollab_doc' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+
+        var content = GCTLang.txtDoc({
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            date: prettyDate(value.time_created),
+            title: value.title,
+            action: action,
+            owner: value.owner_guid,
+            guid: value.guid,
+            type: "gccollab_doc",
+            liked: liked,
+            likes: likes
+        });
+        return content;
     }
 }
 

@@ -2352,23 +2352,7 @@ myApp.onPageInit('docs', function (page) {
             if(docs.length > 0){
                 $('#docs-more').show();
                 $.each(docs, function (key, value) {
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-title='" + value.title + "' data-guid='" + value.guid + "' data-type='gccollab_doc' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtDoc({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        title: value.title,
-                        action: action,
-                        owner: value.owner_guid,
-                        guid: value.guid,
-                        type: "gccollab_doc",
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Doc(value);
                     $(content).hide().appendTo('#docs-all').fadeIn(1000);
                 });
             } else {
@@ -2396,23 +2380,7 @@ myApp.onPageInit('docs', function (page) {
             if(docs.length > 0){
                 $('#docs-more').show();
                 $.each(docs, function (key, value) {
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-title='" + value.title + "' data-guid='" + value.guid + "' data-type='gccollab_doc' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtDoc({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        title: value.title,
-                        action: action,
-                        owner: value.owner_guid,
-                        guid: value.guid,
-                        type: "gccollab_doc",
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Doc(value);
                     $(content).hide().appendTo('#docs-all').fadeIn(1000);
                 });
             } else {
@@ -2433,23 +2401,7 @@ myApp.onPageInit('docs', function (page) {
             if(docs.length > 0){
                 $('#docs-more').show();
                 $.each(docs, function (key, value) {
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-title='" + value.title + "' data-guid='" + value.guid + "' data-type='gccollab_doc' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtDoc({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        title: value.title,
-                        action: action,
-                        owner: value.owner_guid,
-                        guid: value.guid,
-                        type: "gccollab_doc",
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Doc(value);
                     $(content).hide().appendTo('#docs-all').fadeIn(1000);
                 });
             } else {
@@ -2469,23 +2421,7 @@ myApp.onPageInit('docs', function (page) {
             if(docs.length > 0){
                 $('#docs-more').show();
                 $.each(docs, function (key, value) {
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-title='" + value.title + "' data-guid='" + value.guid + "' data-type='gccollab_doc' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtDoc({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        title: value.title,
-                        action: action,
-                        owner: value.owner_guid,
-                        guid: value.guid,
-                        type: "gccollab_doc",
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Doc(value);
                     $(content).hide().appendTo('#docs-all').fadeIn(1000);
                 });
             } else {
@@ -2508,22 +2444,7 @@ myApp.onPageInit('docs', function (page) {
                 $('#docs-more').show();
                 var content = "";
                 $.each(docs, function (key, value) {
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-title='" + value.title + "' data-guid='" + value.guid + "' data-type='gccollab_doc' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    content += GCTLang.txtDoc({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        title: value.title,
-                        action: action,
-                        owner: value.owner_guid,
-                        guid: value.guid,
-                        type: "gccollab_doc",
-                        liked: liked,
-                        likes: likes
-                    });
+                    content += GCTEach.Doc(value);
                 });
                 $('#docs-all').html('');
                 $(content).hide().appendTo('#docs-all').fadeIn(1000);
