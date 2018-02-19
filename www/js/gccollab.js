@@ -1444,24 +1444,7 @@ myApp.onPageInit('groups', function (page) {
             if(groups.length > 0){
                 $('#groups-all-more').show();
                 $.each(groups, function (key, value) {
-                    var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtGroup({
-                        icon: value.iconURL,
-                        name: value.name,
-                        description: text,
-                        count: members,
-                        action: action,
-                        owner: value.guid,
-                        type: "gccollab_group",
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Group(value);
                     $(content).hide().appendTo('#groups-all').fadeIn(1000);
                 });
             } else {
@@ -1479,24 +1462,7 @@ myApp.onPageInit('groups', function (page) {
             if(groups.length > 0){
                 $('#groups-mine-more').show();
                 $.each(groups, function (key, value) {
-                    var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtGroup({
-                        icon: value.iconURL,
-                        name: value.name,
-                        description: text,
-                        count: members,
-                        action: action,
-                        owner: value.guid,
-                        type: "gccollab_group",
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Group(value);
                     $(content).hide().appendTo('#groups-mine').fadeIn(1000);
                 });
             } else {
@@ -1525,24 +1491,7 @@ myApp.onPageInit('groups', function (page) {
             if(groups.length > 0){
                 $('#groups-all-more').show();
                 $.each(groups, function (key, value) {
-                    var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtGroup({
-                        icon: value.iconURL,
-                        name: value.name,
-                        description: text,
-                        count: members,
-                        action: action,
-                        owner: value.guid,
-                        type: "gccollab_group",
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Group(value);
                     $(content).hide().appendTo('#groups-all').fadeIn(1000);
                 });
             } else {
@@ -1560,24 +1509,7 @@ myApp.onPageInit('groups', function (page) {
             if(groups.length > 0){
                 $('#groups-mine-more').show();
                 $.each(groups, function (key, value) {
-                    var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtGroup({
-                        icon: value.iconURL,
-                        name: value.name,
-                        description: text,
-                        count: members,
-                        action: action,
-                        owner: value.guid,
-                        type: "gccollab_group",
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Group(value);
                     $(content).hide().appendTo('#groups-mine').fadeIn(1000);
                 });
             } else {
@@ -1599,24 +1531,7 @@ myApp.onPageInit('groups', function (page) {
             if(groups.length > 0){
                 $('#groups-all-more').show();
                 $.each(groups, function (key, value) {
-                    var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtGroup({
-                        icon: value.iconURL,
-                        name: value.name,
-                        description: text,
-                        count: members,
-                        action: action,
-                        owner: value.guid,
-                        type: "gccollab_group",
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Group(value);
                     $(content).hide().appendTo('#groups-all').fadeIn(1000);
                 });
             } else {
@@ -1633,24 +1548,7 @@ myApp.onPageInit('groups', function (page) {
             if(groups.length > 0){
                 $('#groups-mine-more').show();
                 $.each(groups, function (key, value) {
-                    var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtGroup({
-                        icon: value.iconURL,
-                        name: value.name,
-                        description: text,
-                        count: members,
-                        action: action,
-                        owner: value.guid,
-                        type: "gccollab_group",
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Group(value);
                     $(content).hide().appendTo('#groups-mine').fadeIn(1000);
                 });
             } else {
@@ -1670,24 +1568,7 @@ myApp.onPageInit('groups', function (page) {
             if(groups.length > 0){
                 $('#groups-all-more').show();
                 $.each(groups, function (key, value) {
-                    var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtGroup({
-                        icon: value.iconURL,
-                        name: value.name,
-                        description: text,
-                        count: members,
-                        action: action,
-                        owner: value.guid,
-                        type: "gccollab_group",
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Group(value);
                     $(content).hide().appendTo('#groups-all').fadeIn(1000);
                 });
             } else {
@@ -1709,24 +1590,7 @@ myApp.onPageInit('groups', function (page) {
             if(groups.length > 0){
                 $('#groups-mine-more').show();
                 $.each(groups, function (key, value) {
-                    var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtGroup({
-                        icon: value.iconURL,
-                        name: value.name,
-                        description: text,
-                        count: members,
-                        action: action,
-                        owner: value.guid,
-                        type: "gccollab_group",
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Group(value);
                     $(content).hide().appendTo('#groups-mine').fadeIn(1000);
                 });
             } else {
@@ -1750,23 +1614,7 @@ myApp.onPageInit('groups', function (page) {
             if(groups.length > 0){
                 $('#groups-all-more').show();
                 $.each(groups, function (key, value) {
-                    var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    content += GCTLang.txtGroup({
-                        icon: value.iconURL,
-                        name: value.name,
-                        description: text,
-                        count: members,
-                        action: action,
-                        owner: value.guid,
-                        type: "gccollab_group",
-                        liked: liked,
-                        likes: likes
-                    });
+                    content += GCTEach.Group(value);
                 });
                 $(content).hide().appendTo('#groups-all').fadeIn(1000);
             } else {
@@ -1785,23 +1633,7 @@ myApp.onPageInit('groups', function (page) {
             if(groups.length > 0){
                 $('#groups-mine-more').show();
                 $.each(groups, function (key, value) {
-                    var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    content += GCTLang.txtGroup({
-                        icon: value.iconURL,
-                        name: value.name,
-                        description: text,
-                        count: members,
-                        action: action,
-                        owner: value.guid,
-                        type: "gccollab_group",
-                        liked: liked,
-                        likes: likes
-                    });
+                    content += GCTEach.Group(value);
                 });
                 $(content).hide().appendTo('#groups-mine').fadeIn(1000);
             } else {

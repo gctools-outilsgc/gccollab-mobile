@@ -2216,6 +2216,7 @@ GCTUser = {
     }
 }
 
+/* GCTEach - handles the different content cards. For 'each(type' sends each value to the corrisponding GCTEach function, and it handles the variables to send to 'GCTLang.txtType' and returns the result */
 GCTEach = {
     Activity: function (value) {
         var description = "";
@@ -2428,6 +2429,26 @@ GCTEach = {
             guid: value.guid,
             type: "gccollab_blog_post",
             replied: replied,
+            liked: liked,
+            likes: likes
+        });
+        return content;
+    },
+    Group: function (value) {
+        var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+
+        var content = GCTLang.txtGroup({
+            icon: value.iconURL,
+            name: value.name,
+            description: text,
+            count: members,
+            action: action,
+            owner: value.guid,
+            type: "gccollab_group",
             liked: liked,
             likes: likes
         });
