@@ -444,50 +444,7 @@ GCTUser = {
         //### This function assumes it's being called from the index page after load
         if (GCTLang.IsLangSet()) {
             if (GCTUser.IsLoggedIn()) {
-                //### Check if the key is still valid
-                $$.ajax({
-                    api_key: api_key_gccollab,
-                    method: 'POST',
-                    dataType: 'json',
-                    url: GCT.LoginURL,
-                    data: { method: "login.user", action: "login", email: GCTUser.Email(), key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
-                    timeout: 12000,
-                    success: function (data) {
-                        if (data.status < 0) {
-                            //### Key is invalid, reset it
-                            GCTUser.SetAPIKey('');
-                            mainView.router.loadPage({ url: 'sign-in.html' });
-                        } else {
-
-                            ///### Checks done.
-                            //### Check for specific system access
-
-                            var HasAccess = true;
-                           
-                           // GCTUser.HasGCconnexAccess(data.GCconnexAccess);
-
-                            if (data.GCcollabAccess) {
-                                GCTUser.SetUserProfile();
-                                mainView.router.loadPage({ url: 'home.html' });
-                            } else {
-                                //### TODO: no access, this *should* only be caused by someone login it successfully at one point, then leave/banned from the system then opening the app
-                            }
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        //### Not good. User is not connected to the internet.
-                        //### Down the line we may have offline capability
-                        //### For now we don't allow the user to move forward
-                        //### Maybe provide a "Check Again" modal?
-                        console.log("app open error");
-                        myApp.confirm('It looks like there is no internet connection. Would you like us to check again?', 'No Internet Connection',
-                            function () {
-                                window.location.reload(true);
-                            }
-                        );
-                        
-                    }
-                });
+                mainView.router.loadPage({ url: 'home.html' });
             } else {
                 mainView.router.loadPage({ url: 'sign-in.html' });
             }

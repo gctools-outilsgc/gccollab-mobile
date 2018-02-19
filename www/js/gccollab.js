@@ -914,7 +914,7 @@ myApp.onPageInit('sign-in', function (page) {
         if (event.keyCode == 13) {
             if( email != "" && password != "" && email.length >= 3 && password.length >= 6 ){
                 GCTUser.Login(email, password, function (success) {
-                    if (success.status > 0) {
+                    if (success.result) {
                         GCTUser.SaveLoginEmail(email);
                         GCTUser.SetAPIKey(success.message);
                         GCTUser.SetUserProfile();
