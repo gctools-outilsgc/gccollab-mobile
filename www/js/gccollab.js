@@ -2739,7 +2739,6 @@ myApp.onPageInit('events', function (page) {
     });
 
     if (!filtersOpened) {
-        eventsArray = [];
         GCTUser.GetEvents(from, to, limit, offset, function(data){
             var events = data.result;
             $('#events-all').html('');
@@ -2807,7 +2806,6 @@ myApp.onPageInit('events', function (page) {
 
     var eventsMore = $$(page.container).find('#events-more');
     eventsMore.on('click', function (e) {
-        eventsArray = [];
         GCTUser.GetEvents(from, to, limit, eventsMoreOffset + limit, function(data){
             var events = data.result;
 
