@@ -2892,29 +2892,7 @@ myApp.onPageInit('opportunities', function (page) {
             if(opportunities.length > 0){
                 $('#opportunities-more').show();
                 $.each(opportunities, function (key, value) {
-                    // Removes HTML components from Blog
-                    var text = (value.description !== null) ? value.description : "";
-
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_opportunity' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtOpps({
-                        guid: value.guid,
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        description: text.trunc(150),
-                        type: "gccollab_opportunity",
-                        replied: replied,
-                        action: action,
-                        owner: value.owner_guid,
-                        title: value.title,
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Opportunity(value);
                     $(content).hide().appendTo('#opportunities-all').fadeIn(1000);
                 });
             } else {
@@ -2943,29 +2921,7 @@ myApp.onPageInit('opportunities', function (page) {
             if(opportunities.length > 0){
                 $('#opportunities-more').show();
                 $.each(opportunities, function (key, value) {
-                    // Removes HTML components from Blog
-                    var text = (value.description !== null) ? value.description : "";
-
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_opportunity' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtOpps({
-                        guid: value.guid,
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        description: text.trunc(150),
-                        type: "gccollab_opportunity",
-                        replied: replied,
-                        action: action,
-                        owner: value.owner_guid,
-                        title: value.title,
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Opportunity(value);
                     $(content).hide().appendTo('#opportunities-all').fadeIn(1000);
                 });
             } else {
@@ -2986,29 +2942,7 @@ myApp.onPageInit('opportunities', function (page) {
             if(opportunities.length > 0){
                 $('#opportunities-more').show();
                 $.each(opportunities, function (key, value) {
-                    // Removes HTML components from Blog
-                    var text = (value.description !== null) ? value.description : "";
-
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_opportunity' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtOpps({
-                        guid: value.guid,
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        description: text.trunc(150),
-                        type: "gccollab_opportunity",
-                        replied: replied,
-                        action: action,
-                        owner: value.owner_guid,
-                        title: value.title,
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Opportunity(value);
                     $(content).hide().appendTo('#opportunities-all').fadeIn(1000);
                 });
             } else {
@@ -3028,29 +2962,7 @@ myApp.onPageInit('opportunities', function (page) {
             if(opportunities.length > 0){
                 $('#opportunities-more').show();
                 $.each(opportunities, function (key, value) {
-                    // Removes HTML components from Blog
-                    var text = (value.description !== null) ? value.description : "";
-
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_opportunity' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    var content = GCTLang.txtOpps({
-                        guid: value.guid,
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        description: text.trunc(150),
-                        type: "gccollab_opportunity",
-                        replied: replied,
-                        action: action,
-                        owner: value.owner_guid,
-                        title: value.title,
-                        liked: liked,
-                        likes: likes
-                    });
-
+                    var content = GCTEach.Opportunity(value);
                     $(content).hide().appendTo('#opportunities-all').fadeIn(1000);
                 });
             } else {
@@ -3073,28 +2985,7 @@ myApp.onPageInit('opportunities', function (page) {
                 $('#opportunities-more').show();
                 var content = "";
                 $.each(opportunities, function (key, value) {
-                    // Removes HTML components from Blog
-                    var text = (value.description !== null) ? value.description : "";
-
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_opportunity' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                    content += GCTLang.txtOpps({
-                        guid: value.guid,
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        description: text.trunc(150),
-                        type: "gccollab_opportunity",
-                        replied: replied,
-                        action: action,
-                        owner: value.owner_guid,
-                        title: value.title,
-                        liked: liked,
-                        likes: likes
-                    });
+                    content += GCTEach.Opportunity(value);
                 });
                 $('#opportunities-all').html('');
                 $(content).hide().appendTo('#opportunities-all').fadeIn(1000);
