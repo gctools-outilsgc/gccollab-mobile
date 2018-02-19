@@ -2529,6 +2529,7 @@ GCTEach = {
             likes: likes
         });
         return content;
+
     },
     Doc: function (value) {
         var liked = (value.liked) ? "liked" : "";
