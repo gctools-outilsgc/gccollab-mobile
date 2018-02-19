@@ -2454,6 +2454,56 @@ GCTEach = {
             likes: likes
         });
         return content;
+    },
+    Event: function (value) {
+        var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
+
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_event' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+
+        var date = (value.startDate).split(" ")[0];
+        var split = date.split("-");
+        var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
+        
+
+        var month = parseInt(split[1]) - 1;
+        var id = 'event-' + split[0] + '-' + month + '-' + split[2];
+        id = id.replace(/(^|-)0+/g, "$1");
+
+        var posted = "";
+        if (value.groupGUID !== null && typeof value.groupGUID !== 'undefined') {
+            posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.groupGUID + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.group + "</a>";
+        } else {
+            posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+        }
+
+        var startDate = GCTLang.Trans("start-date") + date;
+        var endDate = GCTLang.Trans("end-date") + (value.endDate).split(" ")[0];
+
+        var location = ((value.location !== null) && (typeof value.location !== 'undefined')) ? "<b>" + GCTLang.Trans("location") + "</b>" + value.location : "";
+        var fullview = false;
+
+        var content = GCTLang.txtEvent({
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            startDate: startDate,
+            endDate: endDate,
+            date: prettyDate(value.startDate),
+            location: location,
+            posted: posted,
+            description: text.trunc(150),
+            title: value.title,
+            id: id,
+            action: action,
+            owner: value.owner_guid,
+            guid: value.guid,
+            type: "gccollab_event",
+            liked: liked,
+            likes: likes,
+            fullview: fullview
+        });
+        return content;
     }
 }
 
