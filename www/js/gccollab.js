@@ -2333,6 +2333,75 @@ myApp.onPageInit('blog', function (page) {
     });
 });
 
+myApp.onPageInit('bookmarks', function (page) {
+    var limit = 10;
+    var offset = 0;
+    var filters = [];
+    var filtersOpened = false;
+    var bookmarksAllMoreOffset = 0;
+    var bookmarksColleaguesMoreOffset = 0;
+    var bookmarksMineMoreOffset = 0;
+
+    $('#clear-filters').on('click', function () {
+        filtersOpened = false;
+        filters = {};
+        $('#bookmark-filters').val('');
+        $('#bookmark-name').val('');
+
+        //GCTUser.bookmarks here
+
+        bookmarksAllMoreOffset = 0;
+        bookmarksColleaguesMoreOffset = 0;
+        bookmarksMineMoreOffset = 0;
+    });
+
+    $('#save-filters').on('click', function () {
+        filtersOpened = true;
+        filters['type'] = ""; //$("#bookmark-filters").val();
+        filters['name'] = $("#bookmark-name").val();
+        if ($("#bookmark-filters").val() == "" && $("#bookmark-name").val() == "") {
+            filters = "";
+        }
+
+       //GCTUser.bookmarks here
+
+        bookmarksAllMoreOffset = 0;
+        bookmarksColleaguesMoreOffset = 0;
+        bookmarksMineMoreOffset = 0;
+    });
+
+    if (!filtersOpened) {
+        //GCTUser.bookmarks here
+    }
+
+    var bookmarksAllMore = $$(page.container).find('#bookmarks-all-more');
+    bookmarksAllMore.on('click', function (e) {
+        //GCTUser.bookmarks here
+    });
+
+    var bookmarksColleagueMore = $$(page.container).find('#bookmarks-colleagues-more');
+    bookmarksColleaguesMore.on('click', function (e) {
+        //GCTUser.bookmarks here
+    });
+
+    var bookmarksMineMore = $$(page.container).find('#bookmarks-mine-more');
+    bookmarksAllMore.on('click', function (e) {
+        //GCTUser.bookmarks here
+    });
+
+    var refreshBookmarks = $$(page.container).find('.pull-to-refresh-content');
+    refreshBookmarks.on('refresh', function (e) {
+        //GCTUser.bookmarks here
+
+        bookmarksAllMoreOffset = 0;
+        bookmarksColleaguesMoreOffset = 0;
+        bookmarksMineMoreOffset = 0;
+
+        myApp.pullToRefreshDone();
+    });
+
+});
+
 myApp.onPageInit('docs', function (page) {
     var limit = 20;
     var offset = 0;
