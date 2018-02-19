@@ -2433,6 +2433,7 @@ GCTEach = {
             likes: likes
         });
         return content;
+
     },
     Group: function (value) {
         var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
