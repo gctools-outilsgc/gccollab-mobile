@@ -717,7 +717,7 @@ GCTUser = {
                         var replied = (value.replied) ? "replied" : "";
                         var liked = (value.liked) ? "liked" : "";
                         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                        var action = '';
+                        var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_blog_post' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
 
                         content += GCTLang.txtBlog({
                             icon: value.userDetails.iconURL,
@@ -859,7 +859,7 @@ GCTUser = {
 
                         var liked = (value.liked) ? "liked" : "";
                         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                        var action = " <a class='link' onclick='GCT.FireLink(this);' data-type='gccollab_opportunity' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
+                        var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_opportunity' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
                         var fullview = true;
 
                         content += GCTLang.txtOpps({
@@ -916,7 +916,7 @@ GCTUser = {
 
                         var liked = (value.liked) ? "liked" : "";
                         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                        var action = " <a class='link' onclick='GCT.FireLink(this);' data-type='gccollab_event' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
+                        var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_event' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
 
                         var date = (value.startDate).split(" ")[0];
                         var split = date.split("-");
@@ -2616,6 +2616,15 @@ GCT = {
             window.open(obj.href, '_system');
         }
         return false;
+    },
+    SiteLink: function (obj) {
+        if (obj.href.indexOf("https://gccollab.ca/") > -1) {
+            console.log('loading collab page...');
+            mainView.router.loadPage('external-pages.html?page=' + obj.href);
+        } else {
+            console.log('non-gccollab link through SiteLink function. (Error)');
+            window.open(obj.href, '_system');
+        }
     },
     SetLinks: function (html) {
         var con = $.parseHTML(html);
