@@ -738,6 +738,12 @@ myApp.onPageInit('group', function (page) {
         } else {
             $("#join-group").show();
         }
+        if (group.private) {
+            //$('#group-description').hide();
+            $("#group-description").html(GCTLang.Trans("private-group"));
+        } else {
+            $("#group-description").html(group.description);
+        }
 
         $("#group-icon").attr('src', group.iconURL);
         $("#group-title").html(group.name).text();
@@ -746,7 +752,6 @@ myApp.onPageInit('group', function (page) {
         $("#group-count").text("(" + group.count + ")");
         $("#like-count").text(group.likes);
         $("#group-tags").text(tags);
-        $("#group-description").html(group.description);
         $("[data-owner]").data('owner', group.owner);
         $("[data-guid]").data('guid', group.guid);
         $("[data-type]").data('type', group.type);

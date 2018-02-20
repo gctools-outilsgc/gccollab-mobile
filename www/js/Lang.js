@@ -127,6 +127,7 @@
     "lang": "Language: ",
 
     "no-group": "Group has not set their description.",
+    "private-group": "This group's membership is closed and its content is accessible only by members.To ask to be added, click the 'Request membership' menu link.",
     "no-profile": "Member has not set their description.",
     "profile": "Profile",
     "wire": "Wire",
@@ -330,6 +331,7 @@ French = {
     "lang": "La Langue: ",
 
     "no-group": "Le groupe n'a pas défini sa description.",
+    "private-group": "Ceci est un groupe fermé. Le contenu de se groupe est accessible uniquement à ses membres. Pour y devenir membre, cliquez sur le lien 'Demande d'adhésion'",
     "no-profile": "Le membre n'a pas défini sa description.",
     "profile": "Profil",
     "wire": "Le fil",
