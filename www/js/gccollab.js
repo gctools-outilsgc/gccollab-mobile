@@ -10,6 +10,7 @@ var myApp = new Framework7({
 });
 
 //API key
+var api_key_gccollab = "";
 
 // Expose Internal DOM library
 var $$ = Dom7;
@@ -4217,7 +4218,7 @@ myApp.onPageInit('register', function (page) {
             api_key: api_key_gccollab,
             method: 'POST',
             url: GCT.RegisterURL,
-            data: { email: formValues.email, userdata: JSON.stringify(formValues) },
+            data: { method:"register.user", email: formValues.email, userdata: JSON.stringify(formValues) },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
