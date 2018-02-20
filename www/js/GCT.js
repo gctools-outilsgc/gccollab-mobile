@@ -1788,6 +1788,71 @@ GCTUser = {
             }
         });
     },
+
+    GetBookmarks: function (limit, offset, filters, successCallback, errorCallback) {
+        limit = limit || 10;
+        offset = offset || 0;
+
+        $$.ajax({
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.APIURL,
+            data: { method: "get.bookmarks", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetBookmarksByUserColleague: function (profile, limit, offset, filters, successCallback, errorCallback) {
+        if (typeof profile == 'undefined')
+            profile = GCTUser.Email(); //### Get current users profile
+
+        limit = limit || 10;
+        offset = offset || 0;
+
+        $$.ajax({
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.APIURL,
+            data: { method: "get.bookmarkscolleague", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, filters: JSON.stringify(filters), key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetBookmarksByUser: function (profile, limit, offset, successCallback, errorCallback) {
+        if (typeof profile == 'undefined')
+            profile = GCTUser.Email(); //### Get current users profile
+
+        limit = limit || 10;
+        offset = offset || 0;
+
+        $$.ajax({
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.APIURL,
+            data: { method: "get.bookmarksbyuser", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+
     GetMembers: function (limit, offset, filters, successCallback, errorCallback) {
         limit = limit || 10;
         offset = offset || 0;
