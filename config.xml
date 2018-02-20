@@ -81,5 +81,6 @@
     <plugin name="cordova-plugin-console" spec="~1.0.7" />
     <plugin name="cordova-plugin-statusbar" spec="~1.0.1" />
     <plugin name="cordova-plugin-inappbrowser" spec="~1.7.1" />
-    <plugin name="com.cmackay.plugins.googleanalytics" spec="~1.0.2" />
+
+
 </widget>
