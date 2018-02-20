@@ -4217,7 +4217,7 @@ myApp.onPageInit('register', function (page) {
         $$.ajax({
             api_key: api_key_gccollab,
             method: 'POST',
-            url: GCT.RegisterURL,
+            url: GCT.GCcollabURL,
             data: { method:"register.user", email: formValues.email, userdata: JSON.stringify(formValues) },
             timeout: 12000,
             success: function (data) {
