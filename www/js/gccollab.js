@@ -2379,7 +2379,9 @@ myApp.onPageInit('bookmarks', function (page) {
         //GCTUser.bookmarks here
     });
 
+
     var bookmarksColleaguesMore = $$(page.container).find('#bookmarks-colleagues-more');
+
     bookmarksColleaguesMore.on('click', function (e) {
         //GCTUser.bookmarks here
     });
