@@ -2379,17 +2379,32 @@ myApp.onPageInit('bookmarks', function (page) {
     if (!filtersOpened) {
         GCTUser.GetBookmarks(limit, offset, filters, function (data) {
             var bookmarks = data.result;
-            console.log(data);
             if (bookmarks.length > 0) {
                 $('#bookmarks-all-more').show();
                 $.each(bookmarks, function (key, value) {
-                    console.log(value);
                     var content = GCTEach.Bookmark(value);
                     $(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
                 });
             } else {
                 $('#bookmarks-all-more').hide();
                 $(noMatches).hide().appendTo('#bookmarks-all').fadeIn(1000);
+            }
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+        GCTUser.GetBookmarksByUserColleague(limit, offset, filters, function (data) {
+            var bookmarks = data.result;
+            console.log(data);
+            if (bookmarks.length > 0) {
+                $('#bookmarks-all-more').show();
+                $.each(bookmarks, function (key, value) {
+                    console.log(value);
+                    var content = GCTEach.Bookmark(value);
+                    $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
+                });
+            } else {
+                $('#bookmarks-all-more').hide();
+                $(noMatches).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
             }
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
