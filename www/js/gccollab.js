@@ -2384,8 +2384,8 @@ myApp.onPageInit('bookmarks', function (page) {
                 $('#bookmarks-all-more').show();
                 $.each(bookmarks, function (key, value) {
                     console.log(value);
-                    //var content = GCTEach.Bookmark(value);
-                    //$(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
+                    var content = GCTEach.Bookmark(value);
+                    $(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
                 });
             } else {
                 $('#bookmarks-all-more').hide();
