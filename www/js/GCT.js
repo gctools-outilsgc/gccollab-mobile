@@ -1836,10 +1836,11 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
+            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
-            url: GCT.APIURL,
-            data: { method: "get.bookmarks", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            url: GCT.GCcollabURL,
+            data: { method: "get.bookmarks", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1858,10 +1859,11 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
+            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
-            url: GCT.APIURL,
-            data: { method: "get.bookmarkscolleague", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, filters: JSON.stringify(filters), key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            url: GCT.GCcollabURL,
+            data: { method: "get.bookmarkscolleague", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1880,10 +1882,11 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
+            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
-            url: GCT.APIURL,
-            data: { method: "get.bookmarksbyuser", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            url: GCT.GCcollabURL,
+            data: { method: "get.bookmarksbyuser", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2683,7 +2686,7 @@ GCTEach = {
 }
 // Exemple of link : https://exemple.ca/services/api/rest/json/?
 GCT = {
-    GCcollabURL: "",
+    GCcollabURL: "https://gccollab.ca/services/api/rest/json",
     GEDSURL: "https://api.geds.gc.ca",
     IsInApp: function () {
         if (window.location.href.toLowerCase().indexOf("http") > -1) {
