@@ -335,6 +335,37 @@ GCTLang = {
             + "</li>";
         return content;
     },
+    txtBookmark: function (object) {
+        var content = "<div class='swiper-slide list-block cards-list'>"
+            + "<div class='card'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+            + "<div class='item-media rounded'><img src='" + object.icon + "' /></div>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row'>"
+            + "<div class='author'>" + object.name + "</div>"
+            + "</div>"
+            + "<div class='time'>" + object.date + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-content'>"
+            + "<div class='card-content-inner'>"
+
+            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
+            + "<div class='blog-title'>" + object.title + "</div>"
+            + "<div class='blog-group'>" + object.posted + "</div>"
+            + "<div class='item-text large'>" + object.description + "</div>"
+            + "<div class='item-text large'>" + object.address + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-footer'>"
+            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + object.action
+            + "</div>"
+            + "</div>"
+            + "</div>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
     liGEDSResult: function (object) {
         var content = "<li class='item-content'>"
             + "<div class='item-inner'>"
@@ -2681,6 +2712,33 @@ GCTEach = {
             liked: liked,
             likes: likes
         });
+        return content;
+    },
+    Bookmark: function (value) {
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var action = '';
+        var posted = '';
+        if (value.group_guid) {
+            posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.group_guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + " place holder -> value.group" + "</a>";
+        } else {
+            posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+        }
+        var content = GCTLang.txtBookmark({
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            owner: value.owner_guid,
+            date: prettyDate(value.time_created),
+            title: value.title,
+            posted: posted,
+            description: value.description,
+            address: value.address,
+            type: "gccollab_bookmark",
+            guid: value.guid,
+            action: action,
+            liked: liked,
+            likes: likes
+        })
         return content;
     }
 }
