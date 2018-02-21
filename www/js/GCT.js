@@ -1882,9 +1882,8 @@ GCTUser = {
             }
         });
     },
-    GetBookmarksByUserColleague: function (profile, limit, offset, filters, successCallback, errorCallback) {
-        if (typeof profile == 'undefined')
-            profile = GCTUser.Email(); //### Get current users profile
+    GetBookmarksByUserColleague: function (limit, offset, filters, successCallback, errorCallback) {
+        
 
         limit = limit || 10;
         offset = offset || 0;
@@ -1894,7 +1893,7 @@ GCTUser = {
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.bookmarkscolleague", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.bookmarkscolleague", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2720,7 +2719,7 @@ GCTEach = {
         var action = '';
         var posted = '';
         if (value.group_guid) {
-            posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.group_guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + " place holder -> value.group" + "</a>";
+            posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.group_guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.group + "</a>";
         } else {
             posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
         }
