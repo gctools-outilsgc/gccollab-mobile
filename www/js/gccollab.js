@@ -2305,7 +2305,6 @@ myApp.onPageInit('blog', function (page) {
                 $('#blogs-more').hide();
                 $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
             }
-
             blogsMoreOffset += limit;
         }, function(jqXHR, textStatus, errorThrown){
             console.log(jqXHR, textStatus, errorThrown);
@@ -2354,6 +2353,38 @@ myApp.onPageInit('bookmarks', function (page) {
         $('#bookmark-filters').val('');
         $('#bookmark-name').val('');
 
+        GCTUser.GetBookmarks(limit, offset, filters, function (data) {
+            var bookmarks = data.result;
+            if (bookmarks.length > 0) {
+                $('#bookmarks-all-more').show();
+                $.each(bookmarks, function (key, value) {
+                    var content = GCTEach.Bookmark(value);
+                    $(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
+                });
+            } else {
+                $('#bookmarks-all-more').hide();
+                $(noMatches).hide().appendTo('#bookmarks-all').fadeIn(1000);
+            }
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+        GCTUser.GetBookmarksByUserColleague(limit, offset, filters, function (data) {
+            var bookmarks = data.result;
+            console.log(data);
+            if (bookmarks.length > 0) {
+                $('#bookmarks-all-more').show();
+                $.each(bookmarks, function (key, value) {
+                    console.log(value);
+                    var content = GCTEach.Bookmark(value);
+                    $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
+                });
+            } else {
+                $('#bookmarks-all-more').hide();
+                $(noMatches).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
+            }
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
         //GCTUser.bookmarks here
 
         bookmarksAllMoreOffset = 0;
@@ -2414,14 +2445,45 @@ myApp.onPageInit('bookmarks', function (page) {
 
     var bookmarksAllMore = $$(page.container).find('#bookmarks-all-more');
     bookmarksAllMore.on('click', function (e) {
-        //GCTUser.bookmarks here
+        GCTUser.GetBookmarks(limit, bookmarksAllMoreOffset + limit, filters, function (data) {
+            var bookmarks = data.result;
+            if (bookmarks.length > 0) {
+                $('#bookmarks-all-more').show();
+                $.each(bookmarks, function (key, value) {
+                    var content = GCTEach.Bookmark(value);
+                    $(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
+                });
+            } else {
+                $('#bookmarks-all-more').hide();
+                $(noMatches).hide().appendTo('#bookmarks-all').fadeIn(1000);
+            }
+            bookmarksAllMoreOffset += limit;
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
     });
 
 
     var bookmarksColleaguesMore = $$(page.container).find('#bookmarks-colleagues-more');
-
     bookmarksColleaguesMore.on('click', function (e) {
-        //GCTUser.bookmarks here
+        GCTUser.GetBookmarksByUserColleague(limit, bookmarksColleaguesMoreOffset + limit , filters, function (data) {
+            var bookmarks = data.result;
+            console.log(data);
+            if (bookmarks.length > 0) {
+                $('#bookmarks-all-more').show();
+                $.each(bookmarks, function (key, value) {
+                    console.log(value);
+                    var content = GCTEach.Bookmark(value);
+                    $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
+                });
+            } else {
+                $('#bookmarks-all-more').hide();
+                $(noMatches).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
+            }
+            bookmarksColleaguesMoreOffset += limit;
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
     });
 
     var bookmarksMineMore = $$(page.container).find('#bookmarks-mine-more');
@@ -2431,6 +2493,40 @@ myApp.onPageInit('bookmarks', function (page) {
 
     var refreshBookmarks = $$(page.container).find('.pull-to-refresh-content');
     refreshBookmarks.on('refresh', function (e) {
+        GCTUser.GetBookmarks(limit, offset, filters, function (data) {
+            var bookmarks = data.result;
+            if (bookmarks.length > 0) {
+                $('#bookmarks-all-more').show();
+                var content = "";
+                $.each(bookmarks, function (key, value) {
+                    content += GCTEach.Bookmark(value);
+                });
+                $('#bookmarks-all').html('');
+                $(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
+            } else {
+                $('#bookmarks-all-more').hide();
+                $(noMatches).hide().appendTo('#bookmarks-all').fadeIn(1000);
+            }
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+        GCTUser.GetBookmarksByUserColleague(limit, offset, filters, function (data) {
+            var bookmarks = data.result;
+            if (bookmarks.length > 0) {
+                $('#bookmarks-all-more').show();
+                var content = "";
+                $.each(bookmarks, function (key, value) {
+                    content += GCTEach.Bookmark(value);
+                });
+                $('#bookmarks-colleagues').html('');
+                $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
+            } else {
+                $('#bookmarks-all-more').hide();
+                $(noMatches).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
+            }
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
         //GCTUser.bookmarks here
 
         bookmarksAllMoreOffset = 0;
