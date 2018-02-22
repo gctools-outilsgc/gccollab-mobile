@@ -771,15 +771,19 @@ myApp.onPageInit('group', function (page) {
 
                     // Removes HTML components from Discussion
                     var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
-                    var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+                  //  if (value.groupURL.indexOf("/groups/profile/") > -1) {
+                       // var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
+                   // } else {
+                        var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.owner_guid.displayName + "</a>";
+                   // }
+                
                     var replied = (value.replied) ? "replied" : "";
                     var liked = (value.liked) ? "liked" : "";
                     var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
                     var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
                      content += GCTLang.txtDiscussion({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
+                      //  icon: value.userDetails.iconURL,
+                       // name: value.userDetails.displayName,
                         date: prettyDate(value.time_created),
                         group: group,
                         description: text.trunc(150),
@@ -796,7 +800,7 @@ myApp.onPageInit('group', function (page) {
 
                 });
             } 
-            content += '</div><a id="group-members-more" class="button button-big button-fill">' + GCTLang.Trans('view-more') + '</a>';
+           // content += '</div><a id="group-members-more" class="button button-big button-fill">' + GCTLang.Trans('view-more') + '</a>';
             content += '<div class="speed-dial"><a href="#" class="floating-button"><i class="icon icon-plus"></i><i class="icon icon-close"></i></a><div class="speed-dial-buttons"><a onclick="GCTUser.NewDiscussion();"> <i class="fa fa-comment"></i></a></div></div>';
             
             $('.popup-generic .popup-title').html(GCTLang.Trans('discussion'));
