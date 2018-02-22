@@ -792,11 +792,7 @@ GCTUser = {
                     $(discussion).each(function(key, value) {
                         // Removes HTML components from Discussion
                         var text = (value.description !== null) ? value.description : "";
-                        // if (value.groupURL.indexOf("/groups/profile/") > -1) {
-                        //     var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
-                        // } else {
-                            var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
-                      //  }
+                        var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
                         var replied = (value.replied) ? "replied" : "";
                         var liked = (value.liked) ? "liked" : "";
                         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
