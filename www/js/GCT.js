@@ -354,7 +354,7 @@ GCTLang = {
             + "<div class='blog-title'>" + object.title + "</div>"
             + "<div class='blog-group'>" + object.posted + "</div>"
             + "<div class='item-text large'>" + object.description + "</div>"
-            + "<div class='item-text large'>" + object.address + "</div>"
+            + "<div class='blog-group'>" + "Link: " + object.address + "</div>"
             + "</div>"
             + "</div>"
             + "<div class='card-footer'>"
@@ -1077,6 +1077,46 @@ GCTUser = {
                     $('.popup-generic .popup-content').html(content);
                     myApp.popup('.popup-generic');
                 }, function(jqXHR, textStatus, errorThrown){
+                    console.log(jqXHR, textStatus, errorThrown);
+                });
+                break;
+
+            case "gccollab_bookmark":
+                GCTUser.GetBookmark(guid, function (data) {
+                    var bookmark = data.result;
+                    var content = "";
+                    $(bookmark).each(function (key, value) {
+                        var liked = (value.liked) ? "liked" : "";
+                        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                        var action = '';
+                        var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_bookmark' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
+                        var posted = '';
+                        if (value.group_guid) {
+                            posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.group_guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.group + "</a>";
+                        } else {
+                            posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+                        }
+                        var address = "<a class='external' data-type='gccollab_bookmark' href='"+value.address+"'>"+value.address+"</a> ";
+                        content += GCTLang.txtBookmark({
+                            icon: value.userDetails.iconURL,
+                            name: value.userDetails.displayName,
+                            owner: value.owner_guid,
+                            date: prettyDate(value.time_created),
+                            title: value.title,
+                            posted: posted,
+                            description: value.description,
+                            address: address,
+                            type: "gccollab_bookmark",
+                            guid: value.guid,
+                            action: action,
+                            liked: liked,
+                            likes: likes
+                        })
+                    });
+                    $('.popup-generic .popup-title').html(GCTLang.Trans("bookmark"));
+                    $('.popup-generic .popup-content').html(content);
+                    myApp.popup('.popup-generic');
+                }, function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR, textStatus, errorThrown);
                 });
                 break;
@@ -1862,6 +1902,23 @@ GCTUser = {
         });
     },
 
+    GetBookmark: function (guid, successCallback, errorCallback) {
+        $$.ajax({
+            api_key: api_key_gccollab,
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "get.bookmark", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetBookmarks: function (limit, offset, filters, successCallback, errorCallback) {
         limit = limit || 10;
         offset = offset || 0;
@@ -1904,19 +1961,20 @@ GCTUser = {
             }
         });
     },
-    GetBookmarksByUser: function (profile, limit, offset, successCallback, errorCallback) {
-        if (typeof profile == 'undefined')
-            profile = GCTUser.Email(); //### Get current users profile
-
+    GetBookmarksByUser: function (limit, offset, target, successCallback, errorCallback) {
+        console.log('in');
         limit = limit || 10;
         offset = offset || 0;
+        if (target == '') {
+            target = GCTUser.Email();
+        }
 
         $$.ajax({
             api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.bookmarksbyuser", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.bookmarksbyuser", user: GCTUser.Email(), limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang(), target: target },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2717,12 +2775,14 @@ GCTEach = {
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
         var action = '';
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_bookmark' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
         var posted = '';
         if (value.group_guid) {
             posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.group_guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.group + "</a>";
         } else {
             posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
         }
+        var address = "<a class='external' data-type='gccollab_bookmark' href='" + value.address + "'>" + value.address + "</a> ";
         var content = GCTLang.txtBookmark({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
@@ -2731,7 +2791,7 @@ GCTEach = {
             title: value.title,
             posted: posted,
             description: value.description,
-            address: value.address,
+            address: address,
             type: "gccollab_bookmark",
             guid: value.guid,
             action: action,

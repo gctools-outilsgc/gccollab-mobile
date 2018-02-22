@@ -2425,11 +2425,9 @@ myApp.onPageInit('bookmarks', function (page) {
         });
         GCTUser.GetBookmarksByUserColleague(limit, offset, filters, function (data) {
             var bookmarks = data.result;
-            console.log(data);
             if (bookmarks.length > 0) {
                 $('#bookmarks-all-more').show();
                 $.each(bookmarks, function (key, value) {
-                    console.log(value);
                     var content = GCTEach.Bookmark(value);
                     $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
                 });
@@ -2439,8 +2437,24 @@ myApp.onPageInit('bookmarks', function (page) {
             }
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
+            });
+        GCTUser.GetBookmarksByUser(limit, offset, '', function (data) {
+            var bookmarks = data.result;
+            console.log(data);
+            if (bookmarks.length > 0) {
+                $('#bookmarks-mine-more').show();
+                $.each(bookmarks, function (key, value) {
+                    console.log(value);
+                    var content = GCTEach.Bookmark(value);
+                    $(content).hide().appendTo('#bookmarks-mine').fadeIn(1000);
+                });
+            } else {
+                $('#bookmarks-mine-more').hide();
+                $(noMatches).hide().appendTo('#bookmarks-mine').fadeIn(1000);
+            }
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
         });
-        //GCTUser.bookmarks here
     }
 
     var bookmarksAllMore = $$(page.container).find('#bookmarks-all-more');
@@ -2468,11 +2482,9 @@ myApp.onPageInit('bookmarks', function (page) {
     bookmarksColleaguesMore.on('click', function (e) {
         GCTUser.GetBookmarksByUserColleague(limit, bookmarksColleaguesMoreOffset + limit , filters, function (data) {
             var bookmarks = data.result;
-            console.log(data);
             if (bookmarks.length > 0) {
                 $('#bookmarks-all-more').show();
                 $.each(bookmarks, function (key, value) {
-                    console.log(value);
                     var content = GCTEach.Bookmark(value);
                     $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
                 });
@@ -2488,7 +2500,22 @@ myApp.onPageInit('bookmarks', function (page) {
 
     var bookmarksMineMore = $$(page.container).find('#bookmarks-mine-more');
     bookmarksAllMore.on('click', function (e) {
-        //GCTUser.bookmarks here
+        GCTUser.GetBookmarksByUser(limit, bookmarksMineMoreOffset + limit, '', function (data) {
+            var bookmarks = data.result;
+            if (bookmarks.length > 0) {
+                $('#bookmarks-mine-more').show();
+                $.each(bookmarks, function (key, value) {
+                    var content = GCTEach.Bookmark(value);
+                    $(content).hide().appendTo('#bookmarks-mine').fadeIn(1000);
+                });
+            } else {
+                $('#bookmarks-mine-more').hide();
+                $(noMatches).hide().appendTo('#bookmarks-mine').fadeIn(1000);
+            }
+            bookmarksMineMoreOffset += limit;
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
     });
 
     var refreshBookmarks = $$(page.container).find('.pull-to-refresh-content');
