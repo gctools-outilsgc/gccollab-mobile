@@ -844,7 +844,6 @@ GCTUser = {
                 GCTUser.GetOpportunity(guid, function (data) {
                     var opportunity = data.result;
                     var content = "";
-                    console.log(opportunity);
                     $(opportunity).each(function (key, value) {
                         
                         var text = (value.description) ? value.description : "";
@@ -1962,7 +1961,6 @@ GCTUser = {
         });
     },
     GetBookmarksByUser: function (limit, offset, target, successCallback, errorCallback) {
-        console.log('in');
         limit = limit || 10;
         offset = offset || 0;
         if (target == '') {
@@ -2157,7 +2155,6 @@ GCTUser = {
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
-                console.log(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {

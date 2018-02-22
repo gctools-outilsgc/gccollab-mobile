@@ -2370,7 +2370,6 @@ myApp.onPageInit('bookmarks', function (page) {
         });
         GCTUser.GetBookmarksByUserColleague(limit, offset, filters, function (data) {
             var bookmarks = data.result;
-            console.log(data);
             if (bookmarks.length > 0) {
                 $('#bookmarks-all-more').show();
                 $.each(bookmarks, function (key, value) {
@@ -2440,7 +2439,6 @@ myApp.onPageInit('bookmarks', function (page) {
             });
         GCTUser.GetBookmarksByUser(limit, offset, '', function (data) {
             var bookmarks = data.result;
-            console.log(data);
             if (bookmarks.length > 0) {
                 $('#bookmarks-mine-more').show();
                 $.each(bookmarks, function (key, value) {
@@ -2554,7 +2552,24 @@ myApp.onPageInit('bookmarks', function (page) {
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
         });
-        //GCTUser.bookmarks here
+        GCTUser.GetBookmarksByUser(limit, offset, '', function (data) {
+            var bookmarks = data.result;
+            if (bookmarks.length > 0) {
+                $('#bookmarks-mine-more').show();
+                var content = "";
+                $.each(bookmarks, function (key, value) {
+                    console.log(value);
+                    content += GCTEach.Bookmark(value);
+                });
+                $('#bookmarks-mine').html('');
+                $(content).hide().appendTo('#bookmarks-mine').fadeIn(1000);
+            } else {
+                $('#bookmarks-mine-more').hide();
+                $(noMatches).hide().appendTo('#bookmarks-mine').fadeIn(1000);
+            }
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
 
         bookmarksAllMoreOffset = 0;
         bookmarksColleaguesMoreOffset = 0;
