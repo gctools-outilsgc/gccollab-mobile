@@ -246,18 +246,25 @@ GCTLang = {
                 + "</div>"
                 + "<div class='card-content'>" + "<hr>"
                     + "<div class='card-content-inner'>"
-                        + "<div class='blog-title'>" + object.additionalTitle + "</div>"
-                        + "<div class='item-text large'>" + object.programArea + "</div>"
-                        + "<div class='item-text large'>" + object.numOpportunities + "</div>"
-                        + "<div class='item-text large'>" + object.idealComplete + "</div>"
+                        + "<div class='blog-title'>" + object.additionalTitle + "</div>" //change from 'blog' title later
+                        + "<div class='item-text'>" + object.programArea + "</div>"
+                        + "<div class='item-text'>" + object.numOpportunities + "</div>"
+                        + "<div class='item-text'>" + object.idealComplete + "</div>"
                         + "<div class='item-text large'>" + object.deadline + "</div>"
                         + "<div class='item-text large'>" + object.oppVirtual + "</div>"
                         + "<div class='item-text large'>" + object.oppOnlyIn + "</div>"
                         + "<div class='item-text large'>" + object.location + "</div>"
                         + "<div class='item-text large'>" + object.security + "</div>"
                         + "<div class='item-text large'>" + object.skills + "</div>"
+                        + "<br>"
+                        + "<div class='blog-title'>" + GCTLang.Trans('opportunity-language-requirements') +"</div>" //change to smaller title later
                         + "<div class='item-text large'>" + object.languageReq + "</div>"
+                        + "<br>"
+                        + "<div class='blog-title'>" + GCTLang.Trans("opportunity-scheduling-requirements") + "</div>" //change to smaller title later
+                        + "<div class='item-text large'>" + object.timecommitment + "</div>"
+                        + "<div class='item-text large'>" + object.timezone + "</div>"
                         + "<div class='item-text large'>" + object.schedulingReq + "</div>"
+                        + "<br>"
                         + "<div class='item-text large'>" + object.participants + "</div>"
                         + "<div class='item-text large'>" + object.applicants + "</div>";
           }
@@ -850,46 +857,51 @@ GCTUser = {
                         if (value.shareText && value.shareURL) 
                             source = "<blockquote>Source: <a onclick='GCT.FireLink(this);' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
                         
-                        var programArea = GCTLang.Trans("program-area");
+                        var programArea = "<b>" + GCTLang.Trans("program-area") + "</b>";
                         if (value.programArea) { programArea += value.programArea; }
 
-                        var numOpportunities = GCTLang.Trans("num-opportunities");
+                        var numOpportunities = "<b>" + GCTLang.Trans("num-opportunities") + "</b>";
                         if (value.numOpportunities) { numOpportunities += value.numOpportunities; }
 
-                        var idealStart = GCTLang.Trans("ideal-start");
+                        var idealStart = "<b>" + GCTLang.Trans("ideal-start") + "</b>";
                         if (value.idealStart) { idealStart += value.idealStart; }
 
-                        var idealComplete = GCTLang.Trans("ideal-complete");
+                        var idealComplete = "<b>" + GCTLang.Trans("ideal-complete") + "</b>";
                         if (value.idealComplete) { idealComplete += value.idealComplete; }
 
-                        var deadline = GCTLang.Trans("deadline");
+                        var deadline = "<b>" + GCTLang.Trans("deadline") + "</b>";
                         if (value.deadline) { deadline += value.deadline; }
 
-                        var oppVirtual = GCTLang.Trans("opportunity-virtual");
+                        var oppVirtual = "<b>" + GCTLang.Trans("opportunity-virtual") + "</b>";
                         if (value.oppVirtual) { oppVirtual += value.oppVirtual; }
 
-                        var oppOnlyIn = GCTLang.Trans("opportunity-in");
+                        var oppOnlyIn = "<b>" + GCTLang.Trans("opportunity-in") + "</b>";
                         if (value.oppOnlyIn) { oppOnlyIn += value.oppOnlyIn; }
 
-                        var location = GCTLang.Trans("opportunity-location");
+                        var location = "<b>" + GCTLang.Trans("opportunity-location") + "</b>";
                         if (value.location) { location += value.location; }
 
-                        var security = GCTLang.Trans("opportunity-security");
+                        var security = "<b>" + GCTLang.Trans("opportunity-security") + "</b>";
                         if (value.security) { security += value.security; }
 
-                        var skills = GCTLang.Trans("opportunity-skills");
+                        var skills = "<b>" + GCTLang.Trans("opportunity-skills") + "</b>";
                         if (value.skills) { skills += value.skills; }
 
-                        var languageReq = GCTLang.Trans("opportunity-language-requirements");
-                        if (value.languageRequirements) { languageReq += value.languageRequirements; }
+                        var languageReq = '';
+                        if (value.languageRequirements) { languageReq = value.languageRequirements; }
 
-                        var schedulingReq = GCTLang.Trans("scheduling-requirements");
-                        if (value.schedulingRequirements) { applicants += value.schedulingRequirements; }
+                        var schedulingReq = "";
+                        if (value.schedulingRequirements) { schedulingReq += value.schedulingRequirements; }
 
-                        var participants = GCTLang.Trans("participants");
+                        var timezone = "<b>" + GCTLang.Trans("opportunity-timezone") + "</b>";
+                        if (value.timezone) { timezone += value.timezone; }
+                        var timecommitment = "<b>" + GCTLang.Trans("opportunity-time-commitment") + "</b>";
+                        if (value.timecommitment) { timecommitment += value.timecommitment; }
+
+                        var participants = "<b>" + GCTLang.Trans("participants") + "</b>";
                         if (value.participants) { participants += value.participants; }
 
-                        var applicants = GCTLang.Trans("applicants");
+                        var applicants = "<b>" + GCTLang.Trans("applicants") + "</b>";
                         if (value.applicants) { applicants += value.applicants; }
 
                         var liked = (value.liked) ? "liked" : "";
@@ -922,6 +934,8 @@ GCTUser = {
                             skills: skills,
                             languageReq: languageReq,
                             schedulingReq: schedulingReq,
+                            timezone: timezone,
+                            timecommitment: timecommitment,
                             participants: participants,
                             applicants: applicants,
 

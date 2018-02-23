@@ -172,6 +172,8 @@
     "opportunity-skills": "Skills sought in candidate: ",
     "opportunity-language-requirements": "Language requirements: ",
     "opportunity-scheduling-requirements": "Scheduling requirements: ",
+    "opportunity-timezone": "Time zone: ",
+    "opportunity-time-commitment": "Time commitment: ",
     "participants": "Participants: ",
     "applicants": "Applicants: ",
 
@@ -376,6 +378,8 @@ French = {
     "opportunity-skills": "Compétences recherchées chez le/la candidat(e): ",
     "opportunity-language-requirements": "Exigences linguistiques: ",
     "opportunity-scheduling-requirements": "Exigences de l'échéancier: ",
+    "opportunity-timezone": "Fuseau horaire: ",
+    "opportunity-time-commitment": "Période d'engagement: ",
     "participants": "Participants: ",
     "applicants": "Candidats: ",
 
