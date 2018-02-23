@@ -239,7 +239,8 @@ GCTLang = {
                 + "<div class='card-content'>"
                     + "<div class='card-content-inner'" + object.all_text +">"
                         + "<div class='blog-title'>" + object.title + "</div>"
-                        + "<div class='item-text large " + object.all_text + "'>" + "<br>" + object.description + "</div>";
+                        + "<div class='title'> <b>" + object.jobtype + "(" + object.roletype + ")" + "</b></div>"
+                        + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>";
         if (object.fullview) { //implement parts for full events popup, rather than the events list
             content += "<div class='item-text large'>" + "" + "</div>" //placeholder for text after desc
                     + "</div>"
@@ -267,7 +268,10 @@ GCTLang = {
                         + "<br>"
                         + "<div class='item-text large'>" + object.participants + "</div>"
                         + "<div class='item-text large'>" + object.applicants + "</div>";
-          }
+        } else {
+            content += "<div class='item-text large'>" + object.deadline + "</div>"
+                + "<div class='item-text'>" + object.programArea + "</div>";
+        }
             content += "</div>"
                 + "</div>"
                 + "<div class='card-footer'>"
@@ -856,7 +860,13 @@ GCTUser = {
                         var source = "";
                         if (value.shareText && value.shareURL) 
                             source = "<blockquote>Source: <a onclick='GCT.FireLink(this);' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
-                        
+
+                        var jobtype = '';
+                        if (value.jobtype) { jobtype += value.jobtype; }
+
+                        var roletype = '';
+                        if (value.roletype) { roletype += value.roletype; }
+
                         var programArea = "<b>" + GCTLang.Trans("program-area") + "</b>";
                         if (value.programArea) { programArea += value.programArea; }
 
@@ -914,6 +924,8 @@ GCTUser = {
                             icon: value.userDetails.iconURL,
                             name: value.userDetails.displayName,
                             date: prettyDate(value.time_created),
+                            jobtype: jobtype,
+                            roletype: roletype,
                             title: value.title,
                             oppType: oppType,
                             description: text,
@@ -2102,7 +2114,7 @@ GCTUser = {
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.opportunity", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.opportunitytest", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2122,7 +2134,7 @@ GCTUser = {
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.opportunities", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.opportunitiestest", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2742,12 +2754,28 @@ GCTEach = {
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
         var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_opportunity' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
+        var programArea = "<b>" + GCTLang.Trans("program-area") + "</b>";
+        if (value.programArea) { programArea += value.programArea; }
+
+        var deadline = "<b>" + GCTLang.Trans("deadline") + "</b>";
+        if (value.deadline) { deadline += value.deadline; }
+
+        var jobtype = '';
+        if (value.jobtype) { jobtype += value.jobtype; }
+
+        var roletype = '';
+        if (value.roletype) { roletype += value.roletype; }
+
         var content = GCTLang.txtOpps({
             guid: value.guid,
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
             date: prettyDate(value.time_created),
+            jobtype: jobtype,
+            roletype: roletype,
             description: text.trunc(150),
+            programArea: programArea,
+            deadline: deadline,
             type: "gccollab_opportunity",
             replied: replied,
             action: action,
