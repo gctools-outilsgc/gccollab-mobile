@@ -1407,17 +1407,45 @@ GCTUser = {
             function (value) { }
         );
     },
+    
     Share: function (obj) {
         var guid = $(obj).data("guid");
         var type = $(obj).data("type");
         $(".popover").remove();
 
-        console.log("share " + guid + '-' +  type);
-
         myApp.prompt('Share this post with others:', 'Share', function (value) {
-            console.log("shareing " + guid + " with '" + value + "'");
+
+            GCTUser.ShareWire(guid, value, function(data){
+                console.log(data);
+                myApp.alert(data.result);
+                myApp.pullToRefreshTrigger(".pull-to-refresh-content");
+            }, function(jqXHR, textStatus, errorThrown){
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        });
+
+            myApp.pullToRefreshTrigger(".pull-to-refresh-content");
+    },
+
+    ShareWire: function (guid, message, successCallback, errorCallback) { 
+        $$.ajax({
+            api_key: api_key_gccollab,
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "share.post", user: GCTUser.Email(), guid: guid, message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                console.log(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
         });
     },
+
     Delete: function (obj) {
         var guid = $(obj).data("guid");
         $(".popover").remove();
