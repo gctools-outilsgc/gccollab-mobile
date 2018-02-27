@@ -773,8 +773,8 @@ myApp.onPageInit('group', function (page) {
             + '<div class="list-block">'
             + '<ul>';
         if (access) {
-            popoverHTML += (enabled.activity) ? '<li><a href="#" class="item-link list-button" onclick="console.log(' + guid + ');">' + "hello" + '</a></li>' : "";
-            popoverHTML += (enabled.bookmarks) ? '<li><a href="#" class="item-link list-button" onclick="GCTGroup.Bookmark(' + limit + "," + offset + "," + guid + ');">' + GCTLang.Trans('bookmarks') + '</a></li>' : "";
+            popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#" class="item-link list-button" onclick="GCTGroup.Activity(' + guid + "," + limit + "," + offset + ');">' + GCTLang.Trans('activity') + '</a></li>' : "";
+            popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#" class="item-link list-button" onclick="GCTGroup.Bookmark(' + limit + "," + offset + "," + guid + ');">' + GCTLang.Trans('bookmarks') + '</a></li>' : "";
         } else {
             popoverHTML += '<li><a href="#" class="item-link list-button">' + "Private Group" + '</a></li>';
         }

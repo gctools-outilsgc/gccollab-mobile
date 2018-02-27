@@ -2867,6 +2867,47 @@ GCTEach = {
 }
 
 GCTGroup = {
+    Activity: function (guid, limit, offset) {
+        var groupActivityMoreOffset = 0;
+        var limit = 10;
+        GCTUser.GetGroupActivity(guid, limit, offset, function (data) {
+            var activityData = data.result;
+
+            var content = '<div id="group-activity-popup">';
+            $(activityData).each(function (key, value) {
+                content += GCTEach.Activity(value);
+            });
+            content += '</div><a id="group-activity-more" class="button button-big button-fill">' + GCTLang.Trans('view-more') + '</a>';
+            $('.popup-generic .popup-title').html(GCTLang.Trans('activity'));
+            $('.popup-generic .popup-content').html(content);
+            myApp.popup('.popup-generic');
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+            });
+        $(document).on('click', '#group-activity-more', function (e) {
+            console.log("loading more activity");
+            GCTUser.GetGroupActivity(guid, limit, groupActivityMoreOffset + limit, function (data) {
+                var activityData = data.result;
+
+                if (activityData.length > 0) {
+                    $('#group-activity-more').show();
+
+                    var content = "";
+                    $(activityData).each(function (key, value) {
+                        content += GCTEach.Activity(value);
+                    });
+                    $(content).hide().appendTo('#group-activity-popup').fadeIn(1000);
+                } else {
+                    $('#group-activity-more').hide();
+                    $(noMatches).hide().appendTo('#group-activity-popup').fadeIn(1000);
+                }
+
+                groupActivityMoreOffset += limit;
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        });
+    },
     Bookmark: function (limit, offset, guid) {
         var groupBookmarksMoreOffset = 0;
         var limit = 10;
@@ -2892,6 +2933,7 @@ GCTGroup = {
             GCTUser.GetBookmarksByUser(limit, groupBookmarksMoreOffset + limit, guid, function (data) {
                 var bookmarks = data.result;
                 var content = '';
+                
                 if (bookmarks.length > 0) {
                     $('#group-bookmarks-more').show();
                     $.each(bookmarks, function (key, value) {
