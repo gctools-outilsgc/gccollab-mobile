@@ -728,6 +728,7 @@ myApp.onPageInit('group', function (page) {
     var groupBookmarksMoreOffset = 0;
     var enabled;
     var access;
+    var membersloaded = false;
 
     GCTUser.GetGroup(guid, function(data){
         var group = data.result;
@@ -917,6 +918,48 @@ myApp.onPageInit('group', function (page) {
         });
     });
 
+    $$('#tab-group-members').on('show', function (e) {
+        if (membersloaded == false) {
+            GCTUser.GetGroupMembers(guid, limit, offset, function (data) {
+                var members = data.result;
+                console.log(members);
+                if (members.length > 0) {
+                    $.each(members, function (key, value) {
+                        var content = GCTEach.Member(value);
+                        $(content).appendTo('#group-members');
+                    });
+                } else {
+                    var content = noMatches;
+                    $(content).appendTo('#group-members');
+                }
+                membersloaded = true;
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
+    });
+    $(document).on('click', '#group-members-more', function (e) {
+        GCTUser.GetGroupMembers(guid, limit, groupMembersMoreOffset + limit, function (data) {
+            var members = data.result;
+
+            var content = '';
+            if (members.length > 0) {
+                $('#group-members-more').show();
+                $.each(members, function (key, value) {
+                    content += GCTEach.Member(value);
+                });
+                $(content).hide().appendTo('#group-members').fadeIn(1000);
+            } else {
+                $('#group-members-more').hide();
+                $(noMatches).hide().appendTo('#group-members').fadeIn(1000);
+            }
+
+            groupMembersMoreOffset += limit;
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    });
+
     GCTUser.GetGroupActivity(guid, limit, offset, function(data){
         var activityData = data.result;
             
@@ -937,8 +980,6 @@ myApp.onPageInit('group', function (page) {
 
             if(activityData.length > 0){
                 $('#group-activity-more').show();
-
-                var activity = "";
                 $(activityData).each(function( key, value ) {
                     var content = GCTEach.Activity(value);
                     $(content).appendTo('#group-activity');
