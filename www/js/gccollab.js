@@ -729,6 +729,7 @@ myApp.onPageInit('group', function (page) {
     var enabled;
     var access;
     var membersloaded = false;
+    var activityloaded = false;
 
     GCTUser.GetGroup(guid, function(data){
         var group = data.result;
@@ -774,7 +775,7 @@ myApp.onPageInit('group', function (page) {
             + '<div class="list-block">'
             + '<ul>';
         if (access) {
-            popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#" class="item-link list-button" onclick="GCTGroup.Activity(' + guid + "," + limit + "," + offset + ');">' + GCTLang.Trans('activity') + '</a></li>' : "";
+            popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#tab-group-activity" class="button tab-link" data-translate="activity">Activity</a></li>' : "";
             popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#" class="item-link list-button" onclick="GCTGroup.Bookmark(' + limit + "," + offset + "," + guid + ');">' + GCTLang.Trans('bookmarks') + '</a></li>' : "";
         } else {
             popoverHTML += '<li><a href="#" class="item-link list-button">' + "Private Group" + '</a></li>';
@@ -922,7 +923,6 @@ myApp.onPageInit('group', function (page) {
         if (membersloaded == false) {
             GCTUser.GetGroupMembers(guid, limit, offset, function (data) {
                 var members = data.result;
-                console.log(members);
                 if (members.length > 0) {
                     $.each(members, function (key, value) {
                         var content = GCTEach.Member(value);
@@ -960,17 +960,26 @@ myApp.onPageInit('group', function (page) {
         });
     });
 
-    GCTUser.GetGroupActivity(guid, limit, offset, function(data){
-        var activityData = data.result;
-            
-        var activity = "";
-        $(activityData).each(function (key, value) {
-            var content = GCTEach.Activity(value);
-            $(content).appendTo('#group-activity');
-        });
-    }, function(jqXHR, textStatus, errorThrown){
-        console.log(jqXHR, textStatus, errorThrown);
+    $$('#tab-group-activity').on('show', function (e) {
+        if (activityloaded == false) {
+            GCTUser.GetGroupActivity(guid, limit, offset, function (data) {
+                var activity = data.result;
+                if (activity.length > 0) {
+                    $(activity).each(function (key, value) {
+                        var content = GCTEach.Activity(value);
+                        $(content).appendTo('#group-activity');
+                    });
+                } else {
+                    var content = noMatches;
+                    $(content).appendTo('#group-activity');
+                }
+                activityloaded = true;
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
     });
+
 
     var groupActivityMore = $$(page.container).find('#group-activity-more');
     groupActivityMore.on('click', function (e) {
