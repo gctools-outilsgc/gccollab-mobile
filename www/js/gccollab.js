@@ -726,10 +726,12 @@ myApp.onPageInit('group', function (page) {
     var groupActivityMoreOffset = 0;
     var groupMembersMoreOffset = 0;
     var groupBookmarksMoreOffset = 0;
+    var enabled;
+    var access;
 
     GCTUser.GetGroup(guid, function(data){
         var group = data.result;
-        
+        console.log(group);
         var tags = (group.tags) ? ($.isArray(group.tags) ? (group.tags).join(", ") : group.tags) : GCTLang.Trans('no-tags');
         if( group.liked ){
             $(".like").addClass('liked');
@@ -739,11 +741,13 @@ myApp.onPageInit('group', function (page) {
         } else {
             $("#join-group").show();
         }
-        if (group.private) {
-            //$('#group-description').hide();
-            $("#group-description").html(GCTLang.Trans("private-group"));
-        } else {
+        access = group.access;
+        if (group.access) {
             $("#group-description").html(group.description);
+            enabled = group.enabled;
+        } else {
+            $("#group-description").html(GCTLang.Trans("private-group"));
+            enabled = false;
         }
 
         $("#group-icon").attr('src', group.iconURL);
@@ -759,6 +763,26 @@ myApp.onPageInit('group', function (page) {
 
     }, function(jqXHR, textStatus, errorThrown){
         console.log(jqXHR, textStatus, errorThrown);
+    });
+
+    $("#group-menu").on('click', function (e) {
+        console.log(enabled);
+        console.log(guid);
+        var popoverHTML = '<div class="popover pop-group-menu">'
+            + '<div class="popover-inner">'
+            + '<div class="list-block">'
+            + '<ul>';
+        if (access) {
+            popoverHTML += (enabled.activity) ? '<li><a href="#" class="item-link list-button" onclick="console.log(' + guid + ');">' + "hello" + '</a></li>' : "";
+            popoverHTML += (enabled.bookmarks) ? '<li><a href="#" class="item-link list-button" onclick="GCTGroup.Bookmark(' + limit + "," + offset + "," + guid + ');">' + GCTLang.Trans('bookmarks') + '</a></li>' : "";
+        } else {
+            popoverHTML += '<li><a href="#" class="item-link list-button">' + "Private Group" + '</a></li>';
+        }
+        popoverHTML += '</ul>'
+            + '</div>'
+            + '</div>'
+            + '</div>';
+        myApp.popover(popoverHTML, this);
     });
 
     $("#group-discussion").on('click', function (e) {

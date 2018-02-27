@@ -1680,7 +1680,7 @@ GCTUser = {
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.group", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.grouptest", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2863,6 +2863,51 @@ GCTEach = {
             likes: likes
         })
         return content;
+    }
+}
+
+GCTGroup = {
+    Bookmark: function (limit, offset, guid) {
+        var groupBookmarksMoreOffset = 0;
+        var limit = 10;
+        GCTUser.GetBookmarksByUser(limit, offset, guid, function (data) {
+            var bookmarks = data.result;
+            var content = '<div id="group-bookmarks-popup">';
+            if (bookmarks.length > 0) {
+                $.each(bookmarks, function (key, value) {
+                    content += GCTEach.Bookmark(value);
+                });
+            } else {
+                content += noMatches;
+            }
+            content += '</div><a id="group-bookmarks-more" class="button button-big button-fill">' + GCTLang.Trans('view-more') + '</a>';
+
+            $('.popup-generic .popup-title').html(GCTLang.Trans('bookmarks'));
+            $('.popup-generic .popup-content').html(content);
+            myApp.popup('.popup-generic');
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+        $(document).on('click', '#group-bookmarks-more', function (e) {
+            GCTUser.GetBookmarksByUser(limit, groupBookmarksMoreOffset + limit, guid, function (data) {
+                var bookmarks = data.result;
+                var content = '';
+                if (bookmarks.length > 0) {
+                    $('#group-bookmarks-more').show();
+                    $.each(bookmarks, function (key, value) {
+                        content += GCTEach.Bookmark(value);
+                    });
+                    $(content).hide().appendTo('#group-bookmarks-popup').fadeIn(1000);
+                } else {
+                    $('#group-bookmarks-more').hide();
+                    $(noMatches).hide().appendTo('#group-bookmarks-popup').fadeIn(1000);
+                }
+
+                groupBookmarksMoreOffset += limit;
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        });
     }
 }
 // Exemple of link : https://exemple.ca/services/api/rest/json/?
