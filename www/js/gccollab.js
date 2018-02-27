@@ -730,6 +730,7 @@ myApp.onPageInit('group', function (page) {
     var access;
     var membersloaded = false;
     var activityloaded = false;
+    var bookmarksloaded = false;
 
     GCTUser.GetGroup(guid, function(data){
         var group = data.result;
@@ -776,7 +777,8 @@ myApp.onPageInit('group', function (page) {
             + '<ul>';
         if (access) {
             popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#tab-group-activity" class="button tab-link" data-translate="activity">Activity</a></li>' : "";
-            popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#" class="item-link list-button" onclick="GCTGroup.Bookmark(' + limit + "," + offset + "," + guid + ');">' + GCTLang.Trans('bookmarks') + '</a></li>' : "";
+            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-group-discussion" class="button tab-link" data-translate="discussion">Discussion</a></li>' : "";
+            popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#tab-group-bookmarks" class="button tab-link" data-translate="bookmarks">Bookmarks</a></li>' : "";
         } else {
             popoverHTML += '<li><a href="#" class="item-link list-button">' + "Private Group" + '</a></li>';
         }
@@ -834,44 +836,47 @@ myApp.onPageInit('group', function (page) {
         });
     });
 
-    $("#group-bookmarks").on('click', function (e) {
-        GCTUser.GetBookmarksByUser(limit, offset, guid, function (data) {
-            var bookmarks = data.result;
-            var content = '<div id="group-bookmarks-popup">';
-            if (bookmarks.length > 0) {
-                $.each(bookmarks, function (key, value) {
-                    content += GCTEach.Bookmark(value);
-                });
-            } else {
-                content += noMatches;
-            }
-            content += '</div><a id="group-bookmarks-more" class="button button-big button-fill">' + GCTLang.Trans('view-more') + '</a>';
-
-            $('.popup-generic .popup-title').html(GCTLang.Trans('bookmarks'));
-            $('.popup-generic .popup-content').html(content);
-            myApp.popup('.popup-generic');
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-        $(document).on('click', '#group-bookmarks-more', function (e) {
-            GCTUser.GetBookmarksByUser(limit, groupBookmarksMoreOffset + limit, guid, function (data) {
+    $("#tab-group-bookmarks").on('show', function (e) {
+        if (bookmarksloaded == false) {
+            GCTUser.GetBookmarksByUser(limit, offset, guid, function (data) {
                 var bookmarks = data.result;
-                var content = '';
                 if (bookmarks.length > 0) {
-                    $('#group-bookmarks-more').show();
                     $.each(bookmarks, function (key, value) {
-                        content += GCTEach.Bookmark(value);
+                        var content = GCTEach.Bookmark(value);
+                        $(content).appendTo('#group-bookmarks');
                     });
-                    $(content).hide().appendTo('#group-bookmarks-popup').fadeIn(1000);
-                } else {
-                    $('#group-bookmarks-more').hide();
-                    $(noMatches).hide().appendTo('#group-bookmarks-popup').fadeIn(1000);
                 }
-
-                groupBookmarksMoreOffset += limit;
+                if (bookmarks.length < limit) {
+                    var content = noMatches;
+                    $(content).appendTo('#group-bookmarks');
+                    $('#group-bookmarks-more').hide();
+                }
+                bookmarksloaded = true;
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
             });
+        }
+    });
+
+    $(document).on('click', '#group-bookmarks-more', function (e) {
+        GCTUser.GetBookmarksByUser(limit, groupBookmarksMoreOffset + limit, guid, function (data) {
+            var bookmarks = data.result;
+            var content = '';
+            if (bookmarks.length > 0) {
+                $('#group-bookmarks-more').show();
+                $.each(bookmarks, function (key, value) {
+                    content += GCTEach.Bookmark(value);
+                });
+                $(content).hide().appendTo('#group-bookmarks').fadeIn(1000);
+            } else {
+                $(noMatches).hide().appendTo('#group-bookmarks').fadeIn(1000);
+            }
+            if (bookmarks.length < limit) {
+                $('#group-bookmarks-more').hide();
+            }
+            groupBookmarksMoreOffset += limit;
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
         });
     });
 
