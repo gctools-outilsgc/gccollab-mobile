@@ -238,6 +238,7 @@ GCTLang = {
                 + "</div>"
                 + "<div class='card-content'>"
                     + "<div class='card-content-inner'" + object.all_text +">"
+                    + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"                    
                         + "<div class='blog-title'>" + object.title + "</div>"
                         + "<div class='title'> <b>" + object.jobtype + "(" + object.roletype + ")" + "</b></div>"
                         + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>";
@@ -275,8 +276,7 @@ GCTLang = {
             content += "</div>"
                 + "</div>"
                 + "<div class='card-footer'>"
-                    + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-                    //+ "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.SharePost(this);'><i class='fa fa-share-alt-square'></i> <span>" + GCTLang.Trans("share") + "</span></a>"
+                     + "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ApplyPost(this);'> <span>Apply</span></a>"
                     + object.action
                 + "</div>"
             + "</div>"
@@ -1478,7 +1478,6 @@ GCTUser = {
         var type = $(obj).data("type");
 
         var mine = (owner == GCTUser.Guid());
-
         var popoverHTML = '<div class="popover more-options-choices">'
             + '<div class="popover-inner">'
                 + '<div class="list-block">'
@@ -1487,7 +1486,7 @@ GCTUser = {
                         + '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
                         if( mine ){
                             if( type == "gccollab_wire_post" ){ popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
-                            popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>';
+                            if( type != "gccollab_opportunity" ){ popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>';}
                         }
                     popoverHTML += '</ul>'
                 + '</div>'
@@ -2482,8 +2481,47 @@ GCTUser = {
                 errorCallback(jqXHR, textStatus, errorThrown);
             }
         });
+    },
+    ApplyPost: function (obj) {
+        var guid = $(obj).data("guid");
+        var type = $(obj).data("type");
+        $(".popover").remove();
+
+        myApp.prompt('Message to opportunity creator', 'Apply', function (value) {
+
+            GCTUser.ApplyOpt(guid, value, function(data){
+                console.log(data);
+                myApp.alert(data.result);
+                myApp.pullToRefreshTrigger(".pull-to-refresh-content");
+            }, function(jqXHR, textStatus, errorThrown){
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        });
+
+            myApp.pullToRefreshTrigger(".pull-to-refresh-content");
+    },
+
+    ApplyOpt: function (guid, message, successCallback, errorCallback) { 
+        $$.ajax({
+            api_key: api_key_gccollab,
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "apply.post", user: GCTUser.Email(), guid: guid, message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                console.log(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
     }
 }
+
+
 
 /* GCTEach - handles the different content cards. For 'each(type' sends each value to the corrisponding GCTEach function, and it handles the variables to send to 'GCTLang.txtType' and returns the result */
 GCTEach = {
