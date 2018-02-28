@@ -745,11 +745,10 @@ myApp.onPageInit('group', function (page) {
             $("#join-group").show();
         }
         access = group.access;
+        $("#group-description").html(group.description);
         if (group.access) {
-            $("#group-description").html(group.description);
             enabled = group.enabled;
         } else {
-            $("#group-description").html(GCTLang.Trans("private-group"));
             enabled = false;
         }
 
@@ -789,15 +788,13 @@ myApp.onPageInit('group', function (page) {
         myApp.popover(popoverHTML, this);
     });
 
-    $("#group-discussion").on('click', function (e) {
+    $("#tab-group-discussion").on('show', function (e) {
         GCTUser.GetGroupDiscussions(guid,limit, offset, function(data){
             var discussions = data.result;
-
-            var content = '<div id="group-members-popup">';
+            var content = '';
             if(discussions.length > 0){
-
                 $.each(discussions, function (key, value) {
-
+                    console.log(value);
                     // Removes HTML components from Discussion
                     var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
                     var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
@@ -824,13 +821,9 @@ myApp.onPageInit('group', function (page) {
                     });
 
                 });
+                $(content).appendTo('#group-discussion');
             } 
-            content += '</div><a id="group-members-more" class="button button-big button-fill">' + GCTLang.Trans('view-more') + '</a>';
-            content += '<div class="speed-dial"><a href="#" class="floating-button"><i class="icon icon-plus"></i><i class="icon icon-close"></i></a><div class="speed-dial-buttons"><a onclick="GCTUser.NewDiscussion();"> <i class="fa fa-comment"></i></a></div></div>';
             
-            $('.popup-generic .popup-title').html(GCTLang.Trans('discussion'));
-            $('.popup-generic .popup-content').html(content);
-            myApp.popup('.popup-generic');
         }, function(jqXHR, textStatus, errorThrown){
             console.log(jqXHR, textStatus, errorThrown);
         });
