@@ -32,6 +32,7 @@
     "owner": "Owner",
 
     "home": "Home",
+    "gccollab": "GCcollab",
     "the-wire": "The Wire",
     "newsfeed": "Newsfeed",
     "group": "Group",
@@ -238,6 +239,7 @@ French = {
     "owner": "Propriétaire",
 
     "home": "Accueil",
+    "gccollab": "GCcollab",
     "the-wire": "Le fil",
     "newsfeed": "Fil de nouvelles",
     "group": "Groupe",

@@ -768,8 +768,6 @@ myApp.onPageInit('group', function (page) {
     });
 
     $("#group-menu").on('click', function (e) {
-        console.log(enabled);
-        console.log(guid);
         var popoverHTML = '<div class="popover pop-group-menu">'
             + '<div class="popover-inner">'
             + '<div class="list-block">'
