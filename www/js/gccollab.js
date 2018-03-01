@@ -2551,7 +2551,6 @@ myApp.onPageInit('bookmarks', function (page) {
             if (bookmarks.length > 0) {
                 $('#bookmarks-mine-more').show();
                 $.each(bookmarks, function (key, value) {
-                    console.log(value);
                     var content = GCTEach.Bookmark(value);
                     $(content).hide().appendTo('#bookmarks-mine').fadeIn(1000);
                 });

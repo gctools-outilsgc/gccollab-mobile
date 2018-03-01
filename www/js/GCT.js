@@ -2012,10 +2012,6 @@ GCTUser = {
     GetBookmarksByUser: function (limit, offset, target, successCallback, errorCallback) {
         limit = limit || 10;
         offset = offset || 0;
-        console.log(target);
-        if (target == '') {
-            target = GCTUser.Email();
-        }
 
         $$.ajax({
             api_key: api_key_gccollab,
