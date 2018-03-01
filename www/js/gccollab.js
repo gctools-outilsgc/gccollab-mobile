@@ -734,7 +734,7 @@ myApp.onPageInit('group', function (page) {
 
     GCTUser.GetGroup(guid, function(data){
         var group = data.result;
-        console.log(group);
+       
         var tags = (group.tags) ? ($.isArray(group.tags) ? (group.tags).join(", ") : group.tags) : GCTLang.Trans('no-tags');
         if( group.liked ){
             $(".like").addClass('liked');
