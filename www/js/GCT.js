@@ -377,6 +377,17 @@ GCTLang = {
         content = GCT.SetLinks(content);
         return content;
     },
+    txtUserList: function (content) {
+        var contentNew = '<li>'
+            + '<div class="item-content">'
+            + '<div class="item-inner">'
+            + content
+        '</div>'
+            + '</div>'
+            + '</li>'
+            + '<li>';
+        return contentNew;
+    },
     liGEDSResult: function (object) {
         var content = "<li class='item-content'>"
             + "<div class='item-inner'>"
@@ -845,6 +856,10 @@ GCTUser = {
                 break;
             case "group":
                 mainView.router.loadPage({ url: 'group.html?guid=' + guid });
+                break;
+
+            case "gccollab_profile":
+                mainView.router.loadPage({ url: 'profile.html?guid=' + guid });
                 break;
 
             case "gccollab_opportunity":
