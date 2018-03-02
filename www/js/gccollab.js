@@ -753,6 +753,7 @@ myApp.onPageInit('group', function (page) {
         }
 
         $("#group-icon").attr('src', group.iconURL);
+        $("#group-icon").attr('alt', "Group Icon of" + group.userDetails.displayName);
         $("#group-title").html(group.name).text();
         $("#group-owner").text(group.userDetails.displayName);
         $("#group-owner-click").attr('onclick', "ShowProfile(" + group.owner_guid + ");");
