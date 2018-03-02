@@ -1,0 +1,81 @@
+<div data-page="profile" class="page navbar-fixed">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left sliding"><a href="#" class="link back"><i class="icon icon-back"></i></a></div>
+            <div class="center" data-translate="Profile">Profile</div>
+            <div class="item-after"><a id="profile-menu" href="#" class="link pull-right more-options"><i class="icon icon-bars"></i></a></div>
+        </div>
+    </div>
+    <div class="toolbar tabbar">
+        <div class="toolbar-inner">
+            <a href="#tab-user-profile" class="button active tab-link" data-translate="profile">Profile</a>
+            <a href="#tab-user-groups" class="button tab-link" data-translate="groups">Groups</a>
+        </div>
+    </div>
+    <div class="page-content hide-bars-on-scroll">
+        <div class="tabs">
+
+            <div id="tab-user-profile" class="tab active list-block media-list">
+                <div class="item-content userprofile">
+                    <div class="item-media"><img id="user-icon" onclick="ShowImage(this);" src="" width="44"></div>
+                    <div class="item-inner">
+                        <div class="item-title-row">
+                            <div class="item-title" id="user-title"></div>
+                        </div>
+                        <div class="item-subtitle" id="user-department"></div>
+                    </div>
+                </div>
+                <div class="row margin-10" id="action-buttons">
+                    <!-- For message + add colleague -->
+                </div>
+                <div class="list-block inputs-list vmargin-0" id="user-info-list">
+                    <!-- For profile information: name, department, job, email, etc. -->
+                </div>
+                <hr>
+                <div class="content-block text-center vmargin-10">
+                    <div class="row profiles">
+                        <div class="col-33 profiles" id="wire-num"></div>
+                        <div class="col-33 profiles" id="blog-num"></div>
+                        <div class="col-33 profiles" id="colleague-num"></div>
+                    </div>
+                    <div class="row profile stats">
+                        <div class="col-33 profile stats font-13" data-translate="wires">Wires</div>
+                        <div class="col-33 profile stats font-13" data-translate="blogs">Blogs</div>
+                        <div class="col-33 profile stats font-13" data-translate="colleagues">Colleagues</div>
+                    </div>
+                </div>
+                <hr>
+                <div id="social-media" class="content-block vmargin-10"></div>
+            </div>
+
+            <div id="tab-user-colleagues" class="tab page-content">
+                <div class="list-block media-list"><ul id="user-colleagues"></ul></div>
+                <a id="group-colleagues-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            </div>
+            <div id="tab-user-activity" class="tab page-content">
+                <div class="list-block media-list"><ul id="user-activity"></ul></div>
+                <a id="user-activity-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            </div>
+            <div id="tab-user-discussion" class="tab page-content">
+                <div class="list-block media-list"><ul id="user-discussion"></ul></div>
+                <a id="user-discussion-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            </div>
+            <div id="tab-user-bookmarks" class="tab page-content">
+                <div class="list-block media-list"><ul id="user-bookmarks"></ul></div>
+                <a id="user-bookmarks-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            </div>
+            <div id="tab-user-groups" class="tab page-content">
+                <div class="list-block media-list"><ul id="user-groups"></ul></div>
+                <a id="user-groups-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            </div>
+            <div id="tab-user-blogs" class="tab page-content">
+                <div class="list-block media-list"><ul id="user-blogs"></ul></div>
+                <a id="user-blogs-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            </div>
+            <div id="tab-user-wires" class="tab page-content">
+                <div class="list-block media-list"><ul id="user-wires"></ul></div>
+                <a id="user-wires-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            </div>
+        </div>
+    </div>
+</div>
