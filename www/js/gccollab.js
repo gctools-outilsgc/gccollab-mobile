@@ -3280,7 +3280,14 @@ myApp.onPageInit('opportunities', function (page) {
 });
 
 myApp.onPageInit('profile', function (page) {
-    var guid = page.query.guid;
+    var guid = page.query.guid; // Checks guid of page, as any link to profile should include the target guid
+    var profile_limit = 10;
+    /* TODO: Tab objects to hold loaded and offset variables. */
+    var ld_groups = false; //keeps track of group tab being loaded for the on show of tab
+    var offset_groups = 0;
+    var ld_activity = false; // Keeps track of activity tab being loaded for the on show of tab
+    var offset_activity = 0;
+    /* Fill profile tab of user profile. */
     GCTUser.GetUserProfile(guid, function (data) {
         var profileData = data.result;
         if (typeof profileData == "string") {
@@ -3363,45 +3370,88 @@ myApp.onPageInit('profile', function (page) {
         console.log(jqXHR, textStatus, errorThrown);
     });
 
-    GCTUser.GetUserGroups(guid, function (data2) {
-        var groupData = data2.result;
-
-        var groups = "";
-        $(groupData).each(function (key, value) {
-            // Removes HTML components from Blog
-            var text = (value.description !== null) ? value.description : "";
-
-            var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
-            groups += "<li><a class='item-link item-content close-popup' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>"
-                + "<div class='item-inner'>"
-                + "<div class='item-title-row no-padding-right'>"
-                + "<div class='item-title reg-text'>" + value.name + "</div>"
-                + "<div class='item-after'>" + members + "</div>"
-                + "</div>"
-                + "<div class='row ptm'>"
-                + "<div class='col-20'><img src='" + value.iconURL + "' width='50' alt='" + value.name + "'></div>"
-                + "<div class='col-80 item-text more_text'>" + text.trunc(500) + "</div>"
-                + "</div>"
-                + "</div>"
-                + "</a></li>";
-        });
-
-        $('#user-groups').html(groups);
-    }, function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR, textStatus, errorThrown);
+    /* Generate the popover drop down for user profile navigation on click */
+    $("#profile-menu").on('click', function (e) {
+        var popoverHTML = '<div class="popover pop-profile-menu">'
+            + '<div class="popover-inner">'
+            + '<div class="list-block">'
+            + '<ul>';
+        
+            popoverHTML += '<li><a href="#tab-user-activity" class="button tab-link" data-translate="activity">Activity</a></li>';
+        
+        popoverHTML += '</ul>'
+            + '</div>'
+            + '</div>'
+            + '</div>';
+        myApp.popover(popoverHTML, this);
     });
 
-    GCTUser.GetUserActivity(guid, 10, 0, function (data3) {
-        var activityData = data3.result;
+    $$('#tab-user-groups').on('show', function (e) {
+        if (!ld_groups) {
+            ld_groups = true;
+            GCTUser.GetUserGroups(guid, function (data2) {
+                var groupData = data2.result;
 
-        var activity = "";
-        $(activityData).each(function (key, value) {
-            var content = GCTEach.Activity(value);
+                var groups = "";
+                $(groupData).each(function (key, value) {
+                    // Removes HTML components from Blog
+                    var text = (value.description !== null) ? value.description : "";
 
-            $(content).appendTo('#user-activity');
+                    var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
+                    groups += "<li><a class='item-link item-content close-popup' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>"
+                        + "<div class='item-inner'>"
+                        + "<div class='item-title-row no-padding-right'>"
+                        + "<div class='item-title reg-text'>" + value.name + "</div>"
+                        + "<div class='item-after'>" + members + "</div>"
+                        + "</div>"
+                        + "<div class='row ptm'>"
+                        + "<div class='col-20'><img src='" + value.iconURL + "' width='50' alt='" + value.name + "'></div>"
+                        + "<div class='col-80 item-text more_text'>" + text.trunc(500) + "</div>"
+                        + "</div>"
+                        + "</div>"
+                        + "</a></li>";
+                });
+
+                $('#user-groups').html(groups);
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        } 
+    });
+    
+    $$('#tab-user-activity').on('show', function (e) {
+        if (!ld_activity) {
+            ld_activity = true;
+            GCTUser.GetUserActivity(guid, profile_limit, 0, function (data3) {
+                var activityData = data3.result;
+
+                var activity = "";
+                $('#user-activity').html(activity); //Clear activity on first load, see if fixes issue
+                $(activityData).each(function (key, value) {
+                    var content = GCTEach.Activity(value);
+
+                    $(content).appendTo('#user-activity');
+                });
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
+    });
+    $(document).on('click', '#user-activity-more', function (e) {
+        GCTUser.GetUserActivity(guid, profile_limit, offset_activity + profile_limit, function (data3) {
+            var activityData = data3.result;
+
+            var activity = "";
+            $(activityData).each(function (key, value) {
+                var content = GCTEach.Activity(value);
+
+                $(content).appendTo('#user-activity');
+            });
+            offset_activity += profile_limit;
+
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
         });
-    }, function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR, textStatus, errorThrown);
     });
 
 });
