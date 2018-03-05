@@ -3244,6 +3244,9 @@ myApp.onPageInit('profile', function (page) {
     var offset_groups = 0;
     var ld_activity = false; // Keeps track of activity tab being loaded for the on show of tab
     var offset_activity = 0;
+    var ld_bookmarks = false;
+    var offset_bookmarks = 0;
+
     /* Fill profile tab of user profile. */
     GCTUser.GetUserProfile(guid, function (data) {
         var profileData = data.result;
@@ -3334,7 +3337,9 @@ myApp.onPageInit('profile', function (page) {
             + '<div class="list-block">'
             + '<ul>';
         
-            popoverHTML += '<li><a href="#tab-user-activity" class="button tab-link" data-translate="activity">Activity</a></li>';
+        popoverHTML += '<li><a href="#tab-user-activity" class="button tab-link" data-translate="activity">Activity</a></li>';
+        popoverHTML += '<li><a href="#tab-user-bookmarks" class="button tab-link" data-translate="bookmarks">Bookmarks</a></li>';
+        
         
         popoverHTML += '</ul>'
             + '</div>'
@@ -3394,7 +3399,6 @@ myApp.onPageInit('profile', function (page) {
             });
         }
     });
-
     $$('#user-activity-more').on('click', function (e) {
         GCTUser.GetUserActivity(guid, profile_limit, offset_activity + profile_limit, function (data3) {
             var activityData = data3.result;
@@ -3412,6 +3416,27 @@ myApp.onPageInit('profile', function (page) {
         });
     });
 
+    $$('#tab-user-bookmarks').on('show', function (e) {
+        if (ld_bookmarks == false) {
+            ld_bookmarks = true;
+            GCTUser.GetBookmarksByUser(profile_limit, offset_bookmarks, guid, function (data) {
+                var bookmarks = data.result;
+                if (bookmarks.length > 0) {
+                    $.each(bookmarks, function (key, value) {
+                        var content = GCTEach.Bookmark(value);
+                        $(content).appendTo('#user-bookmarks');
+                    });
+                }
+                if (bookmarks.length < profile_limit) {
+                    var content = noMatches;
+                    $(content).appendTo('#user-bookmarks');
+                    $('#group-bookmarks-more').hide();
+                }
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
+    });
 
 });
         
