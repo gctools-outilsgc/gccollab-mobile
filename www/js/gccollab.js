@@ -796,7 +796,8 @@ myApp.onPageInit('group', function (page) {
                 $.each(discussions, function (key, value) {
                     console.log(value);
                     // Removes HTML components from Discussion
-                    var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
+                    //var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
+                    var text = "<blockquote class='item-text large'>" + value.description + "</blockquote>";
                     var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
                     var replied = (value.replied) ? "replied" : "";
                     var liked = (value.liked) ? "liked" : "";
@@ -808,7 +809,7 @@ myApp.onPageInit('group', function (page) {
                         name: value.userDetails.displayName,
                         date: prettyDate(value.time_created),
                         group: group,
-                        description: text.trunc(150),
+                        description: text,
                         title: value.title,
                         all_text: 'all_text',
                         action: action,
