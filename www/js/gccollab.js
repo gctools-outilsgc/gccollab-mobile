@@ -851,7 +851,7 @@ myApp.onPageInit('group', function (page) {
         }
     });
 
-    $(document).on('click', '#group-bookmarks-more', function (e) {
+    $$('#group-bookmarks-more').on('click', function (e) {
         GCTUser.GetBookmarksByUser(limit, groupBookmarksMoreOffset + limit, guid, function (data) {
             var bookmarks = data.result;
             var content = '';
@@ -872,51 +872,7 @@ myApp.onPageInit('group', function (page) {
             console.log(jqXHR, textStatus, errorThrown);
         });
     });
-
-    $("#group-members").on('click', function (e) {
-        GCTUser.GetGroupMembers(guid, limit, offset, function(data){
-            var members = data.result;
-
-            var content = '<div id="group-members-popup">';
-            if(members.length > 0){
-                $.each(members, function (key, value) {
-                    content += GCTEach.Member(value);
-                });
-            } else {
-                content += noMatches;
-            }
-            content += '</div><a id="group-members-more" class="button button-big button-fill">' + GCTLang.Trans('view-more') + '</a>';
-
-            $('.popup-generic .popup-title').html(GCTLang.Trans('members'));
-            $('.popup-generic .popup-content').html(content);
-            myApp.popup('.popup-generic');
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        $(document).on('click', '#group-members-more', function (e) {
-            GCTUser.GetGroupMembers(guid, limit, groupMembersMoreOffset + limit, function(data){
-                var members = data.result;
-
-                var content = '';
-                if(members.length > 0){
-                    $('#group-members-more').show();
-                    $.each(members, function (key, value) {
-                        content += GCTEach.Member(value);
-                    });
-                    $(content).hide().appendTo('#group-members-popup').fadeIn(1000);
-                } else {
-                    $('#group-members-more').hide();
-                    $(noMatches).hide().appendTo('#group-members-popup').fadeIn(1000);
-                }
-
-                groupMembersMoreOffset += limit;
-            }, function(jqXHR, textStatus, errorThrown){
-                console.log(jqXHR, textStatus, errorThrown);
-            });
-        });
-    });
-
+    
     $$('#tab-group-members').on('show', function (e) {
         if (membersloaded == false) {
             GCTUser.GetGroupMembers(guid, limit, offset, function (data) {
@@ -936,7 +892,7 @@ myApp.onPageInit('group', function (page) {
             });
         }
     });
-    $(document).on('click', '#group-members-more', function (e) {
+    $$('#group-members-more').on('click', function (e) {
         GCTUser.GetGroupMembers(guid, limit, groupMembersMoreOffset + limit, function (data) {
             var members = data.result;
 
@@ -3437,7 +3393,8 @@ myApp.onPageInit('profile', function (page) {
             });
         }
     });
-    $(document).on('click', '#user-activity-more', function (e) {
+
+    $$('#user-activity-more').on('click', function (e) {
         GCTUser.GetUserActivity(guid, profile_limit, offset_activity + profile_limit, function (data3) {
             var activityData = data3.result;
 
@@ -3453,6 +3410,7 @@ myApp.onPageInit('profile', function (page) {
             console.log(jqXHR, textStatus, errorThrown);
         });
     });
+
 
 });
         
