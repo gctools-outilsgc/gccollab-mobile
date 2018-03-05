@@ -90,7 +90,7 @@ GCTLang = {
                      + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
                         + "<div class='blog-title'>" + object.title + "</div>"
                         + "<div class='blog-group'>" + object.group + "</div>"
-                        + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
+                        + "<div class='item-text large'>" + object.description + "</div>"
                     + "</div>"
                 + "</div>"
                 + "<div class='card-footer'>"
