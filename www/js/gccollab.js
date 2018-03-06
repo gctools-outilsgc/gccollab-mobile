@@ -1327,6 +1327,11 @@ myApp.onPageInit('wire', function (page) {
             var content = GCTEach.Wire(value);
             $(content).hide().appendTo('#wires-colleagues').fadeIn(1000);
         });
+        if (wires.length < limit) {
+            var content = endOfContent;
+            $(content).hide().appendTo('#wires-colleagues').fadeIn(1000);
+            $('#wires-colleagues-more').hide();
+        }
     }, function(jqXHR, textStatus, errorThrown){
         console.log(jqXHR, textStatus, errorThrown);
     });
@@ -1338,6 +1343,11 @@ myApp.onPageInit('wire', function (page) {
             var content = GCTEach.Wire(value);
             $(content).hide().appendTo('#wires-mine').fadeIn(1000);
         });
+        if (wires.length < limit) {
+            var content = endOfContent;
+            $(content).hide().appendTo('#wires-mine').fadeIn(1000);
+            $('#wires-mine-more').hide();
+        }
     }, function(jqXHR, textStatus, errorThrown){
         console.log(jqXHR, textStatus, errorThrown);
     });
@@ -1367,7 +1377,11 @@ myApp.onPageInit('wire', function (page) {
                 var content = GCTEach.Wire(value);
                 $(content).hide().appendTo('#wires-colleagues').fadeIn(1000);
             });
-
+            if (wires.length < limit) {
+                var content = endOfContent;
+                $(content).hide().appendTo('#wires-colleagues').fadeIn(1000);
+                $('#wires-colleagues-more').hide();
+            }
             wiresColleaguesMoreOffset += limit;
         }, function(jqXHR, textStatus, errorThrown){
             console.log(jqXHR, textStatus, errorThrown);
@@ -1383,7 +1397,11 @@ myApp.onPageInit('wire', function (page) {
                 var content = GCTEach.Wire(value);
                 $(content).hide().appendTo('#wires-mines').fadeIn(1000);
             });
-
+            if (wires.length < limit) {
+                var content = endOfContent;
+                $(content).hide().appendTo('#wires-mine').fadeIn(1000);
+                $('#wires-mine-more').hide();
+            }
             wiresMineMoreOffset += limit;
         }, function(jqXHR, textStatus, errorThrown){
             console.log(jqXHR, textStatus, errorThrown);
