@@ -812,31 +812,36 @@ GCTUser = {
                 GCTUser.GetDiscussion(guid, function(data){
                     var discussion = data.result;
                     var content = ""; 
-                    $(discussion).each(function(key, value) {
-                        // Removes HTML components from Discussion
-                        var text = (value.description !== null) ? value.description : "";
-                        var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
-                        var replied = (value.replied) ? "replied" : "";
-                        var liked = (value.liked) ? "liked" : "";
-                        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                        var action = '';
+                    $(discussion).each(function (key, value) {
+                        if (value.subtype == "groupforumtopic") {
+                            // Removes HTML components from Discussion
+                            var text = (value.description !== null) ? value.description : "";
+                            var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+                            var replied = (value.replied) ? "replied" : "";
+                            var liked = (value.liked) ? "liked" : "";
+                            var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                            var action = '';
 
-                        content += GCTLang.txtDiscussion({
-                            icon: value.userDetails.iconURL,
-                            name: value.userDetails.displayName,
-                            date: prettyDate(value.time_created),
-                            group: group,
-                            description: text,
-                            title: value.title,
-                            all_text: "all_text",
-                            action: action,
-                            owner: value.owner_guid,
-                            guid: value.guid,
-                            type: "gccollab_discussion_post",
-                            replied: replied,
-                            liked: liked,
-                            likes: likes
-                        });
+                            content += GCTLang.txtDiscussion({
+                                icon: value.userDetails.iconURL,
+                                name: value.userDetails.displayName,
+                                date: prettyDate(value.time_created),
+                                group: group,
+                                description: text,
+                                title: value.title,
+                                all_text: "all_text",
+                                action: action,
+                                owner: value.owner_guid,
+                                guid: value.guid,
+                                type: "gccollab_discussion_post",
+                                replied: replied,
+                                liked: liked,
+                                likes: likes
+                            });
+                        } else if (value.subtype == "discussion_reply") {
+                            console.log("discussion reply");
+                        }
+                        
                     });
 
                     $('.popup-generic .popup-title').html(GCTLang.Trans("discussion"));
