@@ -476,6 +476,7 @@ GCTLang = {
 
 var noContent = '<div class="swiper-slide list-block cards-list"><div class="card"><div class="card-content"><div class="card-content-inner center"><div class="item-text">' + GCTLang.Trans('no-content') + '</div></div></div></div></div>';
 var noMatches = '<div class="card"><div class="card-content"><div class="card-content-inner"><div class="item-text">' + GCTLang.Trans('no-matches') + '</div></div></div></div>';
+var endOfContent = '<div class="card"><div class="card-content"><div class="card-content-inner"><div class="item-text">' + GCTLang.Trans("end-of-content") + '</div></div></div></div>';
 
 function isAppleDevice(){
     return (navigator.userAgent.match(/(iPhone|iPod|iPad)/) != null) ? true : false;

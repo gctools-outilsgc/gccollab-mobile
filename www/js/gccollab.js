@@ -3388,12 +3388,18 @@ myApp.onPageInit('profile', function (page) {
                 var activityData = data3.result;
 
                 var activity = "";
-                $('#user-activity').html(activity); //Clear activity on first load, see if fixes issue
-                $(activityData).each(function (key, value) {
-                    var content = GCTEach.Activity(value);
-
+                if (activityData.length > 0) {
+                    $(activityData).each(function (key, value) {
+                        var content = GCTEach.Activity(value);
+                        $(content).appendTo('#user-activity');
+                    });
+                }
+                if (activityData.length < profile_limit) {
+                    var content = endOfContent;
                     $(content).appendTo('#user-activity');
-                });
+                    $('#user-activity-more').hide();
+                }
+                
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
             });
@@ -3404,11 +3410,18 @@ myApp.onPageInit('profile', function (page) {
             var activityData = data3.result;
 
             var activity = "";
-            $(activityData).each(function (key, value) {
-                var content = GCTEach.Activity(value);
+            if (activityData.length > 0) {
+                $(activityData).each(function (key, value) {
+                    var content = GCTEach.Activity(value);
 
+                    $(content).appendTo('#user-activity');
+                });
+            }
+            if (activityData.length < profile_limit) {
+                var content = endOfContent;
                 $(content).appendTo('#user-activity');
-            });
+                $('#user-activity-more').hide();
+            }
             offset_activity += profile_limit;
 
         }, function (jqXHR, textStatus, errorThrown) {
@@ -3428,14 +3441,33 @@ myApp.onPageInit('profile', function (page) {
                     });
                 }
                 if (bookmarks.length < profile_limit) {
-                    var content = noMatches;
+                    var content = endOfContent;
                     $(content).appendTo('#user-bookmarks');
-                    $('#group-bookmarks-more').hide();
+                    $('#user-bookmarks-more').hide();
                 }
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
             });
         }
+    });
+    $$('#user-bookmarks-more').on('click', function (e) {
+        GCTUser.GetBookmarksByUser(profile_limit, offset_bookmarks + profile_limit, guid, function (data) {
+            var bookmarks = data.result;
+            if (bookmarks.length > 0) {
+                $.each(bookmarks, function (key, value) {
+                    var content = GCTEach.Bookmark(value);
+                    $(content).appendTo('#user-bookmarks');
+                });
+                offset_bookmarks += profile_limit;
+            }
+            if (bookmarks.length < profile_limit) {
+                var content = endOfContent;
+                $(content).appendTo('#user-bookmarks');
+                $('#user-bookmarks-more').hide();
+            }
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
     });
 
 });
