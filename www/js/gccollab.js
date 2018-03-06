@@ -129,55 +129,13 @@ function ShowProfile(email) {
         if( profileData.displayName == GCTUser.DisplayName() ){
             isOwnProfile = true;
         }
-
-        GCTUser.GetUserGroups(email, function(data2) {
-            var groupData = data2.result;
-
-            var groups = "";
-            $(groupData).each(function( key, value ) {
-                // Removes HTML components from Blog
-                var text = (value.description !== null) ? value.description : "";
-                
-                var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
-                groups += "<li><a class='item-link item-content close-popup' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>"
-                    + "<div class='item-inner'>"
-                        + "<div class='item-title-row no-padding-right'>"
-                          + "<div class='item-title reg-text'>" + value.name + "</div>"
-                          + "<div class='item-after'>" + members + "</div>"
-                        + "</div>"
-                        + "<div class='row ptm'>"
-                            + "<div class='col-20'><img src='" + value.iconURL + "' width='50' alt='" + value.name + "'></div>"
-                            + "<div class='col-80 item-text more_text'>" + text.trunc(500) + "</div>"
-                        + "</div>"
-                    + "</div>"
-                + "</a></li>";
-            });
-
-            $('#user-groups').html(groups);
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetUserActivity(email, 10, 0, function (data3) {
-            var activityData = data3.result;
-
-            var activity = "";
-            $(activityData).each(function (key, value) {
-                var content = GCTEach.Activity(value);
-                
-                $(content).appendTo('#user-activity');
-            });
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
+        
         var colleagueButton = (profileData.friend) ? '<a href="#" class="button button-fill button-raised" data-guid="' + profileData.id + '" onclick="GCTUser.RemoveColleague(this);">' + GCTLang.Trans("remove-colleague") + '</a>' : '<a href="#" class="button button-fill button-raised" data-guid="' + profileData.id + '" onclick="GCTUser.AddColleague(this);">' + GCTLang.Trans("add-colleague") + '</a>';
         
         var profile = '<div class="toolbar tabbar">'
                 + '<div class="toolbar-inner">'
                     + '<a href="#tab-profile" class="button active tab-link">' + GCTLang.Trans('profile') + '</a>'
-                    + '<a href="#tab-groups" class="button tab-link">' + GCTLang.Trans('groups') + '</a>'
-                    + '<a href="#tab-activity" class="button tab-link">' + GCTLang.Trans('activity') + '</a>'
+                    
                 + '</div>'
             + '</div>'
 
@@ -192,13 +150,6 @@ function ShowProfile(email) {
                             + '<div class="item-subtitle">' + profileData.department + '</div>'
                         + '</div>'
                     + '</div>';
-                if( !isOwnProfile ){
-                    profile += '<div class="row margin-10">'
-                        + '<div class="col-50"><a href="#" class="button button-fill button-raised" data-name="' + profileData.displayName + '" data-guid="' + profileData.id + '" onclick="GCTUser.NewMessage(this);">' + GCTLang.Trans("message") + '</a></div>'
-                        + '<div class="col-50">' + colleagueButton + '</div>'
-                        // + '<div class="col-33"><a href="#" class="button button-fill button-raised" data-guid="' + profileData.displayName + '" onclick="GCTUser.BlockUser(this);">' + GCTLang.Trans("blockuser") + '</a></div>'
-                    + '</div>';
-                }
                     profile += '<div class="page-content">'
                         + '<div class="list-block inputs-list vmargin-10">'
                             + '<ul>'
@@ -228,34 +179,6 @@ function ShowProfile(email) {
                                     + '</div>'
                                 + '</li>';
                             }
-                            profile += '<li>'
-                                + '<div class="item-content">'
-                                    + '<div class="item-inner">'
-                                        + '<div class="item-title label">' + GCTLang.Trans('email') + '</div>'
-                                        + '<div class="item-text"><a class="external" href="mailto:' + profileData.email + '">' + profileData.email + '</a></div>'
-                                    + '</div>'
-                                + '</div>'
-                            + '</li>';
-                            if( profileData.hasOwnProperty("telephone") && profileData.telephone !== null && profileData.telephone !== "" ){
-                                profile += '<li>'
-                                    + '<div class="item-content">'
-                                        + '<div class="item-inner">'
-                                            + '<div class="item-title label">' + GCTLang.Trans('phone') + '</div>'
-                                            + '<div class="item-text"><a class="external" href="tel:' + profileData.telephone + '">' + profileData.telephone + '</a></div>'
-                                        + '</div>'
-                                    + '</div>'
-                                + '</li>';
-                            }
-                            if( profileData.hasOwnProperty("about_me") && profileData.about_me !== null && profileData.about_me !== "" ){
-                                profile += '<li class="align-top">'
-                                    + '<div class="item-content">'
-                                        + '<div class="item-inner">'
-                                            + '<div class="item-title label">' + GCTLang.Trans('about-me') + '</div>'
-                                            + '<div class="item-text large" onclick="ToggleAllText(this);">' + profileData.about_me + '</div>'
-                                        + '</div>'
-                                    + '</div>'
-                                + '</li>';
-                            }
                             profile += '</ul>'
                         + '</div>'
 
@@ -272,28 +195,19 @@ function ShowProfile(email) {
                                 + '<div class="col-33 profile stats font-13">' + GCTLang.Trans('colleagues') + '</div>'
                             + '</div>'
                         + '</div>'
-                        + '<hr>';
+                                + '<hr>';
 
-                    if( profileData.hasOwnProperty("links") ){
-                        profile += '<div id="social-media" class="content-block vmargin-10">'
-                            + '<div class="center">' + GCTLang.Trans('social-media') + '</div>'
-                            + '<ul class="socials">';
-                                if( profileData.links.hasOwnProperty("github") ){ profile += '<li><a id="user-github" href="' + profileData.links.github + '" class="gh external"><i class="fa fa-github"></i></a></li>'; }
-                                if( profileData.links.hasOwnProperty("twitter") ){ profile += '<li><a id="user-twitter" href="' + profileData.links.twitter + '" class="tw external"><i class="fa fa-twitter"></i></a></li>'; }
-                                if( profileData.links.hasOwnProperty("linkedin") ){ profile += '<li><a id="user-linkedin" href="' + profileData.links.linkedin + '" class="li external"><i class="fa fa-linkedin"></i></a></li>'; }
-                                if( profileData.links.hasOwnProperty("facebook") ){ profile += '<li><a id="user-facebook" href="' + profileData.links.facebook + '" class="fb external"><i class="fa fa-facebook"></i></a></li>'; }
-                            profile += '</ul>'
-                        + '</div>';
+                    if( !isOwnProfile ){
+                                profile += '<div class="row margin-10">'
+                                    + '<div class="col-50"><a href="#" class="button button-fill button-raised" data-name="' + profileData.displayName + '" data-guid="' + profileData.id + '" onclick="GCTUser.NewMessage(this);">' + GCTLang.Trans("message") + '</a></div>'
+                                    + '<div class="col-50">' + colleagueButton + '</div>'
+                                    // + '<div class="col-33"><a href="#" class="button button-fill button-raised" data-guid="' + profileData.displayName + '" onclick="GCTUser.BlockUser(this);">' + GCTLang.Trans("blockuser") + '</a></div>'
+                                + '</div>';
                     }
 
-                profile += '</div>'
-            + '</div>'
+                   
 
-            + '<div id="tab-groups" class="tab">'
-                + '<div class="list-block media-list"><ul id="user-groups"></ul></div>'
-            + '</div>'
-            + '<div id="tab-activity" class="tab">'
-                + '<div class="list-block media-list"><ul id="user-activity"></ul></div>'
+                profile += '</div>'
             + '</div>'
             + "<a class='link' data-guid='" + profileData.id + "' data-type='gccollab_profile' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + " Temp</a>"
 
