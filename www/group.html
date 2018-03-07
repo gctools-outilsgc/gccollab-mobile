@@ -1,18 +1,26 @@
-<div data-page="group" class="page navbar-fixed">
+<div data-page="group" class="page navbar-fixed with-subnavbar">
   <div class="navbar">
       <div class="navbar-inner">
-          <div class="left sliding"><a href="#" class="link back"><i class="icon icon-back"></i></a></div>
+          <div class="left sliding"><a href="#" data-panel="left" class="open-panel link icon-only" aria-label="Button to open Site Navigation Menu"><i class="icon icon-bars"></i></a></div>
           <div class="center" data-translate="group">Group</div>
-          <div class="item-after"><a id="group-menu" href="#" class="link pull-right more-options"><i class="icon icon-bars"></i></a></div>
+          <div class="right sliding"><a href="#" data-panel="right" class="open-panel link icon-only" aria-label="Button to open Notification Panel"><i class="fa fa-bell badge-wrapper"></i></a></div>
       </div>
+      <div class="subnavbar">
+          <div class="buttons-row">
+              <a href="#tab-group-profile" class="button active tab-link" data-translate="profile">Profile</a>
+              <a href="#tab-group-members" class="button tab-link" data-translate="members">Members</a>
+              <a id="group-menu" href="#" class="button tab-link" data-translate="More">More</a>
+          </div>
+        </div>
   </div>
-  <div class="toolbar tabbar">
+
+  <div class="toolbar toolbar-bottom">
       <div class="toolbar-inner">
-          <a href="#tab-group-profile" class="button active tab-link" data-translate="profile">Profile</a>
-          <a href="#tab-group-members" class="button tab-link" data-translate="members">Members</a>
+          <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="icon icon-back"></i></a></div>
       </div>
   </div>
-  <div class="page-content hide-bars-on-scroll">
+
+  <div class="page-content hide-bars-on-scroll with-subnavbar">
       <div class="tabs">
           <div id="tab-group-profile" class="tab active list-block media-list">
               <div class="item-content">
@@ -44,19 +52,19 @@
                   </ul>
               </div>
           </div>
-          <div id="tab-group-members" class="tab page-content">
+          <div id="tab-group-members" class="tab">
               <div class="list-block media-list"><ul id="group-members"></ul></div>
               <a id="group-members-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
           </div>
-          <div id="tab-group-activity" class="tab page-content">
+          <div id="tab-group-activity" class="tab">
               <div class="list-block media-list"><ul id="group-activity"></ul></div>
               <a id="group-activity-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
           </div>
-          <div id="tab-group-discussion" class="tab page-content">
+          <div id="tab-group-discussion" class="tab">
               <div class="list-block media-list"><ul id="group-discussion"></ul></div>
               <a id="group-discussion-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
           </div>
-          <div id="tab-group-bookmarks" class="tab page-content">
+          <div id="tab-group-bookmarks" class="tab">
               <div class="list-block media-list"><ul id="group-bookmarks"></ul></div>
               <a id="group-bookmarks-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
           </div>
