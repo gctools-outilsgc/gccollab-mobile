@@ -1,36 +1,44 @@
-<div data-page="wire" class="page navbar-fixed">
-  <div class="navbar">
-    <div class="navbar-inner">
-      <div class="left sliding"><a href="#" class="link back"><i class="icon icon-back"></i></a></div>
-      <div class="center" data-translate="the-wire">The Wire</div>
-      <div class="right sliding"><a href="#" class="link icon-only" onclick="GCTUser.PostWirePost();"><i class="fa fa-comment"></i></a></div>
+<div data-page="wire" class="page navbar-fixed  with-subnavbar">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left sliding"><a href="#" data-panel="left" class="open-panel link icon-only" aria-label="Button to open Site Navigation Menu"><i class="icon icon-bars"></i></a></div>
+            <div class="center" data-translate="the-wire">The Wire</div>
+            <div class="right sliding"><a href="#" data-panel="right" class="open-panel link icon-only" aria-label="Button to open Notification Panel"><i class="fa fa-bell badge-wrapper"></i></a></div>
+        </div>
+        <div class="subnavbar">
+            <div class="buttons-row">
+                <a href="#tab-all" class="button active tab-link">All</a>
+                <a href="#tab-colleagues" class="button tab-link">Colleagues</a>
+                <a href="#tab-mine" class="button tab-link">Mine</a>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="toolbar tabbar">
-    <div class="toolbar-inner">
-      <a href="#tab-all" class="button active tab-link">All</a>
-      <a href="#tab-colleagues" class="button tab-link">My Colleagues</a>
-      <a href="#tab-mine" class="button tab-link">Mine</a>
+
+    <div class="toolbar toolbar-bottom">
+        <div class="toolbar-inner">
+            <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="icon icon-back"></i></a></div>
+            <div class="right sliding"><a href="#" class="link icon-only" onclick="GCTUser.PostWirePost();"><i class="fa fa-comment"></i></a></div>
+        </div>
     </div>
-  </div>
-  <div class="page-content hide-bars-on-scroll pull-to-refresh-content">
-    <div class="pull-to-refresh-layer">
-      <div class="preloader"></div>
-      <div class="pull-to-refresh-arrow"></div>
+
+    <div class="page-content hide-bars-on-scroll pull-to-refresh-content with-subnavbar">
+        <div class="pull-to-refresh-layer">
+            <div class="preloader"></div>
+            <div class="pull-to-refresh-arrow"></div>
+        </div>
+        <div class="tabs">
+            <div id="tab-all" class="tab active">
+                <div id="wires-all" class="context"></div>
+                <a id="wires-all-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            </div>
+            <div id="tab-colleagues" class="tab ">
+                <div id="wires-colleagues" class="context"></div>
+                <a id="wires-colleagues-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            </div>
+            <div id="tab-mine" class="tab ">
+                <div id="wires-mine" class="context"></div>
+                <a id="wires-mine-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            </div>
+        </div>
     </div>
-    <div class="tabs">
-      <div id="tab-all" class="tab page-content active">
-        <div id="wires-all" class="context"></div>
-        <a id="wires-all-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
-      </div>
-      <div id="tab-colleagues" class="tab page-content">
-        <div id="wires-colleagues" class="context"></div>
-        <a id="wires-colleagues-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
-      </div>
-      <div id="tab-mine" class="tab page-content">
-        <div id="wires-mine" class="context"></div>
-        <a id="wires-mine-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
-      </div>
-    </div>
-  </div>
 </div>
