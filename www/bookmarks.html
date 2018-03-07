@@ -2,17 +2,23 @@
 
     <div class="navbar">
         <div class="navbar-inner">
-            <div class="left sliding"><a href="#" class="link back"><i class="icon icon-back"></i></a></div>
+            <div class="left sliding"><a href="#" data-panel="left" class="open-panel link icon-only" aria-label="Button to open Site Navigation Menu"><i class="icon icon-bars"></i></a></div>
             <div class="center" data-translate="bookmarks">Bookmarks</div>
-            <!--<div class="right sliding"><a href="#" class="link icon-only open-popup" data-popup=".popup-filters"><i class="fa fa-filter"></i></a></div>-->
+            <div class="right sliding"><a href="#" data-panel="right" class="open-panel link icon-only" aria-label="Button to open Notification Panel"><i class="fa fa-bell badge-wrapper"></i></a></div>
+        </div>
+        <div class="subnavbar">
+            <div class="buttons-row">
+                <a href="#tab-all" class="button active tab-link">All</a>
+                <a href="#tab-colleagues" class="button tab-link">Colleagues</a>
+                <a href="#tab-mine" class="button tab-link">Mine</a>
+            </div>
         </div>
     </div>
 
-    <div class="toolbar tabbar">
+    <div class="toolbar toolbar-bottom">
         <div class="toolbar-inner">
-            <a href="#tab-all" class="button active tab-link">All</a>
-            <a href="#tab-colleagues" class="button tab-link">My Colleagues</a>
-            <a href="#tab-mine" class="button tab-link">Mine</a>
+            <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="icon icon-back"></i></a></div>
+            <!--<div class="right sliding"><a href="#" class="link icon-only open-popup" data-popup=".popup-filters"><i class="fa fa-filter"></i></a></div>-->
         </div>
     </div>
 
