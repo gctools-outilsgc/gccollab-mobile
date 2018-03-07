@@ -1,11 +1,17 @@
 <div data-page="discussion" class="page navbar-fixed">
   <div class="navbar">
-    <div class="navbar-inner">
-      <div class="left sliding"><a href="#" class="link back"><i class="icon icon-back"></i></a></div>
-      <div class="center" data-translate="discussions">discussions</div>
-      <div class="right sliding"><a href="#" class="link icon-only open-popup" data-popup=".popup-filters"><i class="fa fa-filter"></i></a></div>
-      <!-- <div class="right sliding"><a href="#" class="link icon-only" onclick="GCTUser.NewBlogPost();"><i class="fa fa-comment"></i></a></div> -->
-    </div>
+      <div class="navbar-inner">
+          <div class="left sliding"><a href="#" data-panel="left" class="open-panel link icon-only" aria-label="Button to open Site Navigation Menu"><i class="icon icon-bars"></i></a></div>
+          <div class="center" data-translate="discussions">discussions</div>
+          <div class="right sliding"><a href="#" data-panel="right" class="open-panel link icon-only" aria-label="Button to open Notification Panel"><i class="fa fa-bell badge-wrapper"></i></a></div>
+      </div>
+  </div>
+  <div class="toolbar toolbar-bottom">
+      <div class="toolbar-inner">
+          <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="icon icon-back"></i></a></div>
+          <div class="right sliding"><a href="#" class="link icon-only open-popup" data-popup=".popup-filters"><i class="fa fa-filter"></i></a></div>
+          <!-- <div class="right sliding"><a href="#" class="link icon-only" onclick="GCTUser.NewBlogPost();"><i class="fa fa-comment"></i></a></div> -->
+      </div>
   </div>
   <div class="page-content hide-bars-on-scroll pull-to-refresh-content">
     <div class="pull-to-refresh-layer">
