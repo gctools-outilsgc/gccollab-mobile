@@ -766,6 +766,7 @@ GCTUser = {
         
         switch(type) {
             case "gccollab_blog_post":
+                mainView.router.loadPage({ url: 'entity.html?guid=' + guid });
                 GCTUser.GetBlog(guid, function(data){
                     var blog = data.result;
                     var content = ""; 
@@ -800,15 +801,15 @@ GCTUser = {
                         });
                     });
 
-                    $('.popup-generic .popup-title').html(GCTLang.Trans("blog"));
-                    $('.popup-generic .popup-content').html(content);
-                    myApp.popup('.popup-generic');
+                    $('#entity-title').html(GCTLang.Trans("blog"));
+                    $(content).hide().appendTo('#entity-main').fadeIn(500);
                 }, function(jqXHR, textStatus, errorThrown){
                     console.log(jqXHR, textStatus, errorThrown);
                 });
                 break;
 
-                case "gccollab_discussion_post":
+            case "gccollab_discussion_post":
+                mainView.router.loadPage({ url: 'entity.html?guid=' + guid });
                 GCTUser.GetDiscussion(guid, function(data){
                     var discussion = data.result;
                     var content = ""; 
@@ -843,10 +844,9 @@ GCTUser = {
                         }
                         
                     });
-
-                    $('.popup-generic .popup-title').html(GCTLang.Trans("discussion"));
-                    $('.popup-generic .popup-content').html(content);
-                    myApp.popup('.popup-generic');
+                    
+                    $('#entity-title').html(GCTLang.Trans("discussion"));
+                    $(content).hide().appendTo('#entity-main').fadeIn(500);
                 }, function(jqXHR, textStatus, errorThrown){
                     console.log(jqXHR, textStatus, errorThrown);
                 });
@@ -869,6 +869,7 @@ GCTUser = {
                 break;
 
             case "gccollab_opportunity":
+                mainView.router.loadPage({ url: 'entity.html?guid=' + guid });
                 GCTUser.GetOpportunity(guid, function (data) {
                     var opportunity = data.result;
                     var content = "";
@@ -980,15 +981,15 @@ GCTUser = {
                         });
                     });
 
-                    $('.popup-generic .popup-title').html(GCTLang.Trans("opportunity"));
-                    $('.popup-generic .popup-content').html(content);
-                    myApp.popup('.popup-generic');
+                    $('#entity-title').html(GCTLang.Trans("opportunity"));
+                    $(content).hide().appendTo('#entity-main').fadeIn(500);
                 }, function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR, textStatus, errorThrown);
                 });
                 break;
 
             case "gccollab_event":
+                mainView.router.loadPage({ url: 'entity.html?guid=' + guid });
                 GCTUser.GetEvent(guid, function (data) {
                     var event = data.result;
                     var content = "";
@@ -1064,10 +1065,8 @@ GCTUser = {
                             eventLang: eventLang
                         });
                     });
-
-                    $('.popup-generic .popup-title').html(GCTLang.Trans("event"));
-                    $('.popup-generic .popup-content').html(content);
-                    myApp.popup('.popup-generic');
+                    $('#entity-title').html(GCTLang.Trans("event"));
+                    $(content).hide().appendTo('#entity-main').fadeIn(500);
                 }, function(jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR, textStatus, errorThrown);
                     var eve_link = "https://gccollab.ca/event_calendar/view/" + guid;
@@ -1076,6 +1075,7 @@ GCTUser = {
                 break;
 
             case "gccollab_wire_post":
+                mainView.router.loadPage({ url: 'entity.html?guid=' + guid });
                 GCTUser.GetWire(guid, 1, function(data){
                     var wires = data.result.reverse();
                     var content = "";
@@ -1115,15 +1115,15 @@ GCTUser = {
                         });
                     });
 
-                    $('.popup-generic .popup-title').html(GCTLang.Trans("wire"));
-                    $('.popup-generic .popup-content').html(content);
-                    myApp.popup('.popup-generic');
+                    $('#entity-title').html(GCTLang.Trans("wire"));
+                    $(content).hide().appendTo('#entity-main').fadeIn(500);
                 }, function(jqXHR, textStatus, errorThrown){
                     console.log(jqXHR, textStatus, errorThrown);
                 });
                 break;
 
             case "gccollab_bookmark":
+                mainView.router.loadPage({ url: 'entity.html?guid=' + guid });
                 GCTUser.GetBookmark(guid, function (data) {
                     var bookmark = data.result;
                     var content = "";
@@ -1155,9 +1155,8 @@ GCTUser = {
                             likes: likes
                         })
                     });
-                    $('.popup-generic .popup-title').html(GCTLang.Trans("bookmark"));
-                    $('.popup-generic .popup-content').html(content);
-                    myApp.popup('.popup-generic');
+                    $('#entity-title').html(GCTLang.Trans("bookmark"));
+                    $(content).hide().appendTo('#entity-main').fadeIn(500);
                 }, function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR, textStatus, errorThrown);
                 });
