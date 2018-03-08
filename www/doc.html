@@ -1,18 +1,26 @@
 <div data-page="doc" class="page navbar-fixed">
-  <div class="navbar">
-    <div class="navbar-inner">
-      <div class="left sliding"><a href="#" class="link back"><i class="icon icon-back"></i></a></div>
-      <div class="center" id="doc-title">Doc</div>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left sliding"><a href="#" data-panel="left" class="open-panel link icon-only" aria-label="Button to open Site Navigation Menu"><i class="icon icon-bars"></i></a></div>
+            <div class="center" id="doc-title">Doc</div>
+            <div class="right sliding"><a href="#" data-panel="right" class="open-panel link icon-only" aria-label="Button to open Notification Panel"><i class="fa fa-bell badge-wrapper"></i></a></div>
+        </div>
     </div>
-  </div>
-  <div class="page-content hide-bars-on-scroll">
-  	<form action="https://gccollab.ca/services/api/rest/json/?" target="doc-iframe" method="post" id="docForm">
-      <input type="hidden" name="method" value="login.userfordocs" />
-      <input type="hidden" id="user" name="user" value="" />
-      <input type="hidden" id="key" name="key" value="" />
-      <input type="hidden" id="guid" name="guid" value="" />
-      <input type="hidden" name="_persistent" value="true" />
-    </form>
-	<iframe name="doc-iframe" id="doc-iframe" />
-  </div>
+
+    <div class="toolbar toolbar-bottom">
+        <div class="toolbar-inner">
+            <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="icon icon-back"></i></a></div>
+        </div>
+    </div>
+
+    <div class="page-content hide-bars-on-scroll">
+        <form action="https://gccollab.ca/services/api/rest/json/?" target="doc-iframe" method="post" id="docForm">
+            <input type="hidden" name="method" value="login.userfordocs" />
+            <input type="hidden" id="user" name="user" value="" />
+            <input type="hidden" id="key" name="key" value="" />
+            <input type="hidden" id="guid" name="guid" value="" />
+            <input type="hidden" name="_persistent" value="true" />
+        </form>
+        <iframe name="doc-iframe" id="doc-iframe" />
+    </div>
 </div>
