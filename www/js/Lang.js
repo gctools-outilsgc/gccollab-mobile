@@ -181,7 +181,7 @@
     "participants": "Participants: ",
     "applicants": "Applicants: ",
 
-    "sign-in-p1": "A collaborative and networking space open to all Canadian public servants (federal, provincial and territorial), academics and students, as well as to all Canadians by invitation.",
+    "sign-in-p1": "A collaborative and networking space open to all Canadian public servants (federal, provincial, territorial and municipal), academics and students, as well as to all Canadians by invitation.",
     "sign-in-p2": "Join the conversation!",
     "email": "Email",
     "username-email": "Username or email",
@@ -391,7 +391,7 @@ French = {
     "participants": "Participants: ",
     "applicants": "Candidats: ",
 
-    "sign-in-p1": "Un espace de collaboration et de réseautage ouvert à tous les fonctionnaires canadiens (fédéraux, provinciaux et territoriaux), universitaires et étudiants, ainsi qu'à tous les Canadiens et à toutes les Canadiennes, par invitation.",
+    "sign-in-p1": "Un espace de collaboration et de réseautage ouvert à tous les fonctionnaires canadiens (fédéraux, provinciaux, territoriaux, et municipaux), universitaires et étudiants, ainsi qu'à tous les Canadiens et à toutes les Canadiennes, par invitation.",
     "sign-in-p2": "Prenez part à la conversation!",
     "email": "Courriel",
     "username-email": "Nom d'utilisateur ou courriel",
