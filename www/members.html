@@ -1,28 +1,36 @@
-<div data-page="members" class="page navbar-fixed">
-  <div class="navbar">
-    <div class="navbar-inner">
-      <div class="left sliding"><a href="#" class="link back"><i class="icon icon-back"></i></a></div>
-      <div class="center" data-translate="members">Members</div>
-      <div class="right sliding"><a href="#" class="link icon-only open-popup" data-popup=".popup-filters"><i class="fa fa-filter"></i></a></div>
+<div data-page="members" class="page navbar-fixed with-subnavbar">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="left sliding"><a href="#" data-panel="left" class="open-panel link icon-only" aria-label="Button to open Site Navigation Menu"><i class="icon icon-bars"></i></a></div>
+            <div class="center" data-translate="members">Members</div>
+            <div class="right sliding"><a href="#" data-panel="right" class="open-panel link icon-only" aria-label="Button to open Notification Panel"><i class="fa fa-bell badge-wrapper"></i></a></div>
+        </div>
+        <div class="subnavbar">
+            <div class="buttons-row">
+                <a href="#tab-all-members" class="button active tab-link">All</a>
+                <a href="#tab-colleagues-members" class="button tab-link">My Colleagues</a>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="toolbar tabbar">
-    <div class="toolbar-inner">
-      <a href="#tab-all" class="button active tab-link">All</a>
-      <a href="#tab-colleagues" class="button tab-link">My Colleagues</a>
+
+    <div class="toolbar toolbar-bottom">
+        <div class="toolbar-inner">
+            <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="icon icon-back"></i></a></div>
+            <div class="right sliding"><a href="#" class="link icon-only open-popup" data-popup=".popup-filters" aria-label="Button for Filters"><i class="fa fa-filter"></i></a></div>
+        </div>
     </div>
-  </div>
-  <div class="page-content hide-bars-on-scroll pull-to-refresh-content">
+
+  <div class="page-content hide-bars-on-scroll pull-to-refresh-content with-subnavbar">
     <div class="pull-to-refresh-layer">
       <div class="preloader"></div>
       <div class="pull-to-refresh-arrow"></div>
     </div>
     <div class="tabs">
-      <div id="tab-all" class="tab page-content active">
+      <div id="tab-all-members" class="tab active">
         <div id="members-all" class="context"></div>
         <a id="members-all-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
       </div>
-      <div id="tab-colleagues" class="tab page-content">
+      <div id="tab-colleagues-members" class="tab">
         <div id="members-colleagues" class="context"></div>
         <a id="members-colleagues-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
       </div>
