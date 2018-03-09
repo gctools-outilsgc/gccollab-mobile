@@ -3085,6 +3085,8 @@ myApp.onPageInit('profile', function (page) {
     var offset_bookmarks = 0;
     var ld_wires = false;
     var offset_wires = 0;
+    var ld_blogs = false;
+    var offset_blogs = 0;
 
     /* Fill profile tab of user profile. */
     GCTUser.GetUserProfile(guid, function (data) {
@@ -3179,7 +3181,7 @@ myApp.onPageInit('profile', function (page) {
         popoverHTML += '<li><a href="#tab-user-activity" class="button tab-link" data-translate="activity">Activity</a></li>';
         popoverHTML += '<li><a href="#tab-user-bookmarks" class="button tab-link" data-translate="bookmarks">Bookmarks</a></li>';
         popoverHTML += '<li><a href="#tab-user-wires" class="button tab-link" data-translate="wires">Wires</a></li>';
-        
+        popoverHTML += '<li><a href="#tab-user-blogs" class="button tab-link" data-translate="blogs">Blogs</a></li>';
         
         popoverHTML += '</ul>'
             + '</div>'
@@ -3346,6 +3348,48 @@ myApp.onPageInit('profile', function (page) {
                 var content = endOfContent;
                 $(content).hide().appendTo('#user-wires').fadeIn(1000);
                 $('#user-wires-more').hide();
+            }
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    });
+
+    $$('#tab-user-blogs').on('show', function (e) {
+        if (ld_blogs == false) {
+            GCTUser.GetBlogsByUser(profile_limit, offset_blogs, guid, function (data) {
+                var blogs = data.result;
+
+                if (blogs.length > 0) {
+                    $.each(blogs, function (key, value) {
+                        var content = GCTEach.Blog(value);
+                        $(content).hide().appendTo('#user-blogs').fadeIn(1000);
+                    });
+                } 
+                if (blogs.length < profile_limit) {
+                    var content = endOfContent;
+                    $(content).hide().appendTo('#user-blogs').fadeIn(1000);
+                    $('#user-blogs-more').hide();
+                }
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
+    });
+    $$('#user-blogs-more').on('click', function (e) {
+        GCTUser.GetBlogsByUser(profile_limit, offset_blogs + profile_limit, guid, function (data) {
+            var blogs = data.result;
+
+            if (blogs.length > 0) {
+                $.each(blogs, function (key, value) {
+                    var content = GCTEach.Blog(value);
+                    $(content).hide().appendTo('#user-blogs').fadeIn(1000);
+                });
+                offset_blogs += profile_limit;
+            }
+            if (blogs.length < profile_limit) {
+                var content = endOfContent;
+                $(content).hide().appendTo('#user-blogs').fadeIn(1000);
+                $('#user-blogs-more').hide();
             }
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);

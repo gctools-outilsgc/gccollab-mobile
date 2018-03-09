@@ -1222,6 +1222,26 @@ GCTUser = {
             }
         });
     },
+    GetBlogsByUser: function (limit, offset, target, successCallback, errorCallback) {
+        limit = limit || 10;
+        offset = offset || 0;
+
+        $$.ajax({
+            api_key: api_key_gccollab,
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "get.blogpostsbyowner", user: GCTUser.Email(), limit: limit, offset: offset, target: target, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetDiscussion: function (guid, successCallback, errorCallback) {
         $$.ajax({
             api_key: api_key_gccollab,
