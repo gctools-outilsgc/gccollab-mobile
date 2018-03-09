@@ -610,49 +610,52 @@ myApp.onPageInit('group', function (page) {
     });
 
     $("#tab-group-discussion").on('show', function (e) {
-        GCTUser.GetGroupDiscussions(guid,limit, offset, function(data){
-            var discussions = data.result;
-            var content = '';
-            if(discussions.length > 0){
-                $.each(discussions, function (key, value) {
-                    // Removes HTML components from Discussion
-                    //var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
-                    var text = "<blockquote class='item-text large'>" + value.description + "</blockquote>";
-                    var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        if (!ld_discussion) {
+            ld_discussion = true;
+            GCTUser.GetGroupDiscussions(guid,limit, offset, function(data){
+                var discussions = data.result;
+                var content = '';
+                if(discussions.length > 0){
+                    $.each(discussions, function (key, value) {
+                        // Removes HTML components from Discussion
+                        //var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
+                        var text = "<blockquote class='item-text large'>" + value.description + "</blockquote>";
+                        var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+                        var replied = (value.replied) ? "replied" : "";
+                        var liked = (value.liked) ? "liked" : "";
+                        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
-                     content += GCTLang.txtDiscussion({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        group: group,
-                        description: text,
-                        title: value.title,
-                        all_text: 'all_text',
-                        action: action,
-                        owner: value.owner_guid,
-                        guid: value.guid,
-                        type: "gccollab_discussion_post",
-                        replied: replied,
-                        liked: liked,
-                        likes: likes
+                         content += GCTLang.txtDiscussion({
+                            icon: value.userDetails.iconURL,
+                            name: value.userDetails.displayName,
+                            date: prettyDate(value.time_created),
+                            group: group,
+                            description: text,
+                            title: value.title,
+                            all_text: 'all_text',
+                            action: action,
+                            owner: value.owner_guid,
+                            guid: value.guid,
+                            type: "gccollab_discussion_post",
+                            replied: replied,
+                            liked: liked,
+                            likes: likes
+                        });
+
                     });
-
-                });
-                $(content).appendTo('#group-discussion');
-            } 
-            if (discussions.length < limit) {
-                var content = endOfContent;
-                $(content).appendTo('#group-discussion');
-                $('#group-discussion-more').hide();
-            }
+                    $(content).appendTo('#group-discussion');
+                } 
+                if (discussions.length < limit) {
+                    var content = endOfContent;
+                    $(content).appendTo('#group-discussion');
+                    $('#group-discussion-more').hide();
+                }
             
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+            }, function(jqXHR, textStatus, errorThrown){
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
     });
     $$("#group-discussion-more").on('click', function (e) {
         GCTUser.GetGroupDiscussions(guid, limit, offset_discussion + limit , function(data){
@@ -804,8 +807,6 @@ myApp.onPageInit('group', function (page) {
             });
         }
     });
-
-
     var groupActivityMore = $$(page.container).find('#group-activity-more');
     groupActivityMore.on('click', function (e) {
         console.log("loading more activity");
@@ -828,6 +829,7 @@ myApp.onPageInit('group', function (page) {
             console.log(jqXHR, textStatus, errorThrown);
         });
     });
+
 });
 
 myApp.onPageInit('sign-in', function (page) {
