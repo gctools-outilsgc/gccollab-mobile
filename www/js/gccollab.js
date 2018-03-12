@@ -3141,6 +3141,22 @@ myApp.onPageInit('profile', function (page) {
     var ld_blogs = false;
     var offset_blogs = 0;
 
+    /* Change needed ids to be guid specific */
+    $("#TabLink-profile").attr('id', "TabLink-profile-" + guid);
+    $("#TabLink-groups").attr('id', "TabLink-groups-" + guid);
+    $("#TabLink-profile-" + guid).attr('href', "#tab-user-profile-" + guid);
+    $("#TabLink-groups-" + guid).attr('href', "#tab-user-groups-" + guid);
+
+    $("#tab-user-profile").attr('id', "tab-user-profile-" + guid);
+    $("#tab-user-activity").attr('id', "tab-user-activity-" + guid);
+    $("#tab-user-discussion").attr('id', "tab-user-discussion-" + guid);
+    $("#tab-user-bookmarks").attr('id', "tab-user-bookmarks-" + guid);
+    $("#tab-user-groups").attr('id', "tab-user-groups-" + guid);
+    $("#tab-user-blogs").attr('id', "tab-user-blogs-" + guid);
+    $("#tab-user-wires").attr('id', "tab-user-wires-" + guid);
+
+    $("#profile-menu").attr('id', "profile-menu-" + guid);
+
     /* Fill profile tab of user profile. */
     GCTUser.GetUserProfile(guid, function (data) {
         var profileData = data.result;
@@ -3225,16 +3241,16 @@ myApp.onPageInit('profile', function (page) {
     });
 
     /* Generate the popover drop down for user profile navigation on click */
-    $("#profile-menu").on('click', function (e) {
+    $("#profile-menu-" + guid).on('click', function (e) {
         var popoverHTML = '<div class="popover pop-profile-menu">'
             + '<div class="popover-inner">'
             + '<div class="list-block">'
             + '<ul>';
         
-        popoverHTML += '<li><a href="#tab-user-activity" class="button tab-link" data-translate="activity">Activity</a></li>';
-        popoverHTML += '<li><a href="#tab-user-bookmarks" class="button tab-link" data-translate="bookmarks">Bookmarks</a></li>';
-        popoverHTML += '<li><a href="#tab-user-wires" class="button tab-link" data-translate="wires">Wires</a></li>';
-        popoverHTML += '<li><a href="#tab-user-blogs" class="button tab-link" data-translate="blogs">Blogs</a></li>';
+        popoverHTML += '<li><a id="TabLink-activity-' + guid + '" href="#tab-user-activity-' + guid +'" class="button tab-link" data-translate="activity">Activity</a></li>';
+        popoverHTML += '<li><a id="TabLink-bookmarks-' + guid + '" href="#tab-user-bookmarks-' + guid +'" class="button tab-link" data-translate="bookmarks">Bookmarks</a></li>';
+        popoverHTML += '<li><a id="TabLink-wires-' + guid + '" href="#tab-user-wires-' + guid +'" class="button tab-link" data-translate="wires">Wires</a></li>';
+        popoverHTML += '<li><a id="TabLink-blogs-' + guid + '" href="#tab-user-blogs-' + guid +'" class="button tab-link" data-translate="blogs">Blogs</a></li>';
         
         popoverHTML += '</ul>'
             + '</div>'
@@ -3243,7 +3259,7 @@ myApp.onPageInit('profile', function (page) {
         myApp.popover(popoverHTML, this);
     });
 
-    $$('#tab-user-groups').on('show', function (e) {
+    $$('#tab-user-groups-' + guid).on('show', function (e) {
         if (!ld_groups) {
             ld_groups = true;
             GCTUser.GetUserGroups(guid, function (data2) {
@@ -3276,7 +3292,7 @@ myApp.onPageInit('profile', function (page) {
         } 
     });
     
-    $$('#tab-user-activity').on('show', function (e) {
+    $$('#tab-user-activity-' + guid).on('show', function (e) {
         if (!ld_activity) {
             ld_activity = true;
             GCTUser.GetUserActivity(guid, profile_limit, 0, function (data3) {
@@ -3324,7 +3340,7 @@ myApp.onPageInit('profile', function (page) {
         });
     });
 
-    $$('#tab-user-bookmarks').on('show', function (e) {
+    $$('#tab-user-bookmarks-' + guid).on('show', function (e) {
         if (ld_bookmarks == false) {
             ld_bookmarks = true;
             GCTUser.GetBookmarksByUser(profile_limit, offset_bookmarks, guid, function (data) {
@@ -3365,7 +3381,7 @@ myApp.onPageInit('profile', function (page) {
         });
     });
 
-    $$('#tab-user-wires').on('show', function (e) {
+    $$('#tab-user-wires-' + guid).on('show', function (e) {
         if (ld_wires == false) {
             ld_wires = true;
             GCTUser.GetWiresByUser(guid, profile_limit, offset_wires, function (data) {
@@ -3407,7 +3423,7 @@ myApp.onPageInit('profile', function (page) {
         });
     });
 
-    $$('#tab-user-blogs').on('show', function (e) {
+    $$('#tab-user-blogs-' + guid).on('show', function (e) {
         if (ld_blogs == false) {
             GCTUser.GetBlogsByUser(profile_limit, offset_blogs, guid, function (data) {
                 var blogs = data.result;
