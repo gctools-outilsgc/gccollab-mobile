@@ -3140,6 +3140,8 @@ myApp.onPageInit('profile', function (page) {
     var offset_wires = 0;
     var ld_blogs = false;
     var offset_blogs = 0;
+    var ld_colleagues = false;
+    var offset_colleagues = 0;
 
     /* Change needed ids to be guid specific */
     $("#TabLink-profile").attr('id', "TabLink-profile-" + guid);
@@ -3148,6 +3150,7 @@ myApp.onPageInit('profile', function (page) {
     $("#TabLink-groups-" + guid).attr('href', "#tab-user-groups-" + guid);
 
     $("#tab-user-profile").attr('id', "tab-user-profile-" + guid);
+    $("#tab-user-colleagues").attr('id', "tab-user-colleagues-" + guid);
     $("#tab-user-activity").attr('id', "tab-user-activity-" + guid);
     $("#tab-user-discussion").attr('id', "tab-user-discussion-" + guid);
     $("#tab-user-bookmarks").attr('id', "tab-user-bookmarks-" + guid);
@@ -3174,6 +3177,8 @@ myApp.onPageInit('profile', function (page) {
     $('#user-wires-more').attr("id", "user-wires-more-" + guid);
     $("#user-blogs").attr("id", "user-blogs-" + guid);
     $("#user-blogs-more").attr("id", "user-blogs-more-" + guid);
+    $("#user-colleagues").attr("id", "user-colleagues-" + guid);
+    $("#user-colleagues-more").attr("id", "user-colleagues-more-" + guid);
 
     /* Fill profile tab of user profile. */
     GCTUser.GetUserProfile(guid, function (data) {
@@ -3265,10 +3270,12 @@ myApp.onPageInit('profile', function (page) {
             + '<div class="list-block">'
             + '<ul>';
         
-        popoverHTML += '<li><a id="TabLink-activity-' + guid + '" href="#tab-user-activity-' + guid +'" class="button tab-link" data-translate="activity">Activity</a></li>';
+        popoverHTML += '<li><a id="TabLink-colleagues-' + guid + '" href="#tab-user-colleagues-' + guid + '" class="button tab-link" data-translate="colleagues">Colleagues</a></li>';
+        popoverHTML += '<li><a id="TabLink-wires-' + guid + '" href="#tab-user-wires-' + guid + '" class="button tab-link" data-translate="wires">Wires</a></li>';
+        popoverHTML += '<li><a id="TabLink-blogs-' + guid + '" href="#tab-user-blogs-' + guid + '" class="button tab-link" data-translate="blogs">Blogs</a></li>';
+        popoverHTML += '<li><a id="TabLink-activity-' + guid + '" href="#tab-user-activity-' + guid + '" class="button tab-link" data-translate="activity">Activity</a></li>';
         popoverHTML += '<li><a id="TabLink-bookmarks-' + guid + '" href="#tab-user-bookmarks-' + guid +'" class="button tab-link" data-translate="bookmarks">Bookmarks</a></li>';
-        popoverHTML += '<li><a id="TabLink-wires-' + guid + '" href="#tab-user-wires-' + guid +'" class="button tab-link" data-translate="wires">Wires</a></li>';
-        popoverHTML += '<li><a id="TabLink-blogs-' + guid + '" href="#tab-user-blogs-' + guid +'" class="button tab-link" data-translate="blogs">Blogs</a></li>';
+        
         
         popoverHTML += '</ul>'
             + '</div>'
@@ -3379,7 +3386,7 @@ myApp.onPageInit('profile', function (page) {
             });
         }
     });
-    $$('#user-bookmarks-more').on('click', function (e) {
+    $$('#user-bookmarks-more-' + guid).on('click', function (e) {
         GCTUser.GetBookmarksByUser(profile_limit, offset_bookmarks + profile_limit, guid, function (data) {
             var bookmarks = data.result;
             if (bookmarks.length > 0) {
@@ -3421,7 +3428,7 @@ myApp.onPageInit('profile', function (page) {
             });
         }
     });
-    $$('#user-wires-more').on('click', function (e) {
+    $$('#user-wires-more-' + guid).on('click', function (e) {
         GCTUser.GetWiresByUser(guid, profile_limit, offset_wires + profile_limit, function (data) {
             var wires = data.result;
             if (wires.length > 0) {
@@ -3462,7 +3469,7 @@ myApp.onPageInit('profile', function (page) {
             });
         }
     });
-    $$('#user-blogs-more').on('click', function (e) {
+    $$('#user-blogs-more-'+guid).on('click', function (e) {
         GCTUser.GetBlogsByUser(profile_limit, offset_blogs + profile_limit, guid, function (data) {
             var blogs = data.result;
 
@@ -3477,6 +3484,46 @@ myApp.onPageInit('profile', function (page) {
                 var content = endOfContent;
                 $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
                 $('#user-blogs-more-' + guid).hide();
+            }
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    });
+
+    $$('#tab-user-colleagues-' + guid).on('show', function (e) {
+        if (!ld_colleagues) {
+            GCTUser.GetMembersByUserColleague(guid, profile_limit, offset_colleagues, '', function (data) {
+                var colleagues = data.result;
+                if (colleagues.length > 0) {
+                    $.each(colleagues, function (key, value) {
+                        var content = GCTEach.Member(value);
+                        $(content).hide().appendTo('#user-colleagues-' + guid).fadeIn(1000);
+                    });
+                }
+                if (colleagues.length < profile_limit) {
+                    var content = endOfContent;
+                    $(content).hide().appendTo('#user-colleagues-' + guid).fadeIn(1000);
+                    $('#user-colleagues-more-' + guid).hide();
+                }
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
+    });
+    $$('#user-colleagues-more-' + guid).on('click', function (e) {
+        GCTUser.GetMembersByUserColleague(guid, profile_limit, offset_colleagues + profile_limit, '', function (data) {
+            var colleagues = data.result;
+            if (colleagues.length > 0) {
+                $.each(colleagues, function (key, value) {
+                    var content = GCTEach.Member(value);
+                    $(content).hide().appendTo('#user-colleagues-' + guid).fadeIn(1000);
+                    offset_colleagues += profile_limit;
+                });
+            }
+            if (colleagues.length < profile_limit) {
+                var content = endOfContent;
+                $(content).hide().appendTo('#user-colleagues-' + guid).fadeIn(1000);
+                $('#user-colleagues-more-' + guid).hide();
             }
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);

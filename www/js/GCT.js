@@ -1756,6 +1756,7 @@ GCTUser = {
             }
         });
     },
+
     GetMessage: function (guid, thread, successCallback, errorCallback) {
         thread = thread || 0;
         
