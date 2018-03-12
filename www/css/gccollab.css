@@ -496,6 +496,10 @@ i.icon-bars.theme-gccollab {
     background-color: #e8e8e8;
     color: #46246A;
 }
+
+.theme-gccollab .subnavbar {
+    font-weight: bolder;
+}
 .theme-gccollab .card-header {
     text-shadow: 2px 2px 4px black;
 }
