@@ -354,10 +354,8 @@ a.color-gccollab {
 .theme-gccollab .button:not(.button-fill) { color: #46246A; }
 
 .theme-gccollab .navbar .button:not(.button-fill),
-.theme-gccollab .subnavbar .button:not(.button-fill),
 .theme-gccollab .toolbar .button:not(.button-fill),
 .theme-gccollab.navbar .button:not(.button-fill),
-.theme-gccollab.subnavbar .button:not(.button-fill),
 .theme-gccollab.toolbar .button:not(.button-fill) {
     color: #fff;
 }
@@ -484,10 +482,23 @@ i.icon-bars.theme-gccollab {
 .subnavbar.theme-gccollab,
 .theme-gccollab .navbar,
 .theme-gccollab .searchbar,
-.theme-gccollab .subnavbar,
 .theme-gccollab .toolbar,
 .toolbar.theme-gccollab {
     background-color: #46246A;
+}
+
+.theme-gccollab .subnavbar .button:not(.button-fill),
+.theme-gccollab.subnavbar .button:not(.button-fill),
+.subnavbar.theme-gccollab,
+.theme-gccollab .subnavbar {
+    background-color: #C7C7C7;
+    color: #000;
+}
+.theme-gccollab .card-header {
+    text-shadow: 2px 2px 4px black;
+}
+.theme-gccollab .navbar .center {
+    text-shadow: 2px 2px 4px black;
 }
 
 .range-slider.theme-gccollab input[type=range]::-webkit-slider-thumb:before,
