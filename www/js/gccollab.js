@@ -3156,6 +3156,14 @@ myApp.onPageInit('profile', function (page) {
     $("#tab-user-wires").attr('id', "tab-user-wires-" + guid);
 
     $("#profile-menu").attr('id', "profile-menu-" + guid);
+    $("#user-icon").attr('id', "user-icon-" + guid);
+    $("#user-title").attr('id', "user-title-" + guid);
+    $("#user-department").attr('id', "user-department-" + guid);
+    $("#user-info-list").attr('id', "user-info-list-" + guid);
+    $("#wire-num").attr('id', "wire-num-" + guid);
+    $("#blog-num").attr('id', "blog-num-" + guid);
+    $("#colleague-num").attr('id', "colleague-num-" + guid);
+    $("#social-media").attr("id", "social-media-" + guid);
 
     /* Fill profile tab of user profile. */
     GCTUser.GetUserProfile(guid, function (data) {
@@ -3176,9 +3184,9 @@ myApp.onPageInit('profile', function (page) {
         var content = '';
         var listItem = '';
 
-        $("#user-icon").attr('src', profileData.iconURL);
-        $("#user-title").html(profileData.displayName).text();
-        $("#user-department").html(profileData.department).text();
+        $("#user-icon-" + guid).attr('src', profileData.iconURL);
+        $("#user-title-" + guid).html(profileData.displayName).text();
+        $("#user-department-" + guid).html(profileData.department).text();
         
         if (!isOwnProfile) {
             var content ='<div class="col-50"><a href="#" class="button button-fill button-raised" data-name="' + profileData.displayName + '" data-guid="' + profileData.id + '" onclick="GCTUser.NewMessage(this);">' + GCTLang.Trans("message") + '</a></div>'
@@ -3220,11 +3228,11 @@ myApp.onPageInit('profile', function (page) {
         }
 
         profile += "</ul>";
-        $("#user-info-list").html(profile).text();
+        $("#user-info-list-"+guid).html(profile).text();
 
-        $("#wire-num").html(profileData.wires).text();
-        $("#blog-num").html(profileData.blogs).text();
-        $("#colleague-num").html(profileData.colleagues).text();
+        $("#wire-num-" + guid).html(profileData.wires).text();
+        $("#blog-num-" + guid).html(profileData.blogs).text();
+        $("#colleague-num-" + guid).html(profileData.colleagues).text();
 
         if (profileData.hasOwnProperty("links")) {
             var links = '<div class="center">' + GCTLang.Trans('social-media') + '</div>'
@@ -3233,7 +3241,7 @@ myApp.onPageInit('profile', function (page) {
             if (profileData.links.hasOwnProperty("twitter")) { links += '<li><a id="user-twitter" href="' + profileData.links.twitter + '" class="tw external"><i class="fa fa-twitter"></i></a></li>'; }
             if (profileData.links.hasOwnProperty("linkedin")) { links += '<li><a id="user-linkedin" href="' + profileData.links.linkedin + '" class="li external"><i class="fa fa-linkedin"></i></a></li>'; }
             if (profileData.links.hasOwnProperty("facebook")) { links += '<li><a id="user-facebook" href="' + profileData.links.facebook + '" class="fb external"><i class="fa fa-facebook"></i></a></li>'; }
-            $("#social-media").html(links).text();
+            $("#social-media-" + guid).html(links).text();
         }
         
     }, function (jqXHR, textStatus, errorThrown) {
