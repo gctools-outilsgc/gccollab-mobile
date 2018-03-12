@@ -3172,6 +3172,8 @@ myApp.onPageInit('profile', function (page) {
     $("#user-bookmarks-more").attr("id", "user-bookmarks-more-" + guid);
     $('#user-wires').attr("id", "user-wires-" + guid);
     $('#user-wires-more').attr("id", "user-wires-more-" + guid);
+    $("#user-blogs").attr("id", "user-blogs-" + guid);
+    $("#user-blogs-more").attr("id", "user-blogs-more-" + guid);
 
     /* Fill profile tab of user profile. */
     GCTUser.GetUserProfile(guid, function (data) {
@@ -3447,13 +3449,13 @@ myApp.onPageInit('profile', function (page) {
                 if (blogs.length > 0) {
                     $.each(blogs, function (key, value) {
                         var content = GCTEach.Blog(value);
-                        $(content).hide().appendTo('#user-blogs').fadeIn(1000);
+                        $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
                     });
                 } 
                 if (blogs.length < profile_limit) {
                     var content = endOfContent;
-                    $(content).hide().appendTo('#user-blogs').fadeIn(1000);
-                    $('#user-blogs-more').hide();
+                    $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
+                    $('#user-blogs-more-' + guid).hide();
                 }
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -3467,14 +3469,14 @@ myApp.onPageInit('profile', function (page) {
             if (blogs.length > 0) {
                 $.each(blogs, function (key, value) {
                     var content = GCTEach.Blog(value);
-                    $(content).hide().appendTo('#user-blogs').fadeIn(1000);
+                    $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
                 });
                 offset_blogs += profile_limit;
             }
             if (blogs.length < profile_limit) {
                 var content = endOfContent;
-                $(content).hide().appendTo('#user-blogs').fadeIn(1000);
-                $('#user-blogs-more').hide();
+                $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
+                $('#user-blogs-more-' + guid).hide();
             }
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
