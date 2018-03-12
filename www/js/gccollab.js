@@ -3170,6 +3170,8 @@ myApp.onPageInit('profile', function (page) {
     $("#user-activity-more").attr("id", "user-activity-more-" + guid);
     $("#user-bookmarks").attr("id", "user-bookmarks-" + guid);
     $("#user-bookmarks-more").attr("id", "user-bookmarks-more-" + guid);
+    $('#user-wires').attr("id", "user-wires-" + guid);
+    $('#user-wires-more').attr("id", "user-wires-more-" + guid);
 
     /* Fill profile tab of user profile. */
     GCTUser.GetUserProfile(guid, function (data) {
@@ -3404,13 +3406,13 @@ myApp.onPageInit('profile', function (page) {
                 if (wires.length > 0) {
                     $.each(wires, function (key, value) {
                         var content = GCTEach.Wire(value);
-                        $(content).hide().appendTo('#user-wires').fadeIn(1000);
+                        $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
                     });
                 }
                 if (wires.length < profile_limit) {
                     var content = endOfContent;
-                    $(content).hide().appendTo('#user-wires').fadeIn(1000);
-                    $('#user-wires-more').hide();
+                    $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
+                    $('#user-wires-more-' + guid).hide();
                 }
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -3423,14 +3425,14 @@ myApp.onPageInit('profile', function (page) {
             if (wires.length > 0) {
                 $.each(wires, function (key, value) {
                     var content = GCTEach.Wire(value);
-                    $(content).hide().appendTo('#user-wires').fadeIn(1000);
+                    $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
                 });
                 offset_wires += profile_limit;
             }
             if (wires.length < profile_limit) {
                 var content = endOfContent;
-                $(content).hide().appendTo('#user-wires').fadeIn(1000);
-                $('#user-wires-more').hide();
+                $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
+                $('#user-wires-more-' + guid).hide();
             }
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
