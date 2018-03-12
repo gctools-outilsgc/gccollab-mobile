@@ -3168,6 +3168,8 @@ myApp.onPageInit('profile', function (page) {
     $('#user-groups').attr("id", "user-groups-" + guid);
     $("#user-activity").attr("id", "user-activity-" + guid);
     $("#user-activity-more").attr("id", "user-activity-more-" + guid);
+    $("#user-bookmarks").attr("id", "user-bookmarks-" + guid);
+    $("#user-bookmarks-more").attr("id", "user-bookmarks-more-" + guid);
 
     /* Fill profile tab of user profile. */
     GCTUser.GetUserProfile(guid, function (data) {
@@ -3360,13 +3362,13 @@ myApp.onPageInit('profile', function (page) {
                 if (bookmarks.length > 0) {
                     $.each(bookmarks, function (key, value) {
                         var content = GCTEach.Bookmark(value);
-                        $(content).appendTo('#user-bookmarks');
+                        $(content).appendTo('#user-bookmarks-'+guid);
                     });
                 }
                 if (bookmarks.length < profile_limit) {
                     var content = endOfContent;
-                    $(content).appendTo('#user-bookmarks');
-                    $('#user-bookmarks-more').hide();
+                    $(content).appendTo('#user-bookmarks-' + guid);
+                    $('#user-bookmarks-more-' + guid).hide();
                 }
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -3379,14 +3381,14 @@ myApp.onPageInit('profile', function (page) {
             if (bookmarks.length > 0) {
                 $.each(bookmarks, function (key, value) {
                     var content = GCTEach.Bookmark(value);
-                    $(content).appendTo('#user-bookmarks');
+                    $(content).appendTo('#user-bookmarks-' + guid);
                 });
                 offset_bookmarks += profile_limit;
             }
             if (bookmarks.length < profile_limit) {
                 var content = endOfContent;
-                $(content).appendTo('#user-bookmarks');
-                $('#user-bookmarks-more').hide();
+                $(content).appendTo('#user-bookmarks-' + guid);
+                $('#user-bookmarks-more-' + guid).hide();
             }
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
