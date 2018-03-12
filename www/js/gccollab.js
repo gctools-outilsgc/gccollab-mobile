@@ -3165,6 +3165,10 @@ myApp.onPageInit('profile', function (page) {
     $("#colleague-num").attr('id', "colleague-num-" + guid);
     $("#social-media").attr("id", "social-media-" + guid);
 
+    $('#user-groups').attr("id", "user-groups-" + guid);
+    $("#user-activity").attr("id", "user-activity-" + guid);
+    $("#user-activity-more").attr("id", "user-activity-more-" + guid);
+
     /* Fill profile tab of user profile. */
     GCTUser.GetUserProfile(guid, function (data) {
         var profileData = data.result;
@@ -3293,7 +3297,7 @@ myApp.onPageInit('profile', function (page) {
                         + "</a></li>";
                 });
 
-                $('#user-groups').html(groups);
+                $("#user-groups-" + guid).html(groups);
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
             });
@@ -3310,13 +3314,13 @@ myApp.onPageInit('profile', function (page) {
                 if (activityData.length > 0) {
                     $(activityData).each(function (key, value) {
                         var content = GCTEach.Activity(value);
-                        $(content).appendTo('#user-activity');
+                        $(content).appendTo('#user-activity-' +guid);
                     });
                 }
                 if (activityData.length < profile_limit) {
                     var content = endOfContent;
-                    $(content).appendTo('#user-activity');
-                    $('#user-activity-more').hide();
+                    $(content).appendTo('#user-activity-' + guid);
+                    $('#user-activity-more-'+guid).hide();
                 }
                 
             }, function (jqXHR, textStatus, errorThrown) {
@@ -3324,7 +3328,7 @@ myApp.onPageInit('profile', function (page) {
             });
         }
     });
-    $$('#user-activity-more').on('click', function (e) {
+    $$('#user-activity-more-'+guid).on('click', function (e) {
         GCTUser.GetUserActivity(guid, profile_limit, offset_activity + profile_limit, function (data3) {
             var activityData = data3.result;
 
@@ -3333,13 +3337,13 @@ myApp.onPageInit('profile', function (page) {
                 $(activityData).each(function (key, value) {
                     var content = GCTEach.Activity(value);
 
-                    $(content).appendTo('#user-activity');
+                    $(content).appendTo('#user-activity-'+guid);
                 });
             }
             if (activityData.length < profile_limit) {
                 var content = endOfContent;
-                $(content).appendTo('#user-activity');
-                $('#user-activity-more').hide();
+                $(content).appendTo('#user-activity-'+guid);
+                $('#user-activity-more-'+guid).hide();
             }
             offset_activity += profile_limit;
 
