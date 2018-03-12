@@ -487,12 +487,14 @@ i.icon-bars.theme-gccollab {
     background-color: #46246A;
 }
 
+.theme-gccollab .toolbar-bottom,
+.theme-gccollab .toolbar-bottom i,
 .theme-gccollab .subnavbar .button:not(.button-fill),
 .theme-gccollab.subnavbar .button:not(.button-fill),
 .subnavbar.theme-gccollab,
 .theme-gccollab .subnavbar {
     background-color: #e8e8e8;
-    color: #000;
+    color: #46246A;
 }
 .theme-gccollab .card-header {
     text-shadow: 2px 2px 4px black;
