@@ -3141,6 +3141,40 @@ myApp.onPageInit('profile', function (page) {
     var ld_blogs = false;
     var offset_blogs = 0;
 
+    /* Change needed ids to be guid specific */
+    $("#TabLink-profile").attr('id', "TabLink-profile-" + guid);
+    $("#TabLink-groups").attr('id', "TabLink-groups-" + guid);
+    $("#TabLink-profile-" + guid).attr('href', "#tab-user-profile-" + guid);
+    $("#TabLink-groups-" + guid).attr('href', "#tab-user-groups-" + guid);
+
+    $("#tab-user-profile").attr('id', "tab-user-profile-" + guid);
+    $("#tab-user-activity").attr('id', "tab-user-activity-" + guid);
+    $("#tab-user-discussion").attr('id', "tab-user-discussion-" + guid);
+    $("#tab-user-bookmarks").attr('id', "tab-user-bookmarks-" + guid);
+    $("#tab-user-groups").attr('id', "tab-user-groups-" + guid);
+    $("#tab-user-blogs").attr('id', "tab-user-blogs-" + guid);
+    $("#tab-user-wires").attr('id', "tab-user-wires-" + guid);
+
+    $("#profile-menu").attr('id', "profile-menu-" + guid);
+    $("#user-icon").attr('id', "user-icon-" + guid);
+    $("#user-title").attr('id', "user-title-" + guid);
+    $("#user-department").attr('id', "user-department-" + guid);
+    $("#user-info-list").attr('id', "user-info-list-" + guid);
+    $("#wire-num").attr('id', "wire-num-" + guid);
+    $("#blog-num").attr('id', "blog-num-" + guid);
+    $("#colleague-num").attr('id', "colleague-num-" + guid);
+    $("#social-media").attr("id", "social-media-" + guid);
+
+    $('#user-groups').attr("id", "user-groups-" + guid);
+    $("#user-activity").attr("id", "user-activity-" + guid);
+    $("#user-activity-more").attr("id", "user-activity-more-" + guid);
+    $("#user-bookmarks").attr("id", "user-bookmarks-" + guid);
+    $("#user-bookmarks-more").attr("id", "user-bookmarks-more-" + guid);
+    $('#user-wires').attr("id", "user-wires-" + guid);
+    $('#user-wires-more').attr("id", "user-wires-more-" + guid);
+    $("#user-blogs").attr("id", "user-blogs-" + guid);
+    $("#user-blogs-more").attr("id", "user-blogs-more-" + guid);
+
     /* Fill profile tab of user profile. */
     GCTUser.GetUserProfile(guid, function (data) {
         var profileData = data.result;
@@ -3160,9 +3194,9 @@ myApp.onPageInit('profile', function (page) {
         var content = '';
         var listItem = '';
 
-        $("#user-icon").attr('src', profileData.iconURL);
-        $("#user-title").html(profileData.displayName).text();
-        $("#user-department").html(profileData.department).text();
+        $("#user-icon-" + guid).attr('src', profileData.iconURL);
+        $("#user-title-" + guid).html(profileData.displayName).text();
+        $("#user-department-" + guid).html(profileData.department).text();
         
         if (!isOwnProfile) {
             var content ='<div class="col-50"><a href="#" class="button button-fill button-raised" data-name="' + profileData.displayName + '" data-guid="' + profileData.id + '" onclick="GCTUser.NewMessage(this);">' + GCTLang.Trans("message") + '</a></div>'
@@ -3204,11 +3238,11 @@ myApp.onPageInit('profile', function (page) {
         }
 
         profile += "</ul>";
-        $("#user-info-list").html(profile).text();
+        $("#user-info-list-"+guid).html(profile).text();
 
-        $("#wire-num").html(profileData.wires).text();
-        $("#blog-num").html(profileData.blogs).text();
-        $("#colleague-num").html(profileData.colleagues).text();
+        $("#wire-num-" + guid).html(profileData.wires).text();
+        $("#blog-num-" + guid).html(profileData.blogs).text();
+        $("#colleague-num-" + guid).html(profileData.colleagues).text();
 
         if (profileData.hasOwnProperty("links")) {
             var links = '<div class="center">' + GCTLang.Trans('social-media') + '</div>'
@@ -3217,7 +3251,7 @@ myApp.onPageInit('profile', function (page) {
             if (profileData.links.hasOwnProperty("twitter")) { links += '<li><a id="user-twitter" href="' + profileData.links.twitter + '" class="tw external"><i class="fa fa-twitter"></i></a></li>'; }
             if (profileData.links.hasOwnProperty("linkedin")) { links += '<li><a id="user-linkedin" href="' + profileData.links.linkedin + '" class="li external"><i class="fa fa-linkedin"></i></a></li>'; }
             if (profileData.links.hasOwnProperty("facebook")) { links += '<li><a id="user-facebook" href="' + profileData.links.facebook + '" class="fb external"><i class="fa fa-facebook"></i></a></li>'; }
-            $("#social-media").html(links).text();
+            $("#social-media-" + guid).html(links).text();
         }
         
     }, function (jqXHR, textStatus, errorThrown) {
@@ -3225,16 +3259,16 @@ myApp.onPageInit('profile', function (page) {
     });
 
     /* Generate the popover drop down for user profile navigation on click */
-    $("#profile-menu").on('click', function (e) {
+    $("#profile-menu-" + guid).on('click', function (e) {
         var popoverHTML = '<div class="popover pop-profile-menu">'
             + '<div class="popover-inner">'
             + '<div class="list-block">'
             + '<ul>';
         
-        popoverHTML += '<li><a href="#tab-user-activity" class="button tab-link" data-translate="activity">Activity</a></li>';
-        popoverHTML += '<li><a href="#tab-user-bookmarks" class="button tab-link" data-translate="bookmarks">Bookmarks</a></li>';
-        popoverHTML += '<li><a href="#tab-user-wires" class="button tab-link" data-translate="wires">Wires</a></li>';
-        popoverHTML += '<li><a href="#tab-user-blogs" class="button tab-link" data-translate="blogs">Blogs</a></li>';
+        popoverHTML += '<li><a id="TabLink-activity-' + guid + '" href="#tab-user-activity-' + guid +'" class="button tab-link" data-translate="activity">Activity</a></li>';
+        popoverHTML += '<li><a id="TabLink-bookmarks-' + guid + '" href="#tab-user-bookmarks-' + guid +'" class="button tab-link" data-translate="bookmarks">Bookmarks</a></li>';
+        popoverHTML += '<li><a id="TabLink-wires-' + guid + '" href="#tab-user-wires-' + guid +'" class="button tab-link" data-translate="wires">Wires</a></li>';
+        popoverHTML += '<li><a id="TabLink-blogs-' + guid + '" href="#tab-user-blogs-' + guid +'" class="button tab-link" data-translate="blogs">Blogs</a></li>';
         
         popoverHTML += '</ul>'
             + '</div>'
@@ -3243,7 +3277,7 @@ myApp.onPageInit('profile', function (page) {
         myApp.popover(popoverHTML, this);
     });
 
-    $$('#tab-user-groups').on('show', function (e) {
+    $$('#tab-user-groups-' + guid).on('show', function (e) {
         if (!ld_groups) {
             ld_groups = true;
             GCTUser.GetUserGroups(guid, function (data2) {
@@ -3269,14 +3303,14 @@ myApp.onPageInit('profile', function (page) {
                         + "</a></li>";
                 });
 
-                $('#user-groups').html(groups);
+                $("#user-groups-" + guid).html(groups);
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
             });
         } 
     });
     
-    $$('#tab-user-activity').on('show', function (e) {
+    $$('#tab-user-activity-' + guid).on('show', function (e) {
         if (!ld_activity) {
             ld_activity = true;
             GCTUser.GetUserActivity(guid, profile_limit, 0, function (data3) {
@@ -3286,13 +3320,13 @@ myApp.onPageInit('profile', function (page) {
                 if (activityData.length > 0) {
                     $(activityData).each(function (key, value) {
                         var content = GCTEach.Activity(value);
-                        $(content).appendTo('#user-activity');
+                        $(content).appendTo('#user-activity-' +guid);
                     });
                 }
                 if (activityData.length < profile_limit) {
                     var content = endOfContent;
-                    $(content).appendTo('#user-activity');
-                    $('#user-activity-more').hide();
+                    $(content).appendTo('#user-activity-' + guid);
+                    $('#user-activity-more-'+guid).hide();
                 }
                 
             }, function (jqXHR, textStatus, errorThrown) {
@@ -3300,7 +3334,7 @@ myApp.onPageInit('profile', function (page) {
             });
         }
     });
-    $$('#user-activity-more').on('click', function (e) {
+    $$('#user-activity-more-'+guid).on('click', function (e) {
         GCTUser.GetUserActivity(guid, profile_limit, offset_activity + profile_limit, function (data3) {
             var activityData = data3.result;
 
@@ -3309,13 +3343,13 @@ myApp.onPageInit('profile', function (page) {
                 $(activityData).each(function (key, value) {
                     var content = GCTEach.Activity(value);
 
-                    $(content).appendTo('#user-activity');
+                    $(content).appendTo('#user-activity-'+guid);
                 });
             }
             if (activityData.length < profile_limit) {
                 var content = endOfContent;
-                $(content).appendTo('#user-activity');
-                $('#user-activity-more').hide();
+                $(content).appendTo('#user-activity-'+guid);
+                $('#user-activity-more-'+guid).hide();
             }
             offset_activity += profile_limit;
 
@@ -3324,7 +3358,7 @@ myApp.onPageInit('profile', function (page) {
         });
     });
 
-    $$('#tab-user-bookmarks').on('show', function (e) {
+    $$('#tab-user-bookmarks-' + guid).on('show', function (e) {
         if (ld_bookmarks == false) {
             ld_bookmarks = true;
             GCTUser.GetBookmarksByUser(profile_limit, offset_bookmarks, guid, function (data) {
@@ -3332,13 +3366,13 @@ myApp.onPageInit('profile', function (page) {
                 if (bookmarks.length > 0) {
                     $.each(bookmarks, function (key, value) {
                         var content = GCTEach.Bookmark(value);
-                        $(content).appendTo('#user-bookmarks');
+                        $(content).appendTo('#user-bookmarks-'+guid);
                     });
                 }
                 if (bookmarks.length < profile_limit) {
                     var content = endOfContent;
-                    $(content).appendTo('#user-bookmarks');
-                    $('#user-bookmarks-more').hide();
+                    $(content).appendTo('#user-bookmarks-' + guid);
+                    $('#user-bookmarks-more-' + guid).hide();
                 }
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -3351,21 +3385,21 @@ myApp.onPageInit('profile', function (page) {
             if (bookmarks.length > 0) {
                 $.each(bookmarks, function (key, value) {
                     var content = GCTEach.Bookmark(value);
-                    $(content).appendTo('#user-bookmarks');
+                    $(content).appendTo('#user-bookmarks-' + guid);
                 });
                 offset_bookmarks += profile_limit;
             }
             if (bookmarks.length < profile_limit) {
                 var content = endOfContent;
-                $(content).appendTo('#user-bookmarks');
-                $('#user-bookmarks-more').hide();
+                $(content).appendTo('#user-bookmarks-' + guid);
+                $('#user-bookmarks-more-' + guid).hide();
             }
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
         });
     });
 
-    $$('#tab-user-wires').on('show', function (e) {
+    $$('#tab-user-wires-' + guid).on('show', function (e) {
         if (ld_wires == false) {
             ld_wires = true;
             GCTUser.GetWiresByUser(guid, profile_limit, offset_wires, function (data) {
@@ -3374,13 +3408,13 @@ myApp.onPageInit('profile', function (page) {
                 if (wires.length > 0) {
                     $.each(wires, function (key, value) {
                         var content = GCTEach.Wire(value);
-                        $(content).hide().appendTo('#user-wires').fadeIn(1000);
+                        $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
                     });
                 }
                 if (wires.length < profile_limit) {
                     var content = endOfContent;
-                    $(content).hide().appendTo('#user-wires').fadeIn(1000);
-                    $('#user-wires-more').hide();
+                    $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
+                    $('#user-wires-more-' + guid).hide();
                 }
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -3393,21 +3427,21 @@ myApp.onPageInit('profile', function (page) {
             if (wires.length > 0) {
                 $.each(wires, function (key, value) {
                     var content = GCTEach.Wire(value);
-                    $(content).hide().appendTo('#user-wires').fadeIn(1000);
+                    $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
                 });
                 offset_wires += profile_limit;
             }
             if (wires.length < profile_limit) {
                 var content = endOfContent;
-                $(content).hide().appendTo('#user-wires').fadeIn(1000);
-                $('#user-wires-more').hide();
+                $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
+                $('#user-wires-more-' + guid).hide();
             }
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
         });
     });
 
-    $$('#tab-user-blogs').on('show', function (e) {
+    $$('#tab-user-blogs-' + guid).on('show', function (e) {
         if (ld_blogs == false) {
             GCTUser.GetBlogsByUser(profile_limit, offset_blogs, guid, function (data) {
                 var blogs = data.result;
@@ -3415,13 +3449,13 @@ myApp.onPageInit('profile', function (page) {
                 if (blogs.length > 0) {
                     $.each(blogs, function (key, value) {
                         var content = GCTEach.Blog(value);
-                        $(content).hide().appendTo('#user-blogs').fadeIn(1000);
+                        $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
                     });
                 } 
                 if (blogs.length < profile_limit) {
                     var content = endOfContent;
-                    $(content).hide().appendTo('#user-blogs').fadeIn(1000);
-                    $('#user-blogs-more').hide();
+                    $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
+                    $('#user-blogs-more-' + guid).hide();
                 }
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -3435,14 +3469,14 @@ myApp.onPageInit('profile', function (page) {
             if (blogs.length > 0) {
                 $.each(blogs, function (key, value) {
                     var content = GCTEach.Blog(value);
-                    $(content).hide().appendTo('#user-blogs').fadeIn(1000);
+                    $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
                 });
                 offset_blogs += profile_limit;
             }
             if (blogs.length < profile_limit) {
                 var content = endOfContent;
-                $(content).hide().appendTo('#user-blogs').fadeIn(1000);
-                $('#user-blogs-more').hide();
+                $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
+                $('#user-blogs-more-' + guid).hide();
             }
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
