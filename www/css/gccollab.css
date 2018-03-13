@@ -166,7 +166,7 @@ form .error {
 .card-header .time { color: #fff; }
 .card-header.plain .time { color: #46246A; }
 .card-content blockquote { margin-top: 10px; border-left: 2px solid #46246A; }
-.card-footer a.link, .card-header a.link { color: #46246A; }
+.card-footer a.link, .card-header a.link, .card-footer { color: #46246A; }
 .gccollab .swiper-pagination .swiper-pagination-bullet-active { background-color: #46246A !important; }
 .theme-gccollab .card-header .item-title { color: #fff !important; }
 .theme-gccollab .item-subtitle { color: rgba(255, 255, 255, 0.7) !important; }

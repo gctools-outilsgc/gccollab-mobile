@@ -178,8 +178,8 @@ GCTLang = {
     },
     txtGroup: function (object) {
         var content = "<div class='swiper-slide list-block cards-list'>"
-            + "<div class='card'>"
-                + "<div class='card-header' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>"
+            + "<div class='card' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>"
+                + "<div class='card-header'>"
                     + "<div class='item-media rounded'><img alt='Profile Image of " + object.name +"' src='" + object.icon + "' /></div>"
                     + "<div class='item-inner'>"
                         + "<div class='item-title-row'>"
@@ -193,7 +193,7 @@ GCTLang = {
                     + "</div>"
                 + "</div>"
                 + "<div class='card-footer'>"
-                    + "<a class='link'>" + object.count + "</a>"
+                    + "<div>" + object.count + "</div>"
                     + object.action
                 + "</div>"
             + "</div>"
