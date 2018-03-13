@@ -3537,6 +3537,10 @@ myApp.onPageInit('profile', function (page) {
 myApp.onPageInit('entity', function (page) {
     var guid = page.query.guid;
     var type = page.query.type;
+    var limit = 10;
+    var offset = 0;
+    var comments = false;
+    $("#comments-more").hide();
 
     console.log(guid + ' ' + type);
 
@@ -3614,7 +3618,7 @@ myApp.onPageInit('entity', function (page) {
                             likes: likes
                         });
                     } else if (value.subtype == "discussion_reply") {
-                        console.log("discussion reply");
+                        comments = true;
                     }
 
                 });
@@ -3627,6 +3631,7 @@ myApp.onPageInit('entity', function (page) {
             break;
             
         case "gccollab_opportunity":
+            $("#comments-view").hide(); $("#comment-head").hide();
             GCTUser.GetOpportunity(guid, function (data) {
                 var opportunity = data.result;
                 var content = "";
@@ -3831,6 +3836,7 @@ myApp.onPageInit('entity', function (page) {
             break;
 
         case "gccollab_wire_post":
+            $("#comments-view").hide(); $("#comment-head").hide();
             GCTUser.GetWire(guid, 1, function (data) {
                 var wires = data.result.reverse();
                 var content = "";
@@ -3919,6 +3925,28 @@ myApp.onPageInit('entity', function (page) {
         default:
             break;
     }
+
+    $$('#comments-view').on('click', function (e) {
+        GCTUser.GetComments(guid, limit, offset, function (data) {
+            $("#comments-view").hide();
+            $("#comments-more").show();
+            var comments = data.result;
+            var content = "";
+            if (comments.length > 0) {
+                $(comments).each(function (key, value) {
+                    content += GCTEach.Comment(value);
+                }); 
+                if (comments.lenght < limit) {
+                    $("#comments-more").hide();
+                }
+            } else {
+                content += noContent;
+            }
+            $(content).hide().appendTo('#entity-comments').fadeIn(500);
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    });
 });
         
 /* ===== Messages Page ===== */

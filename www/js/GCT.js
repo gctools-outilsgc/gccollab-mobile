@@ -38,6 +38,31 @@ GCTLang = {
         //console.log(GCT.SetLinks(content));
         return GCT.SetLinks(content);
     },
+    txtComment: function (object) {
+        var content = "<div class='swiper-slide list-block cards-list'>"
+            + "<div class='card'>"
+                + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+                    + "<div class='item-media rounded'><img alt='Profile Image of " + object.name +"' src='" + object.icon + "' /></div>"
+                    + "<div class='item-inner'>"
+                        + "<div class='item-title-row'>"
+                            + "<div class='author'>" + object.name + "</div>"
+                        + "</div>"
+                        + "<div class='time'>" + object.date + "</div>"
+                    + "</div>"
+                + "</div>"
+                + "<div class='card-content'>"
+            + "<div class='card-content-inner'>"
+                     + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
+                        + "<div class='item-text large'>" + object.description + "</div>"
+                    + "</div>"
+                + "</div>"
+                + "<div class='card-footer'>"
+                    + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+                + "</div>"
+            + "</div>"
+        + "</div>";
+        return content;
+    },
     txtBlog: function (object) {
         var content = "<div class='swiper-slide list-block cards-list'>"
             + "<div class='card'>"
@@ -70,7 +95,6 @@ GCTLang = {
         content = GCT.SetLinks(content);
         return content;
     },
-
     txtDiscussion: function (object) {
        
         var content = "<div class='swiper-slide list-block cards-list'>"
@@ -1633,6 +1657,26 @@ GCTUser = {
         });
     },
 
+    GetComments: function (guid, limit, offset, successCallback, errorCallback) {
+        limit = limit || 10;
+        offset = offset || 0;
+        $$.ajax({
+            api_key: api_key_gccollab,
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "get.commentstest", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+
     GetBookmark: function (guid, successCallback, errorCallback) {
         $$.ajax({
             api_key: api_key_gccollab,
@@ -2579,7 +2623,25 @@ GCTEach = {
             action: action,
             liked: liked,
             likes: likes
-        })
+        });
+        return content;
+    },
+    Comment: function (value) {
+        console.log(value);
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+
+        var content = GCTLang.txtComment({
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            owner: value.owner_guid,
+            date: prettyDate(value.time_created),
+            description: value.description,
+            type: value.subtype,
+            guid: value.guid,
+            liked: liked,
+            likes: likes
+        });
         return content;
     }
 }
