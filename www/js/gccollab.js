@@ -3539,7 +3539,6 @@ myApp.onPageInit('entity', function (page) {
     var type = page.query.type;
     var limit = 10;
     var offset = 0;
-    var comments = false;
     $("#comments-more").hide();
 
     console.log(guid + ' ' + type);
@@ -3618,7 +3617,7 @@ myApp.onPageInit('entity', function (page) {
                             likes: likes
                         });
                     } else if (value.subtype == "discussion_reply") {
-                        comments = true;
+                        //not needed
                     }
 
                 });
