@@ -849,7 +849,7 @@ myApp.onPageInit('sign-in', function (page) {
     }
 
     $("#email, #password").keyup(function (event) {
-        event.preventDefault();
+        //event.preventDefault();
 
         var email = $('#email').val();
         var password = $('#password').val();
@@ -857,7 +857,7 @@ myApp.onPageInit('sign-in', function (page) {
         if (event.keyCode == 13) {
             if( email != "" && password != "" && email.length >= 3 && password.length >= 6 ){
                 GCTUser.Login(email, password, function (success) {
-                    if (success.result) {
+                    if (success.result==true) {
                         GCTUser.SaveLoginEmail(email);
                         GCTUser.SetAPIKey(success.message);
                         GCTUser.SetUserProfile();
