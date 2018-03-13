@@ -412,6 +412,12 @@ GCTLang = {
             + '<li>';
         return contentNew;
     },
+    txtGlobalNav: function (title) {
+        var content = '<div class="left sliding"><a href="#" data-panel="left" class="open-panel link icon-only" aria-label="Button to open Site Navigation Menu"><i class="icon icon-bars"></i></a></div>' +
+            '<div class="center" id="entity-title">' + GCTLang.Trans(title) + '</div>' +
+            '<div class="right sliding"><a href="#" data-panel="right" class="open-panel link icon-only" aria-label="Button to open Notification Panel"><i class="fa fa-bell badge-wrapper"></i></a></div>';
+        return content;
+    },
     liGEDSResult: function (object) {
         var content = "<li class='item-content'>"
             + "<div class='item-inner'>"

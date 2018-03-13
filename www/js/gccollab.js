@@ -1177,6 +1177,7 @@ function Translate(obj) {
 }
 
 myApp.onPageInit('wire', function (page) {
+    $$('.navbar-inner').html(GCTLang.txtGlobalNav('the-wire'));
     var limit = 20;
     var offset = 0;
     var wiresAllMoreOffset = 0;
@@ -1334,6 +1335,7 @@ myApp.onPageInit('wire', function (page) {
 });
 
 myApp.onPageInit('newsfeed', function (page) {
+    $$('.navbar-inner').html(GCTLang.txtGlobalNav('newsfeed'));
     var limit = 20;
     var offset = 0;
     var newsfeedMoreOffset = 0;
@@ -1389,6 +1391,7 @@ myApp.onPageInit('newsfeed', function (page) {
 });
 
 myApp.onPageInit('groups', function (page) {
+    $$('.navbar-inner').html(GCTLang.txtGlobalNav('groups'));
     var limit = 20;
     var offset = 0;
     var groupsAllMoreOffset = 0;
