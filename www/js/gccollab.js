@@ -3936,11 +3936,35 @@ myApp.onPageInit('entity', function (page) {
                 $(comments).each(function (key, value) {
                     content += GCTEach.Comment(value);
                 }); 
-                if (comments.lenght < limit) {
+                if (comments.length < limit) {
                     $("#comments-more").hide();
+                    content += endOfContent;
                 }
             } else {
                 content += noContent;
+                $("#comments-more").hide();
+            }
+            $(content).hide().appendTo('#entity-comments').fadeIn(500);
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    });
+    $$('#comments-more').on('click', function (e) {
+        GCTUser.GetComments(guid, limit, offset + limit, function (data) {
+            offset += limit;
+            var comments = data.result;
+            var content = "";
+            if (comments.length > 0) {
+                $(comments).each(function (key, value) {
+                    content += GCTEach.Comment(value);
+                });
+                if (comments.length < limit) {
+                    content += endOfContent;
+                    $("#comments-more").hide();
+                }
+            } else {
+                content += endOfContent;
+                $("#comments-more").hide();
             }
             $(content).hide().appendTo('#entity-comments').fadeIn(500);
         }, function (jqXHR, textStatus, errorThrown) {
