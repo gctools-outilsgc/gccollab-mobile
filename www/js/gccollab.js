@@ -3973,6 +3973,20 @@ myApp.onPageInit('entity', function (page) {
             console.log(jqXHR, textStatus, errorThrown);
         });
     });
+    $$('#comments-submit').on('click', function (e) {
+        var comment = $$('#message').val();
+        if (!(comment === '')) {
+            GCTUser.SubmitComment(guid, comment, function (data) {
+                console.log("submited");
+                var result = data.result;
+                console.log(result);
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        } else {
+            //empty message, dont use, give feedback
+        }
+    });
 });
         
 /* ===== Messages Page ===== */

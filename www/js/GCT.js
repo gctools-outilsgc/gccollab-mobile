@@ -226,7 +226,6 @@ GCTLang = {
         return content;
     },
     txtMember: function (object) {
-        console.log(object);
         var content = "<a class='item-link item-content close-popup' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile("+object.guid+");'>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row no-padding-right'>"
@@ -1664,6 +1663,23 @@ GCTUser = {
             dataType: 'text',
             url: GCT.GCcollabURL,
             data: { method: "get.commentsall", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    SubmitComment: function (guid, message, successCallback, errorCallback) {
+        $$.ajax({
+            api_key: api_key_gccollab,
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "submit.commenttest", user: GCTUser.Email(), guid: guid, message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
