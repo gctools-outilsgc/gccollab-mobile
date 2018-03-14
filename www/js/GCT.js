@@ -226,25 +226,17 @@ GCTLang = {
         return content;
     },
     txtMember: function (object) {
-        var content = "<div id='member-" + object.guid + "' class='swiper-slide list-block cards-list media-list'>"
-            + "<div class='card'>"
-                + "<div class='card-header' onclick='ShowProfile(" + object.guid + ");'>"
-                    + "<div class='item-media rounded'><img alt='Profile Image of " + object.name +"' src='" + object.icon + "' /></div>"
-                    + "<div class='item-inner'>"
-                        + "<div class='item-title-row'>"
-                            + "<div class='item-title'>" + object.name + "</div>"
-                            + "</div>"
-                        + "<div class='item-subtitle'>" + object.organization + "</div>"
-                    + "</div>"
-                + "</div>"
-                + "<div class='card-content'>"
-                    + "<div class='card-content-inner'>"
-                        + "<div class='item-text'>" + object.description + "</div>"
-                    + "</div>"
-                + "</div>"
-                + "<div class='card-footer'>" + object.date + "</div>"
+        console.log(object);
+        var content = "<a class='item-link item-content close-popup' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile("+object.guid+");'>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row no-padding-right'>"
             + "</div>"
-        + "</div>";
+            + "<div class='row ptm'>"
+            + "<div class='col-20'><img src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
+            + "<div class='col-80 item-title reg-text'>" + object.name + "<div class='item-text more_text'>" + object.organization + "</div> <div class='item-text more_text'> " + object.job + "</div></div>"
+            + "</div>"
+            + "</div>"
+            + "</a>";
         content = GCT.SetLinks(content);
         return content;
     },
@@ -2389,11 +2381,12 @@ GCTEach = {
         return content;
     },
     Member: function (value) {
-        var description = (value.about) ? urlify(value.about) : (value.job ? value.job : GCTLang.Trans('no-profile'));
+        var description = (value.about) ? urlify(value.about) : GCTLang.Trans('no-profile');
         var content = GCTLang.txtMember({
             guid: value.user_id,
             icon: value.iconURL,
             name: value.displayName,
+            job: (value.job) ? value.job : '',
             date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
             description: description,
             organization: value.organization
