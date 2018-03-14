@@ -598,9 +598,9 @@ myApp.onPageInit('group', function (page) {
             + '<div class="list-block">'
             + '<ul>';
         if (access) {
-            popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#tab-group-activity" class="button tab-link" data-translate="activity">Activity</a></li>' : "";
-            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-group-discussion" class="button tab-link" data-translate="discussion">Discussion</a></li>' : "";
-            popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#tab-group-bookmarks" class="button tab-link" data-translate="bookmarks">Bookmarks</a></li>' : "";
+            popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#tab-group-activity" class="button tab-link" data-translate="activity">'+ GCTLang.Trans("activity") +'</a></li>' : "";
+            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-group-discussion" class="button tab-link" data-translate="discussion">'+ GCTLang.Trans("discussion") +'</a></li>' : "";
+            popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#tab-group-bookmarks" class="button tab-link" data-translate="bookmarks">'+ GCTLang.Trans("bookmarks") +'</a></li>' : "";
         } else {
             popoverHTML += '<li><a href="#" class="item-link list-button">' + "Private Group" + '</a></li>';
         }
@@ -3275,11 +3275,11 @@ myApp.onPageInit('profile', function (page) {
             + '<div class="list-block">'
             + '<ul>';
         
-        popoverHTML += '<li><a id="TabLink-colleagues-' + guid + '" href="#tab-user-colleagues-' + guid + '" class="button tab-link" data-translate="colleagues">Colleagues</a></li>';
-        popoverHTML += '<li><a id="TabLink-wires-' + guid + '" href="#tab-user-wires-' + guid + '" class="button tab-link" data-translate="wires">Wires</a></li>';
-        popoverHTML += '<li><a id="TabLink-blogs-' + guid + '" href="#tab-user-blogs-' + guid + '" class="button tab-link" data-translate="blogs">Blogs</a></li>';
-        popoverHTML += '<li><a id="TabLink-activity-' + guid + '" href="#tab-user-activity-' + guid + '" class="button tab-link" data-translate="activity">Activity</a></li>';
-        popoverHTML += '<li><a id="TabLink-bookmarks-' + guid + '" href="#tab-user-bookmarks-' + guid +'" class="button tab-link" data-translate="bookmarks">Bookmarks</a></li>';
+        popoverHTML += '<li><a id="TabLink-colleagues-' + guid + '" href="#tab-user-colleagues-' + guid + '" class="button tab-link">'+ GCTLang.Trans("colleagues") +'</a></li>';
+        popoverHTML += '<li><a id="TabLink-wires-' + guid + '" href="#tab-user-wires-' + guid + '" class="button tab-link">'+ GCTLang.Trans("wires") +'</a></li>';
+        popoverHTML += '<li><a id="TabLink-blogs-' + guid + '" href="#tab-user-blogs-' + guid + '" class="button tab-link">'+ GCTLang.Trans("blogs") +'</a></li>';
+        popoverHTML += '<li><a id="TabLink-activity-' + guid + '" href="#tab-user-activity-' + guid + '" class="button tab-link">'+ GCTLang.Trans("activity") +'</a></li>';
+        popoverHTML += '<li><a id="TabLink-bookmarks-' + guid + '" href="#tab-user-bookmarks-' + guid +'" class="button tab-link">'+ GCTLang.Trans("bookmarks") +'</a></li>';
         
         
         popoverHTML += '</ul>'
@@ -3300,7 +3300,7 @@ myApp.onPageInit('profile', function (page) {
                     // Removes HTML components from Blog
                     var text = (value.description !== null) ? value.description : "";
 
-                    var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
+                    var members = (value.count > 0) ? value.count + (value.count == 1 ? " " + GCTLang.Trans("member") : " " + GCTLang.Trans("members")) : "";
                     groups += "<li><a class='item-link item-content close-popup' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>"
                         + "<div class='item-inner'>"
                         + "<div class='item-title-row no-padding-right'>"

@@ -40,6 +40,7 @@
     "groups": "Groups",
     "chat": "Chat",
     "members": "Members",
+    "member": "member",
     "geds": "GEDS",
     "geds-search": "GEDS Search",
     "event-calendar": "Event Calendar",
@@ -205,8 +206,12 @@
     "organization": "Organization",
     "display-name": "Display Name",
     "display-name-info": "Please enter your first and last name, as you are known in the workplace/school. As per the <a class='terms' href='#'>Terms and Conditions of Use</a>, your display name must reflect your real name. Pseudonyms are not allowed.",
-    "toc": "I have read, understood, and agree to the <a class='terms' href='#'>Terms and Conditions of Use</a>.",
-    
+    "toc": "I have read, understood, and agree to the <a class='terms' href='#'>Terms and Conditions of Use</a>.",    
+    "all": "All",
+    "my-groups": "My groups",
+    "my-colleagues": "My colleagues",
+    "mine": "Mine",
+    "more": "More"
 }
 
 French = {
@@ -227,7 +232,7 @@ French = {
     "discussion-replied": " a ajouté un nouveau sujet de discussion ",
     "discussion-add": " ajouté un nouveau sujet de discussion ",
     "friend-added": " est maintenant collègue avec ",
-    "wire-create": " posté au fil: ",
+    "wire-create": " a publié un message sur le fil: ",
     "group-created": " créé le groupe ",
     "file-created": " a téléchargé le fichier ",
     "joined-group": " s’est joint(e) au groupe ",
@@ -251,6 +256,7 @@ French = {
     "groups": "Groupes",
     "chat": "Chat",
     "members": "Membres",
+    "member": "Membre",
     "geds": "GEDS",
     "geds-search": "Recherche GEDS",
     "event-calendar": "Calendrier d'événement",
@@ -337,7 +343,7 @@ French = {
     "start-date": "Date de Début: ",
     "end-date": "Date de Fin: ",
     "web-view": "Site",
-    "additional-info": "Information Additionnellen",
+    "additional-info": "Information Additionnelle",
     "organizer": "Organisateur: ",
     "fee": "Frais: ",
     "lang": "La Langue: ",
@@ -417,5 +423,9 @@ French = {
     "display-name": "Nom à afficher",
     "display-name-info": "Veuillez écrire votre prénom et votre nom de famille, tel que l'on vous connaît au travail. Conformément aux <a class='terms' href='#'>Conditions d'utilisation</a>, le nom affiché doit correspondre à votre vrai nom. Il n'est pas permis d'utiliser un pseudonyme.",
     "toc": "J'ai lu, j'ai compris et j'accepte les <a class='terms' href='#'>conditions d'utilisation</a>.",
-    
+    "all": "Tous",
+    "my-groups": "Mes groupes",
+    "my-colleagues": "Mes collègues",
+    "mine": "Moi",
+    "more": "Autres"
 }

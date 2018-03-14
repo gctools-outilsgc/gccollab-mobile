@@ -2469,7 +2469,7 @@ GCTEach = {
         var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-        var members = (value.count > 0) ? value.count + (value.count == 1 ? " member" : " members") : "";
+        var members = (value.count > 0) ? value.count + (value.count == 1 ? " " + GCTLang.Trans("member") : " " + GCTLang.Trans("members")) : "";
         var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
         var content = GCTLang.txtGroup({
