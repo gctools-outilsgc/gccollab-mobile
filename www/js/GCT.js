@@ -1406,7 +1406,7 @@ GCTUser = {
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.groupactivity", user: GCTUser.Email(), guid: guid, limit: 0, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang(), api_version: apiVersion },
+            data: { method: "get.groupactivity", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang(), api_version: apiVersion },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
