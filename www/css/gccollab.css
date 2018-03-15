@@ -267,11 +267,21 @@ textarea {
     border: none;
 }
 
+
 #wire-post-textarea {
     min-height: 100px;
     max-width: 95%;
     padding: 5px;
     margin-top: 10px;
+    resize: none;
+    border: 1px solid #46246A;
+    border-radius: 0;
+}
+
+.comment-textarea {
+    min-height: 100px;
+    text-align: center;
+    max-width: 98%;
     resize: none;
     border: 1px solid #46246A;
     border-radius: 0;

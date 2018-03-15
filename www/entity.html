@@ -15,11 +15,25 @@
 
     <div class="page-content hide-bars-on-scroll">
         <div id="entity-main" class="context"></div>
-        <div id="comment-head" class="blog-title">Comments:</div>
-        <a id="comments-view" class="button button-big button-fill" data-translate="view-comments">VIEW COMMENTS</a>
-        <div id="entity-comments" class="context"></div>
-        <input class="style login3" id="message" data-translate-target="placeholder" placeholder="Enter" value="">
-        <a id="comments-submit" class="button">Comment</a>
-        <a id="comments-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+
+        <div id="comment-card" class="card">
+            <div id="comment-head" class="comment-card-header">
+                <div class='item-title-row'><h2>Comments:</h2></div>
+                <a id="comments-view" class="button button-big button-fill" data-translate="view-comments">VIEW COMMENTS</a>
+            </div>
+
+            <div class="card-content">
+                <div id="entity-comments" class="context">
+                    <textarea id="message" class="comment-textarea"> </textarea>
+                    <a id="comments-submit" class="button button-big button-fill">Comment</a>
+                    <br/>
+                </div>
+            </div>
+
+            <a id="comments-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            <br/>
+            
+        </div>
+
     </div>
 </div>
