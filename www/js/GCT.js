@@ -1679,7 +1679,7 @@ GCTUser = {
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "submit.commenttest", user: GCTUser.Email(), guid: guid, message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "submit.comment", user: GCTUser.Email(), guid: guid, message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
