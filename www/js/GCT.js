@@ -241,6 +241,7 @@ GCTLang = {
         return content;
     },
     txtOpps: function (object) {
+        if(object.state == 'posted'){
         var content = "<div class='swiper-slide list-block cards-list'>"
             + "<div class='card'>"
                 + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
@@ -292,13 +293,15 @@ GCTLang = {
             content += "</div>"
                 + "</div>"
                 + "<div class='card-footer'>"
-                     + "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ApplyPost(this);'> <span>Apply</span></a>"
-                    + object.action
+                    content += object.action
+                    if(object.apply_button == true){content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ApplyPost(this);'> <span>Apply</span></a>";}
                 + "</div>"
             + "</div>"
         + "</div>";
+   
         content = GCT.SetLinks(content);
         return content;
+    }
     },
     txtWire: function (object) {
         var content = "<div class='swiper-slide list-block cards-list'>"
@@ -1264,6 +1267,7 @@ GCTUser = {
             }
         });
     },
+    
     GetDiscussion: function (guid, successCallback, errorCallback) {
         $$.ajax({
             api_key: api_key_gccollab,
@@ -2556,6 +2560,9 @@ GCTEach = {
         var roletype = '';
         if (value.roletype) { roletype += value.roletype; }
 
+        var apply_button = 'false';
+        if (value.userDetails.user_id != GCTUser.Guid()) { apply_button = true; }
+
         var content = GCTLang.txtOpps({
             guid: value.guid,
             icon: value.userDetails.iconURL,
@@ -2572,7 +2579,9 @@ GCTEach = {
             owner: value.owner_guid,
             title: value.title,
             liked: liked,
-            likes: likes
+            likes: likes,
+            state:value.state,
+            apply_button: apply_button
         });
         return content;
 
