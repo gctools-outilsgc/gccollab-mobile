@@ -46,7 +46,7 @@ GCTLang = {
             + '<div class="item-title-row">'
             + '<div class="item-title author-comment">' + object.name +'</div>'
             + '</div>'
-            + '<div class="time">' + object.date +'</div>' 
+            + '<div class="time">' + object.date + '<a href="#" class="link pull-right more-options" data-owner="' + object.owner + '" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="GCTUser.MoreOptions(this); "><i class="fa fa-caret-down"></i></a></div>'
             + '<div class="content-block">' + object.description +'</div>'
             + '</div>'
             + '</div>'
