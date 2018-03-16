@@ -10,57 +10,48 @@ GCTLang = {
     txtNewsfeed: function (object) {
         var content = "<div class='swiper-slide list-block cards-list'>"
             + "<div class='card'>"
-                + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
-                    + "<div class='item-media rounded'><img alt='Profile Image of "+object.name+"' src='" + object.icon + "' /></div>"
-                    + "<div class='item-inner'>"
-                        + "<div class='item-title-row'>"
-                            + "<div class='author'>" + object.name + "</div>"
-                        + "</div>"
-                        + "<div class='time'>" + object.date + "</div>"
-                    + "</div>"
-                + "</div>"
-                + "<div class='card-content'>"
-                    + "<div class='card-content-inner'>"
-                     + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
-                        + "<div class='item-text large'>" + object.name + " " + object.description + " " + object.more + "</div>"
-                        + object.text
-                        + object.source
-                    + "</div>"
-                + "</div>"
-                + "<div class='card-footer'>"
-                    + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-                    + object.reply
-                    // + "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.SharePost(this);'><i class='fa fa-share-alt-square'></i> <span>" + GCTLang.Trans("share") + "</span></a>"
-                    + object.action
-                + "</div>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row'>"
+            + "<div class='author'>" + object.name + "</div>"
             + "</div>"
-        + "</div>";
+            + "<div class='time'>" + object.date + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-content'>"
+            + "<div class='card-content-inner'>"
+            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
+            + "<div class='item-text large'>" + object.name + " " + object.description + " " + object.more + "</div>"
+            + object.text
+            + object.source
+            + "</div>"
+            + "</div>"
+            + "<div class='card-footer'>"
+            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + object.reply
+            // + "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.SharePost(this);'><i class='fa fa-share-alt-square'></i> <span>" + GCTLang.Trans("share") + "</span></a>"
+            + object.action
+            + "</div>"
+            + "</div>"
+            + "</div>";
         //console.log(GCT.SetLinks(content));
         return GCT.SetLinks(content);
     },
     txtComment: function (object) {
-        var content = "<div class='swiper-slide list-block cards-list'>"
-            + "<div class='card'>"
-                + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
-                    + "<div class='item-media rounded'><img alt='Profile Image of " + object.name +"' src='" + object.icon + "' /></div>"
-                    + "<div class='item-inner'>"
-                        + "<div class='item-title-row'>"
-                            + "<div class='author'>" + object.name + "</div>"
-                        + "</div>"
-                        + "<div class='time'>" + object.date + "</div>"
-                    + "</div>"
-                + "</div>"
-                + "<div class='card-content'>"
-            + "<div class='card-content-inner'>"
-                     + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
-                        + "<div class='item-text large'>" + object.description + "</div>"
-                    + "</div>"
-                + "</div>"
-                + "<div class='card-footer'>"
-                    + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-                + "</div>"
-            + "</div>"
-        + "</div>";
+        var content = '<li>'
+                + '<div class="item-link item-content">'
+                    + '<div class="item-media"> <img src="' + object.icon + '" onclick="ShowProfile(' + object.owner + ');" style="border-radius:100%" width="40" height="40" alt="Profile Picture"> </div>'
+                    + '<div class="item-inner">'
+                        + '<div class="item-title-row">'
+                            + '<div class="item-title author-comment">' + object.name +'</div>'
+                        + '</div>'
+                        + '<div class="time">' + object.date + '<a href="#" class="link pull-right more-options" data-owner="' + object.owner + '" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="GCTUser.MoreOptions(this); "><i class="fa fa-caret-down"></i></a></div>'
+                        + object.description
+                    + '</div>'
+                + '</div>'
+            + '</li>';
+        content = GCT.SetLinks(content);
         return content;
     },
     txtBlog: function (object) {
@@ -226,7 +217,6 @@ GCTLang = {
         return content;
     },
     txtMember: function (object) {
-        console.log(object);
         var content = "<a class='item-link item-content close-popup' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile("+object.guid+");'>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row no-padding-right'>"
@@ -1668,6 +1658,23 @@ GCTUser = {
             dataType: 'text',
             url: GCT.GCcollabURL,
             data: { method: "get.commentsall", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    SubmitComment: function (guid, message, successCallback, errorCallback) {
+        $$.ajax({
+            api_key: api_key_gccollab,
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "submit.comment", user: GCTUser.Email(), guid: guid, message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);

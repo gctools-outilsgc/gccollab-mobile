@@ -3633,7 +3633,7 @@ myApp.onPageInit('entity', function (page) {
             break;
             
         case "gccollab_opportunity":
-            $("#comments-view").hide(); $("#comment-head").hide();
+            $("#comment-card").hide();
             GCTUser.GetOpportunity(guid, function (data) {
                 var opportunity = data.result;
                 var content = "";
@@ -3838,7 +3838,7 @@ myApp.onPageInit('entity', function (page) {
             break;
 
         case "gccollab_wire_post":
-            $("#comments-view").hide(); $("#comment-head").hide();
+            $("#comment-card").hide();
             GCTUser.GetWire(guid, 1, function (data) {
                 var wires = data.result.reverse();
                 var content = "";
@@ -3972,6 +3972,20 @@ myApp.onPageInit('entity', function (page) {
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
         });
+    });
+    $$('#comments-submit').on('click', function (e) {
+        var comment = $$('#message').val();
+        if (!(comment === '')) {
+            GCTUser.SubmitComment(guid, comment, function (data) {
+                console.log("submited");
+                var result = data.result;
+                console.log(result);
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        } else {
+            //empty message, dont use, give feedback
+        }
     });
 });
         
