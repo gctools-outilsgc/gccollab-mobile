@@ -4239,6 +4239,10 @@ myApp.onPageInit('terms', function (page) {
     $('#terms-content').html($('#terms-content-' + GCTLang.Lang()).html());
 });
 
+myApp.onPageInit('about', function (page) {
+    $('#about-content').html($('#about-content-' + GCTLang.Lang()).html());
+});
+
 myApp.onPageInit('faqs', function (page) {
     $('#faqs-content').html($('#faqs-content-' + GCTLang.Lang()).html());
 });
