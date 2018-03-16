@@ -16,23 +16,40 @@
     <div class="page-content hide-bars-on-scroll">
         <div id="entity-main" class="context"></div>
 
-        <div id="comment-card" class="card">
-            <div id="comment-head" class="comment-card-header">
-                <div class='item-title-row'><h2>Comments:</h2></div>
-                <a id="comments-view" class="button button-big button-fill" data-translate="view-comments">VIEW COMMENTS</a>
-            </div>
-
-            <div class="card-content">
-                <div id="entity-comments" class="context">
-                    <textarea id="message" class="comment-textarea"> </textarea>
-                    <a id="comments-submit" class="button button-big button-fill">Comment</a>
-                    <br/>
+        <div id="comment-card">
+            <div class="content-block comment">
+                <div class="content-block-inner comment">
+                    <div class="row no-gutter">
+                        <div class="col">
+                            <div id="comment-count" class="left number-comment">comments:</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <a id="comments-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
-            <br/>
-            
+            <div class="list-block ">
+                <ul class="message-comment">
+                    <li class="align-top">
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-input">
+                                    <textarea id="message" class="comment-textarea" placeholder="write a comment"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="content-block"> <a id="comments-submit" class="button button-big button-fill">Comment</a> </li>
+                    <li class="content-block"><a id="comments-view" class="button button-big button-fill" data-translate="view-comments">VIEW COMMENTS</a></li>
+                </ul>
+            </div>
+
+            <div id="comment-head" class="list-block media-list comment">
+                <ul id="entity-comments" class="comment">
+
+                </ul>
+                <a id="comments-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            </div>
+
         </div>
 
     </div>
