@@ -514,9 +514,7 @@ myApp.onPageInit('*', function (page) {
         e.preventDefault();
         ShowColleagueRequests();
     });
-
-    $(".icon-back").addClass('fa fa-arrow-circle-o-left fa-2x'); //Change all framework7 icon-backs to awesomefont back arrow
-
+    
     // Get & save user profile data if not present
     if( GCTUser.Guid() == "" ){
         GCTUser.SetUserProfile();
