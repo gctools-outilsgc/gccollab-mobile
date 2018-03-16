@@ -1,14 +1,19 @@
 <div data-page="external-pages" class="page navbar-fixed">
 
-  <div class="navbar" id="navbarExternal-Pages">
-    <div id="external-navbar-inner" class="navbar-inner"></div>
-  </div>
+    <div class="navbar" id="navbarExternal-Pages">
+        <div id="external-navbar-inner" class="navbar-inner"></div>
+    </div>
+    <div class="toolbar toolbar-bottom">
+        <div class="toolbar-inner">
+            <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="icon icon-back"></i></a></div>
+        </div>
+    </div>
 
     <div class="page-content hide-bars-on-scroll pull-to-refresh-content" style="overflow-x: hidden;">
 
 
         <form action="https://gccollab.ca/services/api/rest/json/?" target="iFrameChat" method="post" id="formGCcollabLogin">
-            <input type="hidden" id="method "name="method" value="login.userforurl" />
+            <input type="hidden" id="method " name="method" value="login.userforurl" />
             <input type="hidden" id="user" name="user" value="tmp" />
             <input type="hidden" id="key" name="key" value="tmp" />
             <input type="hidden" id="url" name="url" value="tmp" />
@@ -21,5 +26,5 @@
 
 
     </div>
-    
+
 </div>
