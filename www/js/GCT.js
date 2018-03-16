@@ -40,16 +40,16 @@ GCTLang = {
     },
     txtComment: function (object) {
         var content = '<li>'
-            + '<div class="item-link item-content">'
-            + '<div class="item-media"> <img src="' + object.icon + '" onclick="ShowProfile(' + object.owner + ');" style="border-radius:100%" width="40" height="40" alt=""> </div>'
-            + '<div class="item-inner">'
-            + '<div class="item-title-row">'
-            + '<div class="item-title author-comment">' + object.name +'</div>'
-            + '</div>'
-            + '<div class="time">' + object.date + '<a href="#" class="link pull-right more-options" data-owner="' + object.owner + '" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="GCTUser.MoreOptions(this); "><i class="fa fa-caret-down"></i></a></div>'
-            + '<div class="content-block">' + object.description +'</div>'
-            + '</div>'
-            + '</div>'
+                + '<div class="item-link item-content">'
+                    + '<div class="item-media"> <img src="' + object.icon + '" onclick="ShowProfile(' + object.owner + ');" style="border-radius:100%" width="40" height="40" alt="Profile Picture"> </div>'
+                    + '<div class="item-inner">'
+                        + '<div class="item-title-row">'
+                            + '<div class="item-title author-comment">' + object.name +'</div>'
+                        + '</div>'
+                        + '<div class="time">' + object.date + '<a href="#" class="link pull-right more-options" data-owner="' + object.owner + '" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="GCTUser.MoreOptions(this); "><i class="fa fa-caret-down"></i></a></div>'
+                        + object.description
+                    + '</div>'
+                + '</div>'
             + '</li>';
         content = GCT.SetLinks(content);
         return content;
