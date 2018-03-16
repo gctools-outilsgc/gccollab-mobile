@@ -542,6 +542,7 @@ myApp.onPageInit('*', function (page) {
 
 
 myApp.onPageInit('group', function (page) {
+    $$('#group-navbar-inner').html(GCTLang.txtGlobalNav('group'));
     var guid = page.query.guid;
     var limit = 20;
     var offset = 0;
@@ -894,7 +895,7 @@ myApp.onPageInit('sign-in', function (page) {
 });
 
 myApp.onPageInit('home', function (page) {
-
+    $$('#home-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
     if (GCTUser.Context() != "gccollab") {
         $('#liMenuChat').hide();
     } else {
@@ -1177,7 +1178,7 @@ function Translate(obj) {
 }
 
 myApp.onPageInit('wire', function (page) {
-    $$('.navbar-inner').html(GCTLang.txtGlobalNav('the-wire'));
+    $$('#wire-navbar-inner').html(GCTLang.txtGlobalNav('the-wire'));
     var limit = 20;
     var offset = 0;
     var wiresAllMoreOffset = 0;
@@ -1335,7 +1336,7 @@ myApp.onPageInit('wire', function (page) {
 });
 
 myApp.onPageInit('newsfeed', function (page) {
-    $$('.navbar-inner').html(GCTLang.txtGlobalNav('newsfeed'));
+    $$('#newsfeed-navbar-inner').html(GCTLang.txtGlobalNav('newsfeed'));
     var limit = 20;
     var offset = 0;
     var newsfeedMoreOffset = 0;
@@ -1391,7 +1392,7 @@ myApp.onPageInit('newsfeed', function (page) {
 });
 
 myApp.onPageInit('groups', function (page) {
-    $$('.navbar-inner').html(GCTLang.txtGlobalNav('groups'));
+    $$('#groups-navbar-inner').html(GCTLang.txtGlobalNav('groups'));
     var limit = 20;
     var offset = 0;
     var groupsAllMoreOffset = 0;
@@ -1619,12 +1620,14 @@ myApp.onPageInit('groups', function (page) {
 });
 
 myApp.onPageInit('chat', function (page) {
+    $$('#chat-navbar-inner').html(GCTLang.txtGlobalNav('chat'));
     $("#user").val(GCTUser.Email());
     $("#key").val(GCTUser.APIKey());
     $("#chatForm").submit(); 
 });
 
 myApp.onPageInit('doc', function (page) {
+    $$('#doc-navbar-inner').html(GCTLang.txtGlobalNav('doc-title'));
     $("#user").val(GCTUser.Email());
     $("#key").val(GCTUser.APIKey());
     $("#guid").val(page.query.guid);
@@ -1632,6 +1635,7 @@ myApp.onPageInit('doc', function (page) {
 });
 
 myApp.onPageInit('external-pages', function (page) {
+    $$('#external-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
     //### log them in at app startup in background and do a check for if logged in later on so we don't do this every page hit
     $("#user").val(GCTUser.Email());
     $("#key").val(GCTUser.APIKey());
@@ -1643,6 +1647,7 @@ myApp.onPageInit('external-pages', function (page) {
 });
 
 myApp.onPageInit('members', function (page) {
+    $$('#members-navbar-inner').html(GCTLang.txtGlobalNav('members'));
     var limit = 20;
     var offset = 0;
     var filters = {};
@@ -1904,6 +1909,7 @@ myApp.onPageInit('geds', function (page) {
 });
 
 myApp.onPageInit('discussion', function (page) {
+    $$('#discussions-navbar-inner').html(GCTLang.txtGlobalNav('discussions'));
     var limit = 20;
     var offset = 0;
     var discussionsMoreOffset = 0;
@@ -2172,6 +2178,7 @@ myApp.onPageInit('discussion', function (page) {
 });
 
 myApp.onPageInit('blog', function (page) {
+    $$('#blogs-navbar-inner').html(GCTLang.txtGlobalNav('blogs'));
     var limit = 20;
     var offset = 0;
     var blogsMoreOffset = 0;
@@ -2300,6 +2307,7 @@ myApp.onPageInit('blog', function (page) {
 });
 
 myApp.onPageInit('bookmarks', function (page) {
+    $$('#bookmarks-navbar-inner').html(GCTLang.txtGlobalNav('bookmarks'));
     var limit = 10;
     var offset = 0;
     var filters = [];
@@ -2541,6 +2549,7 @@ myApp.onPageInit('bookmarks', function (page) {
 });
 
 myApp.onPageInit('docs', function (page) {
+    $$('#docs-navbar-inner').html(GCTLang.txtGlobalNav('docs'));
     var limit = 20;
     var offset = 0;
     var docsMoreOffset = 0;
@@ -2670,6 +2679,7 @@ myApp.onPageInit('docs', function (page) {
 });
 
 myApp.onPageInit('events', function (page) {
+    $$('#events-navbar-inner').html(GCTLang.txtGlobalNav('event-calendar'));
     var eventsArray = [];
 
     // Default
@@ -3001,6 +3011,7 @@ myApp.onPageInit('events', function (page) {
 });
 
 myApp.onPageInit('opportunities', function (page) {
+    $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platform'));
     var limit = 20;
     var offset = 0;
     var opportunitiesMoreOffset = 0;
@@ -3132,6 +3143,7 @@ myApp.onPageInit('opportunities', function (page) {
 });
 
 myApp.onPageInit('profile', function (page) {
+    $$('#profile-navbar-inner').html(GCTLang.txtGlobalNav('profile'));
     var guid = page.query.guid; // Checks guid of page, as any link to profile should include the target guid
     var profile_limit = 10;
     /* TODO: Tab objects to hold loaded and offset variables. */
@@ -4246,18 +4258,22 @@ myApp.onPageInit('register', function (page) {
 });
 
 myApp.onPageInit('privacy', function (page) {
+    $$('#privacy-navbar-inner').html(GCTLang.txtGlobalNav('privacy-policy'));
     $('#privacy-content').html($('#privacy-content-' + GCTLang.Lang()).html());
 });
 
 myApp.onPageInit('terms', function (page) {
+    $$('#terms-navbar-inner').html(GCTLang.txtGlobalNav('terms-and-conditions'));
     $('#terms-content').html($('#terms-content-' + GCTLang.Lang()).html());
 });
 
 myApp.onPageInit('about', function (page) {
+    $$('#about-navbar-inner').html(GCTLang.txtGlobalNav('about-gccollab'));
     $('#about-content').html($('#about-content-' + GCTLang.Lang()).html());
 });
 
 myApp.onPageInit('faqs', function (page) {
+    $$('#faq-navbar-inner').html(GCTLang.txtGlobalNav('faq'));
     $('#faqs-content').html($('#faqs-content-' + GCTLang.Lang()).html());
 });
 
