@@ -597,9 +597,9 @@ myApp.onPageInit('group', function (page) {
             + '<div class="list-block">'
             + '<ul>';
         if (access) {
-            popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#tab-group-activity" class="button tab-link" data-translate="activity">'+ GCTLang.Trans("activity") +'</a></li>' : "";
-            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-group-discussion" class="button tab-link" data-translate="discussion">'+ GCTLang.Trans("discussion") +'</a></li>' : "";
-            popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#tab-group-bookmarks" class="button tab-link" data-translate="bookmarks">'+ GCTLang.Trans("bookmarks") +'</a></li>' : "";
+            popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#tab-group-activity" class="button tab-link close-popover" data-translate="activity">'+ GCTLang.Trans("activity") +'</a></li>' : "";
+            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-group-discussion" class="button tab-link close-popover" data-translate="discussion">'+ GCTLang.Trans("discussion") +'</a></li>' : "";
+            popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#tab-group-bookmarks" class="button tab-link close-popover" data-translate="bookmarks">'+ GCTLang.Trans("bookmarks") +'</a></li>' : "";
         } else {
             popoverHTML += '<li><a href="#" class="item-link list-button">' + "Private Group" + '</a></li>';
         }
@@ -3285,11 +3285,11 @@ myApp.onPageInit('profile', function (page) {
             + '<div class="list-block">'
             + '<ul>';
         
-        popoverHTML += '<li><a id="TabLink-colleagues-' + guid + '" href="#tab-user-colleagues-' + guid + '" class="button tab-link">'+ GCTLang.Trans("colleagues") +'</a></li>';
-        popoverHTML += '<li><a id="TabLink-wires-' + guid + '" href="#tab-user-wires-' + guid + '" class="button tab-link">'+ GCTLang.Trans("wires") +'</a></li>';
-        popoverHTML += '<li><a id="TabLink-blogs-' + guid + '" href="#tab-user-blogs-' + guid + '" class="button tab-link">'+ GCTLang.Trans("blogs") +'</a></li>';
-        popoverHTML += '<li><a id="TabLink-activity-' + guid + '" href="#tab-user-activity-' + guid + '" class="button tab-link">'+ GCTLang.Trans("activity") +'</a></li>';
-        popoverHTML += '<li><a id="TabLink-bookmarks-' + guid + '" href="#tab-user-bookmarks-' + guid +'" class="button tab-link">'+ GCTLang.Trans("bookmarks") +'</a></li>';
+        popoverHTML += '<li><a id="TabLink-colleagues-' + guid + '" href="#tab-user-colleagues-' + guid + '" class="button tab-link close-popover">'+ GCTLang.Trans("colleagues") +'</a></li>';
+        popoverHTML += '<li><a id="TabLink-wires-' + guid + '" href="#tab-user-wires-' + guid + '" class="button tab-link close-popover">'+ GCTLang.Trans("wires") +'</a></li>';
+        popoverHTML += '<li><a id="TabLink-blogs-' + guid + '" href="#tab-user-blogs-' + guid + '" class="button tab-link close-popover">'+ GCTLang.Trans("blogs") +'</a></li>';
+        popoverHTML += '<li><a id="TabLink-activity-' + guid + '" href="#tab-user-activity-' + guid + '" class="button tab-link close-popover">'+ GCTLang.Trans("activity") +'</a></li>';
+        popoverHTML += '<li><a id="TabLink-bookmarks-' + guid + '" href="#tab-user-bookmarks-' + guid +'" class="button tab-link close-popover">'+ GCTLang.Trans("bookmarks") +'</a></li>';
         
         
         popoverHTML += '</ul>'
