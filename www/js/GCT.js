@@ -284,8 +284,10 @@ GCTLang = {
                 + "</div>"
                 + "<div class='card-footer'>"
                     content += object.action
-                    if(object.apply_button == true){content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ApplyPost(this);'> <span>Apply</span></a>";}
-                + "</div>"
+                    if(object.apply == 'mission_apply'){content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ApplyPost(this);'> <span>Apply</span></a>";}
+                    else if(object.apply == 'withdraw'){content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>Withdraw</span></a>";}
+                    else if(object.apply == 'offered'){content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.AccepetPost(this);'> <span>Accept</span></a><a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.DeclinedPost(this);'> <span>Decline</span></a>";}
+                    + "</div>"
             + "</div>"
         + "</div>";
    
@@ -2567,9 +2569,6 @@ GCTEach = {
         var roletype = '';
         if (value.roletype) { roletype += value.roletype; }
 
-        var apply_button = 'false';
-        if (value.userDetails.user_id != GCTUser.Guid()) { apply_button = true; }
-
         var content = GCTLang.txtOpps({
             guid: value.guid,
             icon: value.userDetails.iconURL,
@@ -2588,7 +2587,7 @@ GCTEach = {
             liked: liked,
             likes: likes,
             state:value.state,
-            apply_button: apply_button
+            apply: value.apply
         });
         return content;
 
