@@ -7,7 +7,7 @@
     <div class="toolbar toolbar-bottom">
         <div class="toolbar-inner">
             <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="fa fa-arrow-circle-o-left fa-2x"></i></a></div>
-            <div class="right sliding"><a id="home-actions" href="#" class="button link open-popover" data-popover=".popover-actions"><i class="icon icon-plus"></i></a></div>
+            <div class="right sliding"><a id="home-actions" href="#" class="link open-popover" data-popover=".popover-actions" aria-label="Create a new Post Menu Options"><i class="fa fa-plus fa-2x"></i></a></div>
         </div>
     </div>
 
@@ -71,10 +71,9 @@
         <div class="popover-inner">
             <div class="list-block">
                 <ul>
-                    <li><a href="#" class="list-button item-link">Link 1</a></li>
-                    <li><a href="#" class="list-button item-link">Link 2</a></li>
-                    <li><a href="#" class="list-button item-link">Link 3</a></li>
-                    <li><a href="#" class="list-button item-link">Link 4</a></li>
+                    <!-- <a onclick="GCTUser.NewMessage();"><i class="fa fa-envelope"></i></a> -->
+                    <!-- <a onclick="GCTUser.NewBlogPost();"><i class="fa fa-pencil-square-o"></i></a> -->
+                    <li><a href="#" onclick="GCTUser.PostWirePost();" class="list-button item-link close-popover"><i class="fa fa-feed"></i>  Create a new Wire post </a></li>
                 </ul>
             </div>
         </div>
