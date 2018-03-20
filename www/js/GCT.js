@@ -231,7 +231,7 @@ GCTLang = {
         return content;
     },
     txtOpps: function (object) {
-        if(object.state == 'posted'){
+        if(object.state != '0' && object.state != 'cancelled'){
         var content = "<div class='swiper-slide list-block cards-list'>"
             + "<div class='card'>"
                 + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
@@ -286,7 +286,9 @@ GCTLang = {
                     content += object.action
                     if(object.apply == 'mission_apply'){content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ApplyPost(this);'> <span>Apply</span></a>";}
                     else if(object.apply == 'withdraw'){content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>Withdraw</span></a>";}
-                    else if(object.apply == 'offered'){content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.AccepetPost(this);'> <span>Accept</span></a><a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.DeclinedPost(this);'> <span>Decline</span></a>";}
+                    else if(object.apply == 'offered'){content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.AcceptPost(this);'> <span>Accept</span></a><a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>Decline</span></a>";}
+                    content += object.state
+                    
                     + "</div>"
             + "</div>"
         + "</div>";
@@ -2254,7 +2256,82 @@ GCTUser = {
                 errorCallback(jqXHR, textStatus, errorThrown);
             }
         });
-    }
+    },
+    WithdrawPost: function (obj) {
+        var guid = $(obj).data("guid");
+        var type = $(obj).data("type");
+        $(".popover").remove();
+
+        myApp.prompt('Reason to withdraw', 'Withdraw', function (value) {
+
+            GCTUser.WithdrawOpt(guid, value, function(data){
+                console.log(data);
+                myApp.alert(data.result);
+                myApp.pullToRefreshTrigger(".pull-to-refresh-content");
+            }, function(jqXHR, textStatus, errorThrown){
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        });
+
+            myApp.pullToRefreshTrigger(".pull-to-refresh-content");
+    },
+
+    WithdrawOpt: function (guid, message, successCallback, errorCallback) { 
+        $$.ajax({
+            api_key: api_key_gccollab,
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "withdraw.post", user: GCTUser.Email(), guid: guid, message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                console.log(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+
+    AcceptPost: function (obj) {
+        var guid = $(obj).data("guid");
+        var type = $(obj).data("type");
+        $(".popover").remove();
+
+        myApp.confirm('Accept', function (value) {
+
+            GCTUser.AcceptOpt(guid, value, function(data){
+                console.log(data);
+                myApp.alert(data.result);
+                myApp.pullToRefreshTrigger(".pull-to-refresh-content");
+            }, function(jqXHR, textStatus, errorThrown){
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        });
+
+            myApp.pullToRefreshTrigger(".pull-to-refresh-content");
+    },
+
+    AcceptOpt: function (guid, message, successCallback, errorCallback) { 
+        $$.ajax({
+            api_key: api_key_gccollab,
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "accept.post", user: GCTUser.Email(), guid: guid, message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                console.log(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
 }
 
 
@@ -2570,6 +2647,12 @@ GCTEach = {
         var roletype = '';
         if (value.roletype) { roletype += value.roletype; }
 
+        var state = '';
+        if (value.state) { state += value.state; }
+
+        var apply = '';
+        if(value.apply) { apply = value.apply};
+        
         var content = GCTLang.txtOpps({
             guid: value.guid,
             icon: value.userDetails.iconURL,
@@ -2587,11 +2670,12 @@ GCTEach = {
             title: value.title,
             liked: liked,
             likes: likes,
-            state:value.state,
-            apply: value.apply
+            state: state,
+            apply: apply
         });
-        return content;
-
+            return content;
+       
+        
     },
     Doc: function (value) {
         var liked = (value.liked) ? "liked" : "";
