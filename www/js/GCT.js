@@ -311,6 +311,7 @@ GCTLang = {
                     + "<div class='card-content-inner'>"
                         + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
             + "<div id='wire-" + object.guid + "' class='item-text large'>" + object.description + "</div>"
+            + "<div class='item-media'>"+ object.image +"</div>"
                         + object.source
                     + "</div>"
                 + "</div>"
@@ -2419,8 +2420,8 @@ GCTEach = {
         }
 
         var img = '';
-        if (value.Image) {
-            img = "<br /><img class='WireImage' onclick='ShowImage(this)' id='img" + value.guid + "' src='" + value.Image + "' style='' />";
+        if (value.attachment) {
+            img = "<img class='WireImage' onclick='ShowImage(this)' id='image-" + value.guid + "' src='https://gccollab.ca/thewire_image/download/" + value.attachment.guid + "' style='' />";
             //imgs.push(value.guid);
         }
 
