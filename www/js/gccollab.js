@@ -3862,8 +3862,8 @@ myApp.onPageInit('entity', function (page) {
                         source = "<blockquote>Source: <a onclick='GCT.FireLink(this);' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
                     }
                     var img = '';
-                    if (value.Image) {
-                        img = "<br /><img class='WireImage' onclick='ShowImage(this)' id='img" + value.guid + "' src='" + value.Image + "' style='' />";
+                    if (value.attachment) {
+                        img = "<img class='WireImage' onclick='ShowImage(this)' id='image-" + value.guid + "' src='https://gccollab.ca/thewire_image/download/" + value.attachment.guid + "' style='' />";
                     }
 
                     var replied = (value.replied) ? "replied" : "";

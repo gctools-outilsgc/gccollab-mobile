@@ -311,6 +311,7 @@ GCTLang = {
                     + "<div class='card-content-inner'>"
                         + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
             + "<div id='wire-" + object.guid + "' class='item-text large'>" + object.description + "</div>"
+            + "<div class='item-media'>"+ object.image +"</div>"
                         + object.source
                     + "</div>"
                 + "</div>"
@@ -1916,7 +1917,7 @@ GCTUser = {
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.wirepost", user: GCTUser.Email(), guid: guid, thread: thread, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.wireposttest", user: GCTUser.Email(), guid: guid, thread: thread, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1936,7 +1937,7 @@ GCTUser = {
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.wireposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.wirepoststest", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), context: GCTUser.Context(), lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2419,8 +2420,8 @@ GCTEach = {
         }
 
         var img = '';
-        if (value.Image) {
-            img = "<br /><img class='WireImage' onclick='ShowImage(this)' id='img" + value.guid + "' src='" + value.Image + "' style='' />";
+        if (value.attachment) {
+            img = "<img class='WireImage' onclick='ShowImage(this)' id='image-" + value.guid + "' src='https://gccollab.ca/thewire_image/download/" + value.attachment.guid + "' style='' />";
             //imgs.push(value.guid);
         }
 
