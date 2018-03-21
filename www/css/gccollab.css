@@ -131,6 +131,7 @@ form .error {
 	-webkit-line-clamp: inherit !important;
 }
 .list-block .item-text.large {
+    color: #000;
 	max-height: 120px;
     -webkit-line-clamp: 6;
 }
@@ -166,6 +167,7 @@ form .error {
 .card-header .time { color: #fff; }
 .card-header.plain .time { color: #46246A; }
 .card-content blockquote { margin-top: 10px; border-left: 2px solid #46246A; }
+.card-content-inner { color: #000; }
 .card-footer a.link, .card-header a.link, .card-footer { color: #46246A; }
 .gccollab .swiper-pagination .swiper-pagination-bullet-active { background-color: #46246A !important; }
 .theme-gccollab .card-header .item-title { color: #fff !important; }
@@ -819,7 +821,7 @@ body {
 	font-family: "Roboto", Helvetica, Arial, sans-serif;
 	margin: 0;
 	padding: 0;
-	color: #000; /* Default text Color text Colour Here*/
+	color: #000;
 	font-size: 15px;
 	line-height: 1.5;
 	width: 100%;
