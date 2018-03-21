@@ -969,7 +969,7 @@ input:focus {
 .list-block.media-list{margin: 0;}
 .author { font-size: 14px; }
 .time {font-size: 12px; color: #60BB87;}
-img.article {width: 100%;height: auto;margin-top: 0;}
+img {width: 100%;height: auto;margin-top: 0;}
 .article-title { font-weight: 200; font-size: 24px; color: #222222; margin: 15px 0; padding: 0 15px;}
 .article-content { color: #666666; margin: 20px 0; padding: 0 15px; line-height: 25px;}
 .readmore { margin: 15px 0; padding: 0 15px;}
