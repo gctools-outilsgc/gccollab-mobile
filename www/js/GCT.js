@@ -222,7 +222,7 @@ GCTLang = {
             + "<div class='item-title-row no-padding-right'>"
             + "</div>"
             + "<div class='row ptm'>"
-            + "<div class='col-20'><img src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
+            + "<div class='col-20 members-icon'><img src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
             + "<div class='col-80 item-title reg-text'>" + object.name + "<div class='item-text more_text'>" + object.organization + "</div> <div class='item-text more_text'> " + object.job + "</div></div>"
             + "</div>"
             + "</div>"
