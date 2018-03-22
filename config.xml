@@ -77,10 +77,10 @@
     <access origin="*" />
     <allow-navigation href="*" />
 
-    <plugin name="cordova-plugin-whitelist" spec="~1.2.2" />
-    <plugin name="cordova-plugin-console" spec="~1.0.7" />
-    <plugin name="cordova-plugin-statusbar" spec="~1.0.1" />
-    <plugin name="cordova-plugin-inappbrowser" spec="~1.7.1" />
+    <plugin name="cordova-plugin-whitelist"  />
+    <plugin name="cordova-plugin-console"  />
+    <plugin name="cordova-plugin-statusbar"  />
+    <plugin name="cordova-plugin-inappbrowser" />
 
 
 </widget>
