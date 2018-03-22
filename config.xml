@@ -85,7 +85,6 @@
     <plugin name="cordova-plugin-console"  />
     <plugin name="cordova-plugin-statusbar"  />
     <plugin name="cordova-plugin-inappbrowser" />
-    <plugin name="cordova-plugin-file-transfer" spec="~1.7.1" />
     <plugin name="cordova-plugin-camera" spec="~4.0.2" />
 
 </widget>
