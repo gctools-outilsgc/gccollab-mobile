@@ -1017,8 +1017,8 @@ ul.profiles::after {height: 1px;}
 /*----------- theme1 contacts color  ------------*/
 /*--------------------------------------------*/
 .list-block.media-list .item-media img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 40px;
+    max-height: 40px;
     border-radius: 50%
 }
 
@@ -1121,4 +1121,9 @@ h2+p { font-size: 17px;  font-weight: 400;}
 .members-icon img {
     max-height: 50px;
     max-width: 50px;
-} 
+}
+
+.card-header .item-media img {
+    max-height: 40px;
+    max-width: 40px;
+}
