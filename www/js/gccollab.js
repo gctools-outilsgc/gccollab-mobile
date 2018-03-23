@@ -4012,7 +4012,6 @@ myApp.onPageInit('CameraTest', function (page) {
             alert('calling getPicture');
             navigator.camera.getPicture(function onSuccess(imageData) {
                 alert('succsess');
-                var image = document.getElementById('myImage');
                 $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
             }, function onFail(message) {
                 alert('Failed because: ' + message);
@@ -4025,6 +4024,7 @@ myApp.onPageInit('CameraTest', function (page) {
         }
         alert('done');
     });
+
     $$('#camera-camera').on('click', function (e) {
         alert('click');
 
@@ -4045,6 +4045,15 @@ myApp.onPageInit('CameraTest', function (page) {
         }
         alert('done');
     });
+
+    $$('#camera-picture').on('click', function (e) {
+        if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
+            var image = GCTCamera.openCamera('');
+            $(image).hide().appendTo('#image-display');
+        } else {
+            alert('no navigator.camera - plugin error? Restart app maybe. Sorry.');
+        }
+    })
 });
 
         

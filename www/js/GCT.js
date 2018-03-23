@@ -2745,6 +2745,44 @@ GCTEach = {
     }
 }
 
+/* For Camera Plugin, https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-camera/ */
+GCTCamera = {
+    /* setOptions - Sets options for camera plugin to use. Takes srcType to dynamically set source. (CAMERA, PHOTOLIBRARY, SAVEDPHOTOALBUM) */
+    setOptions: function (srcType) {
+        var options = {
+            quality: 50, //100 is full quality, do we want to send full HD photos though?
+            destinationType: Camera.DestinationType.FILE_URI,
+            sourceType: srcType,
+            encordingType: Camera.EncodingType.JPEG, //Do we want just jpeg?
+            mediaType: Camera.MediaType.Picture,
+            allowEdit: false, //unstable on android
+            correctOrientation: true //Corrects Android orientation quirks
+        }
+        return options;
+    },
+
+    openCamera: function (selection, successFunc) {
+        var srcType = Camera.PictureSourceType.CAMERA;
+        var options = GCTCamera.setOptions(srcType);
+        //var func = createNewFileEntry; //for saving function later
+
+        navigator.camera.getPicture(function cameraSuccess(imageUri) {
+            // func(imageUri); //make function to save
+            alert("success");
+            return GCTCamera.displayImage(imageUri); //return html with img
+            
+        }, function cameraError(error) {
+            console.debug("Unable to obtain picture: " + error);
+        }, options);
+    },
+
+    displayImage: function (imgUri) {
+        alert("display");
+        var content = '<img id="picture-taken" src="data:image/jpeg;base64,"' + imgUri + '/>';
+        return content;
+    }
+}
+
 // Exemple of link : https://exemple.ca/services/api/rest/json/?
 GCT = {
     GCcollabURL: "https://gccollab.ca/services/api/rest/json",
