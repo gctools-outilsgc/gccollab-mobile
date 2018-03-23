@@ -14,6 +14,11 @@ var $$ = Dom7;
 
 // Add main view
 var mainView = myApp.addView('.view-main', {
+}); 
+
+$$(document).on('deviceready', function () {
+    console.log("Device is ready!");
+    alert("ready");
 });
 
 // Show/hide preloader for remote ajax loaded pages
@@ -3998,6 +4003,30 @@ myApp.onPageInit('entity', function (page) {
         }
     });
 });
+
+myApp.onPageInit('CameraTest', function (page) {
+    $$('#camera-camera').on('click', function (e) {
+        alert('click');
+        
+        if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
+            alert('calling getPicture');
+            navigator.camera.getPicture(function onSuccess(imageData) {
+                alert('succsess');
+                var image = document.getElementById('myImage');
+                image.src = "data:image/jpeg;base64," + imageData;
+            }, function onFail(message) {
+                alert('Failed because: ' + message);
+            }, {
+                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                destinationType: Camera.DestinationType.DATA_URL
+            });
+        } else {
+            alert('no navigator.camera - did you install the plugin?');
+        }
+        alert('done');
+    });
+});
+
         
 /* ===== Messages Page ===== */
 myApp.onPageInit('messages', function (page) {
