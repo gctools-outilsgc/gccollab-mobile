@@ -4005,7 +4005,7 @@ myApp.onPageInit('entity', function (page) {
 });
 
 myApp.onPageInit('CameraTest', function (page) {
-    $$('#camera-camera').on('click', function (e) {
+    $$('#camera-gallery').on('click', function (e) {
         alert('click');
         
         if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
@@ -4013,13 +4013,33 @@ myApp.onPageInit('CameraTest', function (page) {
             navigator.camera.getPicture(function onSuccess(imageData) {
                 alert('succsess');
                 var image = document.getElementById('myImage');
-                image.src = "data:image/jpeg;base64," + imageData;
+                $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
             }, function onFail(message) {
                 alert('Failed because: ' + message);
             }, {
                 sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
                 destinationType: Camera.DestinationType.DATA_URL
             });
+        } else {
+            alert('no navigator.camera - did you install the plugin?');
+        }
+        alert('done');
+    });
+    $$('#camera-camera').on('click', function (e) {
+        alert('click');
+
+        if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
+            alert('calling getPicture');
+            navigator.camera.getPicture(function onSuccess(imageData) {
+                alert('succsess');
+                var image = document.getElementById('myImage');
+                $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
+            }, function onFail(message) {
+                alert('Failed because: ' + message);
+            }, {
+                    sourceType: Camera.PictureSourceType.CAMERA,
+                    destinationType: Camera.DestinationType.DATA_URL
+                });
         } else {
             alert('no navigator.camera - did you install the plugin?');
         }
