@@ -414,7 +414,8 @@ function ShowColleagueRequests() {
                     name: value.displayName,
                     date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
                     description: description,
-                    organization: value.organization
+                    organization: value.organization,
+                    job: (value.job) ? value.job : ''
                 });
             });
         } else {
