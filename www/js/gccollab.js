@@ -4064,8 +4064,8 @@ myApp.onPageInit('PostWire', function (page) {
     $$('#camera-camera').on('click', function (e) {
         if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
             navigator.camera.getPicture(function onSuccess(imageData) {
-                $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
-                createNewFileEntry(imageData);
+                $("#picture-taken").attr('src', imageData);
+                imageURI = imageData;
             }, function onFail(message) {
                 alert('Failed because: ' + message);
             }, {
@@ -4084,8 +4084,8 @@ myApp.onPageInit('PostWire', function (page) {
     $$('#camera-gallery').on('click', function (e) {
         if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
             navigator.camera.getPicture(function onSuccess(imageData) {
-                $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
-                createNewFileEntry(imageData);
+                $("#picture-taken").attr('src', imageData);
+                imageURI = imageData;
             }, function onFail(message) {
             }, {
                     quality: 90,
