@@ -4073,8 +4073,8 @@ myApp.onPageInit('PostWire', function (page) {
                     sourceType: Camera.PictureSourceType.CAMERA,
                     destinationType: Camera.DestinationType.DATA_URL,
                     encodingType: Camera.EncodingType.JPEG,
-                    targetWidth: 1920,
-                    targetHeight: 1080,
+                    targetWidth: 1280,
+                    targetHeight: 720,
                     allowEdit: false,
                     correctOrientation: true //Corrects Android orientation quirks
                 });
