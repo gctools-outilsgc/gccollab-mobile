@@ -4016,11 +4016,15 @@ myApp.onPageInit('CameraTest', function (page) {
             }, function onFail(message) {
                 alert('Failed because: ' + message);
             }, {
-                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-                destinationType: Camera.DestinationType.DATA_URL
+                    quality: 90,
+                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    encodingType: Camera.EncodingType.JPEG,
+                    allowEdit: false,
+                    correctOrientation: true //Corrects Android orientation quirks
             });
         } else {
-            alert('no navigator.camera - did you install the plugin?');
+            alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
         }
         alert('done');
     });
@@ -4032,28 +4036,22 @@ myApp.onPageInit('CameraTest', function (page) {
             alert('calling getPicture');
             navigator.camera.getPicture(function onSuccess(imageData) {
                 alert('succsess');
-                var image = document.getElementById('myImage');
                 $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
             }, function onFail(message) {
                 alert('Failed because: ' + message);
             }, {
+                    quality: 90,
                     sourceType: Camera.PictureSourceType.CAMERA,
-                    destinationType: Camera.DestinationType.DATA_URL
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    encodingType: Camera.EncodingType.JPEG,
+                    allowEdit: false,
+                    correctOrientation: true //Corrects Android orientation quirks
                 });
         } else {
-            alert('no navigator.camera - did you install the plugin?');
+            alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
         }
         alert('done');
     });
-
-    $$('#camera-picture').on('click', function (e) {
-        if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
-            var image = GCTCamera.openCamera('');
-            $(image).hide().appendTo('#image-display');
-        } else {
-            alert('no navigator.camera - plugin error? Restart app maybe. Sorry.');
-        }
-    })
 });
 
         
