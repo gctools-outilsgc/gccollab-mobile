@@ -4048,7 +4048,7 @@ myApp.onPageInit('PostWire', function (page) {
     $$('#submit-wire').on('click', function (e) {
         var message = $("#wire-post-textarea").val();
         if (message != "") {
-            GCTUser.PostWire(message, '', function (data) {
+            GCTUser.PostWire(message, imageURI, function (data) {
                 console.log(data);
                 myApp.alert(data.result, function () {
                     mainView.router.loadPage({ url: 'wire.html' });
@@ -4064,15 +4064,17 @@ myApp.onPageInit('PostWire', function (page) {
     $$('#camera-camera').on('click', function (e) {
         if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
             navigator.camera.getPicture(function onSuccess(imageData) {
-                $("#picture-taken").attr('src', imageData);
+                $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
                 imageURI = imageData;
             }, function onFail(message) {
                 alert('Failed because: ' + message);
             }, {
-                    quality: 90,
+                    quality: 50,
                     sourceType: Camera.PictureSourceType.CAMERA,
-                    destinationType: Camera.DestinationType.FILE_URI,
+                    destinationType: Camera.DestinationType.DATA_URL,
                     encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 1920,
+                    targetHeight: 1080,
                     allowEdit: false,
                     correctOrientation: true //Corrects Android orientation quirks
                 });
@@ -4084,14 +4086,16 @@ myApp.onPageInit('PostWire', function (page) {
     $$('#camera-gallery').on('click', function (e) {
         if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
             navigator.camera.getPicture(function onSuccess(imageData) {
-                $("#picture-taken").attr('src', imageData);
+                $("#picture-taken").attr('src', "data:image/jpeg;base64," +  imageData);
                 imageURI = imageData;
             }, function onFail(message) {
             }, {
-                    quality: 90,
+                    quality: 50,
                     sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-                    destinationType: Camera.DestinationType.FILE_URI,
+                    destinationType: Camera.DestinationType.DATA_URL,
                     encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 1920,
+                    targetHeight: 1080,
                     allowEdit: false,
                     correctOrientation: true //Corrects Android orientation quirks
                 });
