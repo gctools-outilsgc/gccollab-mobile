@@ -905,16 +905,12 @@ GCTUser = {
         mainView.router.loadPage({ url: 'PostWire.html' }); // temp redirect, but maybe keep
     },
     PostWire: function (message, imageURI, successCallback, errorCallback) { 
-        if (imageURI != '') {
-            imageURI = JSON.stringify({ "Picture": imageURI });
-            alert(imageURI);
-        }
         $$.ajax({
             api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "post.wire", user: GCTUser.Email(), message: message, image: imageURI, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "post.wiretest", user: GCTUser.Email(), message: message, image: imageURI, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);

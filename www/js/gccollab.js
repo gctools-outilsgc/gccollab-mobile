@@ -4069,12 +4069,12 @@ myApp.onPageInit('PostWire', function (page) {
             }, function onFail(message) {
                 alert('Failed because: ' + message);
             }, {
-                    quality: 50,
+                    quality: 95,
                     sourceType: Camera.PictureSourceType.CAMERA,
                     destinationType: Camera.DestinationType.DATA_URL,
                     encodingType: Camera.EncodingType.JPEG,
-                    targetWidth: 1280,
-                    targetHeight: 720,
+                    targetWidth: 1920,
+                    targetHeight: 1920,
                     allowEdit: false,
                     correctOrientation: true //Corrects Android orientation quirks
                 });
@@ -4090,12 +4090,12 @@ myApp.onPageInit('PostWire', function (page) {
                 imageURI = imageData;
             }, function onFail(message) {
             }, {
-                    quality: 50,
+                    quality: 95,
                     sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
                     destinationType: Camera.DestinationType.DATA_URL,
                     encodingType: Camera.EncodingType.JPEG,
                     targetWidth: 1920,
-                    targetHeight: 1080,
+                    targetHeight: 1920,
                     allowEdit: false,
                     correctOrientation: true //Corrects Android orientation quirks
                 });
