@@ -406,7 +406,7 @@ function ShowColleagueRequests() {
         var content = "";
         if(colleagueData.length > 0){
             $.each(colleagueData, function (key, value) {
-                var description = '<div class="row"><div class="col-50"><a href="#" class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.ApproveColleague(this);">' + GCTLang.Trans("accept") + '</a></div><div class="col-50"><a href="#" class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.DeclineColleague(this);">' + GCTLang.Trans("decline") + '</a></div></div>';
+                var description = '<div class="row"><div class="col-50"><span class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.ApproveColleague(this);">' + GCTLang.Trans("accept") + '</span></div><span class="col-50"><div class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.DeclineColleague(this);">' + GCTLang.Trans("decline") + '</span></div></div>';
                 
                 content += GCTLang.txtMember({
                     guid: value.user_id,
@@ -415,7 +415,8 @@ function ShowColleagueRequests() {
                     date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
                     description: description,
                     organization: value.organization,
-                    job: (value.job) ? value.job : ''
+                    job: (value.job) ? value.job : '',
+                    colleaguerequest: true
                 });
             });
         } else {

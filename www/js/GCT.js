@@ -224,8 +224,9 @@ GCTLang = {
             + "<div class='row ptm'>"
             + "<div class='col-20 members-icon'><img src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
             + "<div class='col-80 item-title reg-text'>" + object.name + "<div class='item-text more_text'>" + object.organization + "</div> <div class='item-text more_text'> " + object.job + "</div></div>"
-            + "</div>"
-            + "</div>"
+            + "</div>"; 
+            (object.colleaguerequest == true) ? content += object.description : content += ''; 
+            content += "</div>"
             + "</a>";
         content = GCT.SetLinks(content);
         return content;
