@@ -4044,6 +4044,7 @@ myApp.onPageInit('CameraTest', function (page) {
 });
 
 myApp.onPageInit('PostWire', function (page) {
+    $$('#groups-navbar-inner').html(GCTLang.txtGlobalNav('new-wire-post'));
     var imageURI = "";
     $$('#submit-wire').on('click', function (e) {
         var message = $("#wire-post-textarea").val();
