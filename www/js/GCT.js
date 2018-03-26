@@ -901,33 +901,8 @@ GCTUser = {
         });
     },
 
-    PostWirePost: function(){
-        myApp.modal({
-            title: GCTLang.Trans("new-wire-post"),
-            text: GCTLang.Trans("new-post-info"),
-            afterText:  '<textarea id="wire-post-textarea"></textarea>',
-            buttons: [
-                {
-                    text: GCTLang.Trans("cancel")
-                },
-                {
-                    text: GCTLang.Trans("ok"),
-                    bold: true,
-                    onClick: function () {
-                        var message = $("#wire-post-textarea").val();
-                        if( message != ""){
-                            GCTUser.PostWire(message, function(data){
-                                console.log(data);
-                                myApp.alert(data.result);
-                                myApp.pullToRefreshTrigger(".pull-to-refresh-content");
-                            }, function(jqXHR, textStatus, errorThrown){
-                                    console.log(jqXHR, textStatus, errorThrown);
-                            });
-                        }
-                    }
-                },
-            ]
-        });
+    PostWirePost: function () {
+        mainView.router.loadPage({ url: 'PostWire.html' }); // temp redirect, but maybe keep
     },
     PostWire: function (message, successCallback, errorCallback) { 
         $$.ajax({
