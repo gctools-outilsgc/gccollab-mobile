@@ -904,13 +904,14 @@ GCTUser = {
     PostWirePost: function () {
         mainView.router.loadPage({ url: 'PostWire.html' }); // temp redirect, but maybe keep
     },
-    PostWire: function (message, successCallback, errorCallback) { 
+    PostWire: function (message, image, successCallback, errorCallback) { 
+        alert(image);
         $$.ajax({
             api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "post.wire", user: GCTUser.Email(), message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "post.wire", user: GCTUser.Email(), message: message, image: image, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);

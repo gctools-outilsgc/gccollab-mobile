@@ -4044,10 +4044,11 @@ myApp.onPageInit('CameraTest', function (page) {
 });
 
 myApp.onPageInit('PostWire', function (page) {
+    var imageURI = "";
     $$('#submit-wire').on('click', function (e) {
         var message = $("#wire-post-textarea").val();
         if (message != "") {
-            GCTUser.PostWire(message, function (data) {
+            GCTUser.PostWire(message, '', function (data) {
                 console.log(data);
                 myApp.alert(data.result, function () {
                     mainView.router.loadPage({ url: 'wire.html' });
@@ -4064,12 +4065,13 @@ myApp.onPageInit('PostWire', function (page) {
         if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
             navigator.camera.getPicture(function onSuccess(imageData) {
                 $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
+                createNewFileEntry(imageData);
             }, function onFail(message) {
                 alert('Failed because: ' + message);
             }, {
                     quality: 90,
                     sourceType: Camera.PictureSourceType.CAMERA,
-                    destinationType: Camera.DestinationType.DATA_URL,
+                    destinationType: Camera.DestinationType.FILE_URI,
                     encodingType: Camera.EncodingType.JPEG,
                     allowEdit: false,
                     correctOrientation: true //Corrects Android orientation quirks
@@ -4083,11 +4085,12 @@ myApp.onPageInit('PostWire', function (page) {
         if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
             navigator.camera.getPicture(function onSuccess(imageData) {
                 $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
+                createNewFileEntry(imageData);
             }, function onFail(message) {
             }, {
                     quality: 90,
                     sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-                    destinationType: Camera.DestinationType.DATA_URL,
+                    destinationType: Camera.DestinationType.FILE_URI,
                     encodingType: Camera.EncodingType.JPEG,
                     allowEdit: false,
                     correctOrientation: true //Corrects Android orientation quirks
