@@ -16,11 +16,6 @@ var $$ = Dom7;
 var mainView = myApp.addView('.view-main', {
 }); 
 
-$$(document).on('deviceready', function () {
-    console.log("Device is ready!");
-    alert("ready");
-});
-
 // Show/hide preloader for remote ajax loaded pages
 // Probably should be removed on a production/local app
 $$(document).on('ajaxStart', function (e) {
@@ -4004,47 +3999,8 @@ myApp.onPageInit('entity', function (page) {
     });
 });
 
-myApp.onPageInit('CameraTest', function (page) {
-    $$('#camera-gallery').on('click', function (e) {
-        if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
-            navigator.camera.getPicture(function onSuccess(imageData) {
-                $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
-            }, function onFail(message) {
-            }, {
-                    quality: 90,
-                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-                    destinationType: Camera.DestinationType.DATA_URL,
-                    encodingType: Camera.EncodingType.JPEG,
-                    allowEdit: false,
-                    correctOrientation: true //Corrects Android orientation quirks
-            });
-        } else {
-            alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
-        }
-    });
-
-    $$('#camera-camera').on('click', function (e) {
-        if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
-            navigator.camera.getPicture(function onSuccess(imageData) {
-                $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
-            }, function onFail(message) {
-                alert('Failed because: ' + message);
-            }, {
-                    quality: 90,
-                    sourceType: Camera.PictureSourceType.CAMERA,
-                    destinationType: Camera.DestinationType.DATA_URL,
-                    encodingType: Camera.EncodingType.JPEG,
-                    allowEdit: false,
-                    correctOrientation: true //Corrects Android orientation quirks
-                });
-        } else {
-            alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
-        }
-    });
-});
-
 myApp.onPageInit('PostWire', function (page) {
-    $$('#groups-navbar-inner').html(GCTLang.txtGlobalNav('new-wire-post'));
+    $$('#postwire-navbar-inner').html(GCTLang.txtGlobalNav('new-wire-post')); //Card has the same text, change at some point?
     var imageURI = "";
     $$('#submit-wire').on('click', function (e) {
         var message = $("#wire-post-textarea").val();

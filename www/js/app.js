@@ -4,6 +4,5 @@
 }
 
 document.addEventListener("deviceready", function () {
-    alert("ready app.js");
     window.open = cordova.InAppBrowser.open;
 }, false);
