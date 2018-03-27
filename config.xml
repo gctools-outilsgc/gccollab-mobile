@@ -85,6 +85,9 @@
     <plugin name="cordova-plugin-console"  />
     <plugin name="cordova-plugin-statusbar"  />
     <plugin name="cordova-plugin-inappbrowser" />
-    <plugin name="cordova-plugin-camera" spec="~4.0.2" />
+    <plugin name="cordova-plugin-camera" spec="~4.0.2">
+      <variable name="CAMERA_USAGE_DESCRIPTION" value="Application requires camera access if you want to take a photo for a wire post." />
+      <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Application requires photo access if you want to add a photo for a wire post." />
+    </plugin>
 
 </widget>

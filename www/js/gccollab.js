@@ -4068,7 +4068,7 @@ myApp.onPageInit('PostWire', function (page) {
                 $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
                 imageURI = imageData;
             }, function onFail(message) {
-                alert('Failed because: ' + message);
+                myApp.alert('Failed because: ' + message);
             }, {
                     quality: 95,
                     sourceType: Camera.PictureSourceType.CAMERA,
@@ -4080,7 +4080,7 @@ myApp.onPageInit('PostWire', function (page) {
                     correctOrientation: true //Corrects Android orientation quirks
                 });
         } else {
-            alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
+            myApp.alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
         }
     });
 
@@ -4090,6 +4090,7 @@ myApp.onPageInit('PostWire', function (page) {
                 $("#picture-taken").attr('src', "data:image/jpeg;base64," +  imageData);
                 imageURI = imageData;
             }, function onFail(message) {
+                myApp.alert("Failed because: " + message);
             }, {
                     quality: 95,
                     sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
