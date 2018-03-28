@@ -3,6 +3,6 @@
     Title: "GCcollab"
 }
 
-document.addEventListener("deviceready", function() {
+document.addEventListener("deviceready", function () {
     window.open = cordova.InAppBrowser.open;
 }, false);

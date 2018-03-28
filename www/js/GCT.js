@@ -30,7 +30,6 @@ GCTLang = {
             + "<div class='card-footer'>"
             + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             + object.reply
-            // + "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.SharePost(this);'><i class='fa fa-share-alt-square'></i> <span>" + GCTLang.Trans("share") + "</span></a>"
             + object.action
             + "</div>"
             + "</div>"
@@ -67,7 +66,7 @@ GCTLang = {
                     + "</div>"
                 + "</div>"
                 + "<div class='card-content'>"
-            + "<div class='card-content-inner'>"
+            + "<div id='blog-" + object.guid + "' class='card-content-inner'>"
            
                      + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
                         + "<div class='blog-title'>" + object.title + "</div>"
@@ -78,7 +77,6 @@ GCTLang = {
                 + "<div class='card-footer'>"
                     + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
                     // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
-                    // + "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.SharePost(this);'><i class='fa fa-share-alt-square'></i> <span>" + GCTLang.Trans("share") + "</span></a>"
                     + object.action
                 + "</div>"
             + "</div>"
@@ -111,7 +109,6 @@ GCTLang = {
                 + "<div class='card-footer'>"
                     + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
                     // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
-                    // + "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.SharePost(this);'><i class='fa fa-share-alt-square'></i> <span>" + GCTLang.Trans("share") + "</span></a>"
                     + object.action
                 + "</div>"
             + "</div>"
@@ -139,7 +136,6 @@ GCTLang = {
                 + "<div class='card-footer'>"
                     + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
                     // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
-                    // + "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.SharePost(this);'><i class='fa fa-share-alt-square'></i> <span>" + GCTLang.Trans("share") + "</span></a>"
                     + object.action
                 + "</div>"
             + "</div>"
@@ -324,7 +320,6 @@ GCTLang = {
                 + "<div class='card-footer'>"
                     + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
                     + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyWirePost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
-                    // + "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.SharePost(this);'><i class='fa fa-share-alt-square'></i> <span>" + GCTLang.Trans("share") + "</span></a>"
                     + object.action
                 + "</div>"
             + "</div>"
@@ -905,41 +900,16 @@ GCTUser = {
         });
     },
 
-    PostWirePost: function(){
-        myApp.modal({
-            title: GCTLang.Trans("new-wire-post"),
-            text: GCTLang.Trans("new-post-info"),
-            afterText:  '<textarea id="wire-post-textarea"></textarea>',
-            buttons: [
-                {
-                    text: GCTLang.Trans("cancel")
-                },
-                {
-                    text: GCTLang.Trans("ok"),
-                    bold: true,
-                    onClick: function () {
-                        var message = $("#wire-post-textarea").val();
-                        if( message != ""){
-                            GCTUser.PostWire(message, function(data){
-                                console.log(data);
-                                myApp.alert(data.result);
-                                myApp.pullToRefreshTrigger(".pull-to-refresh-content");
-                            }, function(jqXHR, textStatus, errorThrown){
-                                    console.log(jqXHR, textStatus, errorThrown);
-                            });
-                        }
-                    }
-                },
-            ]
-        });
+    PostWirePost: function () {
+        mainView.router.loadPage({ url: 'PostWire.html' }); // temp redirect, but maybe keep
     },
-    PostWire: function (message, successCallback, errorCallback) { 
+    PostWire: function (message, imageURI, successCallback, errorCallback) { 
         $$.ajax({
             api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "post.wire", user: GCTUser.Email(), message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "post.wire", user: GCTUser.Email(), message: message, image: imageURI, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1095,7 +1065,7 @@ GCTUser = {
         );
     },
     
-    Share: function (obj) {
+    ShareOnWire: function (obj) {
         var guid = $(obj).data("guid");
         var type = $(obj).data("type");
         $(".popover").remove();
@@ -1168,9 +1138,11 @@ GCTUser = {
         var popoverHTML = '<div class="popover more-options-choices">'
             + '<div class="popover-inner">'
                 + '<div class="list-block">'
-                    + '<ul>'
-                        + '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" data-type="' + type + '" onclick="GCTUser.Share(this);">' + GCTLang.Trans("share") + '</a></li>'
-                        + '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
+                    + '<ul>';
+                        if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post') {
+                            popoverHTML += '<li><a href="#" class="item-link list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
+                        }
+                        popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
                         if( mine ){
                             if( type == "gccollab_wire_post" ){ popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
                             if( type != "gccollab_opportunity" ){ popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>';}
@@ -2746,6 +2718,7 @@ GCTEach = {
         return content;
     }
 }
+
 
 // Exemple of link : https://exemple.ca/services/api/rest/json/?
 GCT = {

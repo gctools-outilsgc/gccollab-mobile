@@ -14,7 +14,7 @@ var $$ = Dom7;
 
 // Add main view
 var mainView = myApp.addView('.view-main', {
-});
+}); 
 
 // Show/hide preloader for remote ajax loaded pages
 // Probably should be removed on a production/local app
@@ -537,6 +537,42 @@ myApp.onPageInit('*', function (page) {
         }, function(jqXHR, textStatus, errorThrown){
             console.log(jqXHR, textStatus, errorThrown);
         });
+    });
+
+    $$(document).on('click', 'a.social-share', function (e) {
+        var guid = $(this).data("guid");
+        var type = $(this).data("type");
+
+        var message = '';
+        var subject = '';
+        var files = [];
+        var url = '';
+        var chooserTitle = 'Pick an app';
+
+        if (type == 'gccollab_wire_post') {
+            message = $("#wire-" + guid).text();
+            subject = 'GCcollab Wire Post';
+        } else if (type == 'gccollab_blog_post') {
+            message = $("#blog-" + guid + ' .blog-title').text();
+            subject = 'GCcollab Blog';
+        }
+
+        if (typeof window.plugins.socialsharing !== 'undefined' && message != "") {
+            window.plugins.socialsharing.shareWithOptions({
+                message: message,
+                subject: subject,
+                files: files,
+                url: url,
+                chooserTitle: chooserTitle
+            }, function(success) {
+                console.log("Share completed? " + success.completed);
+                console.log("Shared to app: " + success.app);
+            }, function(failure) {
+                console.log("Sharing failed with message: " + failure);
+            });
+        } else {
+            alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably Brandon\'s fault');
+        }
     });
 });
 
@@ -4000,6 +4036,73 @@ myApp.onPageInit('entity', function (page) {
         }
     });
 });
+
+myApp.onPageInit('PostWire', function (page) {
+    $$('#postwire-navbar-inner').html(GCTLang.txtGlobalNav('new-wire-post')); //Card has the same text, change at some point?
+    var imageURI = "";
+    $$('#submit-wire').on('click', function (e) {
+        var message = $("#wire-post-textarea").val();
+        if (message != "") {
+            GCTUser.PostWire(message, imageURI, function (data) {
+                console.log(data);
+                myApp.alert(data.result, function () {
+                    mainView.router.loadPage({ url: 'wire.html' });
+                });
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        } else {
+            myApp.alert("Cannot post wire with no text.");
+        }
+    });
+
+    $$('#camera-camera').on('click', function (e) {
+        if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
+            navigator.camera.getPicture(function onSuccess(imageData) {
+                $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
+                imageURI = imageData;
+            }, function onFail(message) {
+                myApp.alert('Failed because: ' + message);
+            }, {
+                    quality: 95,
+                    sourceType: Camera.PictureSourceType.CAMERA,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 1920,
+                    targetHeight: 1920,
+                    allowEdit: false,
+                    correctOrientation: true //Corrects Android orientation quirks
+                });
+        } else {
+            myApp.alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
+        }
+    });
+
+    $$('#camera-gallery').on('click', function (e) {
+        if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
+            navigator.camera.getPicture(function onSuccess(imageData) {
+                $("#picture-taken").attr('src', "data:image/jpeg;base64," +  imageData);
+                imageURI = imageData;
+            }, function onFail(message) {
+                myApp.alert("Failed because: " + message);
+            }, {
+                    quality: 95,
+                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 1920,
+                    targetHeight: 1920,
+                    allowEdit: false,
+                    correctOrientation: true //Corrects Android orientation quirks
+                });
+        } else {
+            alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
+        }
+    });
+
+});
+
+
         
 /* ===== Messages Page ===== */
 myApp.onPageInit('messages', function (page) {
