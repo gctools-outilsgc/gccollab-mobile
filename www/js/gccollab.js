@@ -45,8 +45,6 @@ function ToggleAllText(object){
     $(object).toggleClass('all_text');
 }
 
-$$("body").addClass("theme-" + GCTUser.Context());
-
 // Add keypress functionality to modals
 $$(document).on('keydown', '.modal-text-input', function(e){
     if(e.which == 27){
@@ -71,7 +69,7 @@ function EnterCode() {
             console.log(success);
             var txt = "";
             if (success.result == true) {
-                GCTUser.SetAPIKey(success.message);
+                GCTUser.SetLoginCookie();
                 GCTUser.SetUserProfile();
                 mainView.router.loadPage({ url: 'home.html' });
             } else {
@@ -219,7 +217,7 @@ function ShowMessage(obj) {
         //     }
         //     messageHTML += '<div class="item-inner">'
         //             + '<div class="item-title-row">'
-        //                 + '<div class="author">' + (message.fromUserDetails.displayName ? message.fromUserDetails.displayName : GCTUser.PrettyContext()) + '</div>'
+        //                 + '<div class="author">' + (message.fromUserDetails.displayName ? message.fromUserDetails.displayName : '') + '</div>'
         //             + '</div>'
         //             + '<div class="time">' + prettyDate(message.time_created) + '</div>'
         //         + '</div>'
@@ -495,6 +493,20 @@ function ShowHideGEDSInfo(li) {
     });
 }
 
+function AppOpen() {
+    if (GCTLang.IsLangSet()) {
+        if (GCTUser.IsLoggedIn()) {
+            mainView.router.loadPage({ url: 'home.html' });
+        } else {
+            mainView.router.loadPage({ url: 'sign-in.html' });
+        }
+    } else {
+        //### Show lang buttons. This is first call and only happens until they click a lang link
+        $('#aEN').toggle();
+        $('#aFR').toggle();
+    }
+}
+
 myApp.onPageInit('*', function (page) {
     myApp.closeModal();
     $$(document).on('click', 'a.external', function (e) {
@@ -524,14 +536,9 @@ myApp.onPageInit('*', function (page) {
 
     //### To do - Store pages once translated and don't translate them again to help performance. Probably use global var array for this.
     GCTLang.TransPage();
-    // $(".navbar .center a").text(GCTUser.PrettyContext());
-    $(".context").addClass(GCTUser.Context());
-
-    $('#gcconnex-context-option').hide(); //### For a later time when we can actually do this.
 
     $$('#logoutBtn').on('click', function (e) {
         GCTUser.Logout(function(success){
-            //GCTUser.SetAPIKey("");
             myApp.closePanel(false);
             mainView.router.loadPage({ url: 'sign-in.html' });
         }, function(jqXHR, textStatus, errorThrown){
@@ -896,7 +903,7 @@ myApp.onPageInit('sign-in', function (page) {
                 GCTUser.Login(email, password, function (success) {
                     if (success.result==true) {
                         GCTUser.SaveLoginEmail(email);
-                        GCTUser.SetAPIKey(success.message);
+                        GCTUser.SetLoginCookie();
                         GCTUser.SetUserProfile();
                         mainView.router.loadPage({ url: 'home.html' });
                     } else {
@@ -917,7 +924,7 @@ myApp.onPageInit('sign-in', function (page) {
             GCTUser.Login(email, password, function (success) {
                 if (success.result == true) {
                     GCTUser.SaveLoginEmail(email);
-                    GCTUser.SetAPIKey(success.message);
+                    GCTUser.SetLoginCookie();
                     GCTUser.SetUserProfile();
                     mainView.router.loadPage({ url: 'home.html' });
                 } else {
@@ -932,11 +939,6 @@ myApp.onPageInit('sign-in', function (page) {
 
 myApp.onPageInit('home', function (page) {
     $$('#home-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
-    if (GCTUser.Context() != "gccollab") {
-        $('#liMenuChat').hide();
-    } else {
-        $('#liMenuChat').show();
-    }
 
     var limit = 15;
     var offset = 0;
@@ -1097,7 +1099,7 @@ myApp.onPageInit('home', function (page) {
     //    method: 'POST',
     //    dataType: 'text',
     //    url: "https://gccollab.ca/services/api/rest/json/?",
-    //    data: { method: "login.userforchat", user: GCTUser.Email(), key: GCTUser.APIKey(), _persistant: "true" },
+    //    data: { method: "login.userforchat", user: GCTUser.Email(), key: api_key_gccollab, _persistant: "true" },
     //    timeout: 12000,
     //    success: function (data) {
     //        console.log(data);
@@ -1658,14 +1660,14 @@ myApp.onPageInit('groups', function (page) {
 myApp.onPageInit('chat', function (page) {
     $$('#chat-navbar-inner').html(GCTLang.txtGlobalNav('chat'));
     $("#user").val(GCTUser.Email());
-    $("#key").val(GCTUser.APIKey());
+    $("#key").val(api_key_gccollab);
     $("#chatForm").submit(); 
 });
 
 myApp.onPageInit('doc', function (page) {
     $$('#doc-navbar-inner').html(GCTLang.txtGlobalNav('doc-title'));
     $("#user").val(GCTUser.Email());
-    $("#key").val(GCTUser.APIKey());
+    $("#key").val(api_key_gccollab);
     $("#guid").val(page.query.guid);
     $("#docForm").submit(); 
 });
@@ -1674,7 +1676,7 @@ myApp.onPageInit('external-pages', function (page) {
     $$('#external-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
     //### log them in at app startup in background and do a check for if logged in later on so we don't do this every page hit
     $("#user").val(GCTUser.Email());
-    $("#key").val(GCTUser.APIKey());
+    $("#key").val(api_key_gccollab);
     $('#url').val(page.query.page);
     $("#formGCcollabLogin").submit();
    
