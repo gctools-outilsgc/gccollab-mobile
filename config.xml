@@ -87,15 +87,11 @@
     <plugin name="cordova-plugin-inappbrowser" />
     <plugin name="cordova-plugin-camera" spec="~4.0.2" />
 
-    <config-file platform="ios" parent="NSPhotoLibraryUsageDescription" overwrite="true">
-      <array>
+    <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
       <string>Application requires photo access if you want to add a photo for a wire post.</string>
-      </array>
-    </config-file>
-    <config-file platform="ios" parent="NSCameraUsageDescription" overwrite="true">
-      <array>
+    </edit-config>
+    <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
       <string>Application requires camera access if you want to take a photo for a wire post.</string>
-      </array>
-    </config-file>
+    </edit-config>
 
 </widget>
