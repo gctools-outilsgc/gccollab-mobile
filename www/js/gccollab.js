@@ -406,7 +406,7 @@ function ShowColleagueRequests() {
         var content = "";
         if(colleagueData.length > 0){
             $.each(colleagueData, function (key, value) {
-                var description = '<div class="row"><div class="col-50"><a href="#" class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.ApproveColleague(this);">' + GCTLang.Trans("accept") + '</a></div><div class="col-50"><a href="#" class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.DeclineColleague(this);">' + GCTLang.Trans("decline") + '</a></div></div>';
+                var description = '<div class="row"><div class="col-50"><span class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.ApproveColleague(this);">' + GCTLang.Trans("accept") + '</span></div><span class="col-50"><div class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.DeclineColleague(this);">' + GCTLang.Trans("decline") + '</span></div></div>';
                 
                 content += GCTLang.txtMember({
                     guid: value.user_id,
@@ -414,7 +414,9 @@ function ShowColleagueRequests() {
                     name: value.displayName,
                     date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
                     description: description,
-                    organization: value.organization
+                    organization: value.organization,
+                    job: (value.job) ? value.job : '',
+                    colleaguerequest: true
                 });
             });
         } else {
@@ -535,6 +537,42 @@ myApp.onPageInit('*', function (page) {
         }, function(jqXHR, textStatus, errorThrown){
             console.log(jqXHR, textStatus, errorThrown);
         });
+    });
+
+    $$(document).on('click', 'a.social-share', function (e) {
+        var guid = $(this).data("guid");
+        var type = $(this).data("type");
+
+        var message = '';
+        var subject = '';
+        var files = [];
+        var url = '';
+        var chooserTitle = 'Pick an app';
+
+        if (type == 'gccollab_wire_post') {
+            message = $("#wire-" + guid).text();
+            subject = 'GCcollab Wire Post';
+        } else if (type == 'gccollab_blog_post') {
+            message = $("#blog-" + guid + ' .blog-title').text();
+            subject = 'GCcollab Blog';
+        }
+
+        if (typeof window.plugins.socialsharing !== 'undefined' && message != "") {
+            window.plugins.socialsharing.shareWithOptions({
+                message: message,
+                subject: subject,
+                files: files,
+                url: url,
+                chooserTitle: chooserTitle
+            }, function(success) {
+                console.log("Share completed? " + success.completed);
+                console.log("Shared to app: " + success.app);
+            }, function(failure) {
+                console.log("Sharing failed with message: " + failure);
+            });
+        } else {
+            alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably Brandon\'s fault');
+        }
     });
 });
 
