@@ -21,7 +21,7 @@ GCTLang = {
             + "<div class='card-content'>"
             + "<div class='card-content-inner'>"
             + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
-            + "<div class='item-text large'><a onclick='ShowProfile(" + object.owner + ");'>" + object.name + "</a> " + object.description + " " + object.more + "</div>"
+            + "<div class='item-text large'><a onclick='ShowProfile(" + object.owner + ");'>" + object.name + "</a> " + object.description + " " + object.more + object.context + "</div>"
             + object.text
             + object.source
             + "</div>"
@@ -1691,7 +1691,7 @@ GCTUser = {
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.newsfeed", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "get.newsfeedtest", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2218,35 +2218,31 @@ GCTEach = {
             switch (value.object.type) {
                 case "wire": description = GCTLang.Trans("wire-create"); break;
                 case "blog": description == GCTLang.Trans("blog-create"); break;
-                case "discussion-reply": description = GCTLang.Trans("discussion-replied"); break;
                 case "group": description = GCTLang.Trans("group-created"); break;
                 case "file": description = GCTLang.Trans("file-created"); break;
                 case "groupforumtopic": description = GCTLang.Trans("discussion-add"); break;
                 default: description = "NEED TO HANDLE CREATE";
             }
         } else { //OTHER
-            switch (value.object.action) {
+            switch (value.action) {
                 case 'friend': description = GCTLang.Trans("friend-added"); break;
                 case 'comment': description = GCTLang.Trans("commented"); break;
+                case 'reply': description = GCTLang.Trans("discussion-replied"); break;
                 case 'join': description = GCTLang.Trans("joined-group"); break;
                 default: description = "NEED TO HANDLE ELSE";
             }
         }
 
-        // if activity for content has a group it was posted to.
-        if (value.object.group_guid) {
-
-        }
-
         var more = "";
-        if (value.object.type == "wire") {
-            more = "";
-        } else if (value.object.type == "user") {
+        if (value.object.type == "user") {
             more = "<a onclick='GCT.FireLink(this)' href='" + value.object.profileURL + "'>" + value.object.displayName + "</a>";
-        } else if (value.description == "river:update:user:default") {
-            more = "";
         } else {
             more = "<a onclick='GCT.FireLink(this)' href='" + value.object.url + "'>" + value.object.name + "</a>";
+        }
+
+        var context = "."; //Currently only content to groups should need context
+        if (value.object.group_guid) {
+            context = ", " + GCTLang.Trans("group-context") + "<a class='link' data-guid='" + value.object.group_guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.object.group_title + "</a>";;
         }
 
         var text = "";
@@ -2275,6 +2271,7 @@ GCTEach = {
             name: value.userDetails.displayName,
             date: prettyDate(value.time_posted),
             more: more,
+            context: context,
             description: description,
             text: text,
             source: source,
