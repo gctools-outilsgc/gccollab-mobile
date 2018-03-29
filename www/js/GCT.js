@@ -21,7 +21,7 @@ GCTLang = {
             + "<div class='card-content'>"
             + "<div class='card-content-inner'>"
             + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
-            + "<div class='item-text large'>" + object.name + " " + object.description + " " + object.more + "</div>"
+            + "<div class='item-text large'><a onclick='ShowProfile(" + object.owner + ");'>" + object.name + "</a> " + object.description + " " + object.more + "</div>"
             + object.text
             + object.source
             + "</div>"
@@ -2230,6 +2230,11 @@ GCTEach = {
             description = GCTLang.Trans("wire-create");
         } else {
             description = value.description;
+        }
+
+        // if activity for content has a group it was posted to.
+        if (value.object.group_guid) {
+
         }
 
         var more = "";
