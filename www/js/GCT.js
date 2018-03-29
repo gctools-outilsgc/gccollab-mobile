@@ -2208,28 +2208,29 @@ GCTEach = {
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
 
         var description = "";
-        if (value.description == "river:update:user:default") {
-            description = GCTLang.Trans("new-avatar");
-        } else if (value.description == "river:reply:object:default") {
-            description = GCTLang.Trans("discussion-replied");
-        } else if (value.action == "comment") {
-            description = GCTLang.Trans("commented");
-        } else if (value.action == "friend") {
-            description = GCTLang.Trans("friend-added");
-        } else if (value.action == "join") {
-            description = GCTLang.Trans("joined-group");
-        } else if (value.object.type == "discussion-add") {
-            description = GCTLang.Trans("discussion-add");
-        } else if (value.object.type == "group" && value.action == "create") {
-            description = GCTLang.Trans("group-created");
-        } else if (value.object.type == "file" && value.action == "create") {
-            description = GCTLang.Trans("file-created");
-        } else if (value.object.type == "event" && value.action == "update") {
-            description = GCTLang.Trans("event-update");
-        } else if (value.object.type == "wire" && value.action == "create") {
-            description = GCTLang.Trans("wire-create");
-        } else {
-            description = value.description;
+        if (value.action == "update") { //UPDATE
+            switch (value.object.type) {
+                case "user": description = GCTLang.Trans("new-avatar"); break;
+                case "event_calendar": description = GCTLang.Trans("update-event"); break;
+                default: description = "NEED TO HANDLE UPDATE";
+            }
+        } else if (value.action == "create") { // CREATE
+            switch (value.object.type) {
+                case "wire": description = GCTLang.Trans("wire-create"); break;
+                case "blog": description == GCTLang.Trans("blog-create"); break;
+                case "discussion-reply": description = GCTLang.Trans("discussion-replied"); break;
+                case "group": description = GCTLang.Trans("group-created"); break;
+                case "file": description = GCTLang.Trans("file-created"); break;
+                case "groupforumtopic": description = GCTLang.Trans("discussion-add"); break;
+                default: description = "NEED TO HANDLE CREATE";
+            }
+        } else { //OTHER
+            switch (value.object.action) {
+                case 'friend': description = GCTLang.Trans("friend-added"); break;
+                case 'comment': description = GCTLang.Trans("commented"); break;
+                case 'join': description = GCTLang.Trans("joined-group"); break;
+                default: description = "NEED TO HANDLE ELSE";
+            }
         }
 
         // if activity for content has a group it was posted to.
