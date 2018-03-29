@@ -2236,7 +2236,7 @@ GCTEach = {
 
         var more = "";
         if (value.object.type == "user" && value.action == "update") {
-            more == "";
+            more = "";
         } else if (value.object.type == "user") {
             more = "<a onclick='GCT.FireLink(this)' href='" + value.object.profileURL + "'>" + value.object.displayName + "</a>";
         } else if  (value.object.type == "wire") {
