@@ -2356,6 +2356,8 @@ GCTEach = {
         var source = "";
         if (value.shareText && value.shareURL) {
             source = "<blockquote>" + GCTLang.Trans("source") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_wire_post' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
+        } else if (value.shareURL) {
+            source = "<blockquote>" + GCTLang.Trans("source") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_wire_post' href='" + value.shareURL + "'>" + text + "</a></blockquote>";
         }
 
         var img = '';
