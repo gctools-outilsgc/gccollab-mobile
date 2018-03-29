@@ -3315,6 +3315,38 @@ myApp.onPageInit('profile', function (page) {
                 + '</li>';
         };
 
+        if (profileData.hasOwnProperty("experience") && profileData.experience !== null && profileData.experience !== "") {
+            profile += '<li class="align-top">'
+                + '<div class="item-content">'
+                + '<div class="item-inner">'
+                + '<div class="item-title label">' + GCTLang.Trans('experience') + '</div>';
+            $(profileData.experience).each(function (key, value) {
+                var job_title = (value.job_title) ? value.job_title : "";
+                var organization = (value.organization) ? value.organization : "";
+                var responsibilities = (value.responsibilities) ? value.responsibilities : "";
+                var startDate = (value.start_date) ? value.start_date : "";
+                var endDate = (value.end_date) ? value.end_date : "";
+                profile += '<div class="item-text large" onclick="ToggleAllText(this);">' + job_title + organization + startDate + endDate + responsibilities + '</div>';
+            });
+            profile += '</div>'
+                + '</div>'
+                + '</li>';
+        };
+
+        if (profileData.hasOwnProperty("skills") && profileData.skills !== null && profileData.skills !== "") {
+            profile += '<li class="align-top">'
+                + '<div class="item-content">'
+                + '<div class="item-inner">'
+                + '<div class="item-title label">' + GCTLang.Trans('skills') + '</div>';
+            $(profileData.skills).each(function (key, value) {
+                var skill = (value.skill) ? value.skill : "";
+                profile += '<div class="item-text large" onclick="ToggleAllText(this);">' + skill + '</div>';
+            });
+            profile += '</div>'
+                + '</div>'
+                + '</li>';
+        };
+
         profile += "</ul>";
         $("#user-info-list-"+guid).html(profile).text();
 
