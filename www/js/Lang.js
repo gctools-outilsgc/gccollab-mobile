@@ -214,7 +214,11 @@
     "my-groups": "My groups",
     "my-colleagues": "My colleagues",
     "mine": "Mine",
-    "more": "More"
+    "more": "More",
+    "apply-opt": "Apply",
+    "withdrawn-opt": 'Withdrawn',
+    "accept-opt": 'Accept',
+    "decline-opt": "Decline"
 }
 
 French = {
@@ -433,5 +437,9 @@ French = {
     "my-groups": "Mes groupes",
     "my-colleagues": "Mes collègues",
     "mine": "Moi",
-    "more": "Autres"
+    "more": "Autres",
+    "apply-opt": "Postuler",
+    "withdrawn-opt": 'Retirer',
+    "accept-opt": 'Accepter',
+    "decline-opt": "Refuser"
 }

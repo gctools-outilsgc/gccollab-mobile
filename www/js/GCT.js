@@ -287,9 +287,9 @@ GCTLang = {
                     + "</div>"
                     + "<div class='card-footer'>"
                         content += object.action
-                        if(object.apply == 'mission_apply'){content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ApplyPost(this);'> <span>Apply</span></a>";}
-                        else if(object.apply == 'withdraw'){content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>Withdraw</span></a>";}
-                        else if(object.apply == 'offered'){content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.AcceptPost(this);'> <span>Accept</span></a><a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>Decline</span></a>";}
+                        if(object.apply == 'mission_apply'){content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ApplyPost(this);'> <span>" + GCTLang.Trans('apply-opt') + "</span></a>";}
+                        else if(object.apply == 'withdraw'){content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('withdrawn-opt') + "</span></a>";}
+                        else if(object.apply == 'offered'){content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.AcceptPost(this);'> <span>" + GCTLang.Trans('accept-opt') + "</span></a><a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('decline-opt') + "</span></a>";}
                         
                         content += "</div>"
                 + "</div>"
@@ -2262,8 +2262,10 @@ GCTUser = {
         });
     },
     WithdrawPost: function (obj) {
+
         var guid = $(obj).data("guid");
         var type = $(obj).data("type");
+
         $(".popover").remove();
 
         myApp.prompt('Reason to withdraw', 'Withdraw', function (value) {
