@@ -2221,6 +2221,7 @@ GCTEach = {
                 case "group": description = GCTLang.Trans("group-created"); break;
                 case "file": description = GCTLang.Trans("file-created"); break;
                 case "groupforumtopic": description = GCTLang.Trans("discussion-add"); break;
+                case "etherpad": description = GCTLang.Trans("doc-create"); break;
                 default: description = "NEED TO HANDLE CREATE";
             }
         } else { //OTHER
@@ -2234,9 +2235,11 @@ GCTEach = {
         }
 
         var more = "";
-        if (value.object.type == "user") {
+        if (value.object.type == "user" && value.action == "update") {
+            more == "";
+        } else if (value.object.type == "user") {
             more = "<a onclick='GCT.FireLink(this)' href='" + value.object.profileURL + "'>" + value.object.displayName + "</a>";
-        } else if ((value.type == "user") || (value.object.type == "wire")) {
+        } else if  (value.object.type == "wire") {
             more = "";
         } else {
             more = "<a onclick='GCT.FireLink(this)' href='" + value.object.url + "'>" + value.object.name + "</a>";
