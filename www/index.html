@@ -9,7 +9,7 @@
     <meta name="theme-color" content="#46246A">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="Expires" content="-1" />
     <title>GCcollab</title>
 
@@ -25,7 +25,8 @@
     <link rel="stylesheet" href="css/gccollab.css">
 
     <!-- Scripts -->
-    <script src="phonegap.js"></script>
+    <script src="../phonegap.js"></script>
+    <script type="text/javascript" src="../cordova.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/Lang.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -39,7 +40,7 @@
     <link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16">
     <link rel="shortcut icon" href="img/favicon.ico">
 </head>
-<body class="theme">
+<body class="theme theme-gccollab">
 <div class="statusbar-overlay"></div>
 <div class="panel-overlay"></div>
 
@@ -297,6 +298,6 @@
 <script type="text/javascript" src="js/framework7.min.js"></script> 
 <script type="text/javascript" src="js/masonry.pkgd.min.js"></script>
 <script type="text/javascript" src="js/gccollab.js"></script>
-<script>GCTUser.AppOpen();</script>
+<script>AppOpen();</script>
 </body>
 </html>

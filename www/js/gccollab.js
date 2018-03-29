@@ -14,7 +14,7 @@ var $$ = Dom7;
 
 // Add main view
 var mainView = myApp.addView('.view-main', {
-});
+}); 
 
 // Show/hide preloader for remote ajax loaded pages
 // Probably should be removed on a production/local app
@@ -45,8 +45,6 @@ function ToggleAllText(object){
     $(object).toggleClass('all_text');
 }
 
-$$("body").addClass("theme-" + GCTUser.Context());
-
 // Add keypress functionality to modals
 $$(document).on('keydown', '.modal-text-input', function(e){
     if(e.which == 27){
@@ -71,7 +69,7 @@ function EnterCode() {
             console.log(success);
             var txt = "";
             if (success.result == true) {
-                GCTUser.SetAPIKey(success.message);
+                GCTUser.SetLoginCookie();
                 GCTUser.SetUserProfile();
                 mainView.router.loadPage({ url: 'home.html' });
             } else {
@@ -219,7 +217,7 @@ function ShowMessage(obj) {
         //     }
         //     messageHTML += '<div class="item-inner">'
         //             + '<div class="item-title-row">'
-        //                 + '<div class="author">' + (message.fromUserDetails.displayName ? message.fromUserDetails.displayName : GCTUser.PrettyContext()) + '</div>'
+        //                 + '<div class="author">' + (message.fromUserDetails.displayName ? message.fromUserDetails.displayName : '') + '</div>'
         //             + '</div>'
         //             + '<div class="time">' + prettyDate(message.time_created) + '</div>'
         //         + '</div>'
@@ -495,6 +493,20 @@ function ShowHideGEDSInfo(li) {
     });
 }
 
+function AppOpen() {
+    if (GCTLang.IsLangSet()) {
+        if (GCTUser.IsLoggedIn()) {
+            mainView.router.loadPage({ url: 'home.html' });
+        } else {
+            mainView.router.loadPage({ url: 'sign-in.html' });
+        }
+    } else {
+        //### Show lang buttons. This is first call and only happens until they click a lang link
+        $('#aEN').toggle();
+        $('#aFR').toggle();
+    }
+}
+
 myApp.onPageInit('*', function (page) {
     myApp.closeModal();
     $$(document).on('click', 'a.external', function (e) {
@@ -524,19 +536,50 @@ myApp.onPageInit('*', function (page) {
 
     //### To do - Store pages once translated and don't translate them again to help performance. Probably use global var array for this.
     GCTLang.TransPage();
-    // $(".navbar .center a").text(GCTUser.PrettyContext());
-    $(".context").addClass(GCTUser.Context());
-
-    $('#gcconnex-context-option').hide(); //### For a later time when we can actually do this.
 
     $$('#logoutBtn').on('click', function (e) {
         GCTUser.Logout(function(success){
-            //GCTUser.SetAPIKey("");
             myApp.closePanel(false);
             mainView.router.loadPage({ url: 'sign-in.html' });
         }, function(jqXHR, textStatus, errorThrown){
             console.log(jqXHR, textStatus, errorThrown);
         });
+    });
+
+    $$(document).on('click', 'a.social-share', function (e) {
+        var guid = $(this).data("guid");
+        var type = $(this).data("type");
+
+        var message = '';
+        var subject = '';
+        var files = [];
+        var url = '';
+        var chooserTitle = 'Pick an app';
+
+        if (type == 'gccollab_wire_post') {
+            message = $("#wire-" + guid).text();
+            subject = 'GCcollab Wire Post';
+        } else if (type == 'gccollab_blog_post') {
+            message = $("#blog-" + guid + ' .blog-title').text();
+            subject = 'GCcollab Blog';
+        }
+
+        if (typeof window.plugins.socialsharing !== 'undefined' && message != "") {
+            window.plugins.socialsharing.shareWithOptions({
+                message: message,
+                subject: subject,
+                files: files,
+                url: url,
+                chooserTitle: chooserTitle
+            }, function(success) {
+                console.log("Share completed? " + success.completed);
+                console.log("Shared to app: " + success.app);
+            }, function(failure) {
+                console.log("Sharing failed with message: " + failure);
+            });
+        } else {
+            alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably Brandon\'s fault');
+        }
     });
 });
 
@@ -860,7 +903,7 @@ myApp.onPageInit('sign-in', function (page) {
                 GCTUser.Login(email, password, function (success) {
                     if (success.result==true) {
                         GCTUser.SaveLoginEmail(email);
-                        GCTUser.SetAPIKey(success.message);
+                        GCTUser.SetLoginCookie();
                         GCTUser.SetUserProfile();
                         mainView.router.loadPage({ url: 'home.html' });
                     } else {
@@ -881,7 +924,7 @@ myApp.onPageInit('sign-in', function (page) {
             GCTUser.Login(email, password, function (success) {
                 if (success.result == true) {
                     GCTUser.SaveLoginEmail(email);
-                    GCTUser.SetAPIKey(success.message);
+                    GCTUser.SetLoginCookie();
                     GCTUser.SetUserProfile();
                     mainView.router.loadPage({ url: 'home.html' });
                 } else {
@@ -896,11 +939,6 @@ myApp.onPageInit('sign-in', function (page) {
 
 myApp.onPageInit('home', function (page) {
     $$('#home-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
-    if (GCTUser.Context() != "gccollab") {
-        $('#liMenuChat').hide();
-    } else {
-        $('#liMenuChat').show();
-    }
 
     var limit = 15;
     var offset = 0;
@@ -1061,7 +1099,7 @@ myApp.onPageInit('home', function (page) {
     //    method: 'POST',
     //    dataType: 'text',
     //    url: "https://gccollab.ca/services/api/rest/json/?",
-    //    data: { method: "login.userforchat", user: GCTUser.Email(), key: GCTUser.APIKey(), _persistant: "true" },
+    //    data: { method: "login.userforchat", user: GCTUser.Email(), key: api_key_gccollab, _persistant: "true" },
     //    timeout: 12000,
     //    success: function (data) {
     //        console.log(data);
@@ -1622,14 +1660,14 @@ myApp.onPageInit('groups', function (page) {
 myApp.onPageInit('chat', function (page) {
     $$('#chat-navbar-inner').html(GCTLang.txtGlobalNav('chat'));
     $("#user").val(GCTUser.Email());
-    $("#key").val(GCTUser.APIKey());
+    $("#key").val(api_key_gccollab);
     $("#chatForm").submit(); 
 });
 
 myApp.onPageInit('doc', function (page) {
     $$('#doc-navbar-inner').html(GCTLang.txtGlobalNav('doc-title'));
     $("#user").val(GCTUser.Email());
-    $("#key").val(GCTUser.APIKey());
+    $("#key").val(api_key_gccollab);
     $("#guid").val(page.query.guid);
     $("#docForm").submit(); 
 });
@@ -1638,7 +1676,7 @@ myApp.onPageInit('external-pages', function (page) {
     $$('#external-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
     //### log them in at app startup in background and do a check for if logged in later on so we don't do this every page hit
     $("#user").val(GCTUser.Email());
-    $("#key").val(GCTUser.APIKey());
+    $("#key").val(api_key_gccollab);
     $('#url').val(page.query.page);
     $("#formGCcollabLogin").submit();
    
@@ -4000,6 +4038,73 @@ myApp.onPageInit('entity', function (page) {
         }
     });
 });
+
+myApp.onPageInit('PostWire', function (page) {
+    $$('#postwire-navbar-inner').html(GCTLang.txtGlobalNav('new-wire-post')); //Card has the same text, change at some point?
+    var imageURI = "";
+    $$('#submit-wire').on('click', function (e) {
+        var message = $("#wire-post-textarea").val();
+        if (message != "") {
+            GCTUser.PostWire(message, imageURI, function (data) {
+                console.log(data);
+                myApp.alert(data.result, function () {
+                    mainView.router.loadPage({ url: 'wire.html' });
+                });
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        } else {
+            myApp.alert("Cannot post wire with no text.");
+        }
+    });
+
+    $$('#camera-camera').on('click', function (e) {
+        if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
+            navigator.camera.getPicture(function onSuccess(imageData) {
+                $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
+                imageURI = imageData;
+            }, function onFail(message) {
+                myApp.alert('Failed because: ' + message);
+            }, {
+                    quality: 95,
+                    sourceType: Camera.PictureSourceType.CAMERA,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 1920,
+                    targetHeight: 1920,
+                    allowEdit: false,
+                    correctOrientation: true //Corrects Android orientation quirks
+                });
+        } else {
+            myApp.alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
+        }
+    });
+
+    $$('#camera-gallery').on('click', function (e) {
+        if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
+            navigator.camera.getPicture(function onSuccess(imageData) {
+                $("#picture-taken").attr('src', "data:image/jpeg;base64," +  imageData);
+                imageURI = imageData;
+            }, function onFail(message) {
+                myApp.alert("Failed because: " + message);
+            }, {
+                    quality: 95,
+                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 1920,
+                    targetHeight: 1920,
+                    allowEdit: false,
+                    correctOrientation: true //Corrects Android orientation quirks
+                });
+        } else {
+            alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
+        }
+    });
+
+});
+
+
         
 /* ===== Messages Page ===== */
 myApp.onPageInit('messages', function (page) {

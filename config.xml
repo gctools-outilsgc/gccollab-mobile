@@ -85,7 +85,15 @@
     <plugin name="cordova-plugin-console"  />
     <plugin name="cordova-plugin-statusbar"  />
     <plugin name="cordova-plugin-inappbrowser" />
+    <plugin name="cordova-plugin-x-socialsharing" />
     <plugin name="cordova-plugin-file-transfer" spec="~1.7.1" />
     <plugin name="cordova-plugin-camera" spec="~4.0.2" />
+
+    <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+      <string>Application requires photo access if you want to add a photo for a wire post.</string>
+    </edit-config>
+    <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+      <string>Application requires camera access if you want to take a photo for a wire post.</string>
+    </edit-config>
 
 </widget>

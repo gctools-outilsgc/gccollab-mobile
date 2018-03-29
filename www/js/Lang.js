@@ -120,9 +120,14 @@
     "deleted": "Your post has been deleted.",
     "deletepost": "Delete this post?",
 
+    "create-wire": "Create a new Wire post",
     "new-blog-post": "New Blog Post",
     "new-wire-post": "New Wire Post",
     "reply-wire-post": "Reply to Wire Post",
+    "submit-post": "Submit Wire",
+    "new-picture": "New Picture",
+    "photo-gallery": "Photo Gallery",
+    "attach-image": "Attach Image: ",
     "new-post-info": "Share your content for everyone to consult e.g. open events, announcements, etc.",
     "new-message-info": "Send a message to ",
 
@@ -343,9 +348,14 @@ French = {
     "deleted": "Votre post a été supprimé.",
     "deletepost": "Supprimer ce post?",
 
+    "create-wire": "Créer un nouveau fil",
     "new-blog-post": "Ajouter un blogue",
     "new-wire-post": "Ajouter un fil",
     "reply-wire-post": "Répondre à le fil",
+    "submit-post": "Envoyer un fil",
+    "new-picture": "Nouvelle Photo",
+    "attach-image": "Joindre l'image: ",
+    "photo-gallery": "Galerie de Photos",
     "new-post-info": "Partagez votre contenu pour que tous puissent consulter par exemple événements ouverts, annonces, etc.",
     "new-message-info": "Envoyer un message à ",
 

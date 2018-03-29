@@ -1,5 +1,4 @@
-﻿var DevOrProd = "prod"; //### set this to "dev" to have the api hit the dev environment, anything else for prod. Sorry about the naming convention. Not feeling very creative...
-var apiVersion = 0.9; 
+﻿var apiVersion = 0.9; 
 var api_key_gccollab = "";
 
 /*
@@ -30,12 +29,10 @@ GCTLang = {
             + "<div class='card-footer'>"
             + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             + object.reply
-            // + "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.SharePost(this);'><i class='fa fa-share-alt-square'></i> <span>" + GCTLang.Trans("share") + "</span></a>"
             + object.action
             + "</div>"
             + "</div>"
             + "</div>";
-        //console.log(GCT.SetLinks(content));
         return GCT.SetLinks(content);
     },
     txtComment: function (object) {
@@ -67,7 +64,7 @@ GCTLang = {
                     + "</div>"
                 + "</div>"
                 + "<div class='card-content'>"
-            + "<div class='card-content-inner'>"
+            + "<div id='blog-" + object.guid + "' class='card-content-inner'>"
            
                      + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
                         + "<div class='blog-title'>" + object.title + "</div>"
@@ -78,7 +75,6 @@ GCTLang = {
                 + "<div class='card-footer'>"
                     + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
                     // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
-                    // + "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.SharePost(this);'><i class='fa fa-share-alt-square'></i> <span>" + GCTLang.Trans("share") + "</span></a>"
                     + object.action
                 + "</div>"
             + "</div>"
@@ -111,7 +107,6 @@ GCTLang = {
                 + "<div class='card-footer'>"
                     + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
                     // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
-                    // + "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.SharePost(this);'><i class='fa fa-share-alt-square'></i> <span>" + GCTLang.Trans("share") + "</span></a>"
                     + object.action
                 + "</div>"
             + "</div>"
@@ -139,7 +134,6 @@ GCTLang = {
                 + "<div class='card-footer'>"
                     + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
                     // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
-                    // + "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.SharePost(this);'><i class='fa fa-share-alt-square'></i> <span>" + GCTLang.Trans("share") + "</span></a>"
                     + object.action
                 + "</div>"
             + "</div>"
@@ -324,7 +318,6 @@ GCTLang = {
                 + "<div class='card-footer'>"
                     + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
                     + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyWirePost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
-                    // + "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.SharePost(this);'><i class='fa fa-share-alt-square'></i> <span>" + GCTLang.Trans("share") + "</span></a>"
                     + object.action
                 + "</div>"
             + "</div>"
@@ -507,84 +500,8 @@ function isAppleDevice(){
 }
 
 GCTUser = {
-    AppOpen: function () {
-        //### Here we have all the preloading functionality for when the app is opened
-        //### Such as hit GA with an event, check if user can be auto logged in
-        //### Check the tools for any notifications
-        //### Check paramters to see if the user open tha app from a notification link etc.
-        //### Need to find the framework7s first event for this
-
-        //### Uncomment to reset
-        //Cookies.remove('lang');
-       // Cookies.remove('apikey');
-        //Cookies.remove('email');
-
-        //### This function assumes it's being called from the index page after load
-        if (GCTLang.IsLangSet()) {
-            if (GCTUser.IsLoggedIn()) {
-                //### Check if the key is still valid
-                $$.ajax({
-                    api_key: api_key_gccollab,
-                    method: 'POST',
-                    dataType: 'json',
-                    url: GCT.GCcollabURL,
-                    data: { method: "login.user", action: "login", email: GCTUser.Email(), key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
-                    timeout: 12000,
-                    success: function (data) {
-                        if (data.status < 0) {
-                            //### Key is invalid, reset it
-                            GCTUser.SetAPIKey('');
-                            mainView.router.loadPage({ url: 'sign-in.html' });
-                        } else {
-
-                            ///### Checks done.
-                            //### Check for specific system access
-
-                            var HasAccess = true;
-                           
-                           // GCTUser.HasGCconnexAccess(data.GCconnexAccess);
-
-                            if (data.GCcollabAccess) {
-                                GCTUser.SetUserProfile();
-                                mainView.router.loadPage({ url: 'home.html' });
-                            } else {
-                                //### TODO: no access, this *should* only be caused by someone login it successfully at one point, then leave/banned from the system then opening the app
-                            }
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        //### Not good. User is not connected to the internet.
-                        //### Down the line we may have offline capability
-                        //### For now we don't allow the user to move forward
-                        //### Maybe provide a "Check Again" modal?
-                        console.log("app open error");
-                        myApp.confirm('It looks like there is no internet connection. Would you like us to check again?', 'No Internet Connection',
-                            function () {
-                                window.location.reload(true);
-                            }
-                        );
-                        
-                    }
-                });
-            } else {
-                mainView.router.loadPage({ url: 'sign-in.html' });
-            }
-        } else {
-            //### Show lang buttons. This is first call and only happens until they click a lang link
-            $('#aEN').toggle();
-            $('#aFR').toggle();
-        }
-    },
-    IsLoggedIn: function () {
-        if (GCTUser.APIKey() == "") {
-            return false;
-        } else {
-            return true;
-        }
-    },
     SendValidation: function (successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
@@ -601,7 +518,6 @@ GCTUser = {
     },
     SendValidationCode: function (Code, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
@@ -618,7 +534,6 @@ GCTUser = {
     },
     Login: function (user, password, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
@@ -635,11 +550,10 @@ GCTUser = {
     },
     Logout: function (successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "login.user", action: "logout", email: GCTUser.Email(), api_key: GCTUser.APIKey(), lang: GCTLang.Lang() },
+            data: { method: "login.user", action: "logout", email: GCTUser.Email(), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -650,15 +564,11 @@ GCTUser = {
             }
         });
     },
-    SetAPIKey: function (key) {
-        if (key == "") {
-            Cookies.remove('apikey');
-        } else {
-            Cookies.set('apikey', api_key_gccollab, { expires: 1000000 });
-        }
+    SetLoginCookie: function () {
+        Cookies.set('loggedin', true, { expires: 7 });
     },
-    APIKey: function () {
-        return (typeof Cookies.get('apikey') != 'undefined') ? Cookies.get('apikey') : "";
+    IsLoggedIn: function () {
+        return (typeof Cookies.get('loggedin') != 'undefined') ? Cookies.get('loggedin') : false;
     },
     LastLoginEmail: function () {
         return (Cookies.get('email')) ? Cookies.get('email') : "";
@@ -669,24 +579,6 @@ GCTUser = {
     },
     SaveLoginEmail: function (txtObj) {
         Cookies.set("email", txtObj, { expires: 100000 });
-    },
-    PrettyContext: function(){
-        return (Cookies.get("context") == "gcconnex") ? "GCconnex" : "GCcollab";
-    },
-    Context: function(){
-        return (Cookies.get("context") == "gcconnex") ? "gcconnex" : "gccollab";
-    },
-    SetContextAsGCconnex: function(reload){
-        Cookies.set("context", "gcconnex", { expires: 100000 });
-        if (typeof reload == 'undefined' || reload) {
-            mainView.router.refreshPage();
-        } 
-    },
-    SetContextAsGCcollab: function(reload){
-        Cookies.set("context", "gccollab",{ expires: 100000 } );
-        if (typeof reload == 'undefined' || reload) {
-            mainView.router.refreshPage();
-        } 
     },
     DisplayName: function () {
         return (Cookies.get('displayName')) ? Cookies.get('displayName') : "";
@@ -719,11 +611,10 @@ GCTUser = {
             profile = GCTUser.Email(); //### Get current users profile
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method:"get.user", user: GCTUser.Email(), api_key: GCTUser.APIKey(), profileemail: profile, environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method:"get.user", user: GCTUser.Email(), api_key: api_key_gccollab, profileemail: profile, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -739,11 +630,10 @@ GCTUser = {
             profile = GCTUser.Email(); //### Get current users profile
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.useractivity", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang(), api_version: apiVersion },
+            data: { method: "get.useractivity", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang(), api_version: apiVersion },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -759,11 +649,10 @@ GCTUser = {
             profile = GCTUser.Email(); //### Get current users profile
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.usergroups", user: GCTUser.Email(), profileemail: profile, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.usergroups", user: GCTUser.Email(), profileemail: profile, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -851,7 +740,7 @@ GCTUser = {
                 method: 'POST',
                 dataType: 'text',
                 url: GCT.GCcollabURL,
-                data: { method: "send.message", user: GCTUser.Email(), touser: guid, subject: subject, message: value, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+                data: { method: "send.message", user: GCTUser.Email(), touser: guid, subject: subject, message: value, api_key: api_key_gccollab, lang: GCTLang.Lang() },
                 timeout: 12000,
                 success: function (data) {
                     data = JSON.parse(data);
@@ -871,11 +760,10 @@ GCTUser = {
         if( message == "" ) return;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "reply.message", user: GCTUser.Email(), message: message, guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "reply.message", user: GCTUser.Email(), message: message, guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -889,11 +777,10 @@ GCTUser = {
     },
     ReadMessage: function(guid, successCallback, errorCallback){
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "read.message", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "read.message", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -905,41 +792,15 @@ GCTUser = {
         });
     },
 
-    PostWirePost: function(){
-        myApp.modal({
-            title: GCTLang.Trans("new-wire-post"),
-            text: GCTLang.Trans("new-post-info"),
-            afterText:  '<textarea id="wire-post-textarea"></textarea>',
-            buttons: [
-                {
-                    text: GCTLang.Trans("cancel")
-                },
-                {
-                    text: GCTLang.Trans("ok"),
-                    bold: true,
-                    onClick: function () {
-                        var message = $("#wire-post-textarea").val();
-                        if( message != ""){
-                            GCTUser.PostWire(message, function(data){
-                                console.log(data);
-                                myApp.alert(data.result);
-                                myApp.pullToRefreshTrigger(".pull-to-refresh-content");
-                            }, function(jqXHR, textStatus, errorThrown){
-                                    console.log(jqXHR, textStatus, errorThrown);
-                            });
-                        }
-                    }
-                },
-            ]
-        });
+    PostWirePost: function () {
+        mainView.router.loadPage({ url: 'PostWire.html' }); // temp redirect, but maybe keep
     },
-    PostWire: function (message, successCallback, errorCallback) { 
+    PostWire: function (message, imageURI, successCallback, errorCallback) { 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "post.wire", user: GCTUser.Email(), message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "post.wire", user: GCTUser.Email(), message: message, image: imageURI, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -967,11 +828,10 @@ GCTUser = {
     },
     ReplyWire: function (guid, message, successCallback, errorCallback) { 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "reply.wire", user: GCTUser.Email(), guid: guid, message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "reply.wire", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1015,11 +875,10 @@ GCTUser = {
     },
     EditWire: function (guid, message, successCallback, errorCallback) { 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "edit.wire", user: GCTUser.Email(), guid: guid, message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "edit.wire", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1035,11 +894,10 @@ GCTUser = {
         var type = $(obj).data("type");
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "like.item", user: encodeURI(GCTUser.Email()), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "like.item", user: encodeURI(GCTUser.Email()), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1080,7 +938,7 @@ GCTUser = {
                     method: 'POST',
                     dataType: 'text',
                     url: GCT.GCcollabURL,
-                    data: { method: "report.post", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+                    data: { method: "report.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
                     timeout: 12000,
                     success: function (data) {
                         data = JSON.parse(data);
@@ -1095,7 +953,7 @@ GCTUser = {
         );
     },
     
-    Share: function (obj) {
+    ShareOnWire: function (obj) {
         var guid = $(obj).data("guid");
         var type = $(obj).data("type");
         $(".popover").remove();
@@ -1116,11 +974,10 @@ GCTUser = {
 
     ShareWire: function (guid, message, successCallback, errorCallback) { 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "share.post", user: GCTUser.Email(), guid: guid, message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "share.post", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1144,7 +1001,7 @@ GCTUser = {
                     method: 'POST',
                     dataType: 'text',
                     url: GCT.GCcollabURL,
-                    data: { method: "delete.post", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+                    data: { method: "delete.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
                     timeout: 12000,
                     success: function (data) {
                         data = JSON.parse(data);
@@ -1168,9 +1025,11 @@ GCTUser = {
         var popoverHTML = '<div class="popover more-options-choices">'
             + '<div class="popover-inner">'
                 + '<div class="list-block">'
-                    + '<ul>'
-                        + '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" data-type="' + type + '" onclick="GCTUser.Share(this);">' + GCTLang.Trans("share") + '</a></li>'
-                        + '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
+                    + '<ul>';
+                        if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post') {
+                            popoverHTML += '<li><a href="#" class="item-link list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
+                        }
+                        popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
                         if( mine ){
                             if( type == "gccollab_wire_post" ){ popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
                             if( type != "gccollab_opportunity" ){ popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>';}
@@ -1192,7 +1051,7 @@ GCTUser = {
                     method: 'POST',
                     dataType: 'text',
                     url: GCT.GCcollabURL,
-                    data: { method: "block.user", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+                    data: { method: "block.user", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
                     timeout: 12000,
                     success: function (data) {
                         data = JSON.parse(data);
@@ -1211,11 +1070,10 @@ GCTUser = {
     },
     GetBlog: function (guid, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.blogpost", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.blogpost", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1231,11 +1089,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.blogposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.blogposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1251,11 +1108,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.blogpostsbyowner", user: GCTUser.Email(), limit: limit, offset: offset, target: target, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.blogpostsbyowner", user: GCTUser.Email(), limit: limit, offset: offset, target: target, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1269,11 +1125,10 @@ GCTUser = {
     
     GetDiscussion: function (guid, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.discussion", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.discussion", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1290,11 +1145,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.discussions", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.discussions", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1307,11 +1161,10 @@ GCTUser = {
     },
     GetDoc: function (guid, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.doc", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.doc", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1327,11 +1180,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.docs", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.docs", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1344,11 +1196,10 @@ GCTUser = {
     },
     GetEvent: function (guid, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.event", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.event", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1366,11 +1217,10 @@ GCTUser = {
         to = to || "";
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.events", user: GCTUser.Email(), from: from, to: to, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.events", user: GCTUser.Email(), from: from, to: to, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1383,11 +1233,10 @@ GCTUser = {
     },
     GetGroup: function (guid, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.group", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.group", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1401,11 +1250,10 @@ GCTUser = {
     GetGroupActivity: function (guid, limit, offset, successCallback, errorCallback) {
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.groupactivity", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang(), api_version: apiVersion },
+            data: { method: "get.groupactivity", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang(), api_version: apiVersion },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1418,11 +1266,10 @@ GCTUser = {
     },
     GetGroupBlogs: function (guid, limit, offset, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.groupblogs", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.groupblogs", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1435,11 +1282,10 @@ GCTUser = {
     },
     GetGroupDiscussions: function (guid, limit, offset, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.groupdiscussions", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.groupdiscussions", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1452,11 +1298,10 @@ GCTUser = {
     },
     GetGroupDocs: function (guid, limit, offset, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.groupdocs", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.groupdocs", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1469,11 +1314,10 @@ GCTUser = {
     },
     GetGroupEvents: function (guid, limit, offset, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.groupevents", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.groupevents", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1486,11 +1330,10 @@ GCTUser = {
     },
     GetGroupFiles: function (guid, limit, offset, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.groupfiles", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.groupfiles", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1503,11 +1346,10 @@ GCTUser = {
     },
     GetGroupMembers: function (guid, limit, offset, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "group.members", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "group.members", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1522,11 +1364,10 @@ GCTUser = {
         var guid = $(obj).data("guid");
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "group.join", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "group.join", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1543,11 +1384,10 @@ GCTUser = {
         var guid = $(obj).data("guid");
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "group.leave", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "group.leave", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1565,11 +1405,10 @@ GCTUser = {
         var guid = $(obj).data("guid");
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "group.invite", user: GCTUser.Email(), profileemail: user, guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "group.invite", user: GCTUser.Email(), profileemail: user, guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1582,11 +1421,10 @@ GCTUser = {
     },
     InviteMembersToGroup: function(users, group){
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "group.invitemembers", user: GCTUser.Email(), profileemail: users, guid: group, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "group.invitemembers", user: GCTUser.Email(), profileemail: users, guid: group, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1601,11 +1439,10 @@ GCTUser = {
         var guid = $(obj).data("guid");
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "group.decline", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "group.decline", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1621,11 +1458,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.groups", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.groups", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1642,11 +1478,10 @@ GCTUser = {
         filters = $.extend({"mine": true}, filters);
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.groups", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.groups", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1662,11 +1497,10 @@ GCTUser = {
         limit = limit || 10;
         offset = offset || 0;
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.commentsall", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.commentsall", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1679,11 +1513,10 @@ GCTUser = {
     },
     SubmitComment: function (guid, message, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "submit.comment", user: GCTUser.Email(), guid: guid, message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "submit.comment", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1697,11 +1530,10 @@ GCTUser = {
 
     GetBookmark: function (guid, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.bookmark", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.bookmark", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1717,11 +1549,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.bookmarks", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.bookmarks", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1739,11 +1570,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.bookmarkscolleague", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.bookmarkscolleague", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1759,11 +1589,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.bookmarksbyuser", user: GCTUser.Email(), limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang(), target: target },
+            data: { method: "get.bookmarksbyuser", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang(), target: target },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1780,11 +1609,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.members", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.members", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1803,11 +1631,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.memberscolleague", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.memberscolleague", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1823,11 +1650,10 @@ GCTUser = {
         thread = thread || 0;
         
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.message", user: GCTUser.Email(), guid: guid, thread: thread, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.message", user: GCTUser.Email(), guid: guid, thread: thread, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1843,11 +1669,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.messages", user: GCTUser.Email(), limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.messages", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1863,11 +1688,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.newsfeed", user: GCTUser.Email(), limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.newsfeed", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1880,11 +1704,10 @@ GCTUser = {
     },
     GetOpportunity: function (guid, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.opportunity", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.opportunity", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1900,11 +1723,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.opportunities", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.opportunities", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1919,11 +1741,10 @@ GCTUser = {
         thread = thread || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.wirepost", user: GCTUser.Email(), guid: guid, thread: thread, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.wirepost", user: GCTUser.Email(), guid: guid, thread: thread, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1939,11 +1760,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.wireposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: GCTUser.APIKey(), context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.wireposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1959,11 +1779,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.wirepostsbycolleagues", user: GCTUser.Email(), limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.wirepostsbycolleagues", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1982,11 +1801,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.wirepostsbyuser", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.wirepostsbyuser", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2002,11 +1820,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.sentmessages", user: GCTUser.Email(), limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.sentmessages", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2022,11 +1839,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.notifications", user: GCTUser.Email(), limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.notifications", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2042,11 +1858,10 @@ GCTUser = {
         offset = offset || 0;
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.colleaguerequests", user: GCTUser.Email(), limit: limit, offset: offset, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "get.colleaguerequests", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2061,11 +1876,10 @@ GCTUser = {
         var guid = $(obj).data("guid");
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "add.colleague", user: GCTUser.Email(), profileemail: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "add.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2080,11 +1894,10 @@ GCTUser = {
         var guid = $(obj).data("guid");
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "remove.colleague", user: GCTUser.Email(), profileemail: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "remove.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2099,11 +1912,10 @@ GCTUser = {
         var guid = $(obj).data("guid");
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "approve.colleague", user: GCTUser.Email(), profileemail: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "approve.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2119,11 +1931,10 @@ GCTUser = {
         var guid = $(obj).data("guid");
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "decline.colleague", user: GCTUser.Email(), profileemail: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "decline.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2139,11 +1950,10 @@ GCTUser = {
         var guid = $(obj).data("guid");
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "revoke.colleague", user: GCTUser.Email(), profileemail: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "revoke.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2157,11 +1967,10 @@ GCTUser = {
     },
     GetLikes: function (guid, successCallback, errorCallback) {
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "like.count", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "like.count", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2177,11 +1986,10 @@ GCTUser = {
         var type = $(obj).data("type");
 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "like.users", user: GCTUser.Email(), guid: guid, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "like.users", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2245,11 +2053,10 @@ GCTUser = {
 
     ApplyOpt: function (guid, message, successCallback, errorCallback) { 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "apply.post", user: GCTUser.Email(), guid: guid, message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "apply.post", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2284,11 +2091,10 @@ GCTUser = {
 
     WithdrawOpt: function (guid, message, successCallback, errorCallback) { 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "withdraw.post", user: GCTUser.Email(), guid: guid, message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "withdraw.post", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2322,11 +2128,10 @@ GCTUser = {
 
     AcceptOpt: function (guid, message, successCallback, errorCallback) { 
         $$.ajax({
-            api_key: api_key_gccollab,
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "accept.post", user: GCTUser.Email(), guid: guid, message: message, api_key: GCTUser.APIKey(), environment: DevOrProd, context: GCTUser.Context(), lang: GCTLang.Lang() },
+            data: { method: "accept.post", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2748,6 +2553,7 @@ GCTEach = {
         return content;
     }
 }
+
 
 // Exemple of link : https://exemple.ca/services/api/rest/json/?
 GCT = {
