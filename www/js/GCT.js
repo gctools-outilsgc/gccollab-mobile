@@ -2211,7 +2211,7 @@ GCTEach = {
         if (value.action == "update") { //UPDATE
             switch (value.object.type) {
                 case "user": description = GCTLang.Trans("new-avatar"); break;
-                case "event_calendar": description = GCTLang.Trans("update-event"); break;
+                case "event_calendar": description = GCTLang.Trans("event-update"); break;
                 default: description = "NEED TO HANDLE UPDATE";
             }
         } else if (value.action == "create") { // CREATE
@@ -2236,13 +2236,15 @@ GCTEach = {
         var more = "";
         if (value.object.type == "user") {
             more = "<a onclick='GCT.FireLink(this)' href='" + value.object.profileURL + "'>" + value.object.displayName + "</a>";
+        } else if ((value.type == "user") || (value.object.type == "wire")) {
+            more = "";
         } else {
             more = "<a onclick='GCT.FireLink(this)' href='" + value.object.url + "'>" + value.object.name + "</a>";
         }
 
-        var context = "."; //Currently only content to groups should need context
+        var context = ""; //Currently only content to groups should need context
         if (value.object.group_guid) {
-            context = ", " + GCTLang.Trans("group-context") + "<a class='link' data-guid='" + value.object.group_guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.object.group_title + "</a>";;
+            context = " " + GCTLang.Trans("group-context") + "<a class='link' data-guid='" + value.object.group_guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.object.group_title + "</a>";;
         }
 
         var text = "";
