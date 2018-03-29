@@ -3297,6 +3297,24 @@ myApp.onPageInit('profile', function (page) {
                 + '</li>';
         }
 
+        if (profileData.hasOwnProperty("education") && profileData.education !== null && profileData.education !== "") {
+            profile += '<li class="align-top">'
+                + '<div class="item-content">'
+                + '<div class="item-inner">'
+                + '<div class="item-title label">' + GCTLang.Trans('education') + '</div>';
+            $(profileData.education).each(function (key, value) {
+                var school = (value.school_name) ? value.school_name : "";
+                var degree = (value.degree) ? value.degree : "";
+                var fieldOfStudy = (value.field_of_study) ? value.field_of_study : "";
+                var startDate = (value.start_date) ? value.start_date : "";
+                var endDate = (value.end_date) ? value.end_date : "";
+                profile += '<div class="item-text large" onclick="ToggleAllText(this);">' + school + degree + fieldOfStudy + startDate + endDate + '</div>';
+            });
+            profile += '</div>'
+                + '</div>'
+                + '</li>';
+        };
+
         profile += "</ul>";
         $("#user-info-list-"+guid).html(profile).text();
 
