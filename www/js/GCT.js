@@ -2217,7 +2217,7 @@ GCTEach = {
         } else if (value.action == "create") { // CREATE
             switch (value.object.type) {
                 case "wire": description = GCTLang.Trans("wire-create"); break;
-                case "blog": description == GCTLang.Trans("blog-create"); break;
+                case "blog": description = GCTLang.Trans("blog-create"); break;
                 case "group": description = GCTLang.Trans("group-created"); break;
                 case "file": description = GCTLang.Trans("file-created"); break;
                 case "groupforumtopic": description = GCTLang.Trans("discussion-add"); break;
