@@ -1127,3 +1127,30 @@ h2+p { font-size: 17px;  font-weight: 400;}
     max-height: 40px;
     max-width: 40px;
 }
+.modal-view {
+    height: 300px;
+}
+.modal-view .list-block {
+    margin: 0;
+}
+
+.my_select .list-block    {
+overflow:scroll;
+  }
+
+.my_select .item-title    {
+    overflow:visible;
+      }
+
+ .my_select .page{
+    color:red;
+}
+
+.my_select label.label-checkbox, label.label-radio{
+overflow:visible;
+
+}
+
+.my_select .list-block .autocomplete-opener .item-after, .list-block .smart-select .item-after{
+ max-width: 100%;   
+}

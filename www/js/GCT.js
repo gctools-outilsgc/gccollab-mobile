@@ -229,7 +229,7 @@ GCTLang = {
         
         if(object.state == 'posted' ){
             var content = "<div class='swiper-slide list-block cards-list'>"
-                + "<div class='card'>"
+                + "<div class='card view view-main'>"
                     + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
                         + "<div class='item-media rounded'><img alt='Profile Image of " + object.name +"' src='" + object.icon + "' /></div>"
                         + "<div class='item-inner'>"
@@ -2069,24 +2069,67 @@ GCTUser = {
         });
     },
     WithdrawPost: function (obj) {
-
+        var $$ = Dom7;
+        var myApp = new Framework7();
         var guid = $(obj).data("guid");
         var type = $(obj).data("type");
 
-        $(".popover").remove();
-
-        myApp.prompt('Reason to withdraw', 'Withdraw', function (value) {
-
-            GCTUser.WithdrawOpt(guid, value, function(data){
-                console.log(data);
-                myApp.alert(data.result);
-                myApp.pullToRefreshTrigger(".pull-to-refresh-content");
-            }, function(jqXHR, textStatus, errorThrown){
-                console.log(jqXHR, textStatus, errorThrown);
-            });
-        });
-
-            myApp.pullToRefreshTrigger(".pull-to-refresh-content");
+        //$(".popover").remove();
+        var mainView = myApp.addView('.view-main', {
+            // Because we want to use dynamic navbar, we need to enable it for this view:
+            dynamicNavbar: true
+          });
+        var modal = myApp.modal({
+            title: 'Reason to decline the offer to participate in opportunity blablabla',
+            afterText:'<div class="view modal-view">' +
+            '<div class="pages my_select">' +
+            '<div class="page">' +
+            '<div class="page-content">' +
+            '<div id="leave-form" class="list-block">' +
+            '<ul>' +
+            '<li>' +
+            '<a class="item-link smart-select smart-select-init">' +
+            '<select name="choices">' +
+            '<option value="wordload" selected>'+GCTLang.Trans("missions:decline:workload")+'</option>' +
+            '<option value="interest">'+GCTLang.Trans("missions:decline:interest")+'</option>' +
+            '<option value="engagement">'+GCTLang.Trans("missions:decline:engagement")+'</option>' +
+            '<option value="approval">'+GCTLang.Trans("missions:decline:approval")+'</option>' +
+            '<option value="other">'+GCTLang.Trans("missions:other")+'</option>' +          
+            '</select>' +
+            '<div class="item-content">' +
+            '<div class="item-inner">' +
+            '<div class="item-title"></div>' +
+            '</div>' +
+            '</div>' +
+            '</a>' +
+            '</li>' +
+            '</ul>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>',
+          
+            buttons: [
+              {
+                text: 'Cancel',
+                onClick: function () {}
+              },
+              {
+                text: 'Awesome!',
+                bold: true,
+                onClick: function () {
+                  myApp.alert('Thanks! I know you like it!')
+                  mainView.router.loadPage('opportunities.html');
+                  $$('#new-add-from').css('display', 'block');
+                }
+              },
+            ]
+          })
+         // myApp.swiper($$(modal).find('.swiper-container'), {pagination: '.swiper-pagination'});
+          $$(modal).on('modal:opened', function () {
+            myApp.addView('.modal-view');
+          })
     },
 
     WithdrawOpt: function (guid, message, successCallback, errorCallback) { 

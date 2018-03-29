@@ -223,7 +223,12 @@
     "apply-opt": "Apply",
     "withdrawn-opt": 'Withdrawn',
     "accept-opt": 'Accept',
-    "decline-opt": "Decline"
+    "decline-opt": "Decline",
+    "missions:decline:workload": "Unable due to current workload and/or operational requirements",
+    "missions:decline:interest":"No longer interested in this opportunity",
+    "missions:decline:engagement":"Already engaged in another opportunity",
+    "missions:decline:approval":"Unable to obtain management approval",
+    "missions:other":"Other"
 }
 
 French = {
@@ -451,5 +456,11 @@ French = {
     "apply-opt": "Postuler",
     "withdrawn-opt": 'Retirer',
     "accept-opt": 'Accepter',
-    "decline-opt": "Refuser"
+    "decline-opt": "Refuser",
+    "missions:decline:workload": "Impossible en raison de la charge de travail actuelle ou des exigences opérationnelles",
+    "missions:decline:interest":"N'est plus intéressé par cette possibilité",
+    "missions:decline:engagement":"Déjà engagé dans une autre possibilité",
+    "missions:decline:approval":"Impossible d'obtenir l'approbation de la direction",
+    "missions:other":"Autre"
+    
 }
