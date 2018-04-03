@@ -2292,7 +2292,7 @@ GCTEach = {
         } else if  (value.object.type == "wire") {
             more = "";
         } else {
-            more = "<a onclick='GCT.FireLink(this)' href='" + value.object.url + "'>" + value.object.name + "</a>";
+            more = "<a onclick='GCT.FireLink(this)' id='info-"+value.object.type+"' href='" + value.object.url + "'>" + value.object.name + "</a>";
         }
 
         var context = ""; //Currently only content to groups should need context
@@ -2335,6 +2335,7 @@ GCTEach = {
             owner: value.subject_guid,
             guid: value.object_guid,
             type: "gccollab_newfeed_post",
+            subtype: value.object.type,
             liked: liked,
             likes: likes
         });
@@ -2663,7 +2664,39 @@ GCT = {
             console.log(lnk);
             GCTUser.ViewPost(lnk, "gccollab_group");
 
-        
+        } else if (obj.href.indexOf("/comment/view/") > -1) {
+            console.log('loading comment...');
+            var passtype = '';
+            switch (obj.id) { //use to check type and send correct type to ViewPost using passtype
+                default: mainView.router.loadPage('external-pages.html?page=' + obj.href); //unhandled case goes to external
+            }
+            lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            GCTUser.ViewPost(lnk, passtype);
+
+        } else if (obj.href.indexOf("/missions/view/") > -1) {
+            console.log('loading mission...');
+            lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            console.log(lnk);
+            GCTUser.ViewPost(lnk, "gccollab_opportunity");
+
+        } else if (obj.href.indexOf("/event_calendar/view/") > -1) {
+            console.log('loading event...');
+            lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            console.log(lnk);
+            GCTUser.ViewPost(lnk, "gccollab_event");
+
+        } else if (obj.href.indexOf("/discussion/view/") > -1) {
+            console.log('loading discussion...');
+            lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            console.log(lnk);
+            GCTUser.ViewPost(lnk, "gccollab_discussion_post");
+
+        } else if (obj.href.indexOf("/bookmarks/view/") > -1) {
+            console.log('loading bookmark...');
+            lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            console.log(lnk);
+            GCTUser.ViewPost(lnk, "gccollab_bookmark");
+
         } else if (obj.href.indexOf("https://gccollab.ca/") > -1) {
             console.log('loading collab page...');
             mainView.router.loadPage('external-pages.html?page=' + obj.href);
