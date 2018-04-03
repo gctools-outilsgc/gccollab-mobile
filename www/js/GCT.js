@@ -2292,7 +2292,7 @@ GCTEach = {
         } else if  (value.object.type == "wire") {
             more = "";
         } else {
-            more = "<a onclick='GCT.FireLink(this)' href='" + value.object.url + "'>" + value.object.name + "</a>";
+            more = "<a onclick='GCT.FireLink(this)' id='info-"+value.object.type+"' href='" + value.object.url + "'>" + value.object.name + "</a>";
         }
 
         var context = ""; //Currently only content to groups should need context
@@ -2665,7 +2665,13 @@ GCT = {
             GCTUser.ViewPost(lnk, "gccollab_group");
 
         } else if (obj.href.indexOf("/comment/view/") > -1) {
-            // how do I figure out the type of content? set by newsfeed and check that set variable
+            console.log('loading comment...');
+            var passtype = '';
+            switch (obj.id) { //use to check type and send correct type to ViewPost using passtype
+                default: mainView.router.loadPage('external-pages.html?page=' + obj.href); //unhandled case goes to external
+            }
+            lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            GCTUser.ViewPost(lnk, passtype);
 
         } else if (obj.href.indexOf("/missions/view/") > -1) {
             console.log('loading mission...');
