@@ -2335,6 +2335,7 @@ GCTEach = {
             owner: value.subject_guid,
             guid: value.object_guid,
             type: "gccollab_newfeed_post",
+            subtype: value.object.type,
             liked: liked,
             likes: likes
         });
@@ -2663,7 +2664,33 @@ GCT = {
             console.log(lnk);
             GCTUser.ViewPost(lnk, "gccollab_group");
 
-        
+        } else if (obj.href.indexOf("/comment/view/") > -1) {
+            // how do I figure out the type of content? set by newsfeed and check that set variable
+
+        } else if (obj.href.indexOf("/missions/view/") > -1) {
+            console.log('loading mission...');
+            lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            console.log(lnk);
+            GCTUser.ViewPost(lnk, "gccollab_opportunity");
+
+        } else if (obj.href.indexOf("/event_calendar/view/") > -1) {
+            console.log('loading event...');
+            lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            console.log(lnk);
+            GCTUser.ViewPost(lnk, "gccollab_event");
+
+        } else if (obj.href.indexOf("/discussion/view/") > -1) {
+            console.log('loading discussion...');
+            lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            console.log(lnk);
+            GCTUser.ViewPost(lnk, "gccollab_discussion_post");
+
+        } else if (obj.href.indexOf("/bookmarks/view/") > -1) {
+            console.log('loading bookmark...');
+            lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            console.log(lnk);
+            GCTUser.ViewPost(lnk, "gccollab_bookmark");
+
         } else if (obj.href.indexOf("https://gccollab.ca/") > -1) {
             console.log('loading collab page...');
             mainView.router.loadPage('external-pages.html?page=' + obj.href);
