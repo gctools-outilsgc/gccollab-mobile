@@ -399,6 +399,10 @@ GCTLang = {
             + '<li>';
         return contentNew;
     },
+    txtProfileExp: function (object) {
+        var content = '<div class="item-text large" onclick="ToggleAllText(this);">' + object.job_title + object.organization + object.startDate + object.endDate + object.responsibilities + '</div>';
+        return content;
+    },
     txtGlobalNav: function (title) {
         var content = '<div class="left sliding"><a href="#" data-panel="left" class="open-panel link icon-only" aria-label="Button to open Site Navigation Menu"><i class="icon icon-bars"></i></a></div>' +
             '<div class="center" id="'+title+'">' + GCTLang.Trans(title) + '</div>' +

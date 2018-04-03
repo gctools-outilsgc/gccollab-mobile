@@ -3321,12 +3321,22 @@ myApp.onPageInit('profile', function (page) {
                 + '<div class="item-inner">'
                 + '<div class="item-title label">' + GCTLang.Trans('experience') + '</div>';
             $(profileData.experience).each(function (key, value) {
-                var job_title = (value.job_title) ? value.job_title : "";
-                var organization = (value.organization) ? value.organization : "";
-                var responsibilities = (value.responsibilities) ? value.responsibilities : "";
-                var startDate = (value.start_date) ? value.start_date : "";
-                var endDate = (value.end_date) ? value.end_date : "";
-                profile += '<div class="item-text large" onclick="ToggleAllText(this);">' + job_title + organization + startDate + endDate + responsibilities + '</div>';
+                var looper = 0; //dynamic variable counter, sigh
+                while (value["item_" + looper]) {
+                    var job_title = (value["item_" + looper].job_title) ? value["item_" + looper].job_title : "";
+                    var organization = (value["item_" + looper].organization) ? value["item_" + looper].organization : "";
+                    var responsibilities = (value["item_" + looper].responsibilities) ? value["item_" + looper].responsibilities : "";
+                    var startDate = (value["item_" + looper].start_date) ? value["item_" + looper].start_date : "";
+                    var endDate = (value["item_" + looper].end_date) ? value["item_" + looper].end_date : "";
+                    profile += GCTLang.txtProfileExp({
+                        job_title: job_title,
+                        organization: organization,
+                        responsibilities: responsibilities,
+                        startDate: startDate,
+                        endDate: endDate
+                    });
+                    looper++;
+                }
             });
             profile += '</div>'
                 + '</div>'
