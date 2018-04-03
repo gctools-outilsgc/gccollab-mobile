@@ -400,7 +400,10 @@ GCTLang = {
         return contentNew;
     },
     txtProfileExp: function (object) {
-        var content = '<div class="item-text large" onclick="ToggleAllText(this);">' + object.job_title + object.organization + object.startDate + object.endDate + object.responsibilities + '</div>';
+        var content = '<div class="item-text large" onclick="ToggleAllText(this);">'
+            + "<div class='bolder-title'>" + object.title + "</div> "
+            + "<div class='norm-text'><i>" + object.subtitle + "<br>" + object.startDate + " to " + object.endDate + "</i></div>"
+            + "<div class='norm-text all_text'>" + object.text + "</div>" + '</div>' +"<br>";
         return content;
     },
     txtGlobalNav: function (title) {

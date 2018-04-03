@@ -3318,8 +3318,8 @@ myApp.onPageInit('profile', function (page) {
         if (profileData.hasOwnProperty("experience") && profileData.experience !== null && profileData.experience !== "") {
             profile += '<li class="align-top">'
                 + '<div class="item-content">'
-                + '<div class="item-inner">'
-                + '<div class="item-title label">' + GCTLang.Trans('experience') + '</div>';
+                + '<div class="item-inner" onclick="ToggleAllText(this);">'
+                + '<div class="bolder-head-title">' + GCTLang.Trans('experience') + '</div><hr>';
             $(profileData.experience).each(function (key, value) {
                 var looper = 0; //dynamic variable counter, sigh
                 while (value["item_" + looper]) {
@@ -3329,9 +3329,9 @@ myApp.onPageInit('profile', function (page) {
                     var startDate = (value["item_" + looper].start_date) ? value["item_" + looper].start_date : "";
                     var endDate = (value["item_" + looper].end_date) ? value["item_" + looper].end_date : "";
                     profile += GCTLang.txtProfileExp({
-                        job_title: job_title,
-                        organization: organization,
-                        responsibilities: responsibilities,
+                        title: job_title,
+                        subtitle: organization,
+                        text: responsibilities,
                         startDate: startDate,
                         endDate: endDate
                     });
@@ -3340,14 +3340,14 @@ myApp.onPageInit('profile', function (page) {
             });
             profile += '</div>'
                 + '</div>'
-                + '</li>';
+                + '</li> <hr>';
         };
 
         if (profileData.hasOwnProperty("skills") && profileData.skills !== null && profileData.skills !== "") {
             profile += '<li class="align-top">'
                 + '<div class="item-content">'
                 + '<div class="item-inner">'
-                + '<div class="item-title label">' + GCTLang.Trans('skills') + '</div>';
+                + '<div class="bolder-head-title">' + GCTLang.Trans('skills') + '</div><hr>';
             $(profileData.skills).each(function (key, value) {
                 var skill = (value.skill) ? value.skill : "";
                 profile += '<div class="item-text large" onclick="ToggleAllText(this);">' + skill + '</div>';
