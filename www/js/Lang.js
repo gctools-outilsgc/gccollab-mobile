@@ -156,6 +156,9 @@
     "job-title": "Job Title",
     "phone": "Phone",
     "about-me": "About Me",
+    "education": "Education",
+    "experience": "Work Experience",
+    "skills": "Skills",
     "social-media": "Social Media",
 
 	"none": "None",
@@ -392,6 +395,9 @@ French = {
     "job-title": "Occupation",
     "phone": "Téléphone",
     "about-me": "À mon sujet",
+    "education": "Études",
+    "experience": "Expérience de travail",
+    "skills": "Compétences",
     "social-media": "Médias sociaux",
 
 	"none": "Aucun",

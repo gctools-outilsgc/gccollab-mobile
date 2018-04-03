@@ -399,6 +399,13 @@ GCTLang = {
             + '<li>';
         return contentNew;
     },
+    txtProfileExp: function (object) {
+        var content = '<div class="item-text large" onclick="ToggleAllText(this);">'
+            + "<div class='bolder-title'>" + object.title + "</div> "
+            + "<div class='norm-text'><i>" + object.subtitle + "<br>" + object.startDate + " to " + object.endDate + "</i></div>"
+            + "<div class='norm-text all_text'>" + object.text + "</div>" + '</div>' +"<br>";
+        return content;
+    },
     txtGlobalNav: function (title) {
         var content = '<div class="left sliding"><a href="#" data-panel="left" class="open-panel link icon-only" aria-label="Button to open Site Navigation Menu"><i class="icon icon-bars"></i></a></div>' +
             '<div class="center" id="'+title+'">' + GCTLang.Trans(title) + '</div>' +

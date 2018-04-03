@@ -1154,3 +1154,20 @@ overflow:visible;
 .my_select .list-block .autocomplete-opener .item-after, .list-block .smart-select .item-after{
  max-width: 100%;   
 }
+
+.norm-text {
+    color: #030303;
+}
+
+.bolder-title {
+    font-weight: bolder;
+    color: #030303;
+    font-size: 14px;
+}
+
+.bolder-head-title {
+    font-weight: bolder;
+    text-transform: uppercase;
+    color: #030303;
+    font-size: 14px;
+}

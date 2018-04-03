@@ -3267,35 +3267,109 @@ myApp.onPageInit('profile', function (page) {
         }
 
         profile = '<ul>';
-        listItem = '<div class="item-title label">' + GCTLang.Trans('name') + '</div>'
-            + '<div class="item-text">' + profileData.displayName + '</div>';
+        listItem = '<div class="bolder-title">' + GCTLang.Trans('name') + '</div>'
+            + '<div class="item-text large norm-text">' + profileData.displayName + '</div>';
         profile += GCTLang.txtUserList(listItem);
 
         if (profileData.hasOwnProperty("jobTitle") && profileData.jobTitle !== null && profileData.jobTitle !== "") {
-            listItem = '<div class="item-title label">' + GCTLang.Trans('job-title') + '</div>'
-                + '<div class="item-text">' + profileData.jobTitle + '</div>';
+            listItem = '<div class="item-text large bolder-title">' + GCTLang.Trans('job-title') + '</div>'
+                + '<div class="item-text large norm-text">' + profileData.jobTitle + '</div>';
             profile += GCTLang.txtUserList(listItem);
         }
 
-        listItem = '<div class="item-title label">' + GCTLang.Trans('email') + '</div>'
-            + '<div class="item-text"><a class="external" href="mailto:' + profileData.email + '">' + profileData.email + '</a></div>';
+        listItem = '<div class="bolder-title">' + GCTLang.Trans('email') + '</div>'
+            + '<div class="item-text large norm-text"><a class="external" href="mailto:' + profileData.email + '">' + profileData.email + '</a></div>';
         profile += GCTLang.txtUserList(listItem);
 
         if (profileData.hasOwnProperty("telephone") && profileData.telephone !== null && profileData.telephone !== "") {
-            listItem ='<div class="item-title label">' + GCTLang.Trans('phone') + '</div>'
-                + '<div class="item-text"><a class="external" href="tel:' + profileData.telephone + '">' + profileData.telephone + '</a></div>';
+            listItem ='<div class="bolder-title">' + GCTLang.Trans('phone') + '</div>'
+                + '<div class="item-text large norm-text"><a class="external" href="tel:' + profileData.telephone + '">' + profileData.telephone + '</a></div>';
             profile += GCTLang.txtUserList(listItem);
         }
         if (profileData.hasOwnProperty("about_me") && profileData.about_me !== null && profileData.about_me !== "") {
             profile += '<li class="align-top">'
                 + '<div class="item-content">'
                 + '<div class="item-inner">'
-                + '<div class="item-title label">' + GCTLang.Trans('about-me') + '</div>'
-                + '<div class="item-text large" onclick="ToggleAllText(this);">' + profileData.about_me + '</div>'
+                + '<div class="bolder-title">' + GCTLang.Trans('about-me') + '</div>'
+                + '<div class="item-text large norm-text" onclick="ToggleAllText(this);">' + profileData.about_me + '</div>'
                 + '</div>'
                 + '</div>'
                 + '</li>';
         }
+
+        if (profileData.hasOwnProperty("education") && profileData.education !== null && profileData.education !== "") {
+            profile += '<hr><li class="align-top">'
+                + '<div class="item-content">'
+                + '<div class="item-inner">'
+                + '<div class="bolder-head-title">' + GCTLang.Trans('education') + '</div><hr>';
+            $(profileData.education).each(function (key, value) {
+                var looper = 0; //dynamic variable counter
+                while (value["item_" + looper]) {
+                    var school = (value["item_" + looper].school_name) ? value["item_" + looper].school_name : "";
+                    var degree = (value["item_" + looper].degree) ? value["item_" + looper].degree : "";
+                    var fieldOfStudy = (value["item_" + looper].field_of_study) ? value["item_" + looper].field_of_study : "";
+                    var startDate = (value["item_" + looper].start_date) ? value["item_" + looper].start_date : "";
+                    var endDate = (value["item_" + looper].end_date) ? value["item_" + looper].end_date : "";
+                    profile += GCTLang.txtProfileExp({
+                        title: school,
+                        subtitle: degree + " - " +  fieldOfStudy,
+                        text: "",
+                        startDate: startDate,
+                        endDate: endDate
+                    });
+                    looper++;
+                }
+            });
+            profile += '</div>'
+                + '</div>'
+                + '</li>';
+        };
+
+        if (profileData.hasOwnProperty("experience") && profileData.experience !== null && profileData.experience !== "") {
+            profile += '<hr><li class="align-top">'
+                + '<div class="item-content">'
+                + '<div class="item-inner" onclick="ToggleAllText(this);">'
+                + '<div class="bolder-head-title">' + GCTLang.Trans('experience') + '</div><hr>';
+            $(profileData.experience).each(function (key, value) {
+                var looper = 0; //dynamic variable counter, sigh
+                while (value["item_" + looper]) {
+                    var job_title = (value["item_" + looper].job_title) ? value["item_" + looper].job_title : "";
+                    var organization = (value["item_" + looper].organization) ? value["item_" + looper].organization : "";
+                    var responsibilities = (value["item_" + looper].responsibilities) ? value["item_" + looper].responsibilities : "";
+                    var startDate = (value["item_" + looper].start_date) ? value["item_" + looper].start_date : "";
+                    var endDate = (value["item_" + looper].end_date) ? value["item_" + looper].end_date : "";
+                    profile += GCTLang.txtProfileExp({
+                        title: job_title,
+                        subtitle: organization,
+                        text: responsibilities,
+                        startDate: startDate,
+                        endDate: endDate
+                    });
+                    looper++;
+                }
+            });
+            profile += '</div>'
+                + '</div>'
+                + '</li>';
+        };
+
+        if (profileData.hasOwnProperty("skills") && profileData.skills !== null && profileData.skills !== "") {
+            profile += '<hr><li class="align-top">'
+                + '<div class="item-content">'
+                + '<div class="item-inner">'
+                + '<div class="bolder-head-title">' + GCTLang.Trans('skills') + '</div><hr>';
+            $(profileData.skills).each(function (key, value) {
+                var looper = 0; //dynamic variable counter
+                while (value["item_" + looper]) {
+                    var skill = (value["item_" + looper].skill) ? value["item_" + looper].skill : "";
+                    profile += '<div class="item-text large" onclick="ToggleAllText(this);">' + skill + '</div>';
+                    looper++;
+                }
+            });
+            profile += '</div>'
+                + '</div>'
+                + '</li>';
+        };
 
         profile += "</ul>";
         $("#user-info-list-"+guid).html(profile).text();
