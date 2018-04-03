@@ -3267,31 +3267,31 @@ myApp.onPageInit('profile', function (page) {
         }
 
         profile = '<ul>';
-        listItem = '<div class="item-title label">' + GCTLang.Trans('name') + '</div>'
-            + '<div class="item-text">' + profileData.displayName + '</div>';
+        listItem = '<div class="bolder-title">' + GCTLang.Trans('name') + '</div>'
+            + '<div class="item-text large norm-text">' + profileData.displayName + '</div>';
         profile += GCTLang.txtUserList(listItem);
 
         if (profileData.hasOwnProperty("jobTitle") && profileData.jobTitle !== null && profileData.jobTitle !== "") {
-            listItem = '<div class="item-title label">' + GCTLang.Trans('job-title') + '</div>'
-                + '<div class="item-text">' + profileData.jobTitle + '</div>';
+            listItem = '<div class="item-text large bolder-title">' + GCTLang.Trans('job-title') + '</div>'
+                + '<div class="item-text large norm-text">' + profileData.jobTitle + '</div>';
             profile += GCTLang.txtUserList(listItem);
         }
 
-        listItem = '<div class="item-title label">' + GCTLang.Trans('email') + '</div>'
-            + '<div class="item-text"><a class="external" href="mailto:' + profileData.email + '">' + profileData.email + '</a></div>';
+        listItem = '<div class="bolder-title">' + GCTLang.Trans('email') + '</div>'
+            + '<div class="item-text large norm-text"><a class="external" href="mailto:' + profileData.email + '">' + profileData.email + '</a></div>';
         profile += GCTLang.txtUserList(listItem);
 
         if (profileData.hasOwnProperty("telephone") && profileData.telephone !== null && profileData.telephone !== "") {
-            listItem ='<div class="item-title label">' + GCTLang.Trans('phone') + '</div>'
-                + '<div class="item-text"><a class="external" href="tel:' + profileData.telephone + '">' + profileData.telephone + '</a></div>';
+            listItem ='<div class="bolder-title">' + GCTLang.Trans('phone') + '</div>'
+                + '<div class="item-text large norm-text"><a class="external" href="tel:' + profileData.telephone + '">' + profileData.telephone + '</a></div>';
             profile += GCTLang.txtUserList(listItem);
         }
         if (profileData.hasOwnProperty("about_me") && profileData.about_me !== null && profileData.about_me !== "") {
             profile += '<li class="align-top">'
                 + '<div class="item-content">'
                 + '<div class="item-inner">'
-                + '<div class="item-title label">' + GCTLang.Trans('about-me') + '</div>'
-                + '<div class="item-text large" onclick="ToggleAllText(this);">' + profileData.about_me + '</div>'
+                + '<div class="bolder-title">' + GCTLang.Trans('about-me') + '</div>'
+                + '<div class="item-text large norm-text" onclick="ToggleAllText(this);">' + profileData.about_me + '</div>'
                 + '</div>'
                 + '</div>'
                 + '</li>';
@@ -3301,7 +3301,7 @@ myApp.onPageInit('profile', function (page) {
             profile += '<li class="align-top">'
                 + '<div class="item-content">'
                 + '<div class="item-inner">'
-                + '<div class="item-title label">' + GCTLang.Trans('education') + '</div>';
+                + '<div class="bolder-head-title">' + GCTLang.Trans('education') + '</div><hr>';
             $(profileData.education).each(function (key, value) {
                 var school = (value.school_name) ? value.school_name : "";
                 var degree = (value.degree) ? value.degree : "";
@@ -3312,7 +3312,7 @@ myApp.onPageInit('profile', function (page) {
             });
             profile += '</div>'
                 + '</div>'
-                + '</li>';
+                + '</li><hr>';
         };
 
         if (profileData.hasOwnProperty("experience") && profileData.experience !== null && profileData.experience !== "") {

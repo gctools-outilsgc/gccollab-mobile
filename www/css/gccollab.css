@@ -1162,6 +1162,7 @@ overflow:visible;
 .bolder-title {
     font-weight: bolder;
     color: #030303;
+    font-size: 14px;
 }
 
 .bolder-head-title {
