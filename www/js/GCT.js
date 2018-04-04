@@ -2077,17 +2077,18 @@ GCTUser = {
     },
     WithdrawPost: function (obj) {
         var $$ = Dom7;
-        var myApp = new Framework7();
+        var myApp = new Framework7({
+            modalTitle: "GCcollab",
+        });
         var guid = $(obj).data("guid");
         var type = $(obj).data("type");
 
-        //$(".popover").remove();
         var mainView = myApp.addView('.view-main', {
             // Because we want to use dynamic navbar, we need to enable it for this view:
             dynamicNavbar: true
           });
         var modal = myApp.modal({
-            title: 'Reason to decline the offer to participate in opportunity blablabla',
+            title: 'Reason to decline the offer to participate in this opportunity',
             afterText:'<div class="view modal-view">' +
             '<div class="pages my_select">' +
                 '<div class="page">' +
@@ -2128,15 +2129,29 @@ GCTUser = {
                 onClick: function () {
                 var message = $("#choices").val();
                   if( message != ""){
-                    GCTUser.WithdrawOpt(guid, message, function(data){
-                        console.log(data);
-                        myApp.alert(data.result);
-                        myApp.pullToRefreshTrigger(".pull-to-refresh-content");
-                    }, function(jqXHR, textStatus, errorThrown){
+                    if(message == 'other'){
+                        
+                        myApp.prompt('Other:', 'Withdrawn', function (value) {
+                
+                            GCTUser.WithdrawOpt(guid, value, function(data){
+                                console.log(data);
+                                myApp.alert(data.result);
+                                myApp.pullToRefreshTrigger(".pull-to-refresh-content");
+                            }, function(jqXHR, textStatus, errorThrown){
+                                console.log(jqXHR, textStatus, errorThrown);
+                            });
+                        });
+                    }else{
+                        GCTUser.WithdrawOpt(guid, message, function(data){
+                            console.log(data);
+                            myApp.alert(data.result);
+                            myApp.pullToRefreshTrigger(".pull-to-refresh-content");
+                        }, function(jqXHR, textStatus, errorThrown){
                             console.log(jqXHR, textStatus, errorThrown);
-                    });
-                }
-                  $$('#new-add-from').css('display', 'block');
+                        });
+                    }
+                    $$('#new-add-from').css('display', 'block');
+                  }
                 }
               },
             ]
