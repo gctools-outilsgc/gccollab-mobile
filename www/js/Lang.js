@@ -98,6 +98,18 @@
 
     "french": "French",
     "english": "English",
+    "on": "On",
+    "off": "Off",
+
+    "access": "Access",
+    "only-me": "Only Me",
+    "only-colleagues": "My Colleagues on GCcollab Only",
+    "only-logged": "Logged in users on GCcollab Only",
+
+    "status": "Status",
+    "published": "Published",
+    "draft": "Draft",
+
 
     "PostBlog": "Create Blog Post",
     "english-title": "English Title",
@@ -349,6 +361,17 @@ French = {
 
     "french": "Français",
     "english": "Anglais",
+    "on": "Activé",
+    "off": "Désactivé",
+
+    "access": "Accès",
+    "only-me": "Seulement moi",
+    "only-colleagues": "Mes Collègues sur GCcollab seulement",
+    "only-logged": "Usagers connectés à GCcollab seulement",
+
+    "status": "Statut",
+    "published": "Publié",
+    "draft": "Brouillon",
 
     "PostBlog": "Ajouter un Blogue",
     "english-title": "Titre en Anglais",

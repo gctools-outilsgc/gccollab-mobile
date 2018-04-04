@@ -108,7 +108,53 @@
           </div>
       </div>
       <div id="PostBlog-Feedback" class="card-content-inner" style="padding-top: 0;">
-          <a href="#PostBlog-Submit" class="button button-big button-fill" data-translate="submit">Submit</a>
+          <form id="PostBlog-French-form">
+              <div class="list-block" style="margin-top: 0;">
+                  <ul>
+                      <li>
+                          <div class="item-content">
+                              <div class="item-inner">
+                                  <div class="item-title label" data-translate="comments">Comments</div>
+                                  <div class="item-input">
+                                      <select id="PostBlog-comments" name="comments">
+                                          <option value="on" data-translate="on">On</option>
+                                          <option value="off" data-translate="off">Off</option>
+                                      </select>
+                                  </div>
+                              </div>
+                          </div>
+                      </li>
+                      <li>
+                          <div class="item-content">
+                              <div class="item-inner">
+                                  <div class="item-title label" data-translate="access">Access</div>
+                                  <div class="item-input">
+                                      <select id="PostBlog-access" name="access">
+                                          <option value="0" data-translate="only-me">Only Me</option>
+                                          <option value="-2" data-translate="only-colleagues">My Colleagues on GCcollab Only</option>
+                                          <option value="1" data-translate="only-logged">Logged in users on GCcollab Only</option>
+                                      </select>
+                                  </div>
+                              </div>
+                          </div>
+                      </li>
+                      <li>
+                          <div class="item-content">
+                              <div class="item-inner">
+                                  <div class="item-title label" data-translate="status">Status</div>
+                                  <div class="item-input">
+                                      <select id="PostBlog-status" name="status">
+                                          <option value="on" data-translate="published">Published</option>
+                                          <option value="off" data-translate="draft">Draft</option>
+                                      </select>
+                                  </div>
+                              </div>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+          </form>
+          <a href="#PostBlog-Submit" class="button button-big button-fill" data-translate="PostBlog">Submit</a>
       </div>
   </div>
 </div>
