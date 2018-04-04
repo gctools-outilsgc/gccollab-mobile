@@ -802,6 +802,22 @@ GCTUser = {
     PostBlogPost: function () {
         mainView.router.loadPage({ url: 'PostBlog.html' }); 
     },
+    PostBlog: function (container, englishTitle, englishExcerpt, englishBody, frenchTitle, frenchExcerpt, frenchBody, successCallback, errorCallback) {
+        $$.ajax({
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "post.blog", user: GCTUser.Email(), title: englishTitle, excerpt: englishExcerpt, body: englishBody, frenchTitle: frenchTitle, frenchExcerpt: frenchExcerpt, frenchBody: frenchBody, container_guid: container, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
 
     PostWirePost: function () {
         mainView.router.loadPage({ url: 'PostWire.html' }); 
