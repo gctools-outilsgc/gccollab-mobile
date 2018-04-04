@@ -799,8 +799,12 @@ GCTUser = {
         });
     },
 
+    PostBlogPost: function () {
+        mainView.router.loadPage({ url: 'PostBlog.html' }); 
+    },
+
     PostWirePost: function () {
-        mainView.router.loadPage({ url: 'PostWire.html' }); // temp redirect, but maybe keep
+        mainView.router.loadPage({ url: 'PostWire.html' }); 
     },
     PostWire: function (message, imageURI, successCallback, errorCallback) { 
         $$.ajax({
