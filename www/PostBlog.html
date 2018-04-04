@@ -20,23 +20,95 @@
   </div>
 
   <div class="page-content hide-bars-on-scroll with-subnavbar">
-      <div class="buttons-row">
-          <a href="#PostBlog-English" class="tab-link button active" data-translate="english">English</a>
-          <a href="#PostBlog-French" class="tab-link button" data-translate="french">French</a>
-      </div>
+      <div id="PostBlog-Feedback"><p class="card-content-inner" style="padding-top: 0;padding-bottom: 0;">Feedback Here</p></div>
       <div class="tabs">
           <div id="PostBlog-English" class="tab active">
-              <div id="PostBlog-English-Message" class="context"></div>
-              <a id="g1" class="button button-big button-fill">English131</a>
+              <div class='swiper-slide list-block cards-list'>
+                    <div id="PostBlog-inner" class="card-content-inner"  style="padding-top: 0;">
+                        <form id="PostBlog-English-form">
+                            <div class="list-block">
+                                <ul>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label" data-translate="english-title">English Title</div>
+                                                <div class="item-input">
+                                                    <input id="english-title" name="english-title" type="text" placeholder="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label" data-translate="english-excerpt">English Excerpt</div>
+                                                <div class="item-input">
+                                                    <input id="english-excerpt" name="english-excerpt" type="text" placeholder="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label" data-translate="english-body">English Body</div>
+                                                <div class="item-input">
+                                                    <textarea id="english-body-textarea" class="resizable"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+              </div>
           </div>
           <div id="PostBlog-French" class="tab">
-              <div id="PostBlog-French-Message" class="context"></div>
-              <a id="g2" class="button button-big button-fill">Frenc124h</a>
+              <div class='swiper-slide list-block cards-list'>
+                          <div id="PostBlog-inner" class="card-content-inner" style="padding-top: 0;">
+                              <form id="PostBlog-French-form">
+                                  <div class="list-block">
+                                      <ul>
+                                          <li>
+                                              <div class="item-content">
+                                                  <div class="item-inner">
+                                                      <div class="item-title label" data-translate="french-title">French Title</div>
+                                                      <div class="item-input">
+                                                          <input id="french-title" name="french-title" type="text" placeholder="" />
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                          <li>
+                                              <div class="item-content">
+                                                  <div class="item-inner">
+                                                      <div class="item-title label" data-translate="french-excerpt">French Excerpt</div>
+                                                      <div class="item-input">
+                                                          <input id="french-excerpt" name="french-excerpt" type="text" placeholder="" />
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                          <li>
+                                              <div class="item-content">
+                                                  <div class="item-inner">
+                                                      <div class="item-title label" data-translate="french-body">French Body</div>
+                                                      <div class="item-input">
+                                                          <textarea id="french-body-textarea" class="resizable"></textarea>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </form>
+                          </div>
+              </div>
           </div>
       </div>
-      <div class="buttons-row">
+      <div id="PostBlog-Feedback" class="card-content-inner" style="padding-top: 0;padding-bottom: 0;">
           <a href="#PostBlog-Submit" class="button button-big button-fill" data-translate="submit">Submit</a>
       </div>
-      
   </div>
 </div>
