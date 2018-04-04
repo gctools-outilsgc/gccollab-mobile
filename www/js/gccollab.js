@@ -3829,6 +3829,9 @@ myApp.onPageInit('entity', function (page) {
                     var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_opportunity' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
                     var fullview = true;
 
+                    var state = '';
+                    if (value.state) { state += value.state; }
+
                     content += GCTLang.txtOpps({
                         guid: value.guid,
                         icon: value.userDetails.iconURL,
@@ -3860,7 +3863,7 @@ myApp.onPageInit('entity', function (page) {
                         timecommitment: timecommitment,
                         participants: participants,
                         applicants: applicants,
-
+                        state: state,
                         type: "gccollab_opportunity",
                         action: action,
                         owner: value.owner_guid,
