@@ -21,7 +21,7 @@ GCTLang = {
             + "<div class='card-content'>"
             + "<div class='card-content-inner'>"
             + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
-            + "<div class='item-text large'>" + object.name + " " + object.description + " " + object.more + "</div>"
+            + "<div class='item-text large'><a onclick='ShowProfile(" + object.owner + ");'>" + object.name + "</a> " + object.description + " " + object.more + object.context + "</div>"
             + object.text
             + object.source
             + "</div>"
@@ -398,6 +398,13 @@ GCTLang = {
             + '</li>'
             + '<li>';
         return contentNew;
+    },
+    txtProfileExp: function (object) {
+        var content = '<div class="item-text large" onclick="ToggleAllText(this);">'
+            + "<div class='bolder-title'>" + object.title + "</div> "
+            + "<div class='norm-text'><i>" + object.subtitle + "<br>" + object.startDate + " to " + object.endDate + "</i></div>"
+            + "<div class='norm-text all_text'>" + object.text + "</div>" + '</div>' +"<br>";
+        return content;
     },
     txtGlobalNav: function (title) {
         var content = '<div class="left sliding"><a href="#" data-panel="left" class="open-panel link icon-only" aria-label="Button to open Site Navigation Menu"><i class="icon icon-bars"></i></a></div>' +
@@ -2070,18 +2077,17 @@ GCTUser = {
     },
     WithdrawPost: function (obj) {
         var $$ = Dom7;
-        var myApp = new Framework7({
-            modalTitle: "GCcollab",
-        });
+        var myApp = new Framework7();
         var guid = $(obj).data("guid");
         var type = $(obj).data("type");
-    
+
+        //$(".popover").remove();
         var mainView = myApp.addView('.view-main', {
             // Because we want to use dynamic navbar, we need to enable it for this view:
             dynamicNavbar: true
           });
         var modal = myApp.modal({
-            title: 'Reason to decline the offer to participate in this opportunity',
+            title: 'Reason to decline the offer to participate in opportunity blablabla',
             afterText:'<div class="view modal-view">' +
             '<div class="pages my_select">' +
                 '<div class="page">' +
@@ -2122,19 +2128,6 @@ GCTUser = {
                 onClick: function () {
                 var message = $("#choices").val();
                   if( message != ""){
-                      if(message == 'other'){
-                        
-        myApp.prompt('Other:', 'Withdrawn', function (value) {
-
-            GCTUser.WithdrawOpt(guid, value, function(data){
-                console.log(data);
-                myApp.alert(data.result);
-                myApp.pullToRefreshTrigger(".pull-to-refresh-content");
-            }, function(jqXHR, textStatus, errorThrown){
-                console.log(jqXHR, textStatus, errorThrown);
-            });
-        });
-                      }else{
                     GCTUser.WithdrawOpt(guid, message, function(data){
                         console.log(data);
                         myApp.alert(data.result);
@@ -2144,7 +2137,6 @@ GCTUser = {
                     });
                 }
                   $$('#new-add-from').css('display', 'block');
-                }
                 }
               },
             ]
@@ -2274,39 +2266,46 @@ GCTEach = {
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
 
         var description = "";
-        if (value.description == "river:update:user:default") {
-            description = GCTLang.Trans("new-avatar");
-        } else if (value.description == "river:reply:object:default") {
-            description = GCTLang.Trans("discussion-replied");
-        } else if (value.action == "comment") {
-            description = GCTLang.Trans("commented");
-        } else if (value.action == "friend") {
-            description = GCTLang.Trans("friend-added");
-        } else if (value.action == "join") {
-            description = GCTLang.Trans("joined-group");
-        } else if (value.object.type == "discussion-add") {
-            description = GCTLang.Trans("discussion-add");
-        } else if (value.object.type == "group" && value.action == "create") {
-            description = GCTLang.Trans("group-created");
-        } else if (value.object.type == "file" && value.action == "create") {
-            description = GCTLang.Trans("file-created");
-        } else if (value.object.type == "event" && value.action == "update") {
-            description = GCTLang.Trans("event-update");
-        } else if (value.object.type == "wire" && value.action == "create") {
-            description = GCTLang.Trans("wire-create");
-        } else {
-            description = value.description;
+        if (value.action == "update") { //UPDATE
+            switch (value.object.type) {
+                case "user": description = GCTLang.Trans("new-avatar"); break;
+                case "event_calendar": description = GCTLang.Trans("event-update"); break;
+                default: description = "NEED TO HANDLE UPDATE";
+            }
+        } else if (value.action == "create") { // CREATE
+            switch (value.object.type) {
+                case "wire": description = GCTLang.Trans("wire-create"); break;
+                case "blog": description = GCTLang.Trans("blog-create"); break;
+                case "group": description = GCTLang.Trans("group-created"); break;
+                case "file": description = GCTLang.Trans("file-created"); break;
+                case "groupforumtopic": description = GCTLang.Trans("discussion-add"); break;
+                case "etherpad": description = GCTLang.Trans("doc-create"); break;
+                default: description = "NEED TO HANDLE CREATE";
+            }
+        } else { //OTHER
+            switch (value.action) {
+                case 'friend': description = GCTLang.Trans("friend-added"); break;
+                case 'comment': description = GCTLang.Trans("commented"); break;
+                case 'reply': description = GCTLang.Trans("discussion-replied"); break;
+                case 'join': description = GCTLang.Trans("joined-group"); break;
+                default: description = "NEED TO HANDLE ELSE";
+            }
         }
 
         var more = "";
-        if (value.object.type == "wire") {
+        if (value.object.type == "user" && value.action == "update") {
             more = "";
         } else if (value.object.type == "user") {
             more = "<a onclick='GCT.FireLink(this)' href='" + value.object.profileURL + "'>" + value.object.displayName + "</a>";
-        } else if (value.description == "river:update:user:default") {
+        } else if  (value.object.type == "wire") {
             more = "";
         } else {
-            more = "<a onclick='GCT.FireLink(this)' href='" + value.object.url + "'>" + value.object.name + "</a>";
+            more = "<a onclick='GCT.FireLink(this)' id='info-"+value.object.type+"' href='" + value.object.url + "'>" + value.object.name + "</a>";
+        }
+
+        var context = ""; //Currently only content to groups should need context
+        if (value.object.group_guid) {
+            context = " " + GCTLang.Trans("group-context") + "<a class='link' data-guid='" + value.object.group_guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.object.group_title + "</a>";;
         }
 
         var text = "";
@@ -2335,6 +2334,7 @@ GCTEach = {
             name: value.userDetails.displayName,
             date: prettyDate(value.time_posted),
             more: more,
+            context: context,
             description: description,
             text: text,
             source: source,
@@ -2343,6 +2343,7 @@ GCTEach = {
             owner: value.subject_guid,
             guid: value.object_guid,
             type: "gccollab_newfeed_post",
+            subtype: value.object.type,
             liked: liked,
             likes: likes
         });
@@ -2371,6 +2372,8 @@ GCTEach = {
         var source = "";
         if (value.shareText && value.shareURL) {
             source = "<blockquote>" + GCTLang.Trans("source") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_wire_post' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
+        } else if (value.shareURL) {
+            source = "<blockquote>" + GCTLang.Trans("source") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_wire_post' href='" + value.shareURL + "'>" + text + "</a></blockquote>";
         }
 
         var img = '';
@@ -2669,7 +2672,39 @@ GCT = {
             console.log(lnk);
             GCTUser.ViewPost(lnk, "gccollab_group");
 
-        
+        } else if (obj.href.indexOf("/comment/view/") > -1) {
+            console.log('loading comment...');
+            var passtype = '';
+            switch (obj.id) { //use to check type and send correct type to ViewPost using passtype
+                default: mainView.router.loadPage('external-pages.html?page=' + obj.href); //unhandled case goes to external
+            }
+            lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            GCTUser.ViewPost(lnk, passtype);
+
+        } else if (obj.href.indexOf("/missions/view/") > -1) {
+            console.log('loading mission...');
+            lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            console.log(lnk);
+            GCTUser.ViewPost(lnk, "gccollab_opportunity");
+
+        } else if (obj.href.indexOf("/event_calendar/view/") > -1) {
+            console.log('loading event...');
+            lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            console.log(lnk);
+            GCTUser.ViewPost(lnk, "gccollab_event");
+
+        } else if (obj.href.indexOf("/discussion/view/") > -1) {
+            console.log('loading discussion...');
+            lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            console.log(lnk);
+            GCTUser.ViewPost(lnk, "gccollab_discussion_post");
+
+        } else if (obj.href.indexOf("/bookmarks/view/") > -1) {
+            console.log('loading bookmark...');
+            lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            console.log(lnk);
+            GCTUser.ViewPost(lnk, "gccollab_bookmark");
+
         } else if (obj.href.indexOf("https://gccollab.ca/") > -1) {
             console.log('loading collab page...');
             mainView.router.loadPage('external-pages.html?page=' + obj.href);
