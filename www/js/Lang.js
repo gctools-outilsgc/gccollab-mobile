@@ -96,6 +96,18 @@
     "filter-docs": "Filter Docs",
     "filter-bookmarks": "Filter Bookmarks",
 
+    "french": "French",
+    "english": "English",
+
+    "PostBlog": "Create Blog Post",
+    "english-title": "English Title",
+    "french-title": "French Title",
+    "english-excerpt": "English Excerpt",
+    "french-excerpt": "French Excerpt",
+    "english-body": "English Body",
+    "french-body": "French Body",
+    "submit-blog": "Submit blog",
+
     "message-centre": "Message Centre",
     "colleague-requests": "Colleague Requests",
     "notifications": "Notifications",
@@ -334,6 +346,18 @@ French = {
     "filter-blogs": "Filtrer les blogues",
     "filter-docs": "Filtrer les Docs",
     "filter-bookmarks": "Filtrer les Signets",
+
+    "french": "Français",
+    "english": "Anglais",
+
+    "PostBlog": "Ajouter un Blogue",
+    "english-title": "Titre en Anglais",
+    "french-title": "Titre en Français",
+    "english-excerpt": "Extrait en Anglais",
+    "french-excerpt": "Extrait en Français",
+    "english-body": "Texte complet en Anglais",
+    "french-body": "Texte complet en Français",
+    "submit-blog": "Ajouter un Blogue",
     
     "message-centre": "Centre de message",
     "colleague-requests": "Demande de collègues",
