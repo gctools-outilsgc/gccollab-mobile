@@ -2044,7 +2044,7 @@ GCTUser = {
         var type = $(obj).data("type");
         $(".popover").remove();
 
-        myApp.prompt('Message to opportunity creator', 'Apply', function (value) {
+        myApp.prompt(GCTLang.Trans("message-creator-opportunity"), GCTLang.Trans('apply-opt'), function (value) {
 
             GCTUser.ApplyOpt(guid, value, function(data){
                 console.log(data);
@@ -2088,7 +2088,7 @@ GCTUser = {
             dynamicNavbar: true
           });
         var modal = myApp.modal({
-            title: 'Reason to decline the offer to participate in this opportunity',
+            title: GCTLang.Trans("reason-decline-opportunity"),
             afterText:'<div class="view modal-view">' +
             '<div class="pages my_select">' +
                 '<div class="page">' +
@@ -2120,7 +2120,7 @@ GCTUser = {
           
             buttons: [
               {
-                text: 'Cancel',
+                text: GCTLang.Trans("cancel"),
                 onClick: function () {}
               },
               {
@@ -2131,7 +2131,7 @@ GCTUser = {
                   if( message != ""){
                     if(message == 'other'){
                         
-                        myApp.prompt('Other:', 'Withdrawn', function (value) {
+                        myApp.prompt(GCTLang.Trans('mission:other'),GCTLang.Trans('withdrawn-opt'), function (value) {
                 
                             GCTUser.WithdrawOpt(guid, value, function(data){
                                 console.log(data);
@@ -2185,7 +2185,7 @@ GCTUser = {
         var type = $(obj).data("type");
         $(".popover").remove();
 
-        myApp.confirm('Accept', function (value) {
+        myApp.confirm(GCTLang.Trans('accept-opt'), function (value) {
 
             GCTUser.AcceptOpt(guid, value, function(data){
                 console.log(data);

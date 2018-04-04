@@ -234,7 +234,9 @@
     "missions:decline:interest":"No longer interested in this opportunity",
     "missions:decline:engagement":"Already engaged in another opportunity",
     "missions:decline:approval":"Unable to obtain management approval",
-    "missions:other":"Other"
+    "missions:other":"Other",
+    "reason-decline-opportunity":"Reason to decline the offer to participate in this opportunity",
+    "message-creator-opportunity":"Message to opportunity creator"
 }
 
 French = {
@@ -473,6 +475,8 @@ French = {
     "missions:decline:interest":"N'est plus intéressé par cette possibilité",
     "missions:decline:engagement":"Déjà engagé dans une autre possibilité",
     "missions:decline:approval":"Impossible d'obtenir l'approbation de la direction",
-    "missions:other":"Autre"
+    "missions:other":"Autre",
+    "reason-decline-opportunity":"Raison pour le retrait de votre participation à cette possibilité",
+    "message-creator-opportunity":"Message au gestionnaire"
     
 }
