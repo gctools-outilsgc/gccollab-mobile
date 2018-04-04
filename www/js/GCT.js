@@ -2090,30 +2090,30 @@ GCTUser = {
             title: 'Reason to decline the offer to participate in opportunity blablabla',
             afterText:'<div class="view modal-view">' +
             '<div class="pages my_select">' +
-            '<div class="page">' +
-            '<div class="page-content">' +
-            '<div id="leave-form" class="list-block">' +
-            '<ul>' +
-            '<li>' +
-            '<a class="item-link smart-select smart-select-init">' +
-            '<select name="choices">' +
-            '<option value="wordload" selected>'+GCTLang.Trans("missions:decline:workload")+'</option>' +
-            '<option value="interest">'+GCTLang.Trans("missions:decline:interest")+'</option>' +
-            '<option value="engagement">'+GCTLang.Trans("missions:decline:engagement")+'</option>' +
-            '<option value="approval">'+GCTLang.Trans("missions:decline:approval")+'</option>' +
-            '<option value="other">'+GCTLang.Trans("missions:other")+'</option>' +          
-            '</select>' +
-            '<div class="item-content">' +
-            '<div class="item-inner">' +
-            '<div class="item-title"></div>' +
-            '</div>' +
-            '</div>' +
-            '</a>' +
-            '</li>' +
-            '</ul>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
+                '<div class="page">' +
+                    '<div class="page-content">' +
+                        '<div id="leave-form" class="list-block">' +
+                            '<ul>' +
+                                '<li>' +
+                                    '<a class="item-link smart-select smart-select-init">' +
+                                        '<select name="choices" id="choices">' +
+                                            '<option value="wordload" selected>'+GCTLang.Trans("missions:decline:workload")+'</option>' +
+                                            '<option value="interest">'+GCTLang.Trans("missions:decline:interest")+'</option>' +
+                                            '<option value="engagement">'+GCTLang.Trans("missions:decline:engagement")+'</option>' +
+                                            '<option value="approval">'+GCTLang.Trans("missions:decline:approval")+'</option>' +
+                                            '<option value="other">'+GCTLang.Trans("missions:other")+'</option>' +          
+                                        '</select>' +
+                                        '<div class="item-content">' +
+                                            '<div class="item-inner">' +
+                                                '<div class="item-title"></div>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</a>' +
+                                '</li>' +
+                            '</ul>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
             '</div>' +
             '</div>',
           
@@ -2123,11 +2123,19 @@ GCTUser = {
                 onClick: function () {}
               },
               {
-                text: 'Awesome!',
+                text: GCTLang.Trans("ok"),
                 bold: true,
                 onClick: function () {
-                  myApp.alert('Thanks! I know you like it!')
-                  mainView.router.loadPage('opportunities.html');
+                var message = $("#choices").val();
+                  if( message != ""){
+                    GCTUser.WithdrawOpt(guid, message, function(data){
+                        console.log(data);
+                        myApp.alert(data.result);
+                        myApp.pullToRefreshTrigger(".pull-to-refresh-content");
+                    }, function(jqXHR, textStatus, errorThrown){
+                            console.log(jqXHR, textStatus, errorThrown);
+                    });
+                }
                   $$('#new-add-from').css('display', 'block');
                 }
               },

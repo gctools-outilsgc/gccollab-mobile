@@ -1142,10 +1142,6 @@ overflow:scroll;
     overflow:visible;
       }
 
- .my_select .page{
-    color:red;
-}
-
 .my_select label.label-checkbox, label.label-radio{
 overflow:visible;
 
@@ -1155,6 +1151,10 @@ overflow:visible;
  max-width: 100%;   
 }
 
+.my_select ul > li {
+     padding-bottom: 0;
+     margin-top:10px;
+}
 .norm-text {
     color: #030303;
 }
