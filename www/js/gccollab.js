@@ -4199,7 +4199,7 @@ myApp.onPageInit('PostBlog', function (page) {
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
         }, function (feedback){
-            var feedbackmsg = '<p class="card-content-inner" style="padding-top: 0;padding-bottom: 0;" id="PostBlog-Feedback">' +"Issue: " + feedback + '</p>';
+            var feedbackmsg = '<p class="card-content-inner" style="padding-top: 0;padding-bottom: 0;" id="PostBlog-Feedback">' +GCTLang.Trans('issue') + feedback + '</p>';
             $(feedbackmsg).hide().appendTo('#PostBlog-Feedback').fadeIn(500);
         });
         myApp.alert(JSON.stringify(title));

@@ -109,6 +109,7 @@
     "status": "Status",
     "published": "Published",
     "draft": "Draft",
+    "issue": "Issue: ",
 
 
     "PostBlog": "Create Blog Post",
@@ -375,6 +376,7 @@ French = {
     "status": "Statut",
     "published": "Publié",
     "draft": "Brouillon",
+    "issue": "Problème: ",
 
     "PostBlog": "Ajouter un Blogue",
     "english-title": "Titre en Anglais",
