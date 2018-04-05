@@ -4181,7 +4181,26 @@ myApp.onPageInit('PostWire', function (page) {
 
 });
 
+myApp.onPageInit('PostOpportunity', function (page) {
+    $$('#postopt-navbar-inner').html(GCTLang.txtGlobalNav('new-wire-post')); //Card has the same text, change at some point?
+    var imageURI = "";
+    $$('#submit-wire').on('click', function (e) {
+        var message = $("#opt-post-name").val();
+        if (message != "") {
+            GCTUser.PostWire(message, imageURI, function (data) {
+                console.log(data);
+                myApp.alert(data.result, function () {
+                    mainView.router.loadPage({ url: 'wire.html' });
+                });
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        } else {
+            myApp.alert("Cannot post wire with no text.");
+        }
+    });
 
+});
         
 /* ===== Messages Page ===== */
 myApp.onPageInit('messages', function (page) {

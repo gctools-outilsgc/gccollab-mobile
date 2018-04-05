@@ -2216,6 +2216,26 @@ GCTUser = {
             }
         });
     },
+
+    CreateNewOpportunity: function () {
+        mainView.router.loadPage({ url: 'NewOpportunity.html' }); // temp redirect, but maybe keep
+    },
+    PostWire: function (message, imageURI, successCallback, errorCallback) { 
+        $$.ajax({
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "post.opportunity", user: GCTUser.Email(), message: message, image: imageURI, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
 }
 
 
