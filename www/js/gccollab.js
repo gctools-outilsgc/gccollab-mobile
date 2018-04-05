@@ -4202,9 +4202,6 @@ myApp.onPageInit('PostBlog', function (page) {
             var feedbackmsg = '<p class="card-content-inner" style="padding-top: 0;padding-bottom: 0;" id="PostBlog-Feedback">' +GCTLang.Trans('issue') + feedback + '</p>';
             $(feedbackmsg).hide().appendTo('#PostBlog-Feedback').fadeIn(500);
         });
-        myApp.alert(JSON.stringify(title));
-        myApp.alert(JSON.stringify(excerpt));
-        myApp.alert(JSON.stringify(body));
     });
 });
 
