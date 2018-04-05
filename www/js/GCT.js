@@ -805,7 +805,7 @@ GCTUser = {
     PostBlog: function (container, title, excerpt, body, comments, access, status, successCallback, errorCallback, issueCallback) {
         if (!title.en && !title.fr) { issueCallback(GCTLang.Trans("require-title")); return; }
         if (!body.en && !body.fr) { issueCallback(GCTLang.Trans("require-body")); return; }
-        if (!(title.en && body.en) || !(title.fr && body.fr)) { issueCallback(GCTLang.Trans("require-same-lang")); return; }
+        if (!(title.en && body.en) && !(title.fr && body.fr)) { issueCallback(GCTLang.Trans("require-same-lang")); return; }
         
         container = container || '';
         title = title || '';
@@ -814,14 +814,13 @@ GCTUser = {
         comments = comments || 1;
         access = access || 1;
         status = status || 0;
-
-        return; //temp for test
+        
 
         $$.ajax({
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "post.blog", user: GCTUser.Email(), title: title, excerpt: excerpt, body:body, container_guid: container, comments: comments, access: access, status:status, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "post.blog", user: GCTUser.Email(), title: JSON.stringify(title), excerpt: JSON.stringify(excerpt), body: JSON.stringify(body), container_guid: container, comments: comments, access: access, status:status, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
