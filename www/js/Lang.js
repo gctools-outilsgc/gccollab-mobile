@@ -119,6 +119,9 @@
     "english-body": "English Body",
     "french-body": "French Body",
     "submit-blog": "Submit blog",
+    "require-title": "Content requires a title.",
+    "require-body": "Content requires a body.",
+    "require-same-lang": "Content requires a title and body for the same language.",
 
     "message-centre": "Message Centre",
     "colleague-requests": "Colleague Requests",
@@ -381,6 +384,9 @@ French = {
     "english-body": "Texte complet en Anglais",
     "french-body": "Texte complet en Français",
     "submit-blog": "Ajouter un Blogue",
+    "require-title": "Le contenu nécessite un titre.",
+    "require-body": "Le contenu nécessite le texte complet.",
+    "require-same-lang": "Le contenu nécessite un titre et le texte complet pour la même langue.",
     
     "message-centre": "Centre de message",
     "colleague-requests": "Demande de collègues",

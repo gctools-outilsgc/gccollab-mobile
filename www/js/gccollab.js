@@ -4182,6 +4182,7 @@ myApp.onPageInit('PostBlog', function (page) {
     $$('#PostBlog-navbar-inner').html(GCTLang.txtGlobalNav('PostBlog'));
 
     $$('#submit-blog').on('click', function (e) {
+        $$('#PostBlog-Feedback').html(''); //clears feedback message on new submit
         var title = {}, excerpt = {}, body = {};
         title.en = $('#english-title').val();
         title.fr = $('#french-title').val(); 
@@ -4192,6 +4193,15 @@ myApp.onPageInit('PostBlog', function (page) {
         var comment = $('#PostBlog-comments').val();
         var access = $('#PostBlog-access').val();
         var status = $('#PostBlog-status').val();
+        //(container, title, excerpt, body, comments, access, successCallback, errorCallback)
+        GCTUser.PostBlog('', title, excerpt, body, comment, access, status, function (data) {
+           
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        }, function (feedback){
+            var feedbackmsg = '<p class="card-content-inner" style="padding-top: 0;padding-bottom: 0;" id="PostBlog-Feedback">' +"Issue: " + feedback + '</p>';
+            $(feedbackmsg).hide().appendTo('#PostBlog-Feedback').fadeIn(500);
+        });
         myApp.alert(JSON.stringify(title));
         myApp.alert(JSON.stringify(excerpt));
         myApp.alert(JSON.stringify(body));
