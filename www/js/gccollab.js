@@ -4114,7 +4114,7 @@ myApp.onPageInit('entity', function (page) {
 });
 
 myApp.onPageInit('PostWire', function (page) {
-    $$('#postwire-navbar-inner').html(GCTLang.txtGlobalNav('new-wire-post')); //Card has the same text, change at some point?
+    $$('#postwire-navbar-inner').html(GCTLang.txtGlobalNav('new-wire-post'));
     var imageURI = "";
     $$('#submit-wire').on('click', function (e) {
         var message = $("#wire-post-textarea").val();
@@ -4178,6 +4178,25 @@ myApp.onPageInit('PostWire', function (page) {
 
 });
 
+myApp.onPageInit('PostBlog', function (page) {
+    $$('#PostBlog-navbar-inner').html(GCTLang.txtGlobalNav('PostBlog'));
+
+    $$('#submit-blog').on('click', function (e) {
+        var title = {}, excerpt = {}, body = {};
+        title.en = $('#english-title').val();
+        title.fr = $('#french-title').val(); 
+        excerpt.en = $('#english-excerpt').val();
+        excerpt.fr = $('#french-excerpt').val();
+        body.en = $('#english-body-textarea').val();
+        body.fr = $('#french-body-textarea').val(); 
+        var comment = $('#PostBlog-comments').val();
+        var access = $('#PostBlog-access').val();
+        var status = $('#PostBlog-status').val();
+        myApp.alert(JSON.stringify(title));
+        myApp.alert(JSON.stringify(excerpt));
+        myApp.alert(JSON.stringify(body));
+    });
+});
 
         
 /* ===== Messages Page ===== */
