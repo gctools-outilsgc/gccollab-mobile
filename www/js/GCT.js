@@ -2333,6 +2333,7 @@ GCTEach = {
                 case "file": description = GCTLang.Trans("file-created"); break;
                 case "groupforumtopic": description = GCTLang.Trans("discussion-add"); break;
                 case "etherpad": description = GCTLang.Trans("doc-create"); break;
+                case "event_calendar": description = GCTLang.Trans("event-create"); break;
                 default: description = "NEED TO HANDLE CREATE";
             }
         } else { //OTHER
