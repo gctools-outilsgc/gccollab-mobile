@@ -799,8 +799,13 @@ GCTUser = {
         });
     },
 
-    PostBlogPost: function () {
-        mainView.router.loadPage({ url: 'PostBlog.html' }); 
+    PostBlogPost: function (group_guid) {
+        if (group_guid) {
+            mainView.router.loadPage({ url: 'PostBlog.html?group_guid=' + group_guid }); 
+        } else {
+            mainView.router.loadPage({ url: 'PostBlog.html' }); 
+        }
+        
     },
     PostBlog: function (container, title, excerpt, body, comments, access, status, successCallback, errorCallback, issueCallback) {
         if (!title.en && !title.fr) { issueCallback(GCTLang.Trans("require-title")); return; }
