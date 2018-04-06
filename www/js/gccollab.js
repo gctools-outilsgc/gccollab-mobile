@@ -4200,6 +4200,7 @@ myApp.onPageInit('PostWire', function (page) {
 
 myApp.onPageInit('PostBlog', function (page) {
     $$('#PostBlog-navbar-inner').html(GCTLang.txtGlobalNav('PostBlog'));
+    var container_guid = (page.query.group_guid) ? page.query.group_guid : '';
 
     $$('#submit-blog').on('click', function (e) {
         $$('#PostBlog-Feedback').html(''); //clears feedback message on new submit
@@ -4214,7 +4215,7 @@ myApp.onPageInit('PostBlog', function (page) {
         var access = $('#PostBlog-access').val();
         var status = $('#PostBlog-status').val();
         //(container, title, excerpt, body, comments, access, successCallback, errorCallback)
-        GCTUser.PostBlog('', title, excerpt, body, comment, access, status, function (data) {
+        GCTUser.PostBlog(container_guid, title, excerpt, body, comment, access, status, function (data) {
             if (data.result.indexOf("gccollab.ca/blog/view/") > -1) {
                 var obj = [];
                 obj.href = data.result;
