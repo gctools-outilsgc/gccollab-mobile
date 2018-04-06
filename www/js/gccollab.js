@@ -655,6 +655,23 @@ myApp.onPageInit('group', function (page) {
         myApp.popover(popoverHTML, this);
     });
 
+    $("#group-actions").on('click', function (e) {
+        var popoverHTML = '<div class="popover pop-group-actions">'
+            + '<div class="popover-inner">'
+            + '<div class="list-block">'
+            + '<ul>';
+        if (access) {
+            popoverHTML += (enabled.blogs && enabled.blogs == "yes") ? '<li><a href="#" onclick="GCTUser.PostBlogPost(' + page.query.guid + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostBlog") + '</span> </a></li>' : "";
+        } else {
+            popoverHTML += '<li><a href="#" class="item-link list-button">' + "Private Group" + '</a></li>';
+        }
+        popoverHTML += '</ul>'
+            + '</div>'
+            + '</div>'
+            + '</div>';
+        myApp.popover(popoverHTML, this);
+    });
+
     $("#tab-group-discussion").on('show', function (e) {
         if (!ld_discussion) {
             ld_discussion = true;
