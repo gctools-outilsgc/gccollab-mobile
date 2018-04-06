@@ -4195,7 +4195,13 @@ myApp.onPageInit('PostBlog', function (page) {
         var status = $('#PostBlog-status').val();
         //(container, title, excerpt, body, comments, access, successCallback, errorCallback)
         GCTUser.PostBlog('', title, excerpt, body, comment, access, status, function (data) {
-           
+            if (data.result.indexOf("gccollab.ca/blog/view/") > -1) {
+                var obj = [];
+                obj.href = data.result;
+                GCT.FireLink(obj);
+            } else {
+                myApp.alert(data.result);
+            }
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
         }, function (feedback){
