@@ -2341,6 +2341,7 @@ GCTEach = {
                 case 'comment': description = GCTLang.Trans("commented"); break;
                 case 'reply': description = GCTLang.Trans("discussion-replied"); break;
                 case 'join': description = GCTLang.Trans("joined-group"); break;
+                case 'vote': description = GCTLang.Trans("voted"); break;
                 default: description = "NEED TO HANDLE ELSE";
             }
         }
