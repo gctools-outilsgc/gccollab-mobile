@@ -4117,7 +4117,7 @@ myApp.onPageInit('entity', function (page) {
 });
 
 myApp.onPageInit('PostWire', function (page) {
-    $$('#postwire-navbar-inner').html(GCTLang.txtGlobalNav('new-wire-post')); //Card has the same text, change at some point?
+    $$('#postwire-navbar-inner').html(GCTLang.txtGlobalNav('new-wire-post'));
     var imageURI = "";
     $$('#submit-wire').on('click', function (e) {
         var message = $("#wire-post-textarea").val();
@@ -4181,6 +4181,38 @@ myApp.onPageInit('PostWire', function (page) {
 
 });
 
+myApp.onPageInit('PostBlog', function (page) {
+    $$('#PostBlog-navbar-inner').html(GCTLang.txtGlobalNav('PostBlog'));
+
+    $$('#submit-blog').on('click', function (e) {
+        $$('#PostBlog-Feedback').html(''); //clears feedback message on new submit
+        var title = {}, excerpt = {}, body = {};
+        title.en = $('#english-title').val();
+        title.fr = $('#french-title').val(); 
+        excerpt.en = $('#english-excerpt').val();
+        excerpt.fr = $('#french-excerpt').val();
+        body.en = $('#english-body-textarea').val();
+        body.fr = $('#french-body-textarea').val(); 
+        var comment = $('#PostBlog-comments').val();
+        var access = $('#PostBlog-access').val();
+        var status = $('#PostBlog-status').val();
+        //(container, title, excerpt, body, comments, access, successCallback, errorCallback)
+        GCTUser.PostBlog('', title, excerpt, body, comment, access, status, function (data) {
+            if (data.result.indexOf("gccollab.ca/blog/view/") > -1) {
+                var obj = [];
+                obj.href = data.result;
+                GCT.FireLink(obj);
+            } else {
+                myApp.alert(data.result);
+            }
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        }, function (feedback){
+            var feedbackmsg = '<p class="card-content-inner" style="padding-top: 0;padding-bottom: 0;" id="PostBlog-Feedback">' +GCTLang.Trans('issue') + feedback + '</p>';
+            $(feedbackmsg).hide().appendTo('#PostBlog-Feedback').fadeIn(500);
+        });
+    });
+});
 
         
 /* ===== Messages Page ===== */

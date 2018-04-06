@@ -96,6 +96,34 @@
     "filter-docs": "Filter Docs",
     "filter-bookmarks": "Filter Bookmarks",
 
+    "french": "French",
+    "english": "English",
+    "on": "On",
+    "off": "Off",
+
+    "access": "Access",
+    "only-me": "Only Me",
+    "only-colleagues": "My Colleagues on GCcollab Only",
+    "only-logged": "Logged in users on GCcollab Only",
+
+    "status": "Status",
+    "published": "Published",
+    "draft": "Draft",
+    "issue": "Issue: ",
+
+
+    "PostBlog": "Create Blog Post",
+    "english-title": "English Title",
+    "french-title": "French Title",
+    "english-excerpt": "English Excerpt",
+    "french-excerpt": "French Excerpt",
+    "english-body": "English Body",
+    "french-body": "French Body",
+    "submit-blog": "Submit blog",
+    "require-title": "Content requires a title.",
+    "require-body": "Content requires a body.",
+    "require-same-lang": "Content requires a title and body for the same language.",
+
     "message-centre": "Message Centre",
     "colleague-requests": "Colleague Requests",
     "notifications": "Notifications",
@@ -336,6 +364,33 @@ French = {
     "filter-blogs": "Filtrer les blogues",
     "filter-docs": "Filtrer les Docs",
     "filter-bookmarks": "Filtrer les Signets",
+
+    "french": "Français",
+    "english": "Anglais",
+    "on": "Activé",
+    "off": "Désactivé",
+
+    "access": "Accès",
+    "only-me": "Seulement moi",
+    "only-colleagues": "Mes Collègues sur GCcollab seulement",
+    "only-logged": "Usagers connectés à GCcollab seulement",
+
+    "status": "Statut",
+    "published": "Publié",
+    "draft": "Brouillon",
+    "issue": "Problème: ",
+
+    "PostBlog": "Ajouter un Blogue",
+    "english-title": "Titre en Anglais",
+    "french-title": "Titre en Français",
+    "english-excerpt": "Extrait en Anglais",
+    "french-excerpt": "Extrait en Français",
+    "english-body": "Texte complet en Anglais",
+    "french-body": "Texte complet en Français",
+    "submit-blog": "Ajouter un Blogue",
+    "require-title": "Le contenu nécessite un titre.",
+    "require-body": "Le contenu nécessite le texte complet.",
+    "require-same-lang": "Le contenu nécessite un titre et le texte complet pour la même langue.",
     
     "message-centre": "Centre de message",
     "colleague-requests": "Demande de collègues",
