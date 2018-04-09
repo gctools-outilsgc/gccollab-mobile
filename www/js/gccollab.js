@@ -2401,6 +2401,47 @@ myApp.onPageInit('blog', function (page) {
         });
     });
 
+    $$('#tab-colleagues-blogs').on('show', function (e) {
+        if (!ld_colleagues) {
+            GCTUser.GetBlogsByColleagues(limit, 0, function (data) {
+                var blogs = data.result;
+                if (blogs.length > 0) {
+                    $.each(blogs, function (key, value) {
+                        var content = GCTEach.Blog(value);
+                        $(content).appendTo('#blogs-colleagues');
+                    });
+                }
+                if (blogs.length < limit) {
+                    var content = endOfContent;
+                    $(content).appendTo('#blogs-colleagues');
+                    $('#blogs-colleagues-more').hide();
+                }
+                ld_colleagues = true;
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
+    });
+    $$('#blogs-colleagues-more').on('click', function (e) {
+        GCTUser.GetBlogsByColleagues(limit, offset_colleagues + limit, function (data) {
+            var blogs = data.result;
+            if (blogs.length > 0) {
+                $.each(blogs, function (key, value) {
+                    var content = GCTEach.Blog(value);
+                    $(content).appendTo('#blogs-colleagues');
+                });
+            }
+            if (blogs.length < limit) {
+                var content = endOfContent;
+                $(content).appendTo('#blogs-colleagues');
+                $('#blogs-colleagues-more').hide();
+            }
+            offset_colleagues += limit;
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    });
+
     var blogsMore = $$(page.container).find('#blogs-all-more');
     blogsMore.on('click', function (e) {
         GCTUser.GetBlogs(limit, blogsMoreOffset + limit, filters, function(data){
