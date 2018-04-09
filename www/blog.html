@@ -1,10 +1,15 @@
-<div data-page="blog" class="page navbar-fixed">
+<div data-page="blog" class="page navbar-fixed  with-subnavbar">
 
-  <div class="navbar">
-      <div id="blogs-navbar-inner" class="navbar-inner">
-
-      </div>
-  </div>
+    <div class="navbar">
+        <div id="blogs-navbar-inner" class="navbar-inner"> </div>
+        <div class="subnavbar">
+            <div class="buttons-row">
+                <a href="#tab-all-blogs" class="button active tab-link" data-translate="all">All</a>
+                <a href="#tab-colleagues-blogs" class="button tab-link" data-translate="my-colleagues">Colleagues</a>
+                <a href="#tab-mine-blogs" class="button tab-link" data-translate="mine">Mine</a>
+            </div>
+        </div>
+    </div>
 
   <div class="toolbar toolbar-bottom">
       <div class="toolbar-inner">
@@ -14,14 +19,27 @@
       </div>
   </div>
 
-  <div class="page-content hide-bars-on-scroll pull-to-refresh-content">
+  <div class="page-content hide-bars-on-scroll pull-to-refresh-content with-subnavbar">
     <div class="pull-to-refresh-layer">
       <div class="preloader"></div>
       <div class="pull-to-refresh-arrow"></div>
     </div>
 
-    <div id="blogs-all" class="context"></div>
-    <a id="blogs-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+    <div class="tabs">
+        <div id="tab-all-blogs" class="tab active">
+            <div id="blogs-all" class="context"></div>
+            <a id="blogs-all-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+        </div>
+        <div id="tab-colleagues-blogs" class="tab ">
+            <div id="blogs-colleagues" class="context"></div>
+            <a id="blogs-colleagues-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+        </div>
+        <div id="tab-mine-blogs" class="tab ">
+            <div id="blogs-mine" class="context"></div>
+            <a id="blogs-mine-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+        </div>
+    </div>
+
   </div>
 
   <div class="popup popup-filters">
