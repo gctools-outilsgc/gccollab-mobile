@@ -114,7 +114,7 @@
     "draft": "Draft",
     "issue": "Issue: ",
 
-
+    "PostDiscussion": "Add a Discussion Topic",
     "PostBlog": "Create Blog Post",
     "english-title": "English Title",
     "french-title": "French Title",
@@ -386,6 +386,7 @@ French = {
     "draft": "Brouillon",
     "issue": "Problème: ",
 
+    "PostDiscussion": "Ajouter un Sujet",
     "PostBlog": "Ajouter un Blogue",
     "english-title": "Titre en Anglais",
     "french-title": "Titre en Français",
