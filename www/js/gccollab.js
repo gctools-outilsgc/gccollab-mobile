@@ -592,6 +592,7 @@ myApp.onPageInit('group', function (page) {
     var groupActivityMoreOffset = 0;
     var groupMembersMoreOffset = 0;
     var groupBookmarksMoreOffset = 0;
+    var offset_blogs = 0;
     var offset_discussion = 0;
     var enabled;
     var access;
@@ -599,6 +600,7 @@ myApp.onPageInit('group', function (page) {
     var activityloaded = false;
     var bookmarksloaded = false;
     var ld_discussion = false;
+    var ld_blogs = false;
 
     GCTUser.GetGroup(guid, function(data){
         var group = data.result;
@@ -894,6 +896,27 @@ myApp.onPageInit('group', function (page) {
         });
     });
 
+    $$('#tab-group-blogs').on('show', function (e) {
+        if (ld_blogs == false) {
+            GCTUser.GetGroupBlogs(guid, limit, offset, function (data) {
+                var blogs = data.result;
+                if (blogs.length > 0) {
+                    $.each(blogs, function (key, value) {
+                        var content = GCTEach.Blog(value);
+                        $(content).appendTo('#group-blogs');
+                    });
+                }
+                if (blogs.length < limit) {
+                    var content = endOfContent;
+                    $(content).appendTo('#group-blogs');
+                    $('#group-blogs-more').hide();
+                }
+                ld_blogs = true;
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
+    });
 });
 
 myApp.onPageInit('sign-in', function (page) {

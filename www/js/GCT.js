@@ -1314,7 +1314,7 @@ GCTUser = {
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.groupblogs", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "get.groupblogstest", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
