@@ -2334,6 +2334,7 @@ GCTEach = {
                 case "groupforumtopic": description = GCTLang.Trans("discussion-add"); break;
                 case "etherpad": description = GCTLang.Trans("doc-create"); break;
                 case "event_calendar": description = GCTLang.Trans("event-create"); break;
+                case "bookmarks": description = GCTLang.Trans("bookmark-create"); break;
                 default: description = "NEED TO HANDLE CREATE";
             }
         } else { //OTHER
