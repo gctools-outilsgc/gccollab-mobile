@@ -917,6 +917,25 @@ myApp.onPageInit('group', function (page) {
             });
         }
     });
+    $$('#group-blogs-more').on('click', function (e) {
+        GCTUser.GetGroupBlogs(guid, limit, offset_blogs + limit , function (data) {
+            var blogs = data.result;
+            if (blogs.length > 0) {
+                $.each(blogs, function (key, value) {
+                    var content = GCTEach.Blog(value);
+                    $(content).appendTo('#group-blogs');
+                });
+            }
+            if (blogs.length < limit) {
+                var content = endOfContent;
+                $(content).appendTo('#group-blogs');
+                $('#group-blogs-more').hide();
+            }
+            offset_blogs += limit;
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    });
 });
 
 myApp.onPageInit('sign-in', function (page) {
