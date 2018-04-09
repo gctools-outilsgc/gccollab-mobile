@@ -1167,6 +1167,24 @@ GCTUser = {
             }
         });
     },
+    GetBlogsByColleagues: function (limit, offset, successCallback, errorCallback) {
+        limit = limit || 20;
+        offset = offset || 0;
+        $$.ajax({
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "get.blogpostsbycolleague", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     
     GetDiscussion: function (guid, successCallback, errorCallback) {
         $$.ajax({

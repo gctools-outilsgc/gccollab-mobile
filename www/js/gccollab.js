@@ -2282,6 +2282,10 @@ myApp.onPageInit('blog', function (page) {
     var blogsMoreOffset = 0;
     var filters = {};
     var filtersOpened = false;
+    var ld_colleagues = false;
+    var offset_colleagues = 0;
+    var ld_mine = false;
+    var offset_mine = 0;
 
     $('#clear-filters').on('click', function() {
         filtersOpened = false;
@@ -2293,13 +2297,13 @@ myApp.onPageInit('blog', function (page) {
             $('#blogs-all').html('');
 
             if(blogs.length > 0){
-                $('#blogs-more').show();
+                $('#blogs-all-more').show();
                 $.each(blogs, function (key, value) {
                     var content = GCTEach.Blog(value);
                     $(content).hide().appendTo('#blogs-all').fadeIn(1000);
                 });
             } else {
-                $('#blogs-more').hide();
+                $('#blogs-all-more').hide();
                 $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
             }
         }, function(jqXHR, textStatus, errorThrown){
@@ -2321,13 +2325,13 @@ myApp.onPageInit('blog', function (page) {
             $('#blogs-all').html('');
 
             if(blogs.length > 0){
-                $('#blogs-more').show();
+                $('#blogs-all-more').show();
                 $.each(blogs, function (key, value) {
                     var content = GCTEach.Blog(value);
                     $(content).hide().appendTo('#blogs-all').fadeIn(1000);
                 });
             } else {
-                $('#blogs-more').hide();
+                $('#blogs-all-more').hide();
                 $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
             }
         }, function(jqXHR, textStatus, errorThrown){
@@ -2342,33 +2346,115 @@ myApp.onPageInit('blog', function (page) {
             var blogs = data.result;
 
             if(blogs.length > 0){
-                $('#blogs-more').show();
+                $('#blogs-all-more').show();
                 $.each(blogs, function (key, value) {
                     var content = GCTEach.Blog(value);
                     $(content).hide().appendTo('#blogs-all').fadeIn(1000);
                 });
             } else {
-                $('#blogs-more').hide();
+                $('#blogs-all-more').hide();
                 $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
             }
         }, function(jqXHR, textStatus, errorThrown){
             console.log(jqXHR, textStatus, errorThrown);
         });
     }
+    
+    $$('#tab-mine-blogs').on('show', function (e) {
+        if (!ld_mine) {
+            GCTUser.GetBlogsByUser(limit, 0, '', function (data) {
+                var blogs = data.result;
+                if (blogs.length > 0) {
+                    $.each(blogs, function (key, value) {
+                        var content = GCTEach.Blog(value);
+                        $(content).appendTo('#blogs-mine');
+                    });
+                }
+                if (blogs.length < limit) {
+                    var content = endOfContent;
+                    $(content).appendTo('#blogs-mine');
+                    $('#blogs-mine-more').hide();
+                }
+                ld_mine = true;
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
+    });
+    $$('#blogs-mine-more').on('click', function (e) {
+        GCTUser.GetBlogsByUser(limit, offset_mine + limit, '', function (data) {
+            var blogs = data.result;
+            if (blogs.length > 0) {
+                $.each(blogs, function (key, value) {
+                    var content = GCTEach.Blog(value);
+                    $(content).appendTo('#blogs-mine');
+                });
+            }
+            if (blogs.length < limit) {
+                var content = endOfContent;
+                $(content).appendTo('#blogs-mine');
+                $('#blogs-mine-more').hide();
+            }
+            offset_mine += limit;
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    });
 
-    var blogsMore = $$(page.container).find('#blogs-more');
+    $$('#tab-colleagues-blogs').on('show', function (e) {
+        if (!ld_colleagues) {
+            GCTUser.GetBlogsByColleagues(limit, 0, function (data) {
+                var blogs = data.result;
+                if (blogs.length > 0) {
+                    $.each(blogs, function (key, value) {
+                        var content = GCTEach.Blog(value);
+                        $(content).appendTo('#blogs-colleagues');
+                    });
+                }
+                if (blogs.length < limit) {
+                    var content = endOfContent;
+                    $(content).appendTo('#blogs-colleagues');
+                    $('#blogs-colleagues-more').hide();
+                }
+                ld_colleagues = true;
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
+    });
+    $$('#blogs-colleagues-more').on('click', function (e) {
+        GCTUser.GetBlogsByColleagues(limit, offset_colleagues + limit, function (data) {
+            var blogs = data.result;
+            if (blogs.length > 0) {
+                $.each(blogs, function (key, value) {
+                    var content = GCTEach.Blog(value);
+                    $(content).appendTo('#blogs-colleagues');
+                });
+            }
+            if (blogs.length < limit) {
+                var content = endOfContent;
+                $(content).appendTo('#blogs-colleagues');
+                $('#blogs-colleagues-more').hide();
+            }
+            offset_colleagues += limit;
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    });
+
+    var blogsMore = $$(page.container).find('#blogs-all-more');
     blogsMore.on('click', function (e) {
         GCTUser.GetBlogs(limit, blogsMoreOffset + limit, filters, function(data){
             var blogs = data.result;
 
             if(blogs.length > 0){
-                $('#blogs-more').show();
+                $('#blogs-all-more').show();
                 $.each(blogs, function (key, value) {
                     var content = GCTEach.Blog(value);
                     $(content).hide().appendTo('#blogs-all').fadeIn(1000);
                 });
             } else {
-                $('#blogs-more').hide();
+                $('#blogs-all-more').hide();
                 $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
             }
             blogsMoreOffset += limit;
@@ -2383,7 +2469,7 @@ myApp.onPageInit('blog', function (page) {
             var blogs = data.result;
 
             if(blogs.length > 0){
-                $('#blogs-more').show();
+                $('#blogs-all-more').show();
                 var content = "";
                 $.each(blogs, function (key, value) {
                     content += GCTEach.Blog(value);
@@ -2391,7 +2477,7 @@ myApp.onPageInit('blog', function (page) {
                 $('#blogs-all').html('');
                 $(content).hide().appendTo('#blogs-all').fadeIn(1000);
             } else {
-                $('#blogs-more').hide();
+                $('#blogs-all-more').hide();
                 $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
             }
         }, function(jqXHR, textStatus, errorThrown){
