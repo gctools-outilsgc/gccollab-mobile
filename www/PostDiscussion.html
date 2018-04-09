@@ -1,0 +1,123 @@
+<div data-page="PostDiscussion" class="page navbar-fixed with-subnavbar">
+  <div class="navbar">
+      <div id="PostDiscussion-navbar-inner" class="navbar-inner"> </div>
+      <div class="subnavbar">
+          <div class="buttons-row">
+              <a href="#PostDiscussion-English" class="tab-link button active" data-translate="english">English</a>
+              <a href="#PostDiscussion-French" class="tab-link button" data-translate="french">French</a>
+          </div>
+        </div>
+  </div>
+
+  <div class="toolbar toolbar-bottom">
+      <div class="toolbar-inner">
+          <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="fa fa-arrow-circle-o-left fa-2x"></i></a></div>
+      </div>
+  </div>
+
+  <div class="page-content hide-bars-on-scroll with-subnavbar">
+      <div id="PostDiscussion-Feedback"></div>
+      <div class="tabs">
+          <div id="PostDiscussion-English" class="tab active">
+              <div class='swiper-slide list-block cards-list'>
+                    <div id="PostDiscussion-inner-eng" class="card-content-inner"  style="padding-top: 0;padding-bottom: 0;">
+                        <form id="PostDiscussion-English-form">
+                            <div class="list-block">
+                                <ul>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div id="eng-title-label" class="item-title label" data-translate="english-title">English Title</div>
+                                                <div class="item-input">
+                                                    <input id="english-title" name="english-title" type="text" placeholder="" aria-labelledby="eng-title-label" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div id="eng-body-label" class="item-title label" data-translate="english-body">English Body</div>
+                                                <div class="item-input">
+                                                    <textarea id="english-body-textarea" class="resizable" aria-labelledby="eng-body-label"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+              </div>
+          </div>
+          <div id="PostDiscussion-French" class="tab">
+              <div class='swiper-slide list-block cards-list'>
+                          <div id="PostDiscussion-inner-fr" class="card-content-inner" style="padding-top: 0;padding-bottom: 0;">
+                              <form id="PostDiscussion-French-form">
+                                  <div class="list-block">
+                                      <ul>
+                                          <li>
+                                              <div class="item-content">
+                                                  <div class="item-inner">
+                                                      <div id="fr-title-label" class="item-title label" data-translate="french-title">French Title</div>
+                                                      <div class="item-input">
+                                                          <input id="french-title" name="french-title" type="text" placeholder="" aria-labelledby="fr-title-label" />
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                          <li>
+                                              <div class="item-content">
+                                                  <div class="item-inner">
+                                                      <div id="fr-body-label" class="item-title label" data-translate="french-body">French Body</div>
+                                                      <div class="item-input">
+                                                          <textarea id="french-body-textarea" class="resizable" aria-labelledby="fr-body-label"></textarea>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </form>
+                          </div>
+              </div>
+          </div>
+      </div>
+      <div class="card-content-inner" style="padding-top: 0;">
+          <form id="PostDiscussion-options-form">
+              <div class="list-block" style="margin-top: 0;">
+                  <ul>
+                      <li>
+                          <div class="item-content">
+                              <div class="item-inner">
+                                  <div id="comment-label" class="item-title label" data-translate="comments">Comments</div>
+                                  <div class="item-input">
+                                      <select id="PostDiscussion-comments" name="comments" aria-labelledby="comment-label">
+                                          <option value="1" data-translate="on">On</option>
+                                          <option value="0" data-translate="off">Off</option>
+                                      </select>
+                                  </div>
+                              </div>
+                          </div>
+                      </li>
+                      <li>
+                          <div class="item-content">
+                              <div class="item-inner">
+                                  <div id="access-label" class="item-title label" data-translate="access">Access</div>
+                                  <div class="item-input">
+                                      <select id="PostDiscussion-access" name="access" aria-labelledby="access-label">
+                                          <option value="0" data-translate="only-me">Only Me</option>
+                                          <option value="-2" data-translate="only-colleagues">My Colleagues on GCcollab Only</option>
+                                          <option value="1" data-translate="only-logged">Logged in users on GCcollab Only</option>
+                                      </select>
+                                  </div>
+                              </div>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+          </form>
+          <a id="submit-Discussion" href="#PostDiscussion-Submit" class="button button-big button-fill" data-translate="PostDiscussion">Submit</a>
+      </div>
+  </div>
+</div>
