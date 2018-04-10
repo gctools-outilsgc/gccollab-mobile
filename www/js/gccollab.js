@@ -4361,6 +4361,7 @@ myApp.onPageInit('PostBlog', function (page) {
     });
 });
 
+});
         
 /* ===== Messages Page ===== */
 myApp.onPageInit('messages', function (page) {

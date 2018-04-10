@@ -1171,3 +1171,14 @@ overflow:visible;
     color: #030303;
     font-size: 14px;
 }
+
+.slidding-block {
+    padding-top: 44px;
+}
+.no-border{
+    border:none;
+}
+
+.specific{
+ padding-left:10px !important; 
+}
