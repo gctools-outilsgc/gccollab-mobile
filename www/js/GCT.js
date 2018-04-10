@@ -799,6 +799,16 @@ GCTUser = {
         });
     },
 
+    PostDiscussionPost: function (group_guid) {
+        mainView.router.loadPage({ url: 'PostDiscussion.html?group_guid=' + group_guid }); 
+    },
+    PostDiscussion: function () {
+        if (!title.en && !title.fr) { issueCallback(GCTLang.Trans("require-title")); return; }
+        if (!message.en && !message.fr) { issueCallback(GCTLang.Trans("require-topic")); return; }
+        if (!(title.en && message.en) && !(title.fr && message.fr)) { issueCallback(GCTLang.Trans("require-same-lang")); return; }
+        return "ajax not set";
+    },
+
     PostBlogPost: function (group_guid) {
         if (group_guid) {
             mainView.router.loadPage({ url: 'PostBlog.html?group_guid=' + group_guid }); 
