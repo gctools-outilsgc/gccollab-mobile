@@ -799,8 +799,46 @@ GCTUser = {
         });
     },
 
+    PostBlogPost: function (group_guid) {
+        if (group_guid) {
+            mainView.router.loadPage({ url: 'PostBlog.html?group_guid=' + group_guid }); 
+        } else {
+            mainView.router.loadPage({ url: 'PostBlog.html' }); 
+        }
+        
+    },
+    PostBlog: function (container, title, excerpt, body, comments, access, status, successCallback, errorCallback, issueCallback) {
+        if (!title.en && !title.fr) { issueCallback(GCTLang.Trans("require-title")); return; }
+        if (!body.en && !body.fr) { issueCallback(GCTLang.Trans("require-body")); return; }
+        if (!(title.en && body.en) && !(title.fr && body.fr)) { issueCallback(GCTLang.Trans("require-same-lang")); return; }
+        
+        container = container || '';
+        title = title || '';
+        excerpt = excerpt || '';
+        body = body || '';
+        comments = comments || 1;
+        access = access || 1;
+        status = status || 0;
+        
+
+        $$.ajax({
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "post.blog", user: GCTUser.Email(), title: JSON.stringify(title), excerpt: JSON.stringify(excerpt), body: JSON.stringify(body), container_guid: container, comments: comments, access: access, status:status, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+
     PostWirePost: function () {
-        mainView.router.loadPage({ url: 'PostWire.html' }); // temp redirect, but maybe keep
+        mainView.router.loadPage({ url: 'PostWire.html' }); 
     },
     PostWire: function (message, imageURI, successCallback, errorCallback) { 
         $$.ajax({
@@ -1129,6 +1167,24 @@ GCTUser = {
             }
         });
     },
+    GetBlogsByColleagues: function (limit, offset, successCallback, errorCallback) {
+        limit = limit || 20;
+        offset = offset || 0;
+        $$.ajax({
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "get.blogpostsbycolleague", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     
     GetDiscussion: function (guid, successCallback, errorCallback) {
         $$.ajax({
@@ -1276,7 +1332,7 @@ GCTUser = {
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "get.groupblogs", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "get.blogpostsbycontainer", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -2315,6 +2371,8 @@ GCTEach = {
                 case "file": description = GCTLang.Trans("file-created"); break;
                 case "groupforumtopic": description = GCTLang.Trans("discussion-add"); break;
                 case "etherpad": description = GCTLang.Trans("doc-create"); break;
+                case "event_calendar": description = GCTLang.Trans("event-create"); break;
+                case "bookmarks": description = GCTLang.Trans("bookmark-create"); break;
                 default: description = "NEED TO HANDLE CREATE";
             }
         } else { //OTHER
@@ -2323,6 +2381,7 @@ GCTEach = {
                 case 'comment': description = GCTLang.Trans("commented"); break;
                 case 'reply': description = GCTLang.Trans("discussion-replied"); break;
                 case 'join': description = GCTLang.Trans("joined-group"); break;
+                case 'vote': description = GCTLang.Trans("voted"); break;
                 default: description = "NEED TO HANDLE ELSE";
             }
         }

@@ -592,6 +592,7 @@ myApp.onPageInit('group', function (page) {
     var groupActivityMoreOffset = 0;
     var groupMembersMoreOffset = 0;
     var groupBookmarksMoreOffset = 0;
+    var offset_blogs = 0;
     var offset_discussion = 0;
     var enabled;
     var access;
@@ -599,6 +600,7 @@ myApp.onPageInit('group', function (page) {
     var activityloaded = false;
     var bookmarksloaded = false;
     var ld_discussion = false;
+    var ld_blogs = false;
 
     GCTUser.GetGroup(guid, function(data){
         var group = data.result;
@@ -644,7 +646,25 @@ myApp.onPageInit('group', function (page) {
         if (access) {
             popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#tab-group-activity" class="button tab-link close-popover" data-translate="activity">'+ GCTLang.Trans("activity") +'</a></li>' : "";
             popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-group-discussion" class="button tab-link close-popover" data-translate="discussion">'+ GCTLang.Trans("discussion") +'</a></li>' : "";
-            popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#tab-group-bookmarks" class="button tab-link close-popover" data-translate="bookmarks">'+ GCTLang.Trans("bookmarks") +'</a></li>' : "";
+            popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#tab-group-bookmarks" class="button tab-link close-popover" data-translate="bookmarks">' + GCTLang.Trans("bookmarks") + '</a></li>' : "";
+            popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#tab-group-blogs" class="button tab-link close-popover" data-translate="blogs">' + GCTLang.Trans("blogs") + '</a></li>' : "";
+        } else {
+            popoverHTML += '<li><a href="#" class="item-link list-button">' + "Private Group" + '</a></li>';
+        }
+        popoverHTML += '</ul>'
+            + '</div>'
+            + '</div>'
+            + '</div>';
+        myApp.popover(popoverHTML, this);
+    });
+
+    $("#group-actions").on('click', function (e) {
+        var popoverHTML = '<div class="popover pop-group-actions">'
+            + '<div class="popover-inner">'
+            + '<div class="list-block">'
+            + '<ul>';
+        if (access) {
+            popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#" onclick="GCTUser.PostBlogPost(' + page.query.guid + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostBlog") + '</span> </a></li>' : "";
         } else {
             popoverHTML += '<li><a href="#" class="item-link list-button">' + "Private Group" + '</a></li>';
         }
@@ -876,6 +896,46 @@ myApp.onPageInit('group', function (page) {
         });
     });
 
+    $$('#tab-group-blogs').on('show', function (e) {
+        if (ld_blogs == false) {
+            GCTUser.GetGroupBlogs(guid, limit, offset, function (data) {
+                var blogs = data.result;
+                if (blogs.length > 0) {
+                    $.each(blogs, function (key, value) {
+                        var content = GCTEach.Blog(value);
+                        $(content).appendTo('#group-blogs');
+                    });
+                }
+                if (blogs.length < limit) {
+                    var content = endOfContent;
+                    $(content).appendTo('#group-blogs');
+                    $('#group-blogs-more').hide();
+                }
+                ld_blogs = true;
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
+    });
+    $$('#group-blogs-more').on('click', function (e) {
+        GCTUser.GetGroupBlogs(guid, limit, offset_blogs + limit , function (data) {
+            var blogs = data.result;
+            if (blogs.length > 0) {
+                $.each(blogs, function (key, value) {
+                    var content = GCTEach.Blog(value);
+                    $(content).appendTo('#group-blogs');
+                });
+            }
+            if (blogs.length < limit) {
+                var content = endOfContent;
+                $(content).appendTo('#group-blogs');
+                $('#group-blogs-more').hide();
+            }
+            offset_blogs += limit;
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    });
 });
 
 myApp.onPageInit('sign-in', function (page) {
@@ -2222,6 +2282,10 @@ myApp.onPageInit('blog', function (page) {
     var blogsMoreOffset = 0;
     var filters = {};
     var filtersOpened = false;
+    var ld_colleagues = false;
+    var offset_colleagues = 0;
+    var ld_mine = false;
+    var offset_mine = 0;
 
     $('#clear-filters').on('click', function() {
         filtersOpened = false;
@@ -2233,13 +2297,13 @@ myApp.onPageInit('blog', function (page) {
             $('#blogs-all').html('');
 
             if(blogs.length > 0){
-                $('#blogs-more').show();
+                $('#blogs-all-more').show();
                 $.each(blogs, function (key, value) {
                     var content = GCTEach.Blog(value);
                     $(content).hide().appendTo('#blogs-all').fadeIn(1000);
                 });
             } else {
-                $('#blogs-more').hide();
+                $('#blogs-all-more').hide();
                 $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
             }
         }, function(jqXHR, textStatus, errorThrown){
@@ -2261,13 +2325,13 @@ myApp.onPageInit('blog', function (page) {
             $('#blogs-all').html('');
 
             if(blogs.length > 0){
-                $('#blogs-more').show();
+                $('#blogs-all-more').show();
                 $.each(blogs, function (key, value) {
                     var content = GCTEach.Blog(value);
                     $(content).hide().appendTo('#blogs-all').fadeIn(1000);
                 });
             } else {
-                $('#blogs-more').hide();
+                $('#blogs-all-more').hide();
                 $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
             }
         }, function(jqXHR, textStatus, errorThrown){
@@ -2282,33 +2346,115 @@ myApp.onPageInit('blog', function (page) {
             var blogs = data.result;
 
             if(blogs.length > 0){
-                $('#blogs-more').show();
+                $('#blogs-all-more').show();
                 $.each(blogs, function (key, value) {
                     var content = GCTEach.Blog(value);
                     $(content).hide().appendTo('#blogs-all').fadeIn(1000);
                 });
             } else {
-                $('#blogs-more').hide();
+                $('#blogs-all-more').hide();
                 $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
             }
         }, function(jqXHR, textStatus, errorThrown){
             console.log(jqXHR, textStatus, errorThrown);
         });
     }
+    
+    $$('#tab-mine-blogs').on('show', function (e) {
+        if (!ld_mine) {
+            GCTUser.GetBlogsByUser(limit, 0, '', function (data) {
+                var blogs = data.result;
+                if (blogs.length > 0) {
+                    $.each(blogs, function (key, value) {
+                        var content = GCTEach.Blog(value);
+                        $(content).appendTo('#blogs-mine');
+                    });
+                }
+                if (blogs.length < limit) {
+                    var content = endOfContent;
+                    $(content).appendTo('#blogs-mine');
+                    $('#blogs-mine-more').hide();
+                }
+                ld_mine = true;
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
+    });
+    $$('#blogs-mine-more').on('click', function (e) {
+        GCTUser.GetBlogsByUser(limit, offset_mine + limit, '', function (data) {
+            var blogs = data.result;
+            if (blogs.length > 0) {
+                $.each(blogs, function (key, value) {
+                    var content = GCTEach.Blog(value);
+                    $(content).appendTo('#blogs-mine');
+                });
+            }
+            if (blogs.length < limit) {
+                var content = endOfContent;
+                $(content).appendTo('#blogs-mine');
+                $('#blogs-mine-more').hide();
+            }
+            offset_mine += limit;
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    });
 
-    var blogsMore = $$(page.container).find('#blogs-more');
+    $$('#tab-colleagues-blogs').on('show', function (e) {
+        if (!ld_colleagues) {
+            GCTUser.GetBlogsByColleagues(limit, 0, function (data) {
+                var blogs = data.result;
+                if (blogs.length > 0) {
+                    $.each(blogs, function (key, value) {
+                        var content = GCTEach.Blog(value);
+                        $(content).appendTo('#blogs-colleagues');
+                    });
+                }
+                if (blogs.length < limit) {
+                    var content = endOfContent;
+                    $(content).appendTo('#blogs-colleagues');
+                    $('#blogs-colleagues-more').hide();
+                }
+                ld_colleagues = true;
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
+    });
+    $$('#blogs-colleagues-more').on('click', function (e) {
+        GCTUser.GetBlogsByColleagues(limit, offset_colleagues + limit, function (data) {
+            var blogs = data.result;
+            if (blogs.length > 0) {
+                $.each(blogs, function (key, value) {
+                    var content = GCTEach.Blog(value);
+                    $(content).appendTo('#blogs-colleagues');
+                });
+            }
+            if (blogs.length < limit) {
+                var content = endOfContent;
+                $(content).appendTo('#blogs-colleagues');
+                $('#blogs-colleagues-more').hide();
+            }
+            offset_colleagues += limit;
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    });
+
+    var blogsMore = $$(page.container).find('#blogs-all-more');
     blogsMore.on('click', function (e) {
         GCTUser.GetBlogs(limit, blogsMoreOffset + limit, filters, function(data){
             var blogs = data.result;
 
             if(blogs.length > 0){
-                $('#blogs-more').show();
+                $('#blogs-all-more').show();
                 $.each(blogs, function (key, value) {
                     var content = GCTEach.Blog(value);
                     $(content).hide().appendTo('#blogs-all').fadeIn(1000);
                 });
             } else {
-                $('#blogs-more').hide();
+                $('#blogs-all-more').hide();
                 $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
             }
             blogsMoreOffset += limit;
@@ -2323,7 +2469,7 @@ myApp.onPageInit('blog', function (page) {
             var blogs = data.result;
 
             if(blogs.length > 0){
-                $('#blogs-more').show();
+                $('#blogs-all-more').show();
                 var content = "";
                 $.each(blogs, function (key, value) {
                     content += GCTEach.Blog(value);
@@ -2331,7 +2477,7 @@ myApp.onPageInit('blog', function (page) {
                 $('#blogs-all').html('');
                 $(content).hide().appendTo('#blogs-all').fadeIn(1000);
             } else {
-                $('#blogs-more').hide();
+                $('#blogs-all-more').hide();
                 $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
             }
         }, function(jqXHR, textStatus, errorThrown){
@@ -4117,7 +4263,7 @@ myApp.onPageInit('entity', function (page) {
 });
 
 myApp.onPageInit('PostWire', function (page) {
-    $$('#postwire-navbar-inner').html(GCTLang.txtGlobalNav('new-wire-post')); //Card has the same text, change at some point?
+    $$('#postwire-navbar-inner').html(GCTLang.txtGlobalNav('new-wire-post'));
     var imageURI = "";
     $$('#submit-wire').on('click', function (e) {
         var message = $("#wire-post-textarea").val();
@@ -4181,24 +4327,39 @@ myApp.onPageInit('PostWire', function (page) {
 
 });
 
-myApp.onPageInit('PostOpportunity', function (page) {
-    $$('#postopt-navbar-inner').html(GCTLang.txtGlobalNav('new-wire-post')); //Card has the same text, change at some point?
-    var imageURI = "";
-    $$('#submit-wire').on('click', function (e) {
-        var message = $("#opt-post-name").val();
-        if (message != "") {
-            GCTUser.PostWire(message, imageURI, function (data) {
-                console.log(data);
-                myApp.alert(data.result, function () {
-                    mainView.router.loadPage({ url: 'wire.html' });
-                });
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
-        } else {
-            myApp.alert("Cannot post wire with no text.");
-        }
+myApp.onPageInit('PostBlog', function (page) {
+    $$('#PostBlog-navbar-inner').html(GCTLang.txtGlobalNav('PostBlog'));
+    var container_guid = (page.query.group_guid) ? page.query.group_guid : '';
+
+    $$('#submit-blog').on('click', function (e) {
+        $$('#PostBlog-Feedback').html(''); //clears feedback message on new submit
+        var title = {}, excerpt = {}, body = {};
+        title.en = $('#english-title').val();
+        title.fr = $('#french-title').val(); 
+        excerpt.en = $('#english-excerpt').val();
+        excerpt.fr = $('#french-excerpt').val();
+        body.en = $('#english-body-textarea').val();
+        body.fr = $('#french-body-textarea').val(); 
+        var comment = $('#PostBlog-comments').val();
+        var access = $('#PostBlog-access').val();
+        var status = $('#PostBlog-status').val();
+        //(container, title, excerpt, body, comments, access, successCallback, errorCallback)
+        GCTUser.PostBlog(container_guid, title, excerpt, body, comment, access, status, function (data) {
+            if (data.result.indexOf("gccollab.ca/blog/view/") > -1) {
+                var obj = [];
+                obj.href = data.result;
+                GCT.FireLink(obj);
+            } else {
+                myApp.alert(data.result);
+            }
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        }, function (feedback){
+            var feedbackmsg = '<p class="card-content-inner" style="padding-top: 0;padding-bottom: 0;" id="PostBlog-Feedback">' +GCTLang.Trans('issue') + feedback + '</p>';
+            $(feedbackmsg).hide().appendTo('#PostBlog-Feedback').fadeIn(500);
+        });
     });
+});
 
 });
         
