@@ -4370,9 +4370,7 @@ myApp.onPageInit('PostBlog', function (page) {
 myApp.onPageInit('PostDiscussion', function (page) {
     $$('#PostDiscussion-navbar-inner').html(GCTLang.txtGlobalNav('PostDiscussion'));
     var container_guid = (page.query.group_guid) ? page.query.group_guid : '';
-    var group_public = (page.query.group_public) ? page.query.group_public : '';
-    console.log(group_public);
-    if (group_public == false) { $$('#PostDiscussion-public').remove(); }
+    var group_public = (page.query.group_public == 'false') ? $$('#PostDiscussion-public').remove() : '';
     
     $$('#submit-discussion').on('click', function (e) {
         $$('#PostDiscussion-Feedback').html(''); //clears feedback message on new submit
