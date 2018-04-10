@@ -601,6 +601,7 @@ myApp.onPageInit('group', function (page) {
     var bookmarksloaded = false;
     var ld_discussion = false;
     var ld_blogs = false;
+    var group_public;
 
     GCTUser.GetGroup(guid, function(data){
         var group = data.result;
@@ -621,6 +622,10 @@ myApp.onPageInit('group', function (page) {
         } else {
             enabled = false;
         }
+
+        if (group.public == true) {
+            group_public = true;
+        } else { group_public = false; }
 
         $("#group-icon").attr('src', group.iconURL);
         $("#group-icon").attr('alt', "Group Icon of" + group.userDetails.displayName);
@@ -665,7 +670,7 @@ myApp.onPageInit('group', function (page) {
             + '<ul>';
         if (access) {
             popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#" onclick="GCTUser.PostBlogPost(' + page.query.guid + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostBlog") + '</span> </a></li>' : "";
-            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#" onclick="GCTUser.PostDiscussionPost(' + page.query.guid + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostDiscussion") + '</span> </a></li>' : "";
+            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#" onclick="GCTUser.PostDiscussionPost(' + page.query.guid + ', '+ group_public + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostDiscussion") + '</span> </a></li>' : "";
         } else {
             popoverHTML += '<li><a href="#" class="item-link list-button">' + "Private Group" + '</a></li>';
         }
@@ -4365,7 +4370,10 @@ myApp.onPageInit('PostBlog', function (page) {
 myApp.onPageInit('PostDiscussion', function (page) {
     $$('#PostDiscussion-navbar-inner').html(GCTLang.txtGlobalNav('PostDiscussion'));
     var container_guid = (page.query.group_guid) ? page.query.group_guid : '';
-
+    var group_public = (page.query.group_public) ? page.query.group_public : '';
+    console.log(group_public);
+    if (group_public == false) { $$('#PostDiscussion-public').remove(); }
+    
     $$('#submit-discussion').on('click', function (e) {
         $$('#PostDiscussion-Feedback').html(''); //clears feedback message on new submit
         var title = {}, message = {};

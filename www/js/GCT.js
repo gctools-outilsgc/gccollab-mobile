@@ -799,8 +799,8 @@ GCTUser = {
         });
     },
 
-    PostDiscussionPost: function (group_guid) {
-        mainView.router.loadPage({ url: 'PostDiscussion.html?group_guid=' + group_guid }); 
+    PostDiscussionPost: function (group_guid, group_public) {
+        mainView.router.loadPage({ url: 'PostDiscussion.html?group_guid=' + group_guid + '&group_public=' + group_public }); 
     },
     PostDiscussion: function (container, title, message, status, access, successCallback, errorCallback, issueCallback) {
         if (!title.en && !title.fr) { issueCallback(GCTLang.Trans("require-title")); return; }
