@@ -4365,6 +4365,26 @@ myApp.onPageInit('PostBlog', function (page) {
 myApp.onPageInit('PostDiscussion', function (page) {
     $$('#PostDiscussion-navbar-inner').html(GCTLang.txtGlobalNav('PostDiscussion'));
     var container_guid = (page.query.group_guid) ? page.query.group_guid : '';
+
+    $$('#submit-discussion').on('click', function (e) {
+        $$('#PostDiscussion-Feedback').html(''); //clears feedback message on new submit
+        var title = {}, message = {};
+        title.en = $('#english-title').val();
+        title.fr = $('#french-title').val(); 
+        message.en = $('#english-body-textarea').val();
+        message.fr = $('#french-body-textarea').val();
+        var status = $('#PostDiscussion-status').val();
+        var access = $('#PostDiscussion-access').val();
+        //container, title, message, status, access, successCallback, errorCallback, issueCallback
+        GCTUser.PostDiscussion(container_guid, title, message, status, access, function (data) {
+            //success
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        }, function (feedback) {
+            var feedbackmsg = '<p class="card-content-inner" style="padding-top: 0;padding-bottom: 0;" id="PostDiscussion-Feedback">' + GCTLang.Trans('issue') + feedback + '</p>';
+            $(feedbackmsg).hide().appendTo('#PostDiscussion-Feedback').fadeIn(500);
+        });
+    });
 });
 
         
