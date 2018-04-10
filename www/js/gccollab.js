@@ -4377,7 +4377,13 @@ myApp.onPageInit('PostDiscussion', function (page) {
         var access = $('#PostDiscussion-access').val();
         //container, title, message, status, access, successCallback, errorCallback, issueCallback
         GCTUser.PostDiscussion(container_guid, title, message, status, access, function (data) {
-            //success
+            if (data.result.indexOf("gccollab.ca/discussion/view/") > -1) {
+                var obj = [];
+                obj.href = data.result;
+                GCT.FireLink(obj);
+            } else {
+                myApp.alert(data.result);
+            }
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
         }, function (feedback) {
