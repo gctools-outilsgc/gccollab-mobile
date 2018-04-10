@@ -823,9 +823,9 @@ GCTUser = {
         });
     },
 
-    PostBlogPost: function (group_guid) {
+    PostBlogPost: function (group_guid, group_public) {
         if (group_guid) {
-            mainView.router.loadPage({ url: 'PostBlog.html?group_guid=' + group_guid }); 
+            mainView.router.loadPage({ url: 'PostBlog.html?group_guid=' + group_guid + '&group_public=' + group_public + '&type=group'  }); 
         } else {
             mainView.router.loadPage({ url: 'PostBlog.html' }); 
         }

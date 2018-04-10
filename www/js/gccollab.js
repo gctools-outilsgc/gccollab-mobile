@@ -669,7 +669,7 @@ myApp.onPageInit('group', function (page) {
             + '<div class="list-block">'
             + '<ul>';
         if (access) {
-            popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#" onclick="GCTUser.PostBlogPost(' + page.query.guid + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostBlog") + '</span> </a></li>' : "";
+            popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#" onclick="GCTUser.PostBlogPost(' + page.query.guid + ', ' + group_public + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostBlog") + '</span> </a></li>' : "";
             popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#" onclick="GCTUser.PostDiscussionPost(' + page.query.guid + ', '+ group_public + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostDiscussion") + '</span> </a></li>' : "";
         } else {
             popoverHTML += '<li><a href="#" class="item-link list-button">' + "Private Group" + '</a></li>';
@@ -4335,7 +4335,9 @@ myApp.onPageInit('PostWire', function (page) {
 
 myApp.onPageInit('PostBlog', function (page) {
     $$('#PostBlog-navbar-inner').html(GCTLang.txtGlobalNav('PostBlog'));
-    var container_guid = (page.query.group_guid) ? page.query.group_guid : '';
+    var container_guid = (page.query.group_guid) ? page.query.group_guid : $$('#PostBlog-Group').remove(); // guid, or if not group, no group access
+    var group_public = (page.query.group_public == 'false') ? $$('#PostBlog-public').remove() : ''; // if not a public group, no all logged access
+    var type = (page.query.type == 'group') ? $$('#PostBlog-Colleague').remove() : ''; // if group, no colleague access
 
     $$('#submit-blog').on('click', function (e) {
         $$('#PostBlog-Feedback').html(''); //clears feedback message on new submit
