@@ -1178,3 +1178,7 @@ overflow:visible;
 .no-border{
     border:none;
 }
+
+.specific{
+ padding-left:10px !important; 
+}

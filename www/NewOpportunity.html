@@ -1,42 +1,40 @@
 <div class="page">
-        <div class="navbar">
-          <div class="navbar-inner sliding">
-            <div class="left">
-              <a href="#" class="link back">
-                <i class="icon icon-back"></i>
-                <span class="ios-only">Back</span>
-              </a>
-            </div>
-            <div class="title">Swipeable Tabs</div>
-          </div>
-        </div>
-        <div class="toolbar tabbar">
-          <div class="toolbar-inner">
-            <a href="#tab-1" class="tab-link tab-link-active">Tab 1</a>
-            <a href="#tab-2" class="tab-link">Tab 2</a>
-            <a href="#tab-3" class="tab-link">Tab 3</a>
-          </div>
-        </div>
-        <div class="tabs-swipeable-wrap opt">
-          <div class="tabs">
-            <div id="tab-1" class="page-content tab tab-active">
-              <div class="block" style="padding-top: 44px; margin: 5px;">
-                <div class="content-block-title">Step 1: Poster Information</div>
-                    <div class="list-block">
-                      <ul>
-                        <!-- Text inputs -->
-                        <li>
-                          <div class="item-content">
-                            <!-- <div class="item-media"><i class="icon f7-icons">Your name</i></div> -->
-                            <div class="item-inner">
-                              <div class="item-title label">Name</div>
-                              <div class="item-input">
-                                <input type="text" placeholder="Your name">
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
+  <div class="navbar">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="#" class="link back">
+          <i class="icon icon-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title">Swipeable Tabs</div>
+    </div>
+  </div>
+  <div class="toolbar tabbar">
+    <div class="toolbar-inner">
+      <a href="#tab-1" class="tab-link tab-link-active">Tab 1</a>
+      <a href="#tab-2" class="tab-link">Tab 2</a>
+      <a href="#tab-3" class="tab-link">Tab 3</a>
+    </div>
+  </div>
+  <div class="tabs-swipeable-wrap opt">
+    <div class="tabs">
+      <div id="tab-1" class="page-content tab tab-active">
+        <div class="block" style="padding-top: 44px; margin: 5px;">
+          <div class="content-block-title">Step 1: Poster Information</div>
+          <div class="list-block">
+            <ul>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Name</div>
+                      <div class="item-input">
+                        <input type="text" placeholder="Your name">
+                      </div>
+                  </div>
+                </div>
+              </li>
+              <li>
                           <div class="item-content">
                             <!-- <div class="item-media"><i class="icon f7-icons">Your email</i></div> -->
                             <div class="item-inner">
@@ -46,8 +44,8 @@
                               </div>
                             </div>
                           </div>
-                        </li>
-                        <li>
+              </li>
+              <li>
                             <div class="item-content">
                             <!-- <div class="item-media"><i class="icon f7-icons">Phone number</i></div> -->
                                 <div class="item-inner">
@@ -57,10 +55,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
+              </li>
                       
                         <!-- Select -->
-                        <li>
+              <li>
                             <a href="#" class="item-link smart-select" data-searchbar="true" data-searchbar-placeholder="Search departement">
                                 <select name="departement">
                                     <option value="none" selected>---</option>
@@ -76,9 +74,9 @@
                                     </div>
                                 </div>
                             </a>
-                        </li>
+              </li>
                               <!-- Switch (Checkbox) -->
-                        <li>
+              <li>
                             <div class="item-content">
                             <!-- <div class="item-media"><i class="icon f7-icons">check</i></div> -->
                                 <div class="item-inner">
@@ -92,9 +90,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
-                      </ul>
-                    </div>
+              </li>
+            </ul>
+          </div>
               </div>
             </div>
             <div id="tab-2" class="page-content tab">
@@ -312,7 +310,7 @@
 <li>
         <!-- <div class="content-block-title">Specific Time Requirements </div> -->
 <div class="list-block">
-  <ul>
+  <ul class='specific'>
     <li class="accordion-item"><a href="#" class="item-content item-link">
         <div class="item-inner">
           <div class="item-title">Specific Time Requirements </div>
@@ -333,38 +331,62 @@
                             
                           </select>
                         </div>
-                      </div>
+                      </div> 
+                           <div class="data-table">
+        <table>
+          <thead>
+            <tr>
+              <th class="label-cell">Day</th>
+              <th class="numeric-cell">Start time</th>
+
+              <th class="numeric-cell">Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="label-cell">Monday</td>
+              <td class="numeric-cell">159</td>
+              <td class="numeric-cell">159</td>
+            </tr>
+            <tr>
+              <td class="label-cell">Tuesday</td>
+              <td class="numeric-cell">159</td>
+              <td class="numeric-cell">159</td>
+            </tr>
+            <tr>
+              <td class="label-cell">Wednasday</td>
+              <td class="numeric-cell">159</td>
+              <td class="numeric-cell">159</td>
+            </tr>
+            <tr>
+              <td class="label-cell">Thursday</td>
+              <td class="numeric-cell">159</td>
+              <td class="numeric-cell">159</td>
+            </tr>
+            <tr>
+              <td class="label-cell">Friday</td>
+              <td class="numeric-cell">159</td>
+              <td class="numeric-cell">159</td>
+            </tr>
+            <tr>
+              <td class="label-cell">Saturday</td>
+              <td class="numeric-cell">159</td>
+              <td class="numeric-cell">159</td>
+            </tr>
+            <tr>
+              <td class="label-cell">Sunday</td>
+              <td class="numeric-cell">159</td>
+              <td class="numeric-cell">159</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
         </div>
       </div>
     </li>
     <li>
-            <div class="data-table data-table-init">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th class="label-cell">Desert (100g serving)</th>
-                          <th class="numeric-cell">Calories</th>
-                          <th class="numeric-cell">Calories</th>
-         
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td class="label-cell">Frozen yogurt</td>
-                          <td class="numeric-cell">159</td>
-                          <td class="numeric-cell">159</td>
 
-                        </tr>
-                        <tr>
-                                <td class="label-cell">Frozen yogurt</td>
-                                <td class="numeric-cell">159</td>
-                                <td class="numeric-cell">159</td>
-      
-                              </tr>
-
-                      </tbody>
-                    </table>
-                  </div>
     </li>
   </ul>
 </div>
@@ -372,7 +394,21 @@
 </li>
 
 
-                              <li>
+                                          <!-- Switch (Checkbox) -->
+                        <li>
+                          <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">The opportunity can be completed virtually:</i></div>
+                            <div class="item-inner">
+                              <div class="item-input">
+                                <label class="label-switch">
+                                  <input type="checkbox">
+                                  <div class="checkbox"></div>
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </li> 
+                        <li>
                                     <div class="item-content">
                                       <!-- <div class="item-media"><i class="icon f7-icons">persons</i></div> -->
                                       <div class="item-inner">
@@ -398,47 +434,73 @@
                                       </div>
                                     </div>
                                   </li>
-                        <!-- Switch (Checkbox) -->
-                        <li>
-                          <div class="item-content">
-                            <div class="item-media"><i class="icon f7-icons">check</i></div>
-                            <div class="item-inner">
-                              <div class="item-title label">Switch</div>
-                              <div class="item-input">
-                                <label class="label-switch">
-                                  <input type="checkbox">
-                                  <div class="checkbox"></div>
-                                </label>
-                              </div>
+                                  <li>
+                                    <div class="item-content">
+                                      <!-- <div class="item-media"><i class="icon f7-icons">persons</i></div> -->
+                                      <div class="item-inner">
+                                        <div class="item-title label">Security level:</div>
+                                        <div class="item-input">
+                                          <select>
+                                            <option>Reliability</option>
+                                            <option>Enhanced Reliability</option>
+                                            <option>Secret</option>
+                                            <option>Top secret</option>
+                             
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <!-- <div class="content-block-title">Specific Time Requirements </div> -->
+                            <div class="list-block">
+                              <ul class='specific'>
+                                <li class="accordion-item"><a href="#" class="item-content item-link">
+                                    <div class="item-inner">
+                                      <div class="item-title">Language requirements </div>
+                                    </div></a>
+                                  <div class="accordion-item-content">
+                                    <div class="content-block"></div>
+                                  <div class="data-table">
+                                    <table>
+                                      <thead>
+                                        <tr>
+                                          <th class="label-cell">Type</th>
+                                          <th class="numeric-cell">English</th>
+                            
+                                          <th class="numeric-cell">French</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td class="label-cell">Written comprehension</td>
+                                          <td class="numeric-cell"></td>
+                                          <td class="numeric-cell"></td>
+                                        </tr>
+                                        <tr>
+                                          <td class="label-cell">Written expression</td>
+                                          <td class="numeric-cell"></td>
+                                          <td class="numeric-cell"></td>
+                                        </tr>
+                                        <tr>
+                                          <td class="label-cell">Oral proficiency</td>
+                                          <td class="numeric-cell"></td>
+                                          <td class="numeric-cell"></td>
+                                        </tr>
+                            
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                            
+                                </li>
+                              </ul>
                             </div>
-                          </div>
-                        </li>
-                        <!-- Slider (Range input) -->
-                        <li>
-                          <div class="item-content">
-                            <div class="item-media"><i class="icon f7-icons">filter</i></div>
-                            <div class="item-inner">
-                              <div class="item-title label">Slider</div>
-                              <div class="item-input">
-                                <div class="range-slider">
-                                  <input type="range" min="0" max="100" value="50" step="0.1">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <!-- Textarea -->
-                        <li class="align-top">
-                          <div class="item-content">
-                            <div class="item-media"><i class="icon f7-icons">chat</i></div>
-                            <div class="item-inner">
-                              <div class="item-title label">Textarea</div>
-                              <div class="item-input">
-                                <textarea></textarea>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
+                            
+                            </li>
                       </ul>
                     </div>
               </div>
