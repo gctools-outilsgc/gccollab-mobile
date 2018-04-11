@@ -4400,8 +4400,7 @@ myApp.onPageInit('PostDiscussion', function (page) {
         });
     });
 });
-
-        
+ 
 /* ===== Messages Page ===== */
 myApp.onPageInit('messages', function (page) {
 
