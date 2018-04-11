@@ -107,7 +107,10 @@
     "access": "Access",
     "only-me": "Only Me",
     "only-colleagues": "My Colleagues on GCcollab Only",
-    "only-logged": "Logged in users on GCcollab Only",
+    "only-logged": "Logged in users on GCcollab",
+    "open": "Open",
+    "closed": "Closed",
+    "only-group": "Group Members Only",
 
     "status": "Status",
     "published": "Published",
@@ -381,7 +384,10 @@ French = {
     "access": "Accès",
     "only-me": "Seulement moi",
     "only-colleagues": "Mes Collègues sur GCcollab seulement",
-    "only-logged": "Usagers connectés à GCcollab seulement",
+    "only-logged": "Usagers connectés à GCcollab",
+    "open": "Ouvert",
+    "closed": "Fermé",
+    "only-group": "Membres du Groupe Seulement",
 
     "status": "Statut",
     "published": "Publié",
