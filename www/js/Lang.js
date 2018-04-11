@@ -104,6 +104,8 @@
     "on": "On",
     "off": "Off",
 
+    "Private-Group": "Private Group",
+
     "access": "Access",
     "only-me": "Only Me",
     "only-colleagues": "My Colleagues on GCcollab Only",
@@ -380,6 +382,8 @@ French = {
     "english": "Anglais",
     "on": "Activé",
     "off": "Désactivé",
+
+    "Private-Group": "Groupe Privé",
 
     "access": "Accès",
     "only-me": "Seulement moi",

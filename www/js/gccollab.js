@@ -654,7 +654,7 @@ myApp.onPageInit('group', function (page) {
             popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#tab-group-bookmarks" class="button tab-link close-popover" data-translate="bookmarks">' + GCTLang.Trans("bookmarks") + '</a></li>' : "";
             popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#tab-group-blogs" class="button tab-link close-popover" data-translate="blogs">' + GCTLang.Trans("blogs") + '</a></li>' : "";
         } else {
-            popoverHTML += '<li><a href="#" class="item-link list-button">' + "Private Group" + '</a></li>';
+            popoverHTML += '<li><a href="#" class="item-link list-button">' + GCTLang.Trans("Private-Group") + '</a></li>';
         }
         popoverHTML += '</ul>'
             + '</div>'
@@ -672,7 +672,7 @@ myApp.onPageInit('group', function (page) {
             popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#" onclick="GCTUser.PostBlogPost(' + page.query.guid + ', ' + group_public + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostBlog") + '</span> </a></li>' : "";
             popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#" onclick="GCTUser.PostDiscussionPost(' + page.query.guid + ', '+ group_public + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostDiscussion") + '</span> </a></li>' : "";
         } else {
-            popoverHTML += '<li><a href="#" class="item-link list-button">' + "Private Group" + '</a></li>';
+            popoverHTML += '<li><a href="#" class="item-link list-button">' + GCTLang.Trans("Private-Group") + '</a></li>';
         }
         popoverHTML += '</ul>'
             + '</div>'
