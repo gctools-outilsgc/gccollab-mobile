@@ -1,11 +1,10 @@
-<div data-page="PostBlog" class="page navbar-fixed with-subnavbar">
+<div data-page="PostDiscussion" class="page navbar-fixed with-subnavbar">
   <div class="navbar">
-      <div id="PostBlog-navbar-inner" class="navbar-inner">
-      </div>
+      <div id="PostDiscussion-navbar-inner" class="navbar-inner"> </div>
       <div class="subnavbar">
           <div class="buttons-row">
-              <a href="#PostBlog-English" class="tab-link button active" data-translate="english">English</a>
-              <a href="#PostBlog-French" class="tab-link button" data-translate="french">French</a>
+              <a href="#PostDiscussion-English" class="tab-link button active" data-translate="english">English</a>
+              <a href="#PostDiscussion-French" class="tab-link button" data-translate="french">French</a>
           </div>
         </div>
   </div>
@@ -17,12 +16,12 @@
   </div>
 
   <div class="page-content hide-bars-on-scroll with-subnavbar">
-      <div id="PostBlog-Feedback"></div>
+      <div id="PostDiscussion-Feedback"></div>
       <div class="tabs">
-          <div id="PostBlog-English" class="tab active">
+          <div id="PostDiscussion-English" class="tab active">
               <div class='swiper-slide list-block cards-list'>
-                    <div id="PostBlog-inner-eng" class="card-content-inner"  style="padding-top: 0;padding-bottom: 0;">
-                        <form id="PostBlog-English-form">
+                    <div id="PostDiscussion-inner-eng" class="card-content-inner"  style="padding-top: 0;padding-bottom: 0;">
+                        <form id="PostDiscussion-English-form">
                             <div class="list-block">
                                 <ul>
                                     <li>
@@ -38,17 +37,7 @@
                                     <li>
                                         <div class="item-content">
                                             <div class="item-inner">
-                                                <div id="eng-excerpt-label" class="item-title label" data-translate="english-excerpt">English Excerpt</div>
-                                                <div class="item-input">
-                                                    <input id="english-excerpt" name="english-excerpt" type="text" placeholder="" aria-labelledby="eng-excerpt-label" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="item-content">
-                                            <div class="item-inner">
-                                                <div id="eng-body-label" class="item-title label" data-translate="english-body">English Body</div>
+                                                <div id="eng-body-label" class="item-title label" data-translate="english-topic">English</div>
                                                 <div class="item-input">
                                                     <textarea id="english-body-textarea" class="resizable" aria-labelledby="eng-body-label"></textarea>
                                                 </div>
@@ -61,16 +50,16 @@
                     </div>
               </div>
           </div>
-          <div id="PostBlog-French" class="tab">
+          <div id="PostDiscussion-French" class="tab">
               <div class='swiper-slide list-block cards-list'>
-                          <div id="PostBlog-inner-fr" class="card-content-inner" style="padding-top: 0;padding-bottom: 0;">
-                              <form id="PostBlog-French-form">
+                          <div id="PostDiscussion-inner-fr" class="card-content-inner" style="padding-top: 0;padding-bottom: 0;">
+                              <form id="PostDiscussion-French-form">
                                   <div class="list-block">
                                       <ul>
                                           <li>
                                               <div class="item-content">
                                                   <div class="item-inner">
-                                                      <div id="fr-title-label" class="item-title label" data-translate="french-title">French Title</div>
+                                                      <div id="fr-title-label" class="item-title label" data-translate="french-title">French</div>
                                                       <div class="item-input">
                                                           <input id="french-title" name="french-title" type="text" placeholder="" aria-labelledby="fr-title-label" />
                                                       </div>
@@ -80,17 +69,7 @@
                                           <li>
                                               <div class="item-content">
                                                   <div class="item-inner">
-                                                      <div id="fr-excerpt-label" class="item-title label" data-translate="french-excerpt">French Excerpt</div>
-                                                      <div class="item-input">
-                                                          <input id="french-excerpt" name="french-excerpt" type="text" placeholder="" aria-labelledby="fr-excerpt-label" />
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </li>
-                                          <li>
-                                              <div class="item-content">
-                                                  <div class="item-inner">
-                                                      <div id="fr-body-label" class="item-title label" data-translate="french-body">French Body</div>
+                                                      <div id="fr-body-label" class="item-title label" data-translate="french-topic">French Body</div>
                                                       <div class="item-input">
                                                           <textarea id="french-body-textarea" class="resizable" aria-labelledby="fr-body-label"></textarea>
                                                       </div>
@@ -105,17 +84,17 @@
           </div>
       </div>
       <div class="card-content-inner" style="padding-top: 0;">
-          <form id="PostBlog-options-form">
+          <form id="PostDiscussion-options-form">
               <div class="list-block" style="margin-top: 0;">
                   <ul>
                       <li>
                           <div class="item-content">
                               <div class="item-inner">
-                                  <div id="comment-label" class="item-title label" data-translate="comments">Comments</div>
+                                  <div id="status-label" class="item-title label" data-translate="status">Status</div>
                                   <div class="item-input">
-                                      <select id="PostBlog-comments" name="comments" aria-labelledby="comment-label">
-                                          <option value="1" data-translate="on">On</option>
-                                          <option value="0" data-translate="off">Off</option>
+                                      <select id="PostDiscussion-status" name="comments" aria-labelledby="status-label">
+                                          <option value="1" data-translate="open">Open</option>
+                                          <option value="0" data-translate="closed">Closed</option>
                                       </select>
                                   </div>
                               </div>
@@ -126,24 +105,10 @@
                               <div class="item-inner">
                                   <div id="access-label" class="item-title label" data-translate="access">Access</div>
                                   <div class="item-input">
-                                      <select id="PostBlog-access" name="access" aria-labelledby="access-label">
+                                      <select id="PostDiscussion-access" name="access" aria-labelledby="access-label">
                                           <option value="0" data-translate="only-me">Only Me</option>
-                                          <option value="-2" id="PostBlog-Colleague" data-translate="only-colleagues">My Colleagues on GCcollab Only</option>
-                                          <option value="2" id="PostBlog-Group" data-translate="only-group">Group Members Only</option>
-                                          <option value="1" id="PostBlog-public" data-translate="only-logged">Logged in users on GCcollab Only</option>
-                                      </select>
-                                  </div>
-                              </div>
-                          </div>
-                      </li>
-                      <li>
-                          <div class="item-content">
-                              <div class="item-inner">
-                                  <div id="status-label" class="item-title label" data-translate="status" >Status</div>
-                                  <div class="item-input">
-                                      <select id="PostBlog-status" name="status" aria-labelledby="status-label">
-                                          <option value="1" data-translate="published">Published</option>
-                                          <option value="0" data-translate="draft">Draft</option>
+                                          <option value="2" data-translate="only-group">Group Members Only</option>
+                                          <option value="1" id="PostDiscussion-public" data-translate="only-logged">Logged in users on GCcollab Only</option>
                                       </select>
                                   </div>
                               </div>
@@ -152,7 +117,7 @@
                   </ul>
               </div>
           </form>
-          <a id="submit-blog" href="#PostBlog-Submit" class="button button-big button-fill" data-translate="PostBlog">Submit</a>
+          <a id="submit-discussion" href="#PostDiscussion-Submit" class="button button-big button-fill" data-translate="PostDiscussion">Submit</a>
       </div>
   </div>
 </div>
