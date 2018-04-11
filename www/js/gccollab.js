@@ -496,6 +496,7 @@ function ShowHideGEDSInfo(li) {
 function AppOpen() {
     if (GCTLang.IsLangSet()) {
         if (GCTUser.IsLoggedIn()) {
+            GCTUser.SetUserProfile();
             mainView.router.loadPage({ url: 'home.html' });
         } else {
             mainView.router.loadPage({ url: 'sign-in.html' });
