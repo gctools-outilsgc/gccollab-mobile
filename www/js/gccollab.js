@@ -9,12 +9,14 @@ var myApp = new Framework7({
     tapHold: true
 });
 
+
 // Expose Internal DOM library
 var $$ = Dom7;
 
 // Add main view
 var mainView = myApp.addView('.view-main', {
 }); 
+
 
 // Show/hide preloader for remote ajax loaded pages
 // Probably should be removed on a production/local app
@@ -1017,6 +1019,8 @@ myApp.onPageInit('home', function (page) {
             slideShadows: true
         }
     });
+
+    
 
     GCTUser.GetWires(limit, offset, '', function(data){
         var wires = data.result;
@@ -3325,7 +3329,24 @@ myApp.onPageInit('opportunities', function (page) {
         myApp.pullToRefreshDone();
     });
 });
+myApp.onPageInit('new-opportunity', function (page) {
+    $$('.sumbit-opt-form').on('click', function (e) {
+        var formData = myApp.formToData('#opt-form');
+        console.log(formData);
+        if (!(formData === '')) {
+            GCTUser.CreateOpportinities(formData, function (data) {
+                console.log("submited");
+                var result = data.result;
+                console.log(result);
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        } else {
+            //empty message, dont use, give feedback
+        }
+    });
 
+});
 myApp.onPageInit('profile', function (page) {
     $$('#profile-navbar-inner').html(GCTLang.txtGlobalNav('profile'));
     var guid = page.query.guid; // Checks guid of page, as any link to profile should include the target guid
@@ -4361,7 +4382,7 @@ myApp.onPageInit('PostBlog', function (page) {
     });
 });
 
-});
+//});
         
 /* ===== Messages Page ===== */
 myApp.onPageInit('messages', function (page) {
@@ -4692,3 +4713,4 @@ function handleTouchMove(evt) {
     xDown = null;
     yDown = null;
 };
+

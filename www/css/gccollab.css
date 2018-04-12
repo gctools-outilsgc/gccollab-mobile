@@ -1182,3 +1182,8 @@ overflow:visible;
 .specific{
  padding-left:10px !important; 
 }
+
+
+#tab1, #tab2, #tab3{
+    padding-top:60px;
+}
