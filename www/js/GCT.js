@@ -827,7 +827,21 @@ GCTUser = {
         mainView.router.loadPage({ url: 'PostDiscussion.html?action=edit&post_guid=' + guid });
     },
     GetDiscussionEdit: function (post_guid, successCallback, errorCallback) {
-        myApp.alert("in get");
+        if (!post_guid) { return "cannot edit nothing"; } //force back? with message 
+        $$.ajax({
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "get.discussionedit", user: GCTUser.Email(), guid: post_guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
     },
 
     PostBlogPost: function (group_guid, group_public) {

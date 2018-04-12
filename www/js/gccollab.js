@@ -4373,19 +4373,22 @@ myApp.onPageInit('PostBlog', function (page) {
 myApp.onPageInit('PostDiscussion', function (page) {
     var action = (page.query.action) ? page.query.action : '';
     var container_guid = (page.query.group_guid) ? page.query.group_guid : '';
-    var group_public = (page.query.group_public == 'false') ? $$('#PostDiscussion-public').remove() : '';
     var post_guid = (page.query.post_guid) ? page.query.post_guid : '';
 
     if (action == "create") {
         $$('#PostDiscussion-navbar-inner').html(GCTLang.txtGlobalNav('PostDiscussion'));
         $$('#submit-discussion').html(GCTLang.Trans('PostDiscussion'));
+        if (page.query.group_public == 'false') { $$('#PostDiscussion-public').remove(); }
     } else if (action == "edit") {
         $$('#PostDiscussion-navbar-inner').html(GCTLang.txtGlobalNav('EditDiscussion'));
         $$('#submit-discussion').html(GCTLang.Trans('EditDiscussion'));
         GCTUser.GetDiscussionEdit(post_guid, function (data) {
             var discussion = data.result;
-            //set text into form fields
-            //$(content).hide().appendTo('#newsfeed-all').fadeIn(1000);
+            $$('input#english-title').val(discussion.title.en);
+            $$('input#french-title').val(discussion.title.fr);
+            $$('#english-body-textarea').val(discussion.description.en);
+            $$('#french-body-textarea').val(discussion.description.fr);
+            if (!discussion.group.public) { $$('#PostDiscussion-public').remove(); }
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
         });
