@@ -823,7 +823,8 @@ GCTUser = {
         });
     },
     EditDiscussionPost: function (obj) {
-        myApp.alert("edit option");
+        var guid = $(obj).data("guid");
+        mainView.router.loadPage({ url: 'PostDiscussion.html?action=edit&post_guid=' + guid });
     },
 
     PostBlogPost: function (group_guid, group_public) {
