@@ -4391,10 +4391,6 @@ myApp.onPageInit('PostBlog', function (page) {
     });
 });
 
-<<<<<<< HEAD
-//});
-        
-=======
 myApp.onPageInit('PostDiscussion', function (page) {
     $$('#PostDiscussion-navbar-inner').html(GCTLang.txtGlobalNav('PostDiscussion'));
     var container_guid = (page.query.group_guid) ? page.query.group_guid : '';
@@ -4427,7 +4423,6 @@ myApp.onPageInit('PostDiscussion', function (page) {
     });
 });
  
->>>>>>> origin/master
 /* ===== Messages Page ===== */
 myApp.onPageInit('messages', function (page) {
 
