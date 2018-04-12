@@ -800,7 +800,7 @@ GCTUser = {
     },
 
     PostDiscussionPost: function (group_guid, group_public) {
-        mainView.router.loadPage({ url: 'PostDiscussion.html?group_guid=' + group_guid + '&group_public=' + group_public }); 
+        mainView.router.loadPage({ url: 'PostDiscussion.html?action=create&group_guid=' + group_guid + '&group_public=' + group_public }); 
     },
     PostDiscussion: function (container, title, message, status, access, successCallback, errorCallback, issueCallback) {
         if (!title.en && !title.fr) { issueCallback(GCTLang.Trans("require-title")); return; }
@@ -825,6 +825,9 @@ GCTUser = {
     EditDiscussionPost: function (obj) {
         var guid = $(obj).data("guid");
         mainView.router.loadPage({ url: 'PostDiscussion.html?action=edit&post_guid=' + guid });
+    },
+    GetDiscussionEdit: function (post_guid, successCallback, errorCallback) {
+        myApp.alert("in get");
     },
 
     PostBlogPost: function (group_guid, group_public) {
