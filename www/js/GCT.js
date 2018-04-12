@@ -822,6 +822,9 @@ GCTUser = {
             }
         });
     },
+    EditDiscussionPost: function (obj) {
+        myApp.alert("edit option");
+    },
 
     PostBlogPost: function (group_guid, group_public) {
         if (group_guid) {
@@ -1100,7 +1103,8 @@ GCTUser = {
                         }
                         popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
                         if( mine ){
-                            if( type == "gccollab_wire_post" ){ popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+                            if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+                            if (type == "gccollab_discussion_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditDiscussionPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
                             if( type != "gccollab_opportunity" ){ popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>';}
                         }
                     popoverHTML += '</ul>'
