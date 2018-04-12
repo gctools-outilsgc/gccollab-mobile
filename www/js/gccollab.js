@@ -498,6 +498,7 @@ function ShowHideGEDSInfo(li) {
 function AppOpen() {
     if (GCTLang.IsLangSet()) {
         if (GCTUser.IsLoggedIn()) {
+            GCTUser.SetUserProfile();
             mainView.router.loadPage({ url: 'home.html' });
         } else {
             mainView.router.loadPage({ url: 'sign-in.html' });
@@ -603,6 +604,7 @@ myApp.onPageInit('group', function (page) {
     var bookmarksloaded = false;
     var ld_discussion = false;
     var ld_blogs = false;
+    var group_public;
 
     GCTUser.GetGroup(guid, function(data){
         var group = data.result;
@@ -623,6 +625,10 @@ myApp.onPageInit('group', function (page) {
         } else {
             enabled = false;
         }
+
+        if (group.public == true) {
+            group_public = true;
+        } else { group_public = false; }
 
         $("#group-icon").attr('src', group.iconURL);
         $("#group-icon").attr('alt', "Group Icon of" + group.userDetails.displayName);
@@ -651,7 +657,7 @@ myApp.onPageInit('group', function (page) {
             popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#tab-group-bookmarks" class="button tab-link close-popover" data-translate="bookmarks">' + GCTLang.Trans("bookmarks") + '</a></li>' : "";
             popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#tab-group-blogs" class="button tab-link close-popover" data-translate="blogs">' + GCTLang.Trans("blogs") + '</a></li>' : "";
         } else {
-            popoverHTML += '<li><a href="#" class="item-link list-button">' + "Private Group" + '</a></li>';
+            popoverHTML += '<li><a href="#" class="item-link list-button">' + GCTLang.Trans("Private-Group") + '</a></li>';
         }
         popoverHTML += '</ul>'
             + '</div>'
@@ -666,9 +672,10 @@ myApp.onPageInit('group', function (page) {
             + '<div class="list-block">'
             + '<ul>';
         if (access) {
-            popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#" onclick="GCTUser.PostBlogPost(' + page.query.guid + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostBlog") + '</span> </a></li>' : "";
+            popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#" onclick="GCTUser.PostBlogPost(' + page.query.guid + ', ' + group_public + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostBlog") + '</span> </a></li>' : "";
+            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#" onclick="GCTUser.PostDiscussionPost(' + page.query.guid + ', '+ group_public + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostDiscussion") + '</span> </a></li>' : "";
         } else {
-            popoverHTML += '<li><a href="#" class="item-link list-button">' + "Private Group" + '</a></li>';
+            popoverHTML += '<li><a href="#" class="item-link list-button">' + GCTLang.Trans("Private-Group") + '</a></li>';
         }
         popoverHTML += '</ul>'
             + '</div>'
@@ -4350,7 +4357,9 @@ myApp.onPageInit('PostWire', function (page) {
 
 myApp.onPageInit('PostBlog', function (page) {
     $$('#PostBlog-navbar-inner').html(GCTLang.txtGlobalNav('PostBlog'));
-    var container_guid = (page.query.group_guid) ? page.query.group_guid : '';
+    var container_guid = (page.query.group_guid) ? page.query.group_guid : $$('#PostBlog-Group').remove(); // guid, or if not group, no group access
+    var group_public = (page.query.group_public == 'false') ? $$('#PostBlog-public').remove() : ''; // if not a public group, no all logged access
+    var type = (page.query.type == 'group') ? $$('#PostBlog-Colleague').remove() : ''; // if group, no colleague access
 
     $$('#submit-blog').on('click', function (e) {
         $$('#PostBlog-Feedback').html(''); //clears feedback message on new submit
@@ -4382,8 +4391,43 @@ myApp.onPageInit('PostBlog', function (page) {
     });
 });
 
+<<<<<<< HEAD
 //});
         
+=======
+myApp.onPageInit('PostDiscussion', function (page) {
+    $$('#PostDiscussion-navbar-inner').html(GCTLang.txtGlobalNav('PostDiscussion'));
+    var container_guid = (page.query.group_guid) ? page.query.group_guid : '';
+    var group_public = (page.query.group_public == 'false') ? $$('#PostDiscussion-public').remove() : '';
+    
+    $$('#submit-discussion').on('click', function (e) {
+        $$('#PostDiscussion-Feedback').html(''); //clears feedback message on new submit
+        var title = {}, message = {};
+        title.en = $('#english-title').val();
+        title.fr = $('#french-title').val(); 
+        message.en = $('#english-body-textarea').val();
+        message.fr = $('#french-body-textarea').val();
+        var status = $('#PostDiscussion-status').val();
+        var access = $('#PostDiscussion-access').val();
+        //container, title, message, status, access, successCallback, errorCallback, issueCallback
+        GCTUser.PostDiscussion(container_guid, title, message, status, access, function (data) {
+            if (data.result.indexOf("gccollab.ca/discussion/view/") > -1) {
+                var obj = [];
+                obj.href = data.result;
+                GCT.FireLink(obj);
+            } else {
+                myApp.alert(data.result);
+            }
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        }, function (feedback) {
+            var feedbackmsg = '<p class="card-content-inner" style="padding-top: 0;padding-bottom: 0;" id="PostDiscussion-Feedback">' + GCTLang.Trans('issue') + feedback + '</p>';
+            $(feedbackmsg).hide().appendTo('#PostDiscussion-Feedback').fadeIn(500);
+        });
+    });
+});
+ 
+>>>>>>> origin/master
 /* ===== Messages Page ===== */
 myApp.onPageInit('messages', function (page) {
 
