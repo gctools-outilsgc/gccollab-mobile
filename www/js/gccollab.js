@@ -4403,10 +4403,43 @@ myApp.onPageInit('PostWire', function (page) {
 });
 
 myApp.onPageInit('PostBlog', function (page) {
-    $$('#PostBlog-navbar-inner').html(GCTLang.txtGlobalNav('PostBlog'));
-    var container_guid = (page.query.group_guid) ? page.query.group_guid : $$('#PostBlog-Group').remove(); // guid, or if not group, no group access
-    var group_public = (page.query.group_public == 'false') ? $$('#PostBlog-public').remove() : ''; // if not a public group, no all logged access
-    var type = (page.query.type == 'group') ? $$('#PostBlog-Colleague').remove() : ''; // if group, no colleague access
+    var action = (page.query.action) ? page.query.action : ''; //Create or Edit
+    var container_guid = ''; // guid of group, for posts on groups
+    var blog_guid = ''; // guid of blog post, for edit
+
+    if (action == "create") {
+        $$('#PostBlog-navbar-inner').html(GCTLang.txtGlobalNav('PostBlog'));
+        $$('#submit-blog').html(GCTLang.Trans('PostBlog'));
+        if (page.query.type == 'group') { $$('#PostBlog-Colleague').remove(); } // If group container, remove colleague access option
+        if (page.query.group_public == 'false') { $$('#PostBlog-public').remove(); } // if not a public group, no all logged access
+        container_guid = (page.query.group_guid) ? page.query.group_guid : ''; // Set container_guid
+        if (!container_guid) { $$('#PostBlog-Group').remove(); } //If not container, remove group access option
+    } else if (action == "edit") {
+        $$('#PostBlog-navbar-inner').html(GCTLang.txtGlobalNav('EditBlog'));
+        $$('#submit-blog').html(GCTLang.Trans('EditBlog'));
+        blog_guid = (page.query.post_guid) ? page.query.post_guid : '';
+        GCTUser.GetBlogEdit(blog_guid, function (data) {
+            var blog = data.result;
+            if (blog.group) {
+                container_guid = blog.container_guid; // Set container_guid
+                $$('#PostBlog-Colleague').remove(); // If group container, remove colleague access option
+                if (blog.group.public == false) { $$('#PostBlog-public').remove(); } // if not a public group, no all logged access
+            } else {
+                $$('#PostBlog-Group').remove(); //If not container, remove group access option
+            }
+            $$('input#english-title').val(blog.title.en);
+            $$('input#french-title').val(blog.title.fr);
+            if (blog.excerpt) {
+                $$('#french-excerpt').val(blog.excerpt.fr);
+                $$('#english-excerpt').val(blog.excerpt.en);
+            }
+            $$('#english-body-textarea').val(blog.description.en);
+            $$('#french-body-textarea').val(blog.description.fr);
+
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    }
 
     $$('#submit-blog').on('click', function (e) {
         $$('#PostBlog-Feedback').html(''); //clears feedback message on new submit
@@ -4421,7 +4454,7 @@ myApp.onPageInit('PostBlog', function (page) {
         var access = $('#PostBlog-access').val();
         var status = $('#PostBlog-status').val();
         //(container, title, excerpt, body, comments, access, successCallback, errorCallback)
-        GCTUser.PostBlog(container_guid, title, excerpt, body, comment, access, status, function (data) {
+        GCTUser.PostBlog(container_guid, blog_guid, title, excerpt, body, comment, access, status, function (data) {
             if (data.result.indexOf("gccollab.ca/blog/view/") > -1) {
                 var obj = [];
                 obj.href = data.result;

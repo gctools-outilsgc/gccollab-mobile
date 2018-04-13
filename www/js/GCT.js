@@ -848,18 +848,19 @@ GCTUser = {
 
     PostBlogPost: function (group_guid, group_public) {
         if (group_guid) {
-            mainView.router.loadPage({ url: 'PostBlog.html?group_guid=' + group_guid + '&group_public=' + group_public + '&type=group'  }); 
+            mainView.router.loadPage({ url: 'PostBlog.html?action=create&group_guid=' + group_guid + '&group_public=' + group_public + '&type=group'  }); 
         } else {
-            mainView.router.loadPage({ url: 'PostBlog.html' }); 
+            mainView.router.loadPage({ url: 'PostBlog.html?action=create' }); 
         }
         
     },
-    PostBlog: function (container, title, excerpt, body, comments, access, status, successCallback, errorCallback, issueCallback) {
+    PostBlog: function (container, blog_guid, title, excerpt, body, comments, access, status, successCallback, errorCallback, issueCallback) {
         if (!title.en && !title.fr) { issueCallback(GCTLang.Trans("require-title")); return; }
         if (!body.en && !body.fr) { issueCallback(GCTLang.Trans("require-body")); return; }
         if (!(title.en && body.en) && !(title.fr && body.fr)) { issueCallback(GCTLang.Trans("require-same-lang")); return; }
         
         container = container || '';
+        blog_guid = blog_guid || '';
         title = title || '';
         excerpt = excerpt || '';
         body = body || '';
@@ -872,7 +873,28 @@ GCTUser = {
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "post.blog", user: GCTUser.Email(), title: JSON.stringify(title), excerpt: JSON.stringify(excerpt), body: JSON.stringify(body), container_guid: container, comments: comments, access: access, status:status, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "save.blog", user: GCTUser.Email(), title: JSON.stringify(title), excerpt: JSON.stringify(excerpt), body: JSON.stringify(body), container_guid: container, blog_guid: blog_guid, comments: comments, access: access, status:status, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    EditBlogPost: function (obj) {
+        var guid = $(obj).data("guid");
+        mainView.router.loadPage({ url: 'PostBlog.html?action=edit&post_guid=' + guid });
+    },
+    GetBlogEdit: function (post_guid, successCallback, errorCallback) {
+        if (!post_guid) { return "cannot edit nothing"; } //force back? with message 
+        $$.ajax({
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "get.blogedit", user: GCTUser.Email(), guid: post_guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1125,7 +1147,8 @@ GCTUser = {
                         if( mine ){
                             if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
                             if (type == "gccollab_discussion_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditDiscussionPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
-                            if( type != "gccollab_opportunity" ){ popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>';}
+                            if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+                            if (type != "gccollab_opportunity") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>'; }
                         }
                     popoverHTML += '</ul>'
                 + '</div>'
