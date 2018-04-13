@@ -2360,6 +2360,24 @@ GCTUser = {
             }
         });
     },
+    CreateOpportinities2: function (title,offert,type,program,num_opt,start_date,completion_date,deadline,description, successCallback, errorCallback) {
+        //  console.log(message);
+          $$.ajax({
+              method: 'POST',
+              dataType: 'text',
+              url: GCT.GCcollabURL,
+              data: { method: "create.opportinities2", user: GCTUser.Email(), offert: offert, type:type, program:program, num_opt:num_opt, start_date:start_date, completion_date:completion_date, deadline:deadline, description:description, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+              timeout: 12000,
+              success: function (data) {
+                  console.log('data'+ data);
+                  data = JSON.parse(data);
+                  successCallback(data);
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                  errorCallback(jqXHR, textStatus, errorThrown);
+              }
+          });
+      },
 }
 
 
@@ -2788,7 +2806,7 @@ GCTEach = {
 
 // Exemple of link : https://exemple.ca/services/api/rest/json/?
 GCT = {
-    GCcollabURL: "https://gccollab.ca/services/api/rest/json",
+    GCcollabURL: "httpS://gccollab.ca/services/api/rest/json",
     GEDSURL: "https://api.geds.gc.ca",
     IsInApp: function () {
         if (window.location.href.toLowerCase().indexOf("http") > -1) {

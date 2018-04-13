@@ -3344,8 +3344,8 @@ myApp.onPageInit('new-opportunity', function (page) {
     // var myTab=page.context.myTab;
     // }
     // myApp.showTab(myTab);
-    $$('.sumbit-opt-form').on('click', function (e) {
-        var formData = myApp.formToData('#opt-form');
+    $$('.next-form1').on('click', function (e) {
+        var formData = myApp.formToData('#opt-form1');
         console.log(formData['agree']);
         var title = formData['name'];
         var email = formData['email'];
@@ -3355,6 +3355,36 @@ myApp.onPageInit('new-opportunity', function (page) {
        // formData = JSON.parse(formData);
         if (!(title === '' || email === '' || agree.length === 0)) {
             GCTUser.CreateOpportinities1(title,email,phone,departement,agree, function (data) {
+                console.log("submited");
+                var selected=$$(this).attr('tab2');
+                mainView.router.load({ url: 'NewOpportunity.html',context:{myTab:'#tab2'} });
+                var result = data.result;
+                console.log(result);
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+
+        } else {
+            myApp.alert('Input required is missing');
+            //empty message, dont use, give feedback
+        }
+    });
+
+    $$('.next-form2').on('click', function (e) {
+        var formData = myApp.formToData('#opt-form2');
+        console.log(formData['skills']);
+        var title = formData['title'];
+        var offert = formData['offert'];
+        var type = formData['type'];
+        var program = formData['program'];
+        var num_opt = formData['num_opt'];
+        var start_date = formData['start_date'];
+        var completion_date = formData['completion_date'];
+        var deadline = formData['deadline'];
+        var description = formData['description'];
+       // formData = JSON.parse(formData);
+        if (formData) {
+            GCTUser.CreateOpportinities2(title,offert,type,program,num_opt,start_date,completion_date,deadline,description, function (data) {
                 console.log("submited");
                 var selected=$$(this).attr('tab2');
                 mainView.router.load({ url: 'NewOpportunity.html',context:{myTab:'#tab2'} });
