@@ -120,6 +120,7 @@
     "issue": "Issue: ",
 
     "PostDiscussion": "Add a Discussion Topic",
+    "EditDiscussion": "Edit Discussion Topic",
     "PostBlog": "Create Blog Post",
     "english-title": "English Title",
     "french-title": "French Title",
@@ -399,6 +400,7 @@ French = {
     "issue": "Problème: ",
 
     "PostDiscussion": "Ajouter un Sujet",
+    "EditDiscussion": "Modifier la Discussion",
     "PostBlog": "Ajouter un Blogue",
     "english-title": "Titre en Anglais",
     "french-title": "Titre en Français",

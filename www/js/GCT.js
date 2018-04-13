@@ -800,18 +800,41 @@ GCTUser = {
     },
 
     PostDiscussionPost: function (group_guid, group_public) {
-        mainView.router.loadPage({ url: 'PostDiscussion.html?group_guid=' + group_guid + '&group_public=' + group_public }); 
+        mainView.router.loadPage({ url: 'PostDiscussion.html?action=create&group_guid=' + group_guid + '&group_public=' + group_public }); 
     },
-    PostDiscussion: function (container, title, message, status, access, successCallback, errorCallback, issueCallback) {
+    PostDiscussion: function (container, topic, title, message, status, access, successCallback, errorCallback, issueCallback) {
         if (!title.en && !title.fr) { issueCallback(GCTLang.Trans("require-title")); return; }
         if (!message.en && !message.fr) { issueCallback(GCTLang.Trans("require-topic")); return; }
         if (!(title.en && message.en) && !(title.fr && message.fr)) { issueCallback(GCTLang.Trans("require-same-lang")); return; }
+        if (!container) { container = ''; }
+        if (!topic) { topic = ''; }
 
         $$.ajax({
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: 'post.discussion', user: GCTUser.Email(), title: JSON.stringify(title), message: JSON.stringify(message), container_guid: container, access: access, open: status, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: 'post.discussion', user: GCTUser.Email(), title: JSON.stringify(title), message: JSON.stringify(message), container_guid: container, topic_guid: topic, access: access, open: status, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    EditDiscussionPost: function (obj) {
+        var guid = $(obj).data("guid");
+        mainView.router.loadPage({ url: 'PostDiscussion.html?action=edit&post_guid=' + guid });
+    },
+    GetDiscussionEdit: function (post_guid, successCallback, errorCallback) {
+        if (!post_guid) { return "cannot edit nothing"; } //force back? with message 
+        $$.ajax({
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "get.discussionedit", user: GCTUser.Email(), guid: post_guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -1100,7 +1123,8 @@ GCTUser = {
                         }
                         popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
                         if( mine ){
-                            if( type == "gccollab_wire_post" ){ popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+                            if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+                            if (type == "gccollab_discussion_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditDiscussionPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
                             if( type != "gccollab_opportunity" ){ popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>';}
                         }
                     popoverHTML += '</ul>'

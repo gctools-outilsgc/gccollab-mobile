@@ -4392,21 +4392,42 @@ myApp.onPageInit('PostBlog', function (page) {
 });
 
 myApp.onPageInit('PostDiscussion', function (page) {
-    $$('#PostDiscussion-navbar-inner').html(GCTLang.txtGlobalNav('PostDiscussion'));
+    var action = (page.query.action) ? page.query.action : '';
     var container_guid = (page.query.group_guid) ? page.query.group_guid : '';
-    var group_public = (page.query.group_public == 'false') ? $$('#PostDiscussion-public').remove() : '';
+    var post_guid = (page.query.post_guid) ? page.query.post_guid : '';
+
+    if (action == "create") {
+        $$('#PostDiscussion-navbar-inner').html(GCTLang.txtGlobalNav('PostDiscussion'));
+        $$('#submit-discussion').html(GCTLang.Trans('PostDiscussion'));
+        if (page.query.group_public == 'false') { $$('#PostDiscussion-public').remove(); }
+    } else if (action == "edit") {
+        $$('#PostDiscussion-navbar-inner').html(GCTLang.txtGlobalNav('EditDiscussion'));
+        $$('#submit-discussion').html(GCTLang.Trans('EditDiscussion'));
+        GCTUser.GetDiscussionEdit(post_guid, function (data) {
+            var discussion = data.result;
+            container_guid = discussion.container_guid;
+            $$('input#english-title').val(discussion.title.en);
+            $$('input#french-title').val(discussion.title.fr);
+            $$('#english-body-textarea').val(discussion.description.en);
+            $$('#french-body-textarea').val(discussion.description.fr);
+            if (!discussion.group.public) { $$('#PostDiscussion-public').remove(); }
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    }
     
     $$('#submit-discussion').on('click', function (e) {
+        
         $$('#PostDiscussion-Feedback').html(''); //clears feedback message on new submit
         var title = {}, message = {};
         title.en = $('#english-title').val();
-        title.fr = $('#french-title').val(); 
+        title.fr = $('#french-title').val();
         message.en = $('#english-body-textarea').val();
         message.fr = $('#french-body-textarea').val();
         var status = $('#PostDiscussion-status').val();
         var access = $('#PostDiscussion-access').val();
-        //container, title, message, status, access, successCallback, errorCallback, issueCallback
-        GCTUser.PostDiscussion(container_guid, title, message, status, access, function (data) {
+            
+        GCTUser.PostDiscussion(container_guid, post_guid, title, message, status, access, function (data) {
             if (data.result.indexOf("gccollab.ca/discussion/view/") > -1) {
                 var obj = [];
                 obj.href = data.result;
@@ -4420,6 +4441,7 @@ myApp.onPageInit('PostDiscussion', function (page) {
             var feedbackmsg = '<p class="card-content-inner" style="padding-top: 0;padding-bottom: 0;" id="PostDiscussion-Feedback">' + GCTLang.Trans('issue') + feedback + '</p>';
             $(feedbackmsg).hide().appendTo('#PostDiscussion-Feedback').fadeIn(500);
         });
+        
     });
 });
  
