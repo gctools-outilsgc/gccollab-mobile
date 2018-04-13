@@ -4356,10 +4356,21 @@ myApp.onPageInit('PostWire', function (page) {
 });
 
 myApp.onPageInit('PostBlog', function (page) {
-    $$('#PostBlog-navbar-inner').html(GCTLang.txtGlobalNav('PostBlog'));
-    var container_guid = (page.query.group_guid) ? page.query.group_guid : $$('#PostBlog-Group').remove(); // guid, or if not group, no group access
-    var group_public = (page.query.group_public == 'false') ? $$('#PostBlog-public').remove() : ''; // if not a public group, no all logged access
-    var type = (page.query.type == 'group') ? $$('#PostBlog-Colleague').remove() : ''; // if group, no colleague access
+    var action = (page.query.action) ? page.query.action : ''; //Create or Edit
+    var container_guid = ''; // guid of group, for posts on groups
+    var blog_guid = ''; // guid of blog post, for edit
+
+    if (action == "create") {
+        $$('#PostBlog-navbar-inner').html(GCTLang.txtGlobalNav('PostBlog'));
+        $$('#submit-blog').html(GCTLang.Trans('PostBlog'));
+        if (page.query.type == 'group') { $$('#PostBlog-Colleague').remove(); } // If group container, remove colleague access option
+        if (page.query.group_public == 'false') { $$('#PostBlog-public').remove(); } // if not a public group, no all logged access
+        container_guid = (page.query.group_guid) ? page.query.group_guid : ''; // Set container_guid
+        if (!container_guid) { $$('#PostBlog-Group').remove(); } //If not container, remove group access option
+    } else if (action == "edit") {
+        $$('#PostBlog-navbar-inner').html(GCTLang.txtGlobalNav('EditBlog'));
+        $$('#submit-blog').html(GCTLang.Trans('EditBlog'));
+    }
 
     $$('#submit-blog').on('click', function (e) {
         $$('#PostBlog-Feedback').html(''); //clears feedback message on new submit
