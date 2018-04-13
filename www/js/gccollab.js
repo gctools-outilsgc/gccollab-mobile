@@ -4370,6 +4370,28 @@ myApp.onPageInit('PostBlog', function (page) {
     } else if (action == "edit") {
         $$('#PostBlog-navbar-inner').html(GCTLang.txtGlobalNav('EditBlog'));
         $$('#submit-blog').html(GCTLang.Trans('EditBlog'));
+        blog_guid = (page.query.post_guid) ? page.query.post_guid : '';
+        GCTUser.GetBlogEdit(blog_guid, function (data) {
+            var blog = data.result;
+            if (blog.group) {
+                container_guid = blog.container_guid; // Set container_guid
+                $$('#PostBlog-Colleague').remove(); // If group container, remove colleague access option
+                if (blog.group.public == false) { $$('#PostBlog-public').remove(); } // if not a public group, no all logged access
+            } else {
+                $$('#PostBlog-Group').remove(); //If not container, remove group access option
+            }
+            $$('input#english-title').val(blog.title.en);
+            $$('input#french-title').val(blog.title.fr);
+            if (blog.excerpt) {
+                $$('#french-excerpt').val(blog.excerpt.fr);
+                $$('#english-excerpt').val(blog.excerpt.en);
+            }
+            $$('#english-body-textarea').val(blog.description.en);
+            $$('#french-body-textarea').val(blog.description.fr);
+
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
     }
 
     $$('#submit-blog').on('click', function (e) {
