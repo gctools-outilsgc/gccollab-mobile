@@ -802,16 +802,18 @@ GCTUser = {
     PostDiscussionPost: function (group_guid, group_public) {
         mainView.router.loadPage({ url: 'PostDiscussion.html?action=create&group_guid=' + group_guid + '&group_public=' + group_public }); 
     },
-    PostDiscussion: function (container, title, message, status, access, successCallback, errorCallback, issueCallback) {
+    PostDiscussion: function (container, topic, title, message, status, access, successCallback, errorCallback, issueCallback) {
         if (!title.en && !title.fr) { issueCallback(GCTLang.Trans("require-title")); return; }
         if (!message.en && !message.fr) { issueCallback(GCTLang.Trans("require-topic")); return; }
         if (!(title.en && message.en) && !(title.fr && message.fr)) { issueCallback(GCTLang.Trans("require-same-lang")); return; }
+        if (!container) { container = ''; }
+        if (!topic) { topic = ''; }
 
         $$.ajax({
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: 'post.discussion', user: GCTUser.Email(), title: JSON.stringify(title), message: JSON.stringify(message), container_guid: container, access: access, open: status, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: 'post.discussion', user: GCTUser.Email(), title: JSON.stringify(title), message: JSON.stringify(message), container_guid: container, topic_guid: topic, access: access, open: status, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
