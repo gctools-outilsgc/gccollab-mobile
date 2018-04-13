@@ -4407,7 +4407,7 @@ myApp.onPageInit('PostBlog', function (page) {
         var access = $('#PostBlog-access').val();
         var status = $('#PostBlog-status').val();
         //(container, title, excerpt, body, comments, access, successCallback, errorCallback)
-        GCTUser.PostBlog(container_guid, title, excerpt, body, comment, access, status, function (data) {
+        GCTUser.PostBlog(container_guid, blog_guid, title, excerpt, body, comment, access, status, function (data) {
             if (data.result.indexOf("gccollab.ca/blog/view/") > -1) {
                 var obj = [];
                 obj.href = data.result;
