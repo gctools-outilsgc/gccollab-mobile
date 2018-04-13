@@ -848,9 +848,9 @@ GCTUser = {
 
     PostBlogPost: function (group_guid, group_public) {
         if (group_guid) {
-            mainView.router.loadPage({ url: 'PostBlog.html?group_guid=' + group_guid + '&group_public=' + group_public + '&type=group'  }); 
+            mainView.router.loadPage({ url: 'PostBlog.html?action=create&group_guid=' + group_guid + '&group_public=' + group_public + '&type=group'  }); 
         } else {
-            mainView.router.loadPage({ url: 'PostBlog.html' }); 
+            mainView.router.loadPage({ url: 'PostBlog.html?action=create' }); 
         }
         
     },
@@ -882,6 +882,10 @@ GCTUser = {
                 errorCallback(jqXHR, textStatus, errorThrown);
             }
         });
+    },
+    EditBlogPost: function (obj) {
+        var guid = $(obj).data("guid");
+        mainView.router.loadPage({ url: 'PostBlog.html?action=edit&post_guid=' + guid });
     },
 
     PostWirePost: function () {
@@ -1125,7 +1129,8 @@ GCTUser = {
                         if( mine ){
                             if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
                             if (type == "gccollab_discussion_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditDiscussionPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
-                            if( type != "gccollab_opportunity" ){ popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>';}
+                            if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+                            if (type != "gccollab_opportunity") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>'; }
                         }
                     popoverHTML += '</ul>'
                 + '</div>'
