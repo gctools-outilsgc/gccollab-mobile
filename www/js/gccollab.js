@@ -3337,18 +3337,35 @@ myApp.onPageInit('opportunities', function (page) {
     });
 });
 myApp.onPageInit('new-opportunity', function (page) {
+    // var myTab = '#tab1';
+    // if(!(page.context.myTab)){
+    //     var myTab = '#tab1';
+    // }else{
+    // var myTab=page.context.myTab;
+    // }
+    // myApp.showTab(myTab);
     $$('.sumbit-opt-form').on('click', function (e) {
         var formData = myApp.formToData('#opt-form');
-        console.log(formData);
-        if (!(formData === '')) {
-            GCTUser.CreateOpportinities(formData, function (data) {
+        console.log(formData['agree']);
+        var title = formData['name'];
+        var email = formData['email'];
+        var phone = formData['phone'];
+        var departement = formData['departement'];
+        var agree = formData['agree'];
+       // formData = JSON.parse(formData);
+        if (!(title === '' || email === '' || agree.length === 0)) {
+            GCTUser.CreateOpportinities1(title,email,phone,departement,agree, function (data) {
                 console.log("submited");
+                var selected=$$(this).attr('tab2');
+                mainView.router.load({ url: 'NewOpportunity.html',context:{myTab:'#tab2'} });
                 var result = data.result;
                 console.log(result);
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
             });
+
         } else {
+            myApp.alert('Input required is missing');
             //empty message, dont use, give feedback
         }
     });

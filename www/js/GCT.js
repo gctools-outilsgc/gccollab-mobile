@@ -2342,14 +2342,16 @@ GCTUser = {
         });
     },
 
-    CreateOpportinities: function (message, successCallback, errorCallback) {
+    CreateOpportinities1: function (title,email,phone,departement,agree, successCallback, errorCallback) {
+      //  console.log(message);
         $$.ajax({
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "create.opportinities", user: GCTUser.Email(), message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "create.opportinities1", user: GCTUser.Email(), title: title, email:email, phone:phone, departement:departement, agree:agree, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
+                console.log('data'+ data);
                 data = JSON.parse(data);
                 successCallback(data);
             },
