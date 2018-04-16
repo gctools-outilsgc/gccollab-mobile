@@ -1010,71 +1010,146 @@ myApp.onPageInit('home', function (page) {
     $$('#home-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
     var limit = 12;
     var offset = 0;
+    var offset_wires = 0;
+    var offset_newsfeed = 0;
+    var offset_blogs = 0;
+    var loaded_wire = false;
+    var loaded_blog = false;
 
     GCTUser.GetNewsfeed(limit, offset, function (data) {
         var newsfeed = data.result;
-
+        var content = '';
         if (newsfeed.length > 0) {
             $.each(newsfeed, function (key, value) {
-                var content = GCTEach.Newsfeed(value);
+                content = GCTEach.Newsfeed(value);
+                $(content).appendTo('#home-newsfeed');
+            });
+        }
+        if (newsfeed.length < limit) {
+            content = endOfContent;
+            $(content).appendTo('#home-newsfeed');
+            $('#home-newsfeed-more').hide();
+        }
+    }, function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR, textStatus, errorThrown);
+        }
+    );
+    $$('#home-newsfeed-more').on('click', function (e) {
+        GCTUser.GetNewsfeed(limit, offset_newsfeed + limit, function (data) {
+            var newsfeed = data.result;
 
-                //### I think fades cause significant performance hits on devices when we have 30 concurrent ones like we do.
-                //### The below makes it so that it only fades the first, visible, post in the list.
-                if (key == 0) {
-                    $(content).hide().appendTo('#home-newsfeed').fadeIn(1000);
-                } else {
+            if (newsfeed.length > 0) {
+                $.each(newsfeed, function (key, value) {
+                    var content = GCTEach.Newsfeed(value);
                     $(content).appendTo('#home-newsfeed');
-                }
-            });
-        } else {
-            $(noContent).hide().appendTo('#home-newsfeed').fadeIn(1000);
+                });
+            }
+            if (newsfeed.length < limit) {
+                content = endOfContent;
+                $(content).appendTo('#home-newsfeed');
+                $('#home-newsfeed-more').hide();
+            }
+            offset_newsfeed += limit;
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
         }
-        
-
-    }, function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR, textStatus, errorThrown);
-        }
-    );
-
-    GCTUser.GetWires(limit, offset, '', function (data) {
-        var wires = data.result;
-
-        if (wires.length > 0) {
-            $.each(wires, function (key, value) {
-                var content = GCTEach.Wire(value);
-                if (key == 0) {
-                    $(content).hide().appendTo('#home-wire').fadeIn(1000);
-                } else {
-                    $(content).appendTo('#home-wire');
-                }
-            });
-        } else {
-            $(noContent).hide().appendTo('#home-wire').fadeIn(1000);
-        }
-
-    }, function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR, textStatus, errorThrown);
-        }
-    );
-
-    GCTUser.GetBlogs(limit, offset, "", function (data) {
-        var blogs = data.result;
-        if (blogs.length > 0) {
-            $.each(blogs, function (key, value) {
-                var content = GCTEach.Blog(value);
-                if (key == 0) {
-                    $(content).hide().appendTo('#home-blogs').fadeIn(1000);
-                } else {
-                    $(content).appendTo('#home-blogs');
-                }
-            });
-        } else {
-            $(noContent).hide().appendTo('#home-blogs').fadeIn(1000);
-        }
-    }, function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR, textStatus, errorThrown);
+        );
     });
 
+    $$('#tab-wire').on('show', function (e) {
+        if (!loaded_wire) {
+            loaded_wire = true;
+            GCTUser.GetWires(limit, offset, '', function (data) {
+                var wires = data.result;
+                var imgs = [];
+                var content = '';
+                if (wires.length > 0) {
+                    $.each(wires, function (key, value) {
+                        content = GCTEach.Wire(value);
+                        $(content).hide().appendTo('#home-wire').fadeIn(1000);
+                    });
+                }
+                if (wires.length < limit) {
+                    content = endOfContent;
+                    $(content).appendTo('#home-wire');
+                    $('#home-wire-more').hide();
+                }
+                
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
+    });
+    $$('#home-wire-more').on('click', function (e) {
+        GCTUser.GetWires(limit, offset_wires + limit, '', function (data) {
+            var wires = data.result;
+            var content = '';
+            if (wires.length > 0) {
+                $.each(wires, function (key, value) {
+                    content = GCTEach.Wire(value);
+                    $(content).hide().appendTo('#home-wire').fadeIn(1000);
+                });
+            }
+            if (wires.length < limit) {
+                content = endOfContent;
+                $(content).appendTo('#home-wire');
+                $('#home-wire-more').hide();
+            }
+            offset_wires += limit;
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    });
+
+    $$('#tab-blogs').on('show', function (e) {
+        if (!loaded_blog) {
+            loaded_blog = true;
+            GCTUser.GetBlogs(limit, offset, "", function (data) {
+                var blogs = data.result;
+                var content = '';
+                if (blogs.length > 0) {
+                    $.each(blogs, function (key, value) {
+                        content = GCTEach.Blog(value);
+                        $(content).appendTo('#home-blogs');
+                    });
+                } 
+                if (blogs.length < limit) {
+                    content = endOfContent;
+                    $(content).appendTo('#home-blogs');
+                    $('#home-blogs-more').hide();
+                }
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
+    });
+    $$('#home-blogs-more').on('click', function (e) {
+        GCTUser.GetBlogs(limit, offset_blogs + limit, "", function (data) {
+            var blogs = data.result;
+            var content = '';
+            if (blogs.length > 0) {
+                $.each(blogs, function (key, value) {
+                    content = GCTEach.Blog(value);
+                    $(content).appendTo('#home-blogs').fadeIn(1000);
+                });
+            } 
+            if (blogs.length < limit) {
+                content = endOfContent;
+                $(content).appendTo('#home-blogs');
+                $('#home-blogs-more').hide();
+            }
+            offset_blogs += limit;
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    });
+
+    var refreshHome = $$(page.container).find('.pull-to-refresh-content');
+    refreshHome.on('refresh', function (e) {
+        console.log("refresh");
+        //referesh placeholder
+        myApp.pullToRefreshDone();
+    });
 });
 
 myApp.onPageInit('homeOld', function (page) {
@@ -2537,7 +2612,7 @@ myApp.onPageInit('blog', function (page) {
                 });
             } else {
                 $('#blogs-all-more').hide();
-                $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
+                $(endOfContent).hide().appendTo('#blogs-all').fadeIn(1000);
             }
             blogsMoreOffset += limit;
         }, function(jqXHR, textStatus, errorThrown){
