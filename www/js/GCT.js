@@ -45,6 +45,8 @@ GCTLang = {
                         + '</div>'
                         + '<div class="time">' + object.date + '<a href="#" class="link pull-right more-options" data-owner="' + object.owner + '" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="GCTUser.MoreOptions(this); "><i class="fa fa-caret-down"></i></a></div>'
                         + object.description
+            + "<br><a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+
                     + '</div>'
                 + '</div>'
             + '</li>';
@@ -2131,14 +2133,18 @@ GCTUser = {
                 var likeData = data.result;
 
                 var content = "";
-                $.each(likeData.users, function (key, value) {
-                    content += GCTLang.txtLikes({
-                        icon: value.iconURL,
-                        name: value.displayName,
-                        date: prettyDate(value.time_created),
-                        owner: value.user_id
+                if (likeData.count > 0) {
+                    $.each(likeData.users, function (key, value) {
+                        content += GCTLang.txtLikes({
+                            icon: value.iconURL,
+                            name: value.displayName,
+                            date: prettyDate(value.time_created),
+                            owner: value.user_id
+                        });
                     });
-                });
+                } else {
+                    content += noContent;
+                }
 
                 $('.popup-generic .popup-title').html(GCTLang.Trans("likes-header"));
                 $('.popup-generic .popup-content').html(content);
