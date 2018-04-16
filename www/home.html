@@ -1,8 +1,15 @@
-<div data-page="home" class="page navbar-fixed">
+<div data-page="home" class="page navbar-fixed with-subnavbar">
 
-  <div class="navbar main-navbar">
-    <div id="home-navbar-inner" class="navbar-inner"> </div>
-  </div>
+    <div class="navbar main-navbar">
+        <div id="home-navbar-inner" class="navbar-inner"> </div>
+        <div class="subnavbar">
+            <div class="buttons-row">
+                <a href="#tab-newsfeed" class="button active tab-link" data-translate="newsfeed">Newsfeed</a>
+                <a href="#tab-wire" class="button tab-link" data-translate="the-wire">The Wire</a>
+                <a href="#tab-blogs" class="button tab-link" data-translate="blogs">Blogs</a>
+            </div>
+        </div>
+    </div>
 
     <div class="toolbar toolbar-bottom">
         <div class="toolbar-inner">
@@ -11,43 +18,43 @@
         </div>
     </div>
 
-  <div class="page-content hide-bars-on-scroll pull-to-refresh-content" style="overflow-x: hidden;">
+  <div class="page-content hide-bars-on-scroll pull-to-refresh-content with-subnavbar" style="overflow-x: hidden;">
     <div class="pull-to-refresh-layer">
       <div class="preloader"></div>
       <div class="pull-to-refresh-arrow"></div>
     </div>
 
-    <div class="content-block small">
-      <div class="row">
-        <div class="col-66"><h2 class="no-margin" data-translate="the-wire">The Wire</h2></div>
-        <div class="col-33"><a href="wire.html" class="button button-fill pull-right" data-translate="view-all">VIEW ALL</a></div>
-      </div>
-    </div>
-    <div class="swiper-container swiper-wires context home-section">
-      <div class="swiper-wrapper" id="GCcollabUserWireContent"><span class="loading" data-translate="loading">Loading...</span></div>
-      <div class="swiper-pagination"></div>
-    </div>
-
-    <div class="content-block small">
-      <div class="row">
-        <div class="col-66"><h2 class="no-margin" data-translate="newsfeed">Newsfeed</h2></div>
-        <div class="col-33"><a href="newsfeed.html" class="button button-fill pull-right" data-translate="view-all">VIEW ALL</a></div>
-      </div>
-    </div>
-    <div class="swiper-container swiper-newsfeed context home-section">
-      <div class="swiper-wrapper" id="GCcollabUserNewsfeedContent"><span class="loading" data-translate="loading">Loading...</span></div>
-      <div class="swiper-pagination"></div>
-    </div>
-
-    <div class="content-block small">
-      <div class="row">
-        <div class="col-66"><h2 class="no-margin" data-translate="blogs">Blogs</h2></div>
-        <div class="col-33"><a href="blog.html" class="button button-fill pull-right" data-translate="view-all">VIEW ALL</a></div>
-      </div>
-    </div>
-    <div class="swiper-container swiper-blogs context home-section">
-      <div class="swiper-wrapper" id="GCcollabUserBlogContent"><span class="loading" data-translate="loading">Loading...</span></div>
-      <div class="swiper-pagination"></div>
+    <div class="tabs">
+        <div id="tab-newsfeed" class="tab active">
+            <div class="content-block small">
+                <div class="row">
+                    <div class="col-66"><h2 class="no-margin" data-translate="newsfeed">Newsfeed</h2></div>
+                    <div class="col-33"><a href="newsfeed.html" class="button button-fill pull-right" data-translate="view-all">VIEW ALL</a></div>
+                </div>
+            </div>
+            <div id="home-newsfeed" class="context"></div>
+            <a id="home-newsfeed-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+        </div>
+        <div id="tab-wire" class="tab">
+            <div class="content-block small">
+                <div class="row">
+                    <div class="col-66"><h2 class="no-margin" data-translate="the-wire">The Wire</h2></div>
+                    <div class="col-33"><a href="wire.html" class="button button-fill pull-right" data-translate="view-all">VIEW ALL</a></div>
+                </div>
+            </div>
+            <div id="home-wire" class="context"></div>
+            <a id="home-wire-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+        </div>
+        <div id="tab-blogs" class="tab">
+            <div class="content-block small">
+                <div class="row">
+                    <div class="col-66"><h2 class="no-margin" data-translate="blogs">Blogs</h2></div>
+                    <div class="col-33"><a href="blog.html" class="button button-fill pull-right" data-translate="view-all">VIEW ALL</a></div>
+                </div>
+            </div>
+            <div id="home-blogs" class="context"></div>
+            <a id="home-blogs-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+        </div>
     </div>
 
     <div class="content-block">

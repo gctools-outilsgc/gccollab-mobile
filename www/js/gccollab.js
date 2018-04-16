@@ -1008,6 +1008,77 @@ myApp.onPageInit('sign-in', function (page) {
 
 myApp.onPageInit('home', function (page) {
     $$('#home-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
+    var limit = 12;
+    var offset = 0;
+
+    GCTUser.GetNewsfeed(limit, offset, function (data) {
+        var newsfeed = data.result;
+
+        if (newsfeed.length > 0) {
+            $.each(newsfeed, function (key, value) {
+                var content = GCTEach.Newsfeed(value);
+
+                //### I think fades cause significant performance hits on devices when we have 30 concurrent ones like we do.
+                //### The below makes it so that it only fades the first, visible, post in the list.
+                if (key == 0) {
+                    $(content).hide().appendTo('#home-newsfeed').fadeIn(1000);
+                } else {
+                    $(content).appendTo('#home-newsfeed');
+                }
+            });
+        } else {
+            $(noContent).hide().appendTo('#home-newsfeed').fadeIn(1000);
+        }
+        
+
+    }, function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR, textStatus, errorThrown);
+        }
+    );
+
+    GCTUser.GetWires(limit, offset, '', function (data) {
+        var wires = data.result;
+
+        if (wires.length > 0) {
+            $.each(wires, function (key, value) {
+                var content = GCTEach.Wire(value);
+                if (key == 0) {
+                    $(content).hide().appendTo('#home-wire').fadeIn(1000);
+                } else {
+                    $(content).appendTo('#home-wire');
+                }
+            });
+        } else {
+            $(noContent).hide().appendTo('#home-wire').fadeIn(1000);
+        }
+
+    }, function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR, textStatus, errorThrown);
+        }
+    );
+
+    GCTUser.GetBlogs(limit, offset, "", function (data) {
+        var blogs = data.result;
+        if (blogs.length > 0) {
+            $.each(blogs, function (key, value) {
+                var content = GCTEach.Blog(value);
+                if (key == 0) {
+                    $(content).hide().appendTo('#home-blogs').fadeIn(1000);
+                } else {
+                    $(content).appendTo('#home-blogs');
+                }
+            });
+        } else {
+            $(noContent).hide().appendTo('#home-blogs').fadeIn(1000);
+        }
+    }, function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR, textStatus, errorThrown);
+    });
+
+});
+
+myApp.onPageInit('homeOld', function (page) {
+    $$('#home-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
 
     var limit = 15;
     var offset = 0;
