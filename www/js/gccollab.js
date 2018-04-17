@@ -1017,7 +1017,7 @@ myApp.onPageInit('home', function (page) {
     var loaded_wire = false;
     var loaded_blog = false;
 
-    GCTUser.GetNewsfeed(limit, offset, function (data) {
+    function homeNewsfeed(data) {
         var newsfeed = data.result;
         var content = '';
         if (newsfeed.length > 0) {
@@ -1031,30 +1031,16 @@ myApp.onPageInit('home', function (page) {
             $(content).appendTo('#home-newsfeed');
             $('#home-newsfeed-more').hide();
         }
-    }, function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR, textStatus, errorThrown);
-        }
-    );
-    $$('#home-newsfeed-more').on('click', function (e) {
-        GCTUser.GetNewsfeed(limit, offset_newsfeed + limit, function (data) {
-            var newsfeed = data.result;
+        offset_newsfeed += limit;
+    }
 
-            if (newsfeed.length > 0) {
-                $.each(newsfeed, function (key, value) {
-                    var content = GCTEach.Newsfeed(value);
-                    $(content).appendTo('#home-newsfeed');
-                });
-            }
-            if (newsfeed.length < limit) {
-                content = endOfContent;
-                $(content).appendTo('#home-newsfeed');
-                $('#home-newsfeed-more').hide();
-            }
-            offset_newsfeed += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        }
-        );
+    function errorConsole (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR, textStatus, errorThrown);
+    }
+
+    GCTUser.GetNewsfeed(limit, offset_newsfeed, homeNewsfeed, errorConsole);
+    $$('#home-newsfeed-more').on('click', function (e) {
+        GCTUser.GetNewsfeed(limit, offset_newsfeed, homeNewsfeed, errorConsole);
     });
 
     $$('#tab-wire').on('show', function (e) {
