@@ -1518,55 +1518,62 @@ myApp.onPageInit('newsfeed', function (page) {
 myApp.onPageInit('groups', function (page) {
     $$('#groups-navbar-inner').html(GCTLang.txtGlobalNav('groups'));
     var limit = 20;
+    var offset_groupsAll = 0;
+    var offset_groupsMine = 0;
+
     var offset = 0;
     var groupsAllMoreOffset = 0;
     var groupsMineMoreOffset = 0;
     var filters = {};
     var filtersOpened = false;
 
+    function groupsAll(data) {
+        var groups = data.result;
+
+        if (groups.length > 0) {
+            $.each(groups, function (key, value) {
+                var content = GCTEach.Group(value);
+                $(content).hide().appendTo('#groups-all').fadeIn(1000);
+            });
+        }
+        if (groups.length < limit) {
+            $('#groups-all-more').hide();
+            $(endOfContent).hide().appendTo('#groups-all').fadeIn(1000);
+        }
+        offset_groupsAll += limit;
+    }
+    function groupsMine(data) {
+        var groups = data.result;
+
+        if (groups.length > 0) {
+            $('#groups-mine-more').show();
+            $.each(groups, function (key, value) {
+                var content = GCTEach.Group(value);
+                $(content).hide().appendTo('#groups-mine').fadeIn(1000);
+            });
+        } 
+        if (groups.length < limit) {
+            $('#groups-mine-more').hide();
+            $(endOfContent).hide().appendTo('#groups-mine').fadeIn(1000);
+        }
+        offset_groupsMine += limit;
+    }
+    function groupsReset() {
+        $('#groups-all').html('');
+        $('#groups-mine').html('');
+        offset_groupsAll = 0;
+        offset_groupsMine = 0;
+
+        GCTUser.GetGroups(limit, offset_groupsAll, filters, groupsAll, errorConsole);
+        GCTUser.GetGroupsMine(limit, offset_groupsMine, filters, groupsMine, errorConsole);
+    }
+
     $('#clear-filters').on('click', function() {
         filtersOpened = false;
         filters = {};
         $("#group-name").val('');
 
-        GCTUser.GetGroups(limit, offset, filters, function(data){
-            var groups = data.result;
-            $('#groups-all').html('');
-
-            if(groups.length > 0){
-                $('#groups-all-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-all').fadeIn(1000);
-                });
-            } else {
-                $('#groups-all-more').hide();
-                $(noMatches).hide().appendTo('#groups-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetGroupsMine(limit, offset, filters, function(data){
-            var groups = data.result;
-            $('#groups-mine').html('');
-
-            if(groups.length > 0){
-                $('#groups-mine-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-mine').fadeIn(1000);
-                });
-            } else {
-                $('#groups-mine-more').hide();
-                $(noMatches).hide().appendTo('#groups-mine').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        groupsAllMoreOffset = 0;
-        groupsMineMoreOffset = 0;
+        groupsReset();
     });
 
     $('#save-filters').on('click', function() {
@@ -1576,168 +1583,28 @@ myApp.onPageInit('groups', function (page) {
             filters = "";
         }
 
-        GCTUser.GetGroups(limit, offset, filters, function(data){
-            var groups = data.result;
-            $('#groups-all').html('');
-
-            if(groups.length > 0){
-                $('#groups-all-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-all').fadeIn(1000);
-                });
-            } else {
-                $('#groups-all-more').hide();
-                $(noMatches).hide().appendTo('#groups-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetGroupsMine(limit, offset, filters, function(data){
-            var groups = data.result;
-            $('#groups-mine').html('');
-
-            if(groups.length > 0){
-                $('#groups-mine-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-mine').fadeIn(1000);
-                });
-            } else {
-                $('#groups-mine-more').hide();
-                $(noMatches).hide().appendTo('#groups-mine').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        groupsAllMoreOffset = 0;
-        groupsMineMoreOffset = 0;
+        groupsReset();
     });
 
     if( !filtersOpened ){
-        GCTUser.GetGroups(limit, offset, filters, function(data){
-            var groups = data.result;
-
-            if(groups.length > 0){
-                $('#groups-all-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-all').fadeIn(1000);
-                });
-            } else {
-                $('#groups-all-more').hide();
-                $(noMatches).hide().appendTo('#groups-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetGroupsMine(limit, offset, filters, function(data){
-            var groups = data.result;
-
-            if(groups.length > 0){
-                $('#groups-mine-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-mine').fadeIn(1000);
-                });
-            } else {
-                $('#groups-mine-more').hide();
-                $(noMatches).hide().appendTo('#groups-mine').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+        GCTUser.GetGroups(limit, offset_groupsAll, filters, groupsAll, errorConsole);
+        GCTUser.GetGroupsMine(limit, offset_groupsMine, filters, groupsMine, errorConsole);
     }
 
-    var groupsAllMore = $$(page.container).find('#groups-all-more');
-    groupsAllMore.on('click', function (e) {
-        GCTUser.GetGroups(limit, groupsAllMoreOffset + limit, filters, function(data){
-            var groups = data.result;
-
-            if(groups.length > 0){
-                $('#groups-all-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-all').fadeIn(1000);
-                });
-            } else {
-                $('#groups-all-more').hide();
-                $(noMatches).hide().appendTo('#groups-all').fadeIn(1000);
-            }
-
-            groupsAllMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#groups-all-more').on('click', function (e) {
+        GCTUser.GetGroups(limit, offset_groupsAll, filters, groupsAll, errorConsole);
     });
 
-    var groupsMineMore = $$(page.container).find('#groups-mine-more');
-    groupsMineMore.on('click', function (e) {
-        GCTUser.GetGroupsMine(limit, groupsMineMoreOffset + limit, filters, function(data){
-            var groups = data.result;
-
-            if(groups.length > 0){
-                $('#groups-mine-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-mine').fadeIn(1000);
-                });
-            } else {
-                $('#groups-mine-more').hide();
-                $(noMatches).hide().appendTo('#groups-mine').fadeIn(1000);
-            }
-
-            groupsMineMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#groups-mine-more').on('click', function (e) {
+        GCTUser.GetGroupsMine(limit, offset_groupsMine, filters, groupsMine, errorConsole);
     });
 
     var refreshGroups = $$(page.container).find('.pull-to-refresh-content');
     refreshGroups.on('refresh', function (e) {
-        GCTUser.GetGroups(limit, offset, filters, function(data){
-            var groups = data.result;
-            $('#groups-all').html('');
-
-            var content = "";
-            if(groups.length > 0){
-                $('#groups-all-more').show();
-                $.each(groups, function (key, value) {
-                    content += GCTEach.Group(value);
-                });
-                $(content).hide().appendTo('#groups-all').fadeIn(1000);
-            } else {
-                $('#groups-all-more').hide();
-                $(noMatches).hide().appendTo('#groups-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetGroupsMine(limit, offset, filters, function(data){
-            var groups = data.result;
-            $('#groups-mine').html('');
-
-            var content = "";
-            if(groups.length > 0){
-                $('#groups-mine-more').show();
-                $.each(groups, function (key, value) {
-                    content += GCTEach.Group(value);
-                });
-                $(content).hide().appendTo('#groups-mine').fadeIn(1000);
-            } else {
-                $('#groups-mine-more').hide();
-                $(noMatches).hide().appendTo('#groups-mine').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        groupsAllMoreOffset = 0;
-        groupsMineMoreOffset = 0;
+        filtersOpened = false;
+        filters = {};
+        $("#group-name").val('');
+        groupsReset();
 
         myApp.pullToRefreshDone();
     });
