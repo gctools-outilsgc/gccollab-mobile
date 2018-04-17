@@ -7,6 +7,7 @@ var myApp = new Framework7({
     material: true,
     pushState: true,
     tapHold: true
+    //preloadPreviousPage: false
 });
 
 

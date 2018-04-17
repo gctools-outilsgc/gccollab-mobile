@@ -10,7 +10,7 @@ GCTLang = {
         var content = "<div class='swiper-slide list-block cards-list'>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
-            + "<div class='item-media rounded'><img aria-labelledby='author-" + object.guid +"' src='" + object.icon + "' /></div>"
+            + "<div class='item-media rounded'><img aria-hidden='true' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
             + "<div id='author-"+object.guid+"' class='author'>" + object.name + "</div>"
