@@ -2346,6 +2346,7 @@ GCTUser = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorCallback(jqXHR, textStatus, errorThrown);
+                console.log('tests');
             }
         });
     },
@@ -2395,10 +2396,30 @@ GCTUser = {
               method: 'POST',
               dataType: 'text',
               url: GCT.GCcollabURL,
-              data: { method: "create.opportinities2", user: GCTUser.Email(), offert: offert, type:type, program:program, num_opt:num_opt, start_date:start_date, completion_date:completion_date, deadline:deadline, description:description, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+              data: { method: "create.opportinities2", user: GCTUser.Email(),title:title, offert: offert, type:type, program:program, num_opt:num_opt, start_date:start_date, completion_date:completion_date, deadline:deadline, description:description, api_key: api_key_gccollab, lang: GCTLang.Lang() },
               timeout: 12000,
               success: function (data) {
                   console.log('data'+ data);
+                  data = JSON.parse(data);
+                  successCallback(data);
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                  errorCallback(jqXHR, textStatus, errorThrown);
+              }
+          });
+      },
+      CreateOpportinities3: function (formData, successCallback, errorCallback) {
+          console.log('here: '+formData);
+          $$.ajax({
+              method: 'POST',
+              dataType: 'text',
+              url: GCT.GCcollabURL,
+              data: { method: "create.opportinities3", user: GCTUser.Email(),  formData:formData, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+              timeout: 12000,
+              success: function (data) {
+                  
+                console.log('data is '+data);
+
                   data = JSON.parse(data);
                   successCallback(data);
               },
@@ -2835,7 +2856,7 @@ GCTEach = {
 
 // Exemple of link : https://exemple.ca/services/api/rest/json/?
 GCT = {
-    GCcollabURL: "httpS://gccollab.ca/services/api/rest/json",
+    GCcollabURL: "https://gccollab.ca/services/api/rest/json",
     GEDSURL: "https://api.geds.gc.ca",
     IsInApp: function () {
         if (window.location.href.toLowerCase().indexOf("http") > -1) {

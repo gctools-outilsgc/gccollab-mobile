@@ -3546,6 +3546,26 @@ myApp.onPageInit('new-opportunity', function (page) {
         }
     });
 
+    $$('.next-form3').on('click', function (e) {
+        var formData = myApp.formToData('#opt-form3');
+       
+        if (formData) {
+            GCTUser.CreateOpportinities3(formData, function (data) {
+                console.log("submited");
+                var selected=$$(this).attr('tab2');
+                mainView.router.load({ url: 'NewOpportunity.html',context:{myTab:'#tab2'} });
+                var result = data.result;
+                console.log(result);
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+
+        } else {
+            myApp.alert('Input required is missing');
+            //empty message, dont use, give feedback
+        }
+    });
+
 });
 myApp.onPageInit('profile', function (page) {
     $$('#profile-navbar-inner').html(GCTLang.txtGlobalNav('profile'));
