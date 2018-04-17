@@ -1520,10 +1520,6 @@ myApp.onPageInit('groups', function (page) {
     var limit = 20;
     var offset_groupsAll = 0;
     var offset_groupsMine = 0;
-
-    var offset = 0;
-    var groupsAllMoreOffset = 0;
-    var groupsMineMoreOffset = 0;
     var filters = {};
     var filtersOpened = false;
 
@@ -1583,7 +1579,9 @@ myApp.onPageInit('groups', function (page) {
             filters = "";
         }
 
-        groupsReset();
+        GCTUser.GetGroups(limit, offset_groupsAll, filters, groupsAll, errorConsole);
+        GCTUser.GetGroupsMine(limit, offset_groupsMine, filters, groupsMine, errorConsole);
+
     });
 
     if( !filtersOpened ){
@@ -1640,56 +1638,62 @@ myApp.onPageInit('external-pages', function (page) {
 myApp.onPageInit('members', function (page) {
     $$('#members-navbar-inner').html(GCTLang.txtGlobalNav('members'));
     var limit = 20;
-    var offset = 0;
+    var offset_membersAll = 0;
+    var offset_membersColleagues = 0;
     var filters = {};
     var filtersOpened = false;
-    var membersAllMoreOffset = 0;
-    var membersColleaguesMoreOffset = 0;
+    
 
-    $('#clear-filters').on('click', function() {
+    function membersAll(data) {
+        var members = data.result;
+
+        if (members.length > 0) {
+            $('#members-all-more').show();
+            $.each(members, function (key, value) {
+                var content = GCTEach.Member(value);
+                $(content).hide().appendTo('#members-all').fadeIn(1000);
+            });
+        }
+        if (members.length < limit) {
+            $('#members-all-more').hide();
+            $(endOfContent).hide().appendTo('#members-all').fadeIn(1000);
+        }
+        offset_membersAll += limit;
+    }
+    function membersColleague(data) {
+        var members = data.result;
+
+        if (members.length > 0) {
+            $('#members-colleagues-more').show();
+            $.each(members, function (key, value) {
+                var content = GCTEach.Member(value);
+                $(content).hide().appendTo('#members-colleagues').fadeIn(1000);
+            });
+        }
+        if (members.length < limit) {
+            $('#members-colleagues-more').hide();
+            $(endOfContent).hide().appendTo('#members-colleagues').fadeIn(1000);
+        }
+        offset_membersColleagues += limit;
+    }
+    function membersReset() {
+        $('#members-colleagues').html('');
+        $('#members-all').html('');
+        offset_membersAll = 0;
+        offset_membersColleagues = 0;
+        $('#members-all-more').show();
+        $('#members-colleagues-more').show();
+
+        GCTUser.GetMembers(limit, offset_membersAll, filters, membersAll, errorConsole);
+        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, offset_membersColleagues, filters, membersColleague, errorConsole);
+    }
+
+    $('#clear-filters').on('click', function () {
         filtersOpened = false;
         filters = {};
         $("#member-filters").val('');
         $("#member-name").val('');
-
-        GCTUser.GetMembers(limit, offset, filters, function(data){
-            var members = data.result;
-            $('#members-all').html('');
-
-            if(members.length > 0){
-                $('#members-all-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-all').fadeIn(1000);
-                });
-            } else {
-                $('#members-all-more').hide();
-                $(noMatches).hide().appendTo('#members-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, offset, filters, function(data){
-            var members = data.result;
-            $('#members-colleagues').html('');
-
-            if(members.length > 0){
-                $('#members-colleagues-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#members-colleagues-more').hide();
-                $(noMatches).hide().appendTo('#members-colleagues').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        membersAllMoreOffset = 0;
-        membersColleaguesMoreOffset = 0;
+        membersReset();
     });
 
     $('#save-filters').on('click', function() {
@@ -1699,170 +1703,28 @@ myApp.onPageInit('members', function (page) {
         if( $("#member-filters").val() == "" && $("#member-name").val() == "" ){
             filters = "";
         }
-
-        GCTUser.GetMembers(limit, offset, filters, function(data){
-            var members = data.result;
-            $('#members-all').html('');
-
-            if(members.length > 0){
-                $('#members-all-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-all').fadeIn(1000);
-                });
-            } else {
-                $('#members-all-more').hide();
-                $(noMatches).hide().appendTo('#members-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, offset, filters, function(data){
-            var members = data.result;
-            $('#members-colleagues').html('');
-
-            if(members.length > 0){
-                $('#members-colleagues-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#members-colleagues-more').hide();
-                $(noMatches).hide().appendTo('#members-colleagues').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        membersAllMoreOffset = 0;
-        membersColleaguesMoreOffset = 0;
+        membersReset();
     });
 
     if( !filtersOpened ){
-        GCTUser.GetMembers(limit, offset, filters, function(data){
-            var members = data.result;
-
-            if(members.length > 0){
-                $('#members-all-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-all').fadeIn(1000);
-                });
-            } else {
-                $('#members-all-more').hide();
-                $(noMatches).hide().appendTo('#members-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, offset, filters, function(data){
-            var members = data.result;
-
-            if(members.length > 0){
-                $('#members-colleagues-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#members-colleagues-more').hide();
-                $(noMatches).hide().appendTo('#members-colleagues').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+        GCTUser.GetMembers(limit, offset_membersAll, filters, membersAll, errorConsole);
+        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, offset_membersColleagues, filters, membersColleague, errorConsole);
     }
 
-    var membersAllMore = $$(page.container).find('#members-all-more');
-    membersAllMore.on('click', function (e) {
-        GCTUser.GetMembers(limit, membersAllMoreOffset + limit, filters, function(data){
-            var members = data.result;
-
-            if(members.length > 0){
-                $('#members-all-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-all').fadeIn(1000);
-                });
-            } else {
-                $('#members-all-more').hide();
-                $(noMatches).hide().appendTo('#members-all').fadeIn(1000);
-            }
-
-            membersAllMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#members-all-more').on('click', function (e) {
+        GCTUser.GetMembers(limit, offset_membersAll, filters, membersAll, errorConsole);
     });
-
-    var membersColleaguesMore = $$(page.container).find('#members-colleagues-more');
-    membersColleaguesMore.on('click', function (e) {
-        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, membersColleaguesMoreOffset + limit, filters, function(data){
-            var members = data.result;
-
-            if(members.length > 0){
-                $('#members-colleagues-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#members-colleagues-more').hide();
-                $(noMatches).hide().appendTo('#members-colleagues').fadeIn(1000);
-            }
-
-            membersColleaguesMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#members-colleagues-more').on('click', function (e) {
+        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, offset_membersColleagues, filters, membersColleague, errorConsole);
     });
 
     var refreshMembers = $$(page.container).find('.pull-to-refresh-content');
     refreshMembers.on('refresh', function (e) {
-        GCTUser.GetMembers(limit, offset, filters, function(data){
-            var members = data.result;
-            $('#members-all').html('');
-
-            var content = "";
-            if(members.length > 0){
-                $('#members-all-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-all').fadeIn(1000);
-                });
-            } else {
-                $('#members-all-more').hide();
-                $(noMatches).hide().appendTo('#members-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, offset, filters, function(data){
-            var members = data.result;
-            $('#members-colleagues').html('');
-
-            var content = "";
-            if(members.length > 0){
-                $('#members-colleagues-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#members-colleagues-more').hide();
-                $(noMatches).hide().appendTo('#members-colleagues').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        membersAllMoreOffset = 0;
-        membersColleaguesMoreOffset = 0;
-
+        filtersOpened = false;
+        filters = {};
+        $("#member-filters").val('');
+        $("#member-name").val('');
+        membersReset();
         myApp.pullToRefreshDone();
     });
 });
