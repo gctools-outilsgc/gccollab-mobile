@@ -1067,9 +1067,6 @@ myApp.onPageInit('home', function (page) {
         offset_blogs += limit;
     }
 
-    function errorConsole (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR, textStatus, errorThrown);
-    }
 
     GCTUser.GetNewsfeed(limit, offset_newsfeed, homeNewsfeed, errorConsole);
     $$('#home-newsfeed-more').on('click', function (e) {

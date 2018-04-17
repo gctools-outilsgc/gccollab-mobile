@@ -3018,3 +3018,7 @@ function urlify(text, context) {
     //     return '<a class="external" ';
     // });
 }
+
+function errorConsole(jqXHR, textStatus, errorThrown) {
+    console.log(jqXHR, textStatus, errorThrown);
+}
