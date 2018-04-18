@@ -16,6 +16,11 @@
           </div>
         </div>
       </div>
+      <div class="toolbar toolbar-bottom">
+          <div class="toolbar-inner">
+              <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="fa fa-arrow-circle-o-left fa-2x"></i></a></div>
+          </div>
+      </div>
 
           <div class="page-content">
             <!-- Tabs animated wrapper, required to switch tabs with transition -->
@@ -34,7 +39,7 @@
                           
                                 <div class="item-content">
                                   <div class="item-inner">
-                                    <div class="item-title label">Name</div>
+                                    <div class="item-title label">*Name</div>
                                     <div class="item-input">
                                       <input type="text" name="name" placeholder="Your name" required validate>
                                     </div>
@@ -43,7 +48,7 @@
                            
                                 <div class="item-content">
                                   <div class="item-inner">
-                                    <div class="item-title label">E-mail</div>
+                                    <div class="item-title label">*E-mail</div>
                                     <div class="item-input">
                                       <input type="email" name="email" placeholder="E-mail">
                                     </div>
@@ -67,7 +72,7 @@
                                   </select>
                                   <div class="item-content">
                                     <div class="item-inner">
-                                      <div class="item-title">Your department/agency</div>
+                                      <div class="item-title">*Your department/agency</div>
                                       <div class="item-after">---</div>
                                     </div>
                                   </div>
@@ -104,7 +109,7 @@
                      
                                 <div class="item-content">
                                   <div class="item-inner">
-                                    <div class="item-title label">Bilingual opportunity title</div>
+                                    <div class="item-title label">*Bilingual opportunity title</div>
                                     <div class="item-input">
                                       <input type="text" name="title" placeholder="title">
                                     </div>
@@ -133,7 +138,7 @@
                       
                                 <div class="item-content">
                                   <div class="item-inner">
-                                    <div class="item-title label">Type of opportunity</div>
+                                    <div class="item-title label">*Type of opportunity</div>
                                     <div class="item-input">
                                         <select name="type">
                                             <option>Mentoring</option>
@@ -147,7 +152,7 @@
                             
                                     <div class="item-content">
                                       <div class="item-inner">
-                                        <div class="item-title label">Program area</div>
+                                        <div class="item-title label">*Program area</div>
                                         <div class="item-input">
                                           <select name="program">
                                             <option>Administration</option>
@@ -189,7 +194,7 @@
                                  
                                     <div class="item-content">
                                       <div class="item-inner">
-                                        <div class="item-title label">Ideal start date</div>
+                                        <div class="item-title label">*Ideal start date</div>
                                         <div class="item-input">
                                           <input type="date" name="start_date" placeholder="start" value="">
                                         </div>
@@ -207,7 +212,7 @@
                                
                                     <div class="item-content">
                                       <div class="item-inner">
-                                        <div class="item-title label">Application deadline</div>
+                                        <div class="item-title label">*Application deadline</div>
                                         <div class="item-input">
                                           <input type="date" name="deadline" placeholder="deadline" value="">
                                         </div>
@@ -254,7 +259,7 @@
                             <li>
                               <div class="item-content">
                                 <div class="item-inner">
-                                  <div class="item-title label">Time in hours</div>
+                                  <div class="item-title label">*Time in hours</div>
                                   <div class="item-input">
                                     <input type="text" name="hours" placeholder="hours">
                                   </div>
@@ -309,38 +314,94 @@
                                             <tbody>
                                               <tr>
                                                 <td class="label-cell">Monday</td>
-                                                <td class="numeric-cell">159</td>
-                                                <td class="numeric-cell">159</td>
+                                                <td class="numeric-cell"> 
+                                                  <div class="item-input">
+                                                    <input type="text" name="mon_start" placeholder="HH:mm">
+                                                  </div>
+                                                </td>
+                                                <td class="numeric-cell">
+                                                  <div class="item-input">
+                                                    <input type="text" name="mon_duration" placeholder="HH:mm">
+                                                  </div>
+                                                </td>
                                               </tr>
                                               <tr>
                                                 <td class="label-cell">Tuesday</td>
-                                                <td class="numeric-cell">159</td>
-                                                <td class="numeric-cell">159</td>
+                                                <td class="numeric-cell">
+                                                  <div class="item-input">
+                                                    <input type="text" name="tue_start" placeholder="HH:mm">
+                                                  </div>
+                                                </td>
+                                                <td class="numeric-cell">
+                                                  <div class="item-input">
+                                                    <input type="text" name="tue_duration" placeholder="HH:mm">
+                                                  </div>
+                                                </td>
                                               </tr>
                                               <tr>
                                                 <td class="label-cell">Wednasday</td>
-                                                <td class="numeric-cell">159</td>
-                                                <td class="numeric-cell">159</td>
+                                                <td class="numeric-cell">
+                                                  <div class="item-input">
+                                                    <input type="text" name="wed_start" placeholder="HH:mm">
+                                                  </div>
+                                                </td>
+                                                <td class="numeric-cell">
+                                                  <div class="item-input">
+                                                    <input type="text" name="wed_duration" placeholder="HH:mm">
+                                                  </div>
+                                                </td>
                                               </tr>
                                               <tr>
                                                 <td class="label-cell">Thursday</td>
-                                                <td class="numeric-cell">159</td>
-                                                <td class="numeric-cell">159</td>
+                                                <td class="numeric-cell">
+                                                  <div class="item-input">
+                                                    <input type="text" name="thu_start" placeholder="HH:mm">
+                                                  </div>
+                                                </td>
+                                                <td class="numeric-cell">
+                                                  <div class="item-input">
+                                                    <input type="text" name="thu_duration" placeholder="HH:mm">
+                                                  </div>
+                                                </td>
                                               </tr>
                                               <tr>
                                                 <td class="label-cell">Friday</td>
-                                                <td class="numeric-cell">159</td>
-                                                <td class="numeric-cell">159</td>
+                                                <td class="numeric-cell">
+                                                  <div class="item-input">
+                                                    <input type="text" name="fri_start" placeholder="HH:mm">
+                                                  </div>
+                                                </td>
+                                                <td class="numeric-cell">
+                                                  <div class="item-input">
+                                                    <input type="text" name="fri_duration" placeholder="HH:mm">
+                                                  </div>
+                                                </td>
                                               </tr>
                                               <tr>
                                                 <td class="label-cell">Saturday</td>
-                                                <td class="numeric-cell">159</td>
-                                                <td class="numeric-cell">159</td>
+                                                <td class="numeric-cell">
+                                                  <div class="item-input">
+                                                    <input type="text" name="sat_start" placeholder="HH:mm">
+                                                  </div>
+                                                </td>
+                                                <td class="numeric-cell">
+                                                  <div class="item-input">
+                                                    <input type="text" name="sat_duration" placeholder="HH:mm">
+                                                  </div>
+                                                </td>
                                               </tr>
                                               <tr>
                                                 <td class="label-cell">Sunday</td>
-                                                <td class="numeric-cell">159</td>
-                                                <td class="numeric-cell">159</td>
+                                                <td class="numeric-cell">
+                                                  <div class="item-input">
+                                                    <input type="text" name="sun_start" placeholder="HH:mm">
+                                                  </div>
+                                                </td>
+                                                <td class="numeric-cell">
+                                                  <div class="item-input">
+                                                    <input type="text" name="sun_duration" placeholder="HH:mm">
+                                                  </div>
+                                                </td>
                                               </tr>
                                             </tbody>
                                           </table>
@@ -368,7 +429,7 @@
                             <li>
                               <div class="item-content">
                                 <div class="item-inner">
-                                  <div class="item-title label">Location</div>
+                                  <div class="item-title label">*Location</div>
                                   <div class="item-input">
                                     <select name="location">
                                       <option>Alberta</option>
@@ -469,11 +530,4 @@
               
             </div> 
           </div>
-
-          <div class="toolbar toolbar-bottom">
-              <div class="toolbar-inner">
-                  <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="fa fa-arrow-circle-o-left fa-2x"></i></a></div>
-              </div>
-          </div>
-  
   </div> 

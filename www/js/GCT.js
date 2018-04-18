@@ -2372,16 +2372,14 @@ GCTUser = {
         });
     },
 
-    CreateOpportinities1: function (title,email,phone,departement,agree, successCallback, errorCallback) {
-      //  console.log(message);
+    CreateOpportinities1: function (formData, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "create.opportinities1", user: GCTUser.Email(), title: title, email:email, phone:phone, departement:departement, agree:agree, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "create.opportinities1", user: GCTUser.Email(), formData: formData, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                console.log('data'+ data);
                 data = JSON.parse(data);
                 successCallback(data);
             },
@@ -2390,13 +2388,12 @@ GCTUser = {
             }
         });
     },
-    CreateOpportinities2: function (title,offert,type,program,num_opt,start_date,completion_date,deadline,description, successCallback, errorCallback) {
-        //  console.log(message);
+    CreateOpportinities2: function (formData, successCallback, errorCallback) {
           $$.ajax({
               method: 'POST',
               dataType: 'text',
               url: GCT.GCcollabURL,
-              data: { method: "create.opportinities2", user: GCTUser.Email(),title:title, offert: offert, type:type, program:program, num_opt:num_opt, start_date:start_date, completion_date:completion_date, deadline:deadline, description:description, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+              data: { method: "create.opportinities2", user: GCTUser.Email(),formData:formData, api_key: api_key_gccollab, lang: GCTLang.Lang() },
               timeout: 12000,
               success: function (data) {
                   console.log('data'+ data);
@@ -2409,7 +2406,6 @@ GCTUser = {
           });
       },
       CreateOpportinities3: function (formData, successCallback, errorCallback) {
-          console.log('here: '+formData);
           $$.ajax({
               method: 'POST',
               dataType: 'text',

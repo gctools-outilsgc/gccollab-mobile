@@ -3492,16 +3492,12 @@ myApp.onPageInit('new-opportunity', function (page) {
     // myApp.showTab(myTab);
     $$('.next-form1').on('click', function (e) {
         var formData = myApp.formToData('#opt-form1');
-        console.log(formData['agree']);
         var title = formData['name'];
         var email = formData['email'];
-        var phone = formData['phone'];
-        var departement = formData['departement'];
         var agree = formData['agree'];
-       // formData = JSON.parse(formData);
         if (!(title === '' || email === '' || agree.length === 0)) {
-            GCTUser.CreateOpportinities1(title,email,phone,departement,agree, function (data) {
-                console.log("submited");
+            formData['agree'] = 'YES';
+            GCTUser.CreateOpportinities1(formData, function (data) {
                 var selected=$$(this).attr('tab2');
                 mainView.router.load({ url: 'NewOpportunity.html',context:{myTab:'#tab2'} });
                 var result = data.result;
@@ -3518,20 +3514,8 @@ myApp.onPageInit('new-opportunity', function (page) {
 
     $$('.next-form2').on('click', function (e) {
         var formData = myApp.formToData('#opt-form2');
-        console.log(formData['skills']);
-        var title = formData['title'];
-        var offert = formData['offert'];
-        var type = formData['type'];
-        var program = formData['program'];
-        var num_opt = formData['num_opt'];
-        var start_date = formData['start_date'];
-        var completion_date = formData['completion_date'];
-        var deadline = formData['deadline'];
-        var description = formData['description'];
-       // formData = JSON.parse(formData);
         if (formData) {
-            GCTUser.CreateOpportinities2(title,offert,type,program,num_opt,start_date,completion_date,deadline,description, function (data) {
-                console.log("submited");
+            GCTUser.CreateOpportinities2(formData, function (data) {
                 var selected=$$(this).attr('tab2');
                 mainView.router.load({ url: 'NewOpportunity.html',context:{myTab:'#tab2'} });
                 var result = data.result;
@@ -3550,12 +3534,16 @@ myApp.onPageInit('new-opportunity', function (page) {
         var formData = myApp.formToData('#opt-form3');
        
         if (formData) {
+            if(formData['remotly'].lenght != 0){
+                formData['remotly'] = 'on';
+            }else{ formData['remotly'] == '';}
             GCTUser.CreateOpportinities3(formData, function (data) {
-                console.log("submited");
                 var selected=$$(this).attr('tab2');
                 mainView.router.load({ url: 'NewOpportunity.html',context:{myTab:'#tab2'} });
                 var result = data.result;
                 console.log(result);
+                myApp.alert(result, 'Error');
+
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
             });
