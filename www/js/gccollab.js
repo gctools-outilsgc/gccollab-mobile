@@ -2163,55 +2163,72 @@ myApp.onPageInit('blog', function (page) {
 myApp.onPageInit('bookmarks', function (page) {
     $$('#bookmarks-navbar-inner').html(GCTLang.txtGlobalNav('bookmarks'));
     var limit = 10;
-    var offset = 0;
     var filters = [];
     var filtersOpened = false;
-    var bookmarksAllMoreOffset = 0;
-    var bookmarksColleaguesMoreOffset = 0;
-    var bookmarksMineMoreOffset = 0;
+    var offset_bookmarksAll = 0;
+    var offset_bookmarksColleagues = 0;
+    var offset_bookmarksMine = 0;
+    
+
+    function bookmarksAll(data) {
+        var bookmarks = data.result;
+        if (bookmarks.length > 0) {
+            $('#bookmarks-all-more').show();
+            $.each(bookmarks, function (key, value) {
+                var content = GCTEach.Bookmark(value);
+                $(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
+            });
+        }
+        if (bookmarks.length < limit) {
+            $('#bookmarks-all-more').hide();
+            $(endOfContent).hide().appendTo('#bookmarks-all').fadeIn(1000);
+        }
+        offset_bookmarksAll += limit;
+    }
+    function bookmarksColleagues(data) {
+        var bookmarks = data.result;
+        if (bookmarks.length > 0) {
+            $('#bookmarks-colleagues-more').show();
+            $.each(bookmarks, function (key, value) {
+                var content = GCTEach.Bookmark(value);
+                $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
+            });
+        }
+        if (bookmarks.length < limit) {
+            $('#bookmarks-colleagues-more').hide();
+            $(endOfContent).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
+        }
+        offset_bookmarksColleagues += limit;
+    }
+    function bookmarksMine(data) {
+        var bookmarks = data.result;
+        if (bookmarks.length > 0) {
+            $('#bookmarks-mine-more').show();
+            $.each(bookmarks, function (key, value) {
+                var content = GCTEach.Bookmark(value);
+                $(content).hide().appendTo('#bookmarks-mine').fadeIn(1000);
+            });
+        } 
+        if (bookmarks.length < limit) {
+            $('#bookmarks-mine-more').hide();
+            $(endOfContent).hide().appendTo('#bookmarks-mine').fadeIn(1000);
+        }
+        offset_bookmarksMine += limit;
+    }
+    function bookmarksReset() {
+        offset_bookmarksAll = 0; offset_bookmarksColleagues = 0; offset_bookmarksMine = 0;
+        $('#bookmarks-mine').html(''); $('#bookmarks-colleagues').html(''); $('#bookmarks-all').html('');
+        GCTUser.GetBookmarks(limit, offset_bookmarksAll, filters, bookmarksAll, errorConsole);
+        GCTUser.GetBookmarksByUserColleague(limit, offset_bookmarksColleagues, filters, bookmarksColleagues, errorConsole);
+        GCTUser.GetBookmarksByUser(limit, offset_bookmarksMine, '', bookmarksMine, errorConsole);
+    }
 
     $('#clear-filters').on('click', function () {
         filtersOpened = false;
         filters = {};
         $('#bookmark-filters').val('');
         $('#bookmark-name').val('');
-
-        GCTUser.GetBookmarks(limit, offset, filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-all').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-        GCTUser.GetBookmarksByUserColleague(limit, offset, filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                $.each(bookmarks, function (key, value) {
-                    console.log(value);
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-        //GCTUser.bookmarks here
-
-        bookmarksAllMoreOffset = 0;
-        bookmarksColleaguesMoreOffset = 0;
-        bookmarksMineMoreOffset = 0;
+        bookmarksReset();
     });
 
     $('#save-filters').on('click', function () {
@@ -2221,182 +2238,31 @@ myApp.onPageInit('bookmarks', function (page) {
         if ($("#bookmark-filters").val() == "" && $("#bookmark-name").val() == "") {
             filters = "";
         }
-
-       //GCTUser.bookmarks here
-
-        bookmarksAllMoreOffset = 0;
-        bookmarksColleaguesMoreOffset = 0;
-        bookmarksMineMoreOffset = 0;
+        bookmarksReset();
     });
 
     if (!filtersOpened) {
-        GCTUser.GetBookmarks(limit, offset, filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-all').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-        GCTUser.GetBookmarksByUserColleague(limit, offset, filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-            });
-        GCTUser.GetBookmarksByUser(limit, offset, '', function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-mine-more').show();
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-mine').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-mine-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-mine').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+        GCTUser.GetBookmarks(limit, offset_bookmarksAll, filters, bookmarksAll, errorConsole);
+        GCTUser.GetBookmarksByUserColleague(limit, offset_bookmarksColleagues, filters, bookmarksColleagues, errorConsole);
+        GCTUser.GetBookmarksByUser(limit, offset_bookmarksMine, '', bookmarksMine, errorConsole);
     }
 
-    var bookmarksAllMore = $$(page.container).find('#bookmarks-all-more');
-    bookmarksAllMore.on('click', function (e) {
-        GCTUser.GetBookmarks(limit, bookmarksAllMoreOffset + limit, filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-all').fadeIn(1000);
-            }
-            bookmarksAllMoreOffset += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+
+    $$('#bookmarks-all-more').on('click', function (e) {
+        GCTUser.GetBookmarks(limit, offset_bookmarksAll, filters, bookmarksAll, errorConsole);
     });
-
-
-    var bookmarksColleaguesMore = $$(page.container).find('#bookmarks-colleagues-more');
-    bookmarksColleaguesMore.on('click', function (e) {
-        GCTUser.GetBookmarksByUserColleague(limit, bookmarksColleaguesMoreOffset + limit , filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-            }
-            bookmarksColleaguesMoreOffset += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#bookmarks-colleagues-more').on('click', function (e) {
+        GCTUser.GetBookmarksByUserColleague(limit, offset_bookmarksColleagues, filters, bookmarksColleagues, errorConsole);
     });
-
-    var bookmarksMineMore = $$(page.container).find('#bookmarks-mine-more');
-    bookmarksAllMore.on('click', function (e) {
-        GCTUser.GetBookmarksByUser(limit, bookmarksMineMoreOffset + limit, '', function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-mine-more').show();
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-mine').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-mine-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-mine').fadeIn(1000);
-            }
-            bookmarksMineMoreOffset += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#bookmarks-mine-more').on('click', function (e) {
+        GCTUser.GetBookmarksByUser(limit, offset_bookmarksMine, '', bookmarksMine, errorConsole);
     });
 
     var refreshBookmarks = $$(page.container).find('.pull-to-refresh-content');
     refreshBookmarks.on('refresh', function (e) {
-        GCTUser.GetBookmarks(limit, offset, filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                var content = "";
-                $.each(bookmarks, function (key, value) {
-                    content += GCTEach.Bookmark(value);
-                });
-                $('#bookmarks-all').html('');
-                $(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-all').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-        GCTUser.GetBookmarksByUserColleague(limit, offset, filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                var content = "";
-                $.each(bookmarks, function (key, value) {
-                    content += GCTEach.Bookmark(value);
-                });
-                $('#bookmarks-colleagues').html('');
-                $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-        GCTUser.GetBookmarksByUser(limit, offset, '', function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-mine-more').show();
-                var content = "";
-                $.each(bookmarks, function (key, value) {
-                    console.log(value);
-                    content += GCTEach.Bookmark(value);
-                });
-                $('#bookmarks-mine').html('');
-                $(content).hide().appendTo('#bookmarks-mine').fadeIn(1000);
-            } else {
-                $('#bookmarks-mine-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-mine').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        bookmarksAllMoreOffset = 0;
-        bookmarksColleaguesMoreOffset = 0;
-        bookmarksMineMoreOffset = 0;
-
+        $('#bookmark-filters').val('');
+        $('#bookmark-name').val('');
+        bookmarksReset();
         myApp.pullToRefreshDone();
     });
 
