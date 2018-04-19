@@ -1010,14 +1010,13 @@ myApp.onPageInit('sign-in', function (page) {
 myApp.onPageInit('home', function (page) {
     $$('#home-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
     var limit = 12;
-    var offset = 0;
-    var offset_wires = 0;
     var offset_blogs = 0;
-    var loaded_wire = false;
     var loaded_blog = false;
 
     var home = {}; //variables for this page's content
     home.newsfeed = listObject("home-newsfeed");
+    home.wire = listObject("home-wire");
+    home.blogs = listObject("home-blogs");
 
     function homeNewsfeed(data) {
         var newsfeed = data.result;
@@ -1033,6 +1032,7 @@ myApp.onPageInit('home', function (page) {
         if (newsfeed.length < limit) {
             content = endOfContent;
             $(content).hide().appendTo('#content-' + home.newsfeed.id).fadeIn(1000);
+            $('#more-' + home.newsfeed.id).hide();
         }
         home.newsfeed.offset += limit;
         var focusNow = document.getElementById('focus-' + home.newsfeed.id);
@@ -1040,36 +1040,52 @@ myApp.onPageInit('home', function (page) {
     }
     function homeWires(data) {
         var wires = data.result;
-        var imgs = [];
         var content = '';
+        if (home.wire.loaded == true) { $(home.wire.appendMessage).appendTo('#content-' + home.wire.id); } else { home.wire.loaded = true; }
+
         if (wires.length > 0) {
             $.each(wires, function (key, value) {
                 content = GCTEach.Wire(value);
-                $(content).hide().appendTo('#home-wire').fadeIn(1000);
+                $(content).hide().appendTo('#content-' + home.wire.id).fadeIn(1000);
             });
         }
         if (wires.length < limit) {
             content = endOfContent;
-            $(content).hide().appendTo('#home-wire').fadeIn(1000);
-            $('#home-wire-more').hide();
+            $(content).hide().appendTo('#content-' + home.wire.id).fadeIn(1000);
+            $('#more-' + home.wire.id).hide();
         }
-        offset_wires += limit;
+        home.wire.offset += limit;
+        var focusNow = document.getElementById('focus-' + home.wire.id);
+        if (focusNow) { focusNow.focus(); }
     }
     function homeBlogs(data) {
         var blogs = data.result;
         var content = '';
+        if (home.blogs.loaded == true) { $(home.blogs.appendMessage).appendTo('#content-' + home.blogs.id); } else { home.blogs.loaded = true; }
         if (blogs.length > 0) {
             $.each(blogs, function (key, value) {
                 content = GCTEach.Blog(value);
-                $(content).hide().appendTo('#home-blogs').fadeIn(1000);
+                $(content).hide().appendTo('#content-' + home.blogs.id).fadeIn(1000);
             });
         }
         if (blogs.length < limit) {
             content = endOfContent;
-            $(content).hide().appendTo('#home-blogs').fadeIn(1000);
-            $('#home-blogs-more').hide();
+            $(content).hide().appendTo('#content-' + home.blogs.id).fadeIn(1000);
+            $('#more-' + home.blogs.id).hide();
         }
-        offset_blogs += limit;
+        home.blogs.offset += limit;
+    }
+    function homeReset() {
+        $.each(home, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
+        });
+        GCTUser.GetNewsfeed(limit, home.newsfeed.offset, homeNewsfeed, errorConsole);
+        GCTUser.GetWires(limit, home.wire.offset, '', homeWires, errorConsole);
+        GCTUser.GetBlogs(limit, home.blogs.offset, "", homeBlogs, errorConsole);
+
     }
 
 
@@ -1079,30 +1095,32 @@ myApp.onPageInit('home', function (page) {
         GCTUser.GetNewsfeed(limit, home.newsfeed.offset, homeNewsfeed, errorConsole);
     });
 
-    $$('#tab-wire').on('show', function (e) {
-        if (!loaded_wire) {
-            loaded_wire = true;
-            GCTUser.GetWires(limit, offset_wires, '', homeWires, errorConsole);
+    $$('#tab-' + home.wire.id).on('show', function (e) {
+        if (!home.wire.loaded) {
+            home.wire.loaded = true;
+            GCTUser.GetWires(limit, home.wire.offset, '', homeWires, errorConsole);
         }
     });
-    $$('#home-wire-more').on('click', function (e) {
-        GCTUser.GetWires(limit, offset_wires, '', homeWires, errorConsole);
+    $$('#more-' + home.wire.id).on('click', function (e) {
+        $('#focus-' + home.wire.id).remove();
+        GCTUser.GetWires(limit, home.wire.offset, '', homeWires, errorConsole);
     });
 
-    $$('#tab-blogs').on('show', function (e) {
+    $$('#tab-' + home.blogs.id).on('show', function (e) {
         if (!loaded_blog) {
             loaded_blog = true;
-            GCTUser.GetBlogs(limit, offset_blogs, "", homeBlogs, errorConsole);
+            GCTUser.GetBlogs(limit, home.blogs.offset, "", homeBlogs, errorConsole);
         }
     });
-    $$('#home-blogs-more').on('click', function (e) {
-        GCTUser.GetBlogs(limit, offset_blogs, "", homeBlogs, errorConsole);
+    $$('#more-' + home.blogs.id).on('click', function (e) {
+        $('#focus-' + home.blogs.id).remove();
+        GCTUser.GetBlogs(limit, home.blogs.offset, "", homeBlogs, errorConsole);
     });
 
     var refreshHome = $$(page.container).find('.pull-to-refresh-content');
     refreshHome.on('refresh', function (e) {
         console.log("refresh");
-        //referesh placeholder
+        homeReset();
         myApp.pullToRefreshDone();
     });
 });
