@@ -1014,14 +1014,16 @@ myApp.onPageInit('home', function (page) {
     var offset_wires = 0;
     var offset_newsfeed = 0;
     var offset_blogs = 0;
+    var loaded_newsfeed = false;
     var loaded_wire = false;
     var loaded_blog = false;
-    var focus_newsfeed = '<span id="focus-newsfeed" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">Loaded Content</span>';
+    var focus_newsfeed = '<span id="focus-newsfeed" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans('content-loaded') + '</span>';
 
     function homeNewsfeed(data) {
         var newsfeed = data.result;
         var content = '';
-        $(focus_newsfeed).appendTo('#home-newsfeed');
+        if (loaded_newsfeed == true) { $(focus_newsfeed).appendTo('#home-newsfeed'); } else { loaded_newsfeed = true; }
+
         if (newsfeed.length > 0) {
             $.each(newsfeed, function (key, value) {
                 content = GCTEach.Newsfeed(value);
