@@ -3483,23 +3483,21 @@ myApp.onPageInit('opportunities', function (page) {
     });
 });
 myApp.onPageInit('new-opportunity', function (page) {
-    // var myTab = '#tab1';
-    // if(!(page.context.myTab)){
-    //     var myTab = '#tab1';
-    // }else{
-    // var myTab=page.context.myTab;
-    // }
-    // myApp.showTab(myTab);
+
+
     $$('.next-form1').on('click', function (e) {
+
+
         var formData = myApp.formToData('#opt-form1');
         var title = formData['name'];
         var email = formData['email'];
         var agree = formData['agree'];
         if (!(title === '' || email === '' || agree.length === 0)) {
+            var selected=$$(this).attr('data-my-tab-id');
+            console.log(selected);
+            myApp.showTab(selected);
             formData['agree'] = 'YES';
             GCTUser.CreateOpportinities1(formData, function (data) {
-                var selected=$$(this).attr('tab2');
-                mainView.router.load({ url: 'NewOpportunity.html',context:{myTab:'#tab2'} });
                 var result = data.result;
                 console.log(result);
             }, function (jqXHR, textStatus, errorThrown) {
@@ -3513,8 +3511,18 @@ myApp.onPageInit('new-opportunity', function (page) {
     });
 
     $$('.next-form2').on('click', function (e) {
+
         var formData = myApp.formToData('#opt-form2');
-        if (formData) {
+
+        var title = formData['title'];
+        var type = formData['type'];
+        var program = formData['program'];
+        var start = formData['start_date'];
+        var deadline = formData['deadline'];
+        if (!(title === '' || type === ''|| program === '' || start === '' || deadline === '')) {
+            var selected=$$(this).attr('data-my-tab-id');
+            console.log(selected);
+            myApp.showTab(selected);
             GCTUser.CreateOpportinities2(formData, function (data) {
                 var selected=$$(this).attr('tab2');
                 mainView.router.load({ url: 'NewOpportunity.html',context:{myTab:'#tab2'} });
@@ -3533,7 +3541,10 @@ myApp.onPageInit('new-opportunity', function (page) {
     $$('.next-form3').on('click', function (e) {
         var formData = myApp.formToData('#opt-form3');
        
-        if (formData) {
+        var hours = formData['hours'];
+        var location = formData['location'];
+
+        if (!(hours === '' || location === '')) {
             if(formData['remotly'].lenght != 0){
                 formData['remotly'] = 'on';
             }else{ formData['remotly'] == '';}
