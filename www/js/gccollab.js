@@ -1016,12 +1016,12 @@ myApp.onPageInit('home', function (page) {
     var offset_blogs = 0;
     var loaded_wire = false;
     var loaded_blog = false;
-    var more_newsfeed = '<a id="home-newsfeed-more" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>';
+    var focus_newsfeed = '<span id="focus-newsfeed" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">Loaded Content</span>';
 
     function homeNewsfeed(data) {
         var newsfeed = data.result;
         var content = '';
-        $('#home-newsfeed-more').remove();
+        $(focus_newsfeed).appendTo('#home-newsfeed');
         if (newsfeed.length > 0) {
             $.each(newsfeed, function (key, value) {
                 content = GCTEach.Newsfeed(value);
@@ -1031,13 +1031,10 @@ myApp.onPageInit('home', function (page) {
         if (newsfeed.length < limit) {
             content = endOfContent;
             $(content).hide().appendTo('#home-newsfeed').fadeIn(1000);
-        } else {
-            $(more_newsfeed).appendTo('#home-newsfeed');
-            $$('#home-newsfeed-more').on('click', function (e) {
-                GCTUser.GetNewsfeed(limit, offset_newsfeed, homeNewsfeed, errorConsole);
-            });
         }
         offset_newsfeed += limit;
+        var focusNow = document.getElementById('focus-newsfeed');
+        focusNow.focus();
     }
     function homeWires(data) {
         var wires = data.result;
@@ -1075,6 +1072,10 @@ myApp.onPageInit('home', function (page) {
 
 
     GCTUser.GetNewsfeed(limit, offset_newsfeed, homeNewsfeed, errorConsole);
+    $$('#home-newsfeed-more').on('click', function (e) {
+        $('#focus-newsfeed').remove();
+        GCTUser.GetNewsfeed(limit, offset_newsfeed, homeNewsfeed, errorConsole);
+    });
 
     $$('#tab-wire').on('show', function (e) {
         if (!loaded_wire) {
