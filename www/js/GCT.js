@@ -414,6 +414,9 @@ GCTLang = {
             '<div class="right sliding"><a href="#" data-panel="right" class="open-panel link icon-only" aria-label="Button to open Notification Panel"><i class="fa fa-bell badge-wrapper"></i></a></div>';
         return content;
     },
+    txtFocusMessage: function (id) {
+        return '<span id="focus-' + id + '" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans('content-loaded') + '</span>';
+    },
     liGEDSResult: function (object) {
         var content = "<li class='item-content'>"
             + "<div class='item-inner'>"
@@ -2830,6 +2833,15 @@ GCTEach = {
         });
         return content;
     }
+}
+
+function listObject(id) {
+    var object = {};
+    object.offset = 0;
+    object.loaded = false;
+    object.id = id;
+    object.appendMessage = GCTLang.txtFocusMessage(id);
+    return object;
 }
 
 
