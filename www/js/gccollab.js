@@ -658,7 +658,25 @@ myApp.onPageInit('group', function (page) {
         group.discussions.offset += limit;
         var focusNow = document.getElementById('focus-' + group.discussions.id);
         if (focusNow) { focusNow.focus(); }
+    }
 
+    function groupBookmarks(data) {
+        var info = data.result;
+        if (group.bookmarks.loaded == true) { $(group.bookmarks.appendMessage).appendTo('#content-' + group.bookmarks.id); } else { group.bookmarks.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Bookmark(value);
+                $(content).hide().appendTo('#content-' + group.bookmarks.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            $(endOfContent).hide().appendTo('#content-' + group.bookmarks.id).fadeIn(1000);
+            $('#more-' + group.bookmarks.id).hide();
+        }
+        group.bookmarks.offset += limit;
+        var focusNow = document.getElementById('focus-' + group.bookmarks.id);
+        if (focusNow) { focusNow.focus(); }
     }
 
     GCTUser.GetGroup(guid, function(data){
@@ -747,47 +765,14 @@ myApp.onPageInit('group', function (page) {
         GCTUser.GetGroupDiscussions(guid, limit, group.discussions.offset, groupDiscussions, errorConsole);
     });
 
-    $("#tab-group-bookmarks").on('show', function (e) {
-        if (bookmarksloaded == false) {
-            GCTUser.GetBookmarksByUser(limit, offset, guid, function (data) {
-                var bookmarks = data.result;
-                if (bookmarks.length > 0) {
-                    $.each(bookmarks, function (key, value) {
-                        var content = GCTEach.Bookmark(value);
-                        $(content).appendTo('#group-bookmarks');
-                    });
-                }
-                if (bookmarks.length < limit) {
-                    var content = noMatches;
-                    $(content).appendTo('#group-bookmarks');
-                    $('#group-bookmarks-more').hide();
-                }
-                bookmarksloaded = true;
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $("#tab-" + group.bookmarks.id).on('show', function (e) {
+        if (!group.bookmarks.loaded) {
+            GCTUser.GetBookmarksByUser(limit, group.bookmarks.offset, guid, groupBookmarks, errorConsole);
         }
     });
-    $$('#group-bookmarks-more').on('click', function (e) {
-        GCTUser.GetBookmarksByUser(limit, groupBookmarksMoreOffset + limit, guid, function (data) {
-            var bookmarks = data.result;
-            var content = '';
-            if (bookmarks.length > 0) {
-                $('#group-bookmarks-more').show();
-                $.each(bookmarks, function (key, value) {
-                    content += GCTEach.Bookmark(value);
-                });
-                $(content).hide().appendTo('#group-bookmarks').fadeIn(1000);
-            } else {
-                $(noMatches).hide().appendTo('#group-bookmarks').fadeIn(1000);
-            }
-            if (bookmarks.length < limit) {
-                $('#group-bookmarks-more').hide();
-            }
-            groupBookmarksMoreOffset += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$("#more-" + group.bookmarks.id).on('click', function (e) {
+        $('#focus-' + group.bookmarks.id).remove();
+        GCTUser.GetBookmarksByUser(limit, group.bookmarks.offset, guid, groupBookmarks, errorConsole);
     });
     
     $$('#tab-group-members').on('show', function (e) {
