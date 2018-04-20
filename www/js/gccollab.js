@@ -3484,7 +3484,8 @@ myApp.onPageInit('opportunities', function (page) {
 });
 myApp.onPageInit('new-opportunity', function (page) {
 
-
+$$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platform'));
+    
     $$('.next-form1').on('click', function (e) {
 
 
