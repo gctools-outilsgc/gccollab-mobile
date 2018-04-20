@@ -2216,62 +2216,80 @@ myApp.onPageInit('bookmarks', function (page) {
     var limit = 10;
     var filters = [];
     var filtersOpened = false;
-    var offset_bookmarksAll = 0;
-    var offset_bookmarksColleagues = 0;
-    var offset_bookmarksMine = 0;
-    
+    var bookmarks = {}; //objects for each tab's variables.
+    bookmarks.all = listObject("bookmarks-all");
+    bookmarks.colleagues = listObject("bookmarks-colleagues");
+    bookmarks.mine = listObject("bookmarks-mine");
 
     function bookmarksAll(data) {
-        var bookmarks = data.result;
-        if (bookmarks.length > 0) {
-            $('#bookmarks-all-more').show();
-            $.each(bookmarks, function (key, value) {
-                var content = GCTEach.Bookmark(value);
-                $(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
+        var info = data.result;
+        var content = '';
+        if (bookmarks.all.loaded == true) { $(bookmarks.all.appendMessage).appendTo('#content-' + bookmarks.all.id); } else { bookmarks.all.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                content = GCTEach.Bookmark(value);
+                $(content).hide().appendTo('#content-' + bookmarks.all.id).fadeIn(1000);
             });
         }
-        if (bookmarks.length < limit) {
-            $('#bookmarks-all-more').hide();
-            $(endOfContent).hide().appendTo('#bookmarks-all').fadeIn(1000);
+        if (info.length < limit) {
+            content = endOfContent;
+            $(content).hide().appendTo('#content-' + bookmarks.all.id).fadeIn(1000);
+            $('#more-' + bookmarks.all.id).hide();
         }
-        offset_bookmarksAll += limit;
+
+        bookmarks.all.offset += limit;
+        var focusNow = document.getElementById('focus-' + bookmarks.all.id);
+        if (focusNow) { focusNow.focus(); }
     }
     function bookmarksColleagues(data) {
-        var bookmarks = data.result;
-        if (bookmarks.length > 0) {
-            $('#bookmarks-colleagues-more').show();
-            $.each(bookmarks, function (key, value) {
+        var info = data.result;
+        if (bookmarks.colleagues.loaded == true) { $(bookmarks.colleagues.appendMessage).appendTo('#content-' + bookmarks.colleagues.id); } else { bookmarks.colleagues.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
                 var content = GCTEach.Bookmark(value);
-                $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
+                $(content).hide().appendTo('#content-' + bookmarks.colleagues.id).fadeIn(1000);
             });
         }
-        if (bookmarks.length < limit) {
-            $('#bookmarks-colleagues-more').hide();
-            $(endOfContent).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
+        if (info.length < limit) {
+            var content = endOfContent;
+            $(content).hide().appendTo('#content-' + bookmarks.colleagues.id).fadeIn(1000);
+            $('#more-' + bookmarks.colleagues.id).hide();
         }
-        offset_bookmarksColleagues += limit;
+        bookmarks.colleagues.offset += limit;
+        var focusNow = document.getElementById('focus-' + bookmarks.colleagues.id);
+        if (focusNow) { focusNow.focus(); }
     }
     function bookmarksMine(data) {
-        var bookmarks = data.result;
-        if (bookmarks.length > 0) {
-            $('#bookmarks-mine-more').show();
-            $.each(bookmarks, function (key, value) {
-                var content = GCTEach.Bookmark(value);
-                $(content).hide().appendTo('#bookmarks-mine').fadeIn(1000);
+        var info = data.result;
+        if (bookmarks.mine.loaded == true) { $(bookmarks.mine.appendMessage).appendTo('#content-' + bookmarks.mine.id); } else { bookmarks.mine.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Wire(value);
+                $(content).hide().appendTo('#content-' + bookmarks.mine.id).fadeIn(1000);
             });
-        } 
-        if (bookmarks.length < limit) {
-            $('#bookmarks-mine-more').hide();
-            $(endOfContent).hide().appendTo('#bookmarks-mine').fadeIn(1000);
         }
-        offset_bookmarksMine += limit;
+        if (info.length < limit) {
+            var content = endOfContent;
+            $(content).hide().appendTo('#content-' + bookmarks.mine.id).fadeIn(1000);
+            $('#more-' + bookmarks.mine.id).hide();
+        }
+        bookmarks.mine.offset += limit;
+        var focusNow = document.getElementById('focus-' + bookmarks.mine.id);
+        if (focusNow) { focusNow.focus(); }
     }
     function bookmarksReset() {
-        offset_bookmarksAll = 0; offset_bookmarksColleagues = 0; offset_bookmarksMine = 0;
-        $('#bookmarks-mine').html(''); $('#bookmarks-colleagues').html(''); $('#bookmarks-all').html('');
-        GCTUser.GetBookmarks(limit, offset_bookmarksAll, filters, bookmarksAll, errorConsole);
-        GCTUser.GetBookmarksByUserColleague(limit, offset_bookmarksColleagues, filters, bookmarksColleagues, errorConsole);
-        GCTUser.GetBookmarksByUser(limit, offset_bookmarksMine, '', bookmarksMine, errorConsole);
+        $.each(bookmarks, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
+        });
+        GCTUser.GetBookmarks(limit, bookmarks.all.offset, filters, bookmarksAll, errorConsole);
+        GCTUser.GetBookmarksByUserColleague(limit, bookmarks.colleagues.offset, filters, bookmarksColleagues, errorConsole);
+        GCTUser.GetBookmarksByUser(limit, bookmarks.mine.offset, '', bookmarksMine, errorConsole);
     }
 
     $('#clear-filters').on('click', function () {
@@ -2293,20 +2311,23 @@ myApp.onPageInit('bookmarks', function (page) {
     });
 
     if (!filtersOpened) {
-        GCTUser.GetBookmarks(limit, offset_bookmarksAll, filters, bookmarksAll, errorConsole);
-        GCTUser.GetBookmarksByUserColleague(limit, offset_bookmarksColleagues, filters, bookmarksColleagues, errorConsole);
-        GCTUser.GetBookmarksByUser(limit, offset_bookmarksMine, '', bookmarksMine, errorConsole);
+        GCTUser.GetBookmarks(limit, bookmarks.all.offset, filters, bookmarksAll, errorConsole);
+        GCTUser.GetBookmarksByUserColleague(limit, bookmarks.colleagues.offset, filters, bookmarksColleagues, errorConsole);
+        GCTUser.GetBookmarksByUser(limit, bookmarks.mine.offset, '', bookmarksMine, errorConsole);
     }
 
 
-    $$('#bookmarks-all-more').on('click', function (e) {
-        GCTUser.GetBookmarks(limit, offset_bookmarksAll, filters, bookmarksAll, errorConsole);
+    $$('#more-' + bookmarks.all.id).on('click', function (e) {
+        $('#focus-' + bookmarks.all.id).remove();
+        GCTUser.GetBookmarks(limit, bookmarks.all.offset, filters, bookmarksAll, errorConsole);
     });
-    $$('#bookmarks-colleagues-more').on('click', function (e) {
-        GCTUser.GetBookmarksByUserColleague(limit, offset_bookmarksColleagues, filters, bookmarksColleagues, errorConsole);
+    $$('#more-' + bookmarks.colleagues.id).on('click', function (e) {
+        $('#focus-' + bookmarks.colleagues.id).remove();
+        GCTUser.GetBookmarksByUserColleague(limit, bookmarks.colleagues.offset, filters, bookmarksColleagues, errorConsole);
     });
-    $$('#bookmarks-mine-more').on('click', function (e) {
-        GCTUser.GetBookmarksByUser(limit, offset_bookmarksMine, '', bookmarksMine, errorConsole);
+    $$('#more-' + bookmarks.mine.id).on('click', function (e) {
+        $('#focus-' + bookmarks.mine.id).remove();
+        GCTUser.GetBookmarksByUser(limit, bookmarks.mine.offset, '', bookmarksMine, errorConsole);
     });
 
     var refreshBookmarks = $$(page.container).find('.pull-to-refresh-content');
