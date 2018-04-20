@@ -10,17 +10,17 @@ GCTLang = {
         var content = "<div class='swiper-slide list-block cards-list'>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
-            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='item-media rounded'><img aria-hidden='true' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
-            + "<div class='author'>" + object.name + "</div>"
+            + "<div id='author-"+object.guid+"' class='author'>" + object.name + "</div>"
             + "</div>"
             + "<div class='time'>" + object.date + "</div>"
             + "</div>"
             + "</div>"
             + "<div class='card-content'>"
             + "<div class='card-content-inner'>"
-            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
+            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
             + "<div class='item-text large'><a onclick='ShowProfile(" + object.owner + ");'>" + object.name + "</a> " + object.description + " " + object.more + object.context + "</div>"
             + object.text
             + object.source
@@ -43,7 +43,7 @@ GCTLang = {
                         + '<div class="item-title-row">'
                             + '<div class="item-title author-comment">' + object.name +'</div>'
                         + '</div>'
-                        + '<div class="time">' + object.date + '<a href="#" class="link pull-right more-options" data-owner="' + object.owner + '" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="GCTUser.MoreOptions(this); "><i class="fa fa-caret-down"></i></a></div>'
+            + '<div class="time">' + object.date + '<a href="#" class="link pull-right more-options" data-owner="' + object.owner + '" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="GCTUser.MoreOptions(this);" aria-label="More Options"><i class="fa fa-caret-down"></i></a></div>'
                         + object.description
             + "<br><a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
 
@@ -68,7 +68,7 @@ GCTLang = {
                 + "<div class='card-content'>"
             + "<div id='blog-" + object.guid + "' class='card-content-inner'>"
            
-                     + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
+            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
                         + "<div class='blog-title'>" + object.title + "</div>"
                         + "<div class='blog-group'>" + object.group + "</div>"
                         + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
@@ -100,7 +100,7 @@ GCTLang = {
                 + "<div class='card-content'>"
             + "<div class='card-content-inner'>"
            
-                     + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
+            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
                         + "<div class='blog-title'>" + object.title + "</div>"
                         + "<div class='blog-group'>" + object.group + "</div>"
                         + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
@@ -243,7 +243,7 @@ GCTLang = {
                     + "</div>"
                     + "<div class='card-content'>"
                         + "<div class='card-content-inner'" + object.all_text +">"
-                        + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"                    
+                + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fa fa-caret-down'></i></a>"                    
                             + "<div class='blog-title'>" + object.title + "</div>"
                             + "<div class='title'> <b>" + object.jobtype + "(" + object.roletype + ")" + "</b></div>"
                             + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>";
@@ -311,7 +311,7 @@ GCTLang = {
                 + "</div>"
                 + "<div class='card-content'>"
                     + "<div class='card-content-inner'>"
-                        + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
+            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
             + "<div id='wire-" + object.guid + "' class='item-text large'>" + object.description + "</div>"
             + "<div class='item-media'>"+ object.image +"</div>"
                         + object.source
@@ -374,7 +374,7 @@ GCTLang = {
             + "<div class='card-content'>"
             + "<div class='card-content-inner'>"
 
-            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'><i class='fa fa-caret-down'></i></a>"
+            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
             + "<div class='blog-title'>" + object.title + "</div>"
             + "<div class='blog-group'>" + object.posted + "</div>"
             + "<div class='item-text large'>" + object.description + "</div>"
@@ -413,6 +413,9 @@ GCTLang = {
             '<div class="center" id="'+title+'">' + GCTLang.Trans(title) + '</div>' +
             '<div class="right sliding"><a href="#" data-panel="right" class="open-panel link icon-only" aria-label="Button to open Notification Panel"><i class="fa fa-bell badge-wrapper"></i></a></div>';
         return content;
+    },
+    txtFocusMessage: function (id) {
+        return '<span id="focus-' + id + '" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans('content-loaded') + '</span>';
     },
     liGEDSResult: function (object) {
         var content = "<li class='item-content'>"
@@ -2849,6 +2852,15 @@ GCTEach = {
     }
 }
 
+function listObject(id) {
+    var object = {};
+    object.offset = 0;
+    object.loaded = false;
+    object.id = id;
+    object.appendMessage = GCTLang.txtFocusMessage(id);
+    return object;
+}
+
 
 // Exemple of link : https://exemple.ca/services/api/rest/json/?
 GCT = {
@@ -3034,4 +3046,8 @@ function urlify(text, context) {
     // return text.replace(urlRegex, function(url) {
     //     return '<a class="external" ';
     // });
+}
+
+function errorConsole(jqXHR, textStatus, errorThrown) {
+    console.log(jqXHR, textStatus, errorThrown);
 }

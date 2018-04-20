@@ -276,7 +276,9 @@
     "missions:decline:approval":"Unable to obtain management approval",
     "missions:other":"Other",
     "reason-decline-opportunity":"Reason to decline the offer to participate in this opportunity",
-    "message-creator-opportunity":"Message to opportunity creator"
+    "message-creator-opportunity": "Message to opportunity creator",
+
+    "content-loaded": "New content appended to page."
 }
 
 French = {
@@ -557,6 +559,8 @@ French = {
     "missions:decline:approval":"Impossible d'obtenir l'approbation de la direction",
     "missions:other":"Autre",
     "reason-decline-opportunity":"Raison pour le retrait de votre participation à cette possibilité",
-    "message-creator-opportunity":"Message au gestionnaire"
+    "message-creator-opportunity": "Message au gestionnaire",
+
+    "content-loaded": "Nouveau contenu ajouté à la page."
     
 }

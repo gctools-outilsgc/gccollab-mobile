@@ -7,6 +7,7 @@ var myApp = new Framework7({
     material: true,
     pushState: true,
     tapHold: true
+    //preloadPreviousPage: false
 });
 
 
@@ -591,20 +592,134 @@ myApp.onPageInit('group', function (page) {
     $$('#group-navbar-inner').html(GCTLang.txtGlobalNav('group'));
     var guid = page.query.guid;
     var limit = 20;
-    var offset = 0;
-    var groupActivityMoreOffset = 0;
-    var groupMembersMoreOffset = 0;
-    var groupBookmarksMoreOffset = 0;
-    var offset_blogs = 0;
-    var offset_discussion = 0;
     var enabled;
     var access;
-    var membersloaded = false;
-    var activityloaded = false;
-    var bookmarksloaded = false;
-    var ld_discussion = false;
-    var ld_blogs = false;
     var group_public;
+
+    var group = {};
+    group.members = listObject("group-members");
+    group.discussions = listObject("group-discussions");
+    group.activity = listObject("group-activity");
+    group.bookmarks = listObject("group-bookmarks");
+    group.blogs = listObject("group-blogs");
+
+    function groupDiscussions(data) {
+        var info = data.result;
+        var content = '';
+        if (group.discussions.loaded == true) { $(group.discussions.appendMessage).appendTo('#content-' + group.discussions.id); } else { group.discussions.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                // Removes HTML components from Discussion
+                //var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
+                var text = "<blockquote class='item-text large'>" + value.description + "</blockquote>";
+                var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+                var replied = (value.replied) ? "replied" : "";
+                var liked = (value.liked) ? "liked" : "";
+                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+
+                content += GCTLang.txtDiscussion({
+                    icon: value.userDetails.iconURL,
+                    name: value.userDetails.displayName,
+                    date: prettyDate(value.time_created),
+                    group: group,
+                    description: text,
+                    title: value.title,
+                    all_text: 'all_text',
+                    action: action,
+                    owner: value.owner_guid,
+                    guid: value.guid,
+                    type: "gccollab_discussion_post",
+                    replied: replied,
+                    liked: liked,
+                    likes: likes
+                });
+
+            });
+            $(content).appendTo('#content-' + group.discussions.id);
+        }
+        if (info.length < limit) {
+            var content = endOfContent;
+            $(content).appendTo('#content-' + group.discussions.id);
+            $('#more-' + group.discussions.id).hide();
+        }
+        group.discussions.offset += limit;
+        var focusNow = document.getElementById('focus-' + group.discussions.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function groupBookmarks(data) {
+        var info = data.result;
+        if (group.bookmarks.loaded == true) { $(group.bookmarks.appendMessage).appendTo('#content-' + group.bookmarks.id); } else { group.bookmarks.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Bookmark(value);
+                $(content).hide().appendTo('#content-' + group.bookmarks.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            $(endOfContent).hide().appendTo('#content-' + group.bookmarks.id).fadeIn(1000);
+            $('#more-' + group.bookmarks.id).hide();
+        }
+        group.bookmarks.offset += limit;
+        var focusNow = document.getElementById('focus-' + group.bookmarks.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function groupMembers(data) {
+        var info = data.result;
+        if (group.members.loaded == true) { $(group.members.appendMessage).appendTo('#content-' + group.members.id); } else { group.members.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Member(value);
+                $(content).hide().appendTo('#content-' + group.members.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            $('#more-' + group.members.id).hide();
+            $(endOfContent).hide().appendTo('#content-' + group.members.id).fadeIn(1000);
+        }
+        group.members.offset += limit;
+        var focusNow = document.getElementById('focus-' + group.members.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function groupActivity(data) {
+        var info = data.result;
+        if (group.activity.loaded == true) { $(group.activity.appendMessage).appendTo('#content-' + group.activity.id); } else { group.activity.loaded = true; }
+
+        if (info.length > 0) {
+            $(info).each(function (key, value) {
+                var content = GCTEach.Activity(value);
+                $(content).hide().appendTo('#content-' + group.activity.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            $(endOfContent).hide().appendTo('#content-' + group.activity.id).fadeIn(1000);
+            $('#more-' + group.activity.id).hide();
+        }
+        group.activity.offset += limit;
+        var focusNow = document.getElementById('focus-' + group.activity.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function groupBlogs(data) {
+        var info = data.result;
+        if (group.blogs.loaded == true) { $(group.blogs.appendMessage).appendTo('#content-' + group.blogs.id); } else { group.blogs.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Blog(value);
+                $(content).hide().appendTo('#content-' + group.blogs.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            $(endOfContent).hide().appendTo('#content-' + group.blogs.id).fadeIn(1000);
+            $('#more-' + group.blogs.id).hide();
+        }
+        group.blogs.offset += limit;
+        var focusNow = document.getElementById('focus-' + group.blogs.id);
+        if (focusNow) { focusNow.focus(); }
+    }
 
     GCTUser.GetGroup(guid, function(data){
         var group = data.result;
@@ -642,9 +757,7 @@ myApp.onPageInit('group', function (page) {
         $("[data-guid]").data('guid', group.guid);
         $("[data-type]").data('type', group.type);
 
-    }, function(jqXHR, textStatus, errorThrown){
-        console.log(jqXHR, textStatus, errorThrown);
-    });
+    }, errorConsole);
 
     $("#group-menu").on('click', function (e) {
         var popoverHTML = '<div class="popover pop-group-menu">'
@@ -653,7 +766,7 @@ myApp.onPageInit('group', function (page) {
             + '<ul>';
         if (access) {
             popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#tab-group-activity" class="button tab-link close-popover" data-translate="activity">'+ GCTLang.Trans("activity") +'</a></li>' : "";
-            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-group-discussion" class="button tab-link close-popover" data-translate="discussion">'+ GCTLang.Trans("discussion") +'</a></li>' : "";
+            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-group-discussions" class="button tab-link close-popover" data-translate="discussion">'+ GCTLang.Trans("discussion") +'</a></li>' : "";
             popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#tab-group-bookmarks" class="button tab-link close-popover" data-translate="bookmarks">' + GCTLang.Trans("bookmarks") + '</a></li>' : "";
             popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#tab-group-blogs" class="button tab-link close-popover" data-translate="blogs">' + GCTLang.Trans("blogs") + '</a></li>' : "";
         } else {
@@ -684,266 +797,54 @@ myApp.onPageInit('group', function (page) {
         myApp.popover(popoverHTML, this);
     });
 
-    $("#tab-group-discussion").on('show', function (e) {
-        if (!ld_discussion) {
-            ld_discussion = true;
-            GCTUser.GetGroupDiscussions(guid,limit, offset, function(data){
-                var discussions = data.result;
-                var content = '';
-                if(discussions.length > 0){
-                    $.each(discussions, function (key, value) {
-                        // Removes HTML components from Discussion
-                        //var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
-                        var text = "<blockquote class='item-text large'>" + value.description + "</blockquote>";
-                        var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
-                        var replied = (value.replied) ? "replied" : "";
-                        var liked = (value.liked) ? "liked" : "";
-                        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                         content += GCTLang.txtDiscussion({
-                            icon: value.userDetails.iconURL,
-                            name: value.userDetails.displayName,
-                            date: prettyDate(value.time_created),
-                            group: group,
-                            description: text,
-                            title: value.title,
-                            all_text: 'all_text',
-                            action: action,
-                            owner: value.owner_guid,
-                            guid: value.guid,
-                            type: "gccollab_discussion_post",
-                            replied: replied,
-                            liked: liked,
-                            likes: likes
-                        });
-
-                    });
-                    $(content).appendTo('#group-discussion');
-                } 
-                if (discussions.length < limit) {
-                    var content = endOfContent;
-                    $(content).appendTo('#group-discussion');
-                    $('#group-discussion-more').hide();
-                }
-            
-            }, function(jqXHR, textStatus, errorThrown){
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $("#tab-" + group.discussions.id).on('show', function (e) {
+        if (!group.discussions.loaded) {
+            GCTUser.GetGroupDiscussions(guid, limit, group.discussions.offset, groupDiscussions, errorConsole);
         }
     });
-    $$("#group-discussion-more").on('click', function (e) {
-        GCTUser.GetGroupDiscussions(guid, limit, offset_discussion + limit , function(data){
-            var discussions = data.result;
-            var content = '';
-            offset_discussion += limit;
-            if(discussions.length > 0){
-                $.each(discussions, function (key, value) {
-                    console.log(value);
-                    // Removes HTML components from Discussion
-                    //var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
-                    var text = "<blockquote class='item-text large'>" + value.description + "</blockquote>";
-                    var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                     content += GCTLang.txtDiscussion({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        group: group,
-                        description: text,
-                        title: value.title,
-                        all_text: 'all_text',
-                        action: action,
-                        owner: value.owner_guid,
-                        guid: value.guid,
-                        type: "gccollab_discussion_post",
-                        replied: replied,
-                        liked: liked,
-                        likes: likes
-                    });
-                });
-                $(content).appendTo('#group-discussion');
-            } 
-            if (discussions.length < limit) {
-                var content = endOfContent;
-                $(content).appendTo('#group-discussion');
-                $('#group-discussion-more').hide();
-            }
-            
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$("#more-" + group.discussions.id).on('click', function (e) {
+        $('#focus-' + group.discussions.id).remove();
+        GCTUser.GetGroupDiscussions(guid, limit, group.discussions.offset, groupDiscussions, errorConsole);
     });
 
-    $("#tab-group-bookmarks").on('show', function (e) {
-        if (bookmarksloaded == false) {
-            GCTUser.GetBookmarksByUser(limit, offset, guid, function (data) {
-                var bookmarks = data.result;
-                if (bookmarks.length > 0) {
-                    $.each(bookmarks, function (key, value) {
-                        var content = GCTEach.Bookmark(value);
-                        $(content).appendTo('#group-bookmarks');
-                    });
-                }
-                if (bookmarks.length < limit) {
-                    var content = noMatches;
-                    $(content).appendTo('#group-bookmarks');
-                    $('#group-bookmarks-more').hide();
-                }
-                bookmarksloaded = true;
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $("#tab-" + group.bookmarks.id).on('show', function (e) {
+        if (!group.bookmarks.loaded) {
+            GCTUser.GetBookmarksByUser(limit, group.bookmarks.offset, guid, groupBookmarks, errorConsole);
         }
     });
-    $$('#group-bookmarks-more').on('click', function (e) {
-        GCTUser.GetBookmarksByUser(limit, groupBookmarksMoreOffset + limit, guid, function (data) {
-            var bookmarks = data.result;
-            var content = '';
-            if (bookmarks.length > 0) {
-                $('#group-bookmarks-more').show();
-                $.each(bookmarks, function (key, value) {
-                    content += GCTEach.Bookmark(value);
-                });
-                $(content).hide().appendTo('#group-bookmarks').fadeIn(1000);
-            } else {
-                $(noMatches).hide().appendTo('#group-bookmarks').fadeIn(1000);
-            }
-            if (bookmarks.length < limit) {
-                $('#group-bookmarks-more').hide();
-            }
-            groupBookmarksMoreOffset += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$("#more-" + group.bookmarks.id).on('click', function (e) {
+        $('#focus-' + group.bookmarks.id).remove();
+        GCTUser.GetBookmarksByUser(limit, group.bookmarks.offset, guid, groupBookmarks, errorConsole);
     });
     
-    $$('#tab-group-members').on('show', function (e) {
-        if (membersloaded == false) {
-            GCTUser.GetGroupMembers(guid, limit, offset, function (data) {
-                var members = data.result;
-                if (members.length > 0) {
-                    $.each(members, function (key, value) {
-                        var content = GCTEach.Member(value);
-                        $(content).appendTo('#group-members');
-                    });
-                } else {
-                    var content = noMatches;
-                    $(content).appendTo('#group-members');
-                }
-                membersloaded = true;
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $$('#tab-' + group.members.id).on('show', function (e) {
+        if (!group.members.loaded) {
+            GCTUser.GetGroupMembers(guid, limit, group.members.offset, groupMembers, errorConsole);
         }
     });
-    $$('#group-members-more').on('click', function (e) {
-        GCTUser.GetGroupMembers(guid, limit, groupMembersMoreOffset + limit, function (data) {
-            var members = data.result;
-
-            var content = '';
-            if (members.length > 0) {
-                $('#group-members-more').show();
-                $.each(members, function (key, value) {
-                    content += GCTEach.Member(value);
-                });
-                $(content).hide().appendTo('#group-members').fadeIn(1000);
-            } else {
-                $('#group-members-more').hide();
-                $(noMatches).hide().appendTo('#group-members').fadeIn(1000);
-            }
-
-            groupMembersMoreOffset += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + group.members.id).on('click', function (e) {
+        $('#focus-' + group.members.id).remove();
+        GCTUser.GetGroupMembers(guid, limit, group.members.offset, groupMembers, errorConsole);
     });
 
-    $$('#tab-group-activity').on('show', function (e) {
-        if (activityloaded == false) {
-            GCTUser.GetGroupActivity(guid, limit, offset, function (data) {
-                var activity = data.result;
-                if (activity.length > 0) {
-                    $(activity).each(function (key, value) {
-                        var content = GCTEach.Activity(value);
-                        $(content).appendTo('#group-activity');
-                    });
-                } else {
-                    var content = noMatches;
-                    $(content).appendTo('#group-activity');
-                }
-                activityloaded = true;
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $$('#tab-' + group.activity.id).on('show', function (e) {
+        if (!group.activity.loaded) {
+            GCTUser.GetGroupActivity(guid, limit, group.activity.offset, groupActivity, errorConsole);
         }
     });
-    var groupActivityMore = $$(page.container).find('#group-activity-more');
-    groupActivityMore.on('click', function (e) {
-        console.log("loading more activity");
-        GCTUser.GetGroupActivity(guid, limit, groupActivityMoreOffset + limit, function(data){
-            var activityData = data.result;
-
-            if(activityData.length > 0){
-                $('#group-activity-more').show();
-                $(activityData).each(function( key, value ) {
-                    var content = GCTEach.Activity(value);
-                    $(content).appendTo('#group-activity');
-                });
-            } else {
-                $('#group-activity-more').hide();
-                $(noMatches).hide().appendTo('#group-activity').fadeIn(1000);
-            }
-
-            groupActivityMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + group.activity.id).on('click', function (e) {
+        $('#focus-' + group.activity.id).remove();
+        GCTUser.GetGroupActivity(guid, limit, group.activity.offset, groupActivity, errorConsole);
     });
 
-    $$('#tab-group-blogs').on('show', function (e) {
-        if (ld_blogs == false) {
-            GCTUser.GetGroupBlogs(guid, limit, offset, function (data) {
-                var blogs = data.result;
-                if (blogs.length > 0) {
-                    $.each(blogs, function (key, value) {
-                        var content = GCTEach.Blog(value);
-                        $(content).appendTo('#group-blogs');
-                    });
-                }
-                if (blogs.length < limit) {
-                    var content = endOfContent;
-                    $(content).appendTo('#group-blogs');
-                    $('#group-blogs-more').hide();
-                }
-                ld_blogs = true;
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $$('#tab-' + group.blogs.id).on('show', function (e) {
+        if (!group.blogs.loaded) {
+            GCTUser.GetGroupBlogs(guid, limit, group.blogs.offset, groupBlogs, errorConsole);
         }
     });
-    $$('#group-blogs-more').on('click', function (e) {
-        GCTUser.GetGroupBlogs(guid, limit, offset_blogs + limit , function (data) {
-            var blogs = data.result;
-            if (blogs.length > 0) {
-                $.each(blogs, function (key, value) {
-                    var content = GCTEach.Blog(value);
-                    $(content).appendTo('#group-blogs');
-                });
-            }
-            if (blogs.length < limit) {
-                var content = endOfContent;
-                $(content).appendTo('#group-blogs');
-                $('#group-blogs-more').hide();
-            }
-            offset_blogs += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + group.blogs.id).on('click', function (e) {
+        $('#focus-' + group.blogs.id).remove();
+        GCTUser.GetGroupBlogs(guid, limit, group.blogs.offset, groupBlogs, errorConsole);
     });
 });
 
@@ -1009,145 +910,117 @@ myApp.onPageInit('sign-in', function (page) {
 myApp.onPageInit('home', function (page) {
     $$('#home-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
     var limit = 12;
-    var offset = 0;
-    var offset_wires = 0;
-    var offset_newsfeed = 0;
     var offset_blogs = 0;
-    var loaded_wire = false;
     var loaded_blog = false;
 
-    GCTUser.GetNewsfeed(limit, offset, function (data) {
+    var home = {}; //variables for this page's content
+    home.newsfeed = listObject("home-newsfeed");
+    home.wire = listObject("home-wire");
+    home.blogs = listObject("home-blogs");
+
+    function homeNewsfeed(data) {
         var newsfeed = data.result;
         var content = '';
+        if (home.newsfeed.loaded == true) { $(home.newsfeed.appendMessage).appendTo('#content-' + home.newsfeed.id); } else { home.newsfeed.loaded = true; }
+
         if (newsfeed.length > 0) {
             $.each(newsfeed, function (key, value) {
                 content = GCTEach.Newsfeed(value);
-                $(content).appendTo('#home-newsfeed');
+                $(content).hide().appendTo('#content-' + home.newsfeed.id).fadeIn(1000);
             });
         }
         if (newsfeed.length < limit) {
             content = endOfContent;
-            $(content).appendTo('#home-newsfeed');
-            $('#home-newsfeed-more').hide();
+            $(content).hide().appendTo('#content-' + home.newsfeed.id).fadeIn(1000);
+            $('#more-' + home.newsfeed.id).hide();
         }
-    }, function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR, textStatus, errorThrown);
-        }
-    );
-    $$('#home-newsfeed-more').on('click', function (e) {
-        GCTUser.GetNewsfeed(limit, offset_newsfeed + limit, function (data) {
-            var newsfeed = data.result;
+        home.newsfeed.offset += limit;
+        var focusNow = document.getElementById('focus-' + home.newsfeed.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function homeWires(data) {
+        var wires = data.result;
+        var content = '';
+        if (home.wire.loaded == true) { $(home.wire.appendMessage).appendTo('#content-' + home.wire.id); } else { home.wire.loaded = true; }
 
-            if (newsfeed.length > 0) {
-                $.each(newsfeed, function (key, value) {
-                    var content = GCTEach.Newsfeed(value);
-                    $(content).appendTo('#home-newsfeed');
-                });
-            }
-            if (newsfeed.length < limit) {
-                content = endOfContent;
-                $(content).appendTo('#home-newsfeed');
-                $('#home-newsfeed-more').hide();
-            }
-            offset_newsfeed += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        }
-        );
-    });
-
-    $$('#tab-wire').on('show', function (e) {
-        if (!loaded_wire) {
-            loaded_wire = true;
-            GCTUser.GetWires(limit, offset, '', function (data) {
-                var wires = data.result;
-                var imgs = [];
-                var content = '';
-                if (wires.length > 0) {
-                    $.each(wires, function (key, value) {
-                        content = GCTEach.Wire(value);
-                        $(content).hide().appendTo('#home-wire').fadeIn(1000);
-                    });
-                }
-                if (wires.length < limit) {
-                    content = endOfContent;
-                    $(content).appendTo('#home-wire');
-                    $('#home-wire-more').hide();
-                }
-                
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
+        if (wires.length > 0) {
+            $.each(wires, function (key, value) {
+                content = GCTEach.Wire(value);
+                $(content).hide().appendTo('#content-' + home.wire.id).fadeIn(1000);
             });
         }
-    });
-    $$('#home-wire-more').on('click', function (e) {
-        GCTUser.GetWires(limit, offset_wires + limit, '', function (data) {
-            var wires = data.result;
-            var content = '';
-            if (wires.length > 0) {
-                $.each(wires, function (key, value) {
-                    content = GCTEach.Wire(value);
-                    $(content).hide().appendTo('#home-wire').fadeIn(1000);
-                });
-            }
-            if (wires.length < limit) {
-                content = endOfContent;
-                $(content).appendTo('#home-wire');
-                $('#home-wire-more').hide();
-            }
-            offset_wires += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
+        if (wires.length < limit) {
+            content = endOfContent;
+            $(content).hide().appendTo('#content-' + home.wire.id).fadeIn(1000);
+            $('#more-' + home.wire.id).hide();
+        }
+        home.wire.offset += limit;
+        var focusNow = document.getElementById('focus-' + home.wire.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function homeBlogs(data) {
+        var blogs = data.result;
+        var content = '';
+        if (home.blogs.loaded == true) { $(home.blogs.appendMessage).appendTo('#content-' + home.blogs.id); } else { home.blogs.loaded = true; }
+        if (blogs.length > 0) {
+            $.each(blogs, function (key, value) {
+                content = GCTEach.Blog(value);
+                $(content).hide().appendTo('#content-' + home.blogs.id).fadeIn(1000);
+            });
+        }
+        if (blogs.length < limit) {
+            content = endOfContent;
+            $(content).hide().appendTo('#content-' + home.blogs.id).fadeIn(1000);
+            $('#more-' + home.blogs.id).hide();
+        }
+        home.blogs.offset += limit;
+    }
+    function homeReset() {
+        $.each(home, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
         });
+        GCTUser.GetNewsfeed(limit, home.newsfeed.offset, homeNewsfeed, errorConsole);
+        GCTUser.GetWires(limit, home.wire.offset, '', homeWires, errorConsole);
+        GCTUser.GetBlogs(limit, home.blogs.offset, "", homeBlogs, errorConsole);
+
+    }
+
+
+    GCTUser.GetNewsfeed(limit, home.newsfeed.offset, homeNewsfeed, errorConsole);
+    $$('#more-' + home.newsfeed.id).on('click', function (e) {
+        $('#focus-' + home.newsfeed.id).remove();
+        GCTUser.GetNewsfeed(limit, home.newsfeed.offset, homeNewsfeed, errorConsole);
     });
 
-    $$('#tab-blogs').on('show', function (e) {
+    $$('#tab-' + home.wire.id).on('show', function (e) {
+        if (!home.wire.loaded) {
+            home.wire.loaded = true;
+            GCTUser.GetWires(limit, home.wire.offset, '', homeWires, errorConsole);
+        }
+    });
+    $$('#more-' + home.wire.id).on('click', function (e) {
+        $('#focus-' + home.wire.id).remove();
+        GCTUser.GetWires(limit, home.wire.offset, '', homeWires, errorConsole);
+    });
+
+    $$('#tab-' + home.blogs.id).on('show', function (e) {
         if (!loaded_blog) {
             loaded_blog = true;
-            GCTUser.GetBlogs(limit, offset, "", function (data) {
-                var blogs = data.result;
-                var content = '';
-                if (blogs.length > 0) {
-                    $.each(blogs, function (key, value) {
-                        content = GCTEach.Blog(value);
-                        $(content).appendTo('#home-blogs');
-                    });
-                } 
-                if (blogs.length < limit) {
-                    content = endOfContent;
-                    $(content).appendTo('#home-blogs');
-                    $('#home-blogs-more').hide();
-                }
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+            GCTUser.GetBlogs(limit, home.blogs.offset, "", homeBlogs, errorConsole);
         }
     });
-    $$('#home-blogs-more').on('click', function (e) {
-        GCTUser.GetBlogs(limit, offset_blogs + limit, "", function (data) {
-            var blogs = data.result;
-            var content = '';
-            if (blogs.length > 0) {
-                $.each(blogs, function (key, value) {
-                    content = GCTEach.Blog(value);
-                    $(content).appendTo('#home-blogs').fadeIn(1000);
-                });
-            } 
-            if (blogs.length < limit) {
-                content = endOfContent;
-                $(content).appendTo('#home-blogs');
-                $('#home-blogs-more').hide();
-            }
-            offset_blogs += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + home.blogs.id).on('click', function (e) {
+        $('#focus-' + home.blogs.id).remove();
+        GCTUser.GetBlogs(limit, home.blogs.offset, "", homeBlogs, errorConsole);
     });
 
     var refreshHome = $$(page.container).find('.pull-to-refresh-content');
     refreshHome.on('refresh', function (e) {
         console.log("refresh");
-        //referesh placeholder
+        homeReset();
         myApp.pullToRefreshDone();
     });
 });
@@ -1436,156 +1309,108 @@ myApp.onPageInit('wire', function (page) {
     $$('#wire-navbar-inner').html(GCTLang.txtGlobalNav('the-wire'));
     var limit = 20;
     var offset = 0;
-    var wiresAllMoreOffset = 0;
-    var wiresColleaguesMoreOffset = 0;
-    var wiresMineMoreOffset = 0;
+    var offset_wiresColleagues = 0;
+    var offset_wiresMine = 0;
 
-    GCTUser.GetWires(limit, offset, '', function(data){
-        var wires = data.result;
+    var wires = {}; //objects for each tab's variables.
+    wires.all = listObject("wires-all");
+    wires.colleagues = listObject("wires-colleagues");
+    wires.mine = listObject("wires-mine");
+
+    function wiresWires(data) {
+        var info = data.result;
         var imgs = [];
-        $.each(wires, function (key, value) {
-            var content = GCTEach.Wire(value);
-            $(content).hide().appendTo('#wires-all').fadeIn(1000);
-        });
-    }, function(jqXHR, textStatus, errorThrown){
-        console.log(jqXHR, textStatus, errorThrown);
-    });
+        var content = '';
+        if (wires.all.loaded == true) { $(wires.all.appendMessage).appendTo('#content-' + wires.all.id); } else { wires.all.loaded = true; }
 
-    GCTUser.GetWiresByUserColleague(limit, offset, function(data){
-        var wires = data.result;
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                content = GCTEach.Wire(value);
+                $(content).hide().appendTo('#content-' + wires.all.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            content = endOfContent;
+            $(content).hide().appendTo('#content-' + wires.all.id).fadeIn(1000);
+            $('#more-' + wires.all.id).hide();
+        }
+        
+        wires.all.offset += limit;
+        var focusNow = document.getElementById('focus-' + wires.all.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function wiresColleagues(data) {
+        var info = data.result;
         var imgs = [];
-        $.each(wires, function (key, value) {
-            var content = GCTEach.Wire(value);
-            $(content).hide().appendTo('#wires-colleagues').fadeIn(1000);
-        });
-        if (wires.length < limit) {
-            var content = endOfContent;
-            $(content).hide().appendTo('#wires-colleagues').fadeIn(1000);
-            $('#wires-colleagues-more').hide();
+        if (wires.colleagues.loaded == true) { $(wires.colleagues.appendMessage).appendTo('#content-' + wires.colleagues.id); } else { wires.colleagues.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Wire(value);
+                $(content).hide().appendTo('#content-' + wires.colleagues.id).fadeIn(1000);
+            });
         }
-    }, function(jqXHR, textStatus, errorThrown){
-        console.log(jqXHR, textStatus, errorThrown);
-    });
-
-    GCTUser.GetWiresByUser(GCTUser.Email(), limit, offset, function(data){
-        var wires = data.result;
-
-        $.each(wires, function (key, value) {
-            var content = GCTEach.Wire(value);
-            $(content).hide().appendTo('#wires-mine').fadeIn(1000);
-        });
-        if (wires.length < limit) {
+        if (info.length < limit) {
             var content = endOfContent;
-            $(content).hide().appendTo('#wires-mine').fadeIn(1000);
-            $('#wires-mine-more').hide();
+            $(content).hide().appendTo('#content-' + wires.colleagues.id).fadeIn(1000);
+            $('#more-' + wires.colleagues.id).hide();
         }
-    }, function(jqXHR, textStatus, errorThrown){
-        console.log(jqXHR, textStatus, errorThrown);
-    });
+        wires.colleagues.offset += limit;
+        var focusNow = document.getElementById('focus-' + wires.colleagues.id);
+        if (focusNow) { focusNow.focus(); }
+    } 
+    function wiresMine(data) {
+        var info = data.result;
+        if (wires.mine.loaded == true) { $(wires.mine.appendMessage).appendTo('#content-' + wires.mine.id); } else { wires.mine.loaded = true; }
 
-    var wiresAllMore = $$(page.container).find('#wires-all-more');
-    wiresAllMore.on('click', function (e) {
-        GCTUser.GetWires(limit, wiresAllMoreOffset + limit, '', function(data){
-            var wires = data.result;
-
-            $.each(wires, function (key, value) {
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
                 var content = GCTEach.Wire(value);
-                $(content).hide().appendTo('#wires-all').fadeIn(1000);
+                $(content).hide().appendTo('#content-' + wires.mine.id).fadeIn(1000);
             });
-
-            wiresAllMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
+        }
+        if (info.length < limit) {
+            var content = endOfContent;
+            $(content).hide().appendTo('#content-' + wires.mine.id).fadeIn(1000);
+            $('#more-' + wires.mine.id).hide();
+        }
+        wires.mine.offset += limit;
+        var focusNow = document.getElementById('focus-' + wires.mine.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function wiresReset() {
+        $.each(wires, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
         });
+        GCTUser.GetWires(limit, wires.all.offset, '', wiresWires, errorConsole);
+        GCTUser.GetWiresByUserColleague(limit, wires.colleagues.offset, wiresColleagues, errorConsole);
+        GCTUser.GetWiresByUser(GCTUser.Email(), limit, wires.mine.offset, wiresMine, errorConsole);
+    }
+
+    GCTUser.GetWires(limit, wires.all.offset, '', wiresWires, errorConsole);
+    $$('#more-' + wires.all.id).on('click', function (e) {
+        $('#focus-' + wires.all.id).remove();
+        GCTUser.GetWires(limit, wires.all.offset, '', wiresWires, errorConsole);
     });
 
-    var wiresColleaguesMore = $$(page.container).find('#wires-colleagues-more');
-    wiresColleaguesMore.on('click', function (e) {
-        GCTUser.GetWiresByUserColleague(limit, wiresColleaguesMoreOffset + limit, function(data){
-            var wires = data.result;
-
-            $.each(wires, function (key, value) {
-                var content = GCTEach.Wire(value);
-                $(content).hide().appendTo('#wires-colleagues').fadeIn(1000);
-            });
-            if (wires.length < limit) {
-                var content = endOfContent;
-                $(content).hide().appendTo('#wires-colleagues').fadeIn(1000);
-                $('#wires-colleagues-more').hide();
-            }
-            wiresColleaguesMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    GCTUser.GetWiresByUserColleague(limit, wires.colleagues.offset, wiresColleagues, errorConsole);
+    $$('#more-' + wires.colleagues.id).on('click', function (e) {
+        $('#focus-' + wires.colleagues.id).remove();
+        GCTUser.GetWiresByUserColleague(limit, wires.colleagues.offset, wiresColleagues, errorConsole);
     });
 
-    var wiresMineMore = $$(page.container).find('#wires-mine-more');
-    wiresMineMore.on('click', function (e) {
-        GCTUser.GetWiresByUser(GCTUser.Email(), limit, wiresMineMoreOffset + limit, function(data){
-            var wires = data.result;
-
-            $.each(wires, function (key, value) {
-                var content = GCTEach.Wire(value);
-                $(content).hide().appendTo('#wires-mines').fadeIn(1000);
-            });
-            if (wires.length < limit) {
-                var content = endOfContent;
-                $(content).hide().appendTo('#wires-mine').fadeIn(1000);
-                $('#wires-mine-more').hide();
-            }
-            wiresMineMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    GCTUser.GetWiresByUser(GCTUser.Email(), limit, wires.mine.offset, wiresMine , errorConsole);
+    $$('#more-' + wires.mine.id).on('click', function (e) {
+        $('#focus-' + wires.mine.id).remove();
+        GCTUser.GetWiresByUser(GCTUser.Email(), limit, wires.mine.offset, wiresMine, errorConsole);
     });
-
+    
     var refreshWires = $$(page.container).find('.pull-to-refresh-content');
     refreshWires.on('refresh', function (e) {
-        GCTUser.GetWires(limit, offset, '', function(data){
-            var wires = data.result;
-            $('#wires-all').html('');
-
-            var content = "";
-            $.each(wires, function (key, value) {
-                content += GCTEach.Wire(value);
-            });
-            $(content).hide().appendTo('#wires-all').fadeIn(1000);
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetWiresByUserColleague(limit, offset, function(data){
-            var wires = data.result;
-            $('#wires-colleagues').html('');
-
-            var content = "";
-            $.each(wires, function (key, value) {
-                content += GCTEach.Wire(value);
-            });
-            $(content).hide().appendTo('#wires-colleagues').fadeIn(1000);
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetWiresByUser(GCTUser.Email(), limit, offset, function(data){
-            var wires = data.result;
-            $('#wires-mine').html('');
-
-            var content = "";
-            $.each(wires, function (key, value) {
-                content += GCTEach.Wire(value);
-            });
-            $('#wires-mine').html(content);
-            $('#wires-mine').hide().fadeIn(1000);
-            // $(content).hide().appendTo('#wires-mines').fadeIn(1000);
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        wiresAllMoreOffset = 0;
-        wiresColleaguesMoreOffset = 0;
-        wiresMineMoreOffset = 0;
-
+        wiresReset();
         myApp.pullToRefreshDone();
     });
 });
@@ -1593,55 +1418,37 @@ myApp.onPageInit('wire', function (page) {
 myApp.onPageInit('newsfeed', function (page) {
     $$('#newsfeed-navbar-inner').html(GCTLang.txtGlobalNav('newsfeed'));
     var limit = 20;
-    var offset = 0;
-    var newsfeedMoreOffset = 0;
+    var offset_newsfeedPersonal = 0;
 
-    GCTUser.GetNewsfeed(limit, offset, function(data){
+    function newsfeedPersonal(data) {
         var newsfeed = data.result;
-        
-        $.each(newsfeed, function (key, value) {
-            var content = GCTEach.Newsfeed(value);
-
-            $(content).hide().appendTo('#newsfeed-all').fadeIn(1000);
-        });
-    }, function(jqXHR, textStatus, errorThrown){
-        console.log(jqXHR, textStatus, errorThrown);
-    });
-
-    var newsfeedMore = $$(page.container).find('#newsfeed-more');
-    newsfeedMore.on('click', function (e) {
-        GCTUser.GetNewsfeed(limit, newsfeedMoreOffset + limit, function(data){
-            var newsfeed = data.result;
-
+        var content = '';
+        if (newsfeed.length > 0) {
             $.each(newsfeed, function (key, value) {
-                var content = GCTEach.Newsfeed(value);
-
+                content = GCTEach.Newsfeed(value);
                 $(content).hide().appendTo('#newsfeed-all').fadeIn(1000);
             });
+        }
+        if (newsfeed.length < limit) {
+            content = endOfContent;
+            $(content).hide().appendTo('#newsfeed-all').fadeIn(1000);
+            $('#newsfeed-more').hide();
+        }
+        offset_newsfeedPersonal += limit;
+    }
 
-            newsfeedMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    GCTUser.GetNewsfeed(limit, offset_newsfeedPersonal, newsfeedPersonal, errorConsole);
+    $$('#newsfeed-more').on('click', function (e) {
+        GCTUser.GetNewsfeed(limit, offset_newsfeedPersonal, newsfeedPersonal, errorConsole);
     });
-
+    
     var refreshNewsfeed = $$(page.container).find('.pull-to-refresh-content');
     refreshNewsfeed.on('refresh', function (e) {
-        GCTUser.GetNewsfeed(limit, offset, function(data){
-            var newsfeed = data.result;
+        offset_newsfeedPersonal = 0;
+        $('#newsfeed-more').show();
 
-            var content = "";
-            $.each(newsfeed, function (key, value) {
-                content += GCTEach.Newsfeed(value);
-            });
-            $('#newsfeed-all').html('');
-            $(content).hide().appendTo('#newsfeed-all').fadeIn(1000);
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        newsfeedMoreOffset = 0;
-
+        GCTUser.GetNewsfeed(limit, offset_newsfeedPersonal, newsfeedPersonal, errorConsole);
+        
         myApp.pullToRefreshDone();
     });
 });
@@ -1649,55 +1456,67 @@ myApp.onPageInit('newsfeed', function (page) {
 myApp.onPageInit('groups', function (page) {
     $$('#groups-navbar-inner').html(GCTLang.txtGlobalNav('groups'));
     var limit = 20;
-    var offset = 0;
-    var groupsAllMoreOffset = 0;
-    var groupsMineMoreOffset = 0;
     var filters = {};
     var filtersOpened = false;
+    var groups = {};
+    groups.all = listObject("groups-all");
+    groups.mine = listObject("groups-mine");
+
+    function groupsAll(data) {
+        var info = data.result;
+        if (groups.all.loaded == true) { $(groups.all.appendMessage).appendTo('#content-' + groups.all.id); } else { groups.all.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Group(value);
+                $(content).hide().appendTo('#content-' + groups.all.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            $('#more-' + groups.all.id).hide();
+            $(endOfContent).hide().appendTo('#content-' + groups.all.id).fadeIn(1000);
+        }
+        groups.all.offset += limit;
+        var focusNow = document.getElementById('focus-' + groups.all.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function groupsMine(data) {
+        var info = data.result;
+        if (groups.mine.loaded == true) { $(groups.mine.appendMessage).appendTo('#content-' + groups.mine.id); } else { groups.mine.loaded = true; }
+
+        if (info.length > 0) {
+            $('#more-' + groups.mine.id).show();
+            $.each(info, function (key, value) {
+                var content = GCTEach.Group(value);
+                $(content).hide().appendTo('#content-' + groups.mine.id).fadeIn(1000);
+            });
+        } 
+        if (info.length < limit) {
+            $('#more-' + groups.mine.id).hide();
+            $(endOfContent).hide().appendTo('#content-' + groups.mine.id).fadeIn(1000);
+        }
+        groups.mine.offset += limit;
+        var focusNow = document.getElementById('focus-' + groups.mine.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function groupsReset() {
+        $.each(groups, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
+        });
+
+        GCTUser.GetGroups(limit, groups.all.offset, filters, groupsAll, errorConsole);
+        GCTUser.GetGroupsMine(limit, groups.mine.offset, filters, groupsMine, errorConsole);
+    }
 
     $('#clear-filters').on('click', function() {
         filtersOpened = false;
         filters = {};
         $("#group-name").val('');
 
-        GCTUser.GetGroups(limit, offset, filters, function(data){
-            var groups = data.result;
-            $('#groups-all').html('');
-
-            if(groups.length > 0){
-                $('#groups-all-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-all').fadeIn(1000);
-                });
-            } else {
-                $('#groups-all-more').hide();
-                $(noMatches).hide().appendTo('#groups-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetGroupsMine(limit, offset, filters, function(data){
-            var groups = data.result;
-            $('#groups-mine').html('');
-
-            if(groups.length > 0){
-                $('#groups-mine-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-mine').fadeIn(1000);
-                });
-            } else {
-                $('#groups-mine-more').hide();
-                $(noMatches).hide().appendTo('#groups-mine').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        groupsAllMoreOffset = 0;
-        groupsMineMoreOffset = 0;
+        groupsReset();
     });
 
     $('#save-filters').on('click', function() {
@@ -1706,170 +1525,30 @@ myApp.onPageInit('groups', function (page) {
         if( $("#group-name").val() == "" ){
             filters = "";
         }
-
-        GCTUser.GetGroups(limit, offset, filters, function(data){
-            var groups = data.result;
-            $('#groups-all').html('');
-
-            if(groups.length > 0){
-                $('#groups-all-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-all').fadeIn(1000);
-                });
-            } else {
-                $('#groups-all-more').hide();
-                $(noMatches).hide().appendTo('#groups-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetGroupsMine(limit, offset, filters, function(data){
-            var groups = data.result;
-            $('#groups-mine').html('');
-
-            if(groups.length > 0){
-                $('#groups-mine-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-mine').fadeIn(1000);
-                });
-            } else {
-                $('#groups-mine-more').hide();
-                $(noMatches).hide().appendTo('#groups-mine').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        groupsAllMoreOffset = 0;
-        groupsMineMoreOffset = 0;
+        groupsReset();
     });
 
     if( !filtersOpened ){
-        GCTUser.GetGroups(limit, offset, filters, function(data){
-            var groups = data.result;
-
-            if(groups.length > 0){
-                $('#groups-all-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-all').fadeIn(1000);
-                });
-            } else {
-                $('#groups-all-more').hide();
-                $(noMatches).hide().appendTo('#groups-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetGroupsMine(limit, offset, filters, function(data){
-            var groups = data.result;
-
-            if(groups.length > 0){
-                $('#groups-mine-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-mine').fadeIn(1000);
-                });
-            } else {
-                $('#groups-mine-more').hide();
-                $(noMatches).hide().appendTo('#groups-mine').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+        GCTUser.GetGroups(limit, groups.all.offset, filters, groupsAll, errorConsole);
+        GCTUser.GetGroupsMine(limit, groups.mine.offset, filters, groupsMine, errorConsole);
     }
 
-    var groupsAllMore = $$(page.container).find('#groups-all-more');
-    groupsAllMore.on('click', function (e) {
-        GCTUser.GetGroups(limit, groupsAllMoreOffset + limit, filters, function(data){
-            var groups = data.result;
-
-            if(groups.length > 0){
-                $('#groups-all-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-all').fadeIn(1000);
-                });
-            } else {
-                $('#groups-all-more').hide();
-                $(noMatches).hide().appendTo('#groups-all').fadeIn(1000);
-            }
-
-            groupsAllMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + groups.all.id).on('click', function (e) {
+        $('focus-' + groups.all.id).remove();
+        GCTUser.GetGroups(limit, groups.all.offset, filters, groupsAll, errorConsole);
     });
 
-    var groupsMineMore = $$(page.container).find('#groups-mine-more');
-    groupsMineMore.on('click', function (e) {
-        GCTUser.GetGroupsMine(limit, groupsMineMoreOffset + limit, filters, function(data){
-            var groups = data.result;
-
-            if(groups.length > 0){
-                $('#groups-mine-more').show();
-                $.each(groups, function (key, value) {
-                    var content = GCTEach.Group(value);
-                    $(content).hide().appendTo('#groups-mine').fadeIn(1000);
-                });
-            } else {
-                $('#groups-mine-more').hide();
-                $(noMatches).hide().appendTo('#groups-mine').fadeIn(1000);
-            }
-
-            groupsMineMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + groups.mine.id).on('click', function (e) {
+        $('focus-' + groups.mine.id).remove();
+        GCTUser.GetGroupsMine(limit, groups.mine.offset, filters, groupsMine, errorConsole);
     });
 
     var refreshGroups = $$(page.container).find('.pull-to-refresh-content');
     refreshGroups.on('refresh', function (e) {
-        GCTUser.GetGroups(limit, offset, filters, function(data){
-            var groups = data.result;
-            $('#groups-all').html('');
-
-            var content = "";
-            if(groups.length > 0){
-                $('#groups-all-more').show();
-                $.each(groups, function (key, value) {
-                    content += GCTEach.Group(value);
-                });
-                $(content).hide().appendTo('#groups-all').fadeIn(1000);
-            } else {
-                $('#groups-all-more').hide();
-                $(noMatches).hide().appendTo('#groups-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetGroupsMine(limit, offset, filters, function(data){
-            var groups = data.result;
-            $('#groups-mine').html('');
-
-            var content = "";
-            if(groups.length > 0){
-                $('#groups-mine-more').show();
-                $.each(groups, function (key, value) {
-                    content += GCTEach.Group(value);
-                });
-                $(content).hide().appendTo('#groups-mine').fadeIn(1000);
-            } else {
-                $('#groups-mine-more').hide();
-                $(noMatches).hide().appendTo('#groups-mine').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        groupsAllMoreOffset = 0;
-        groupsMineMoreOffset = 0;
-
+        filtersOpened = false;
+        filters = {};
+        $("#group-name").val('');
+        groupsReset();
         myApp.pullToRefreshDone();
     });
 });
@@ -1904,56 +1583,66 @@ myApp.onPageInit('external-pages', function (page) {
 myApp.onPageInit('members', function (page) {
     $$('#members-navbar-inner').html(GCTLang.txtGlobalNav('members'));
     var limit = 20;
-    var offset = 0;
     var filters = {};
     var filtersOpened = false;
-    var membersAllMoreOffset = 0;
-    var membersColleaguesMoreOffset = 0;
+    var members = {};
+    members.all = listObject("members-all");
+    members.colleagues = listObject("members-colleagues");
 
-    $('#clear-filters').on('click', function() {
+    function membersAll(data) {
+        var info = data.result;
+        if (members.all.loaded == true) { $(members.all.appendMessage).appendTo('#content-' + members.all.id); } else { members.all.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Member(value);
+                $(content).hide().appendTo('#content-' + members.all.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            $('#more-' + members.all.id).hide();
+            $(endOfContent).hide().appendTo('#content-' + members.all.id).fadeIn(1000);
+        }
+        members.all.offset += limit;
+        var focusNow = document.getElementById('focus-' + members.all.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function membersColleague(data) {
+        var info = data.result;
+        if (members.colleagues.loaded == true) { $(members.colleagues.appendMessage).appendTo('#content-' + members.colleagues.id); } else { members.colleagues.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Member(value);
+                $(content).hide().appendTo('#content-' + members.colleagues.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            $(endOfContent).hide().appendTo('#content-' + members.colleagues.id).fadeIn(1000);
+            $('#more-' + members.colleagues.id).hide();
+        }
+        members.colleagues.offset += limit;
+        var focusNow = document.getElementById('focus-' + members.colleagues.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function membersReset() {
+        $.each(members, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
+        });
+
+        GCTUser.GetMembers(limit, members.all.offset, filters, membersAll, errorConsole);
+        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, members.colleagues.offset, filters, membersColleague, errorConsole);
+    }
+
+    $('#clear-filters').on('click', function () {
         filtersOpened = false;
         filters = {};
         $("#member-filters").val('');
         $("#member-name").val('');
-
-        GCTUser.GetMembers(limit, offset, filters, function(data){
-            var members = data.result;
-            $('#members-all').html('');
-
-            if(members.length > 0){
-                $('#members-all-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-all').fadeIn(1000);
-                });
-            } else {
-                $('#members-all-more').hide();
-                $(noMatches).hide().appendTo('#members-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, offset, filters, function(data){
-            var members = data.result;
-            $('#members-colleagues').html('');
-
-            if(members.length > 0){
-                $('#members-colleagues-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#members-colleagues-more').hide();
-                $(noMatches).hide().appendTo('#members-colleagues').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        membersAllMoreOffset = 0;
-        membersColleaguesMoreOffset = 0;
+        membersReset();
     });
 
     $('#save-filters').on('click', function() {
@@ -1963,170 +1652,28 @@ myApp.onPageInit('members', function (page) {
         if( $("#member-filters").val() == "" && $("#member-name").val() == "" ){
             filters = "";
         }
-
-        GCTUser.GetMembers(limit, offset, filters, function(data){
-            var members = data.result;
-            $('#members-all').html('');
-
-            if(members.length > 0){
-                $('#members-all-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-all').fadeIn(1000);
-                });
-            } else {
-                $('#members-all-more').hide();
-                $(noMatches).hide().appendTo('#members-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, offset, filters, function(data){
-            var members = data.result;
-            $('#members-colleagues').html('');
-
-            if(members.length > 0){
-                $('#members-colleagues-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#members-colleagues-more').hide();
-                $(noMatches).hide().appendTo('#members-colleagues').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        membersAllMoreOffset = 0;
-        membersColleaguesMoreOffset = 0;
+        membersReset();
     });
 
     if( !filtersOpened ){
-        GCTUser.GetMembers(limit, offset, filters, function(data){
-            var members = data.result;
-
-            if(members.length > 0){
-                $('#members-all-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-all').fadeIn(1000);
-                });
-            } else {
-                $('#members-all-more').hide();
-                $(noMatches).hide().appendTo('#members-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, offset, filters, function(data){
-            var members = data.result;
-
-            if(members.length > 0){
-                $('#members-colleagues-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#members-colleagues-more').hide();
-                $(noMatches).hide().appendTo('#members-colleagues').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+        GCTUser.GetMembers(limit, members.all.offset, filters, membersAll, errorConsole);
+        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, members.colleagues.offset, filters, membersColleague, errorConsole);
     }
 
-    var membersAllMore = $$(page.container).find('#members-all-more');
-    membersAllMore.on('click', function (e) {
-        GCTUser.GetMembers(limit, membersAllMoreOffset + limit, filters, function(data){
-            var members = data.result;
-
-            if(members.length > 0){
-                $('#members-all-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-all').fadeIn(1000);
-                });
-            } else {
-                $('#members-all-more').hide();
-                $(noMatches).hide().appendTo('#members-all').fadeIn(1000);
-            }
-
-            membersAllMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + members.all.id).on('click', function (e) {
+        GCTUser.GetMembers(limit, members.all.offset, filters, membersAll, errorConsole);
     });
-
-    var membersColleaguesMore = $$(page.container).find('#members-colleagues-more');
-    membersColleaguesMore.on('click', function (e) {
-        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, membersColleaguesMoreOffset + limit, filters, function(data){
-            var members = data.result;
-
-            if(members.length > 0){
-                $('#members-colleagues-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#members-colleagues-more').hide();
-                $(noMatches).hide().appendTo('#members-colleagues').fadeIn(1000);
-            }
-
-            membersColleaguesMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + members.colleagues.id).on('click', function (e) {
+        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, members.colleagues.offset, filters, membersColleague, errorConsole);
     });
 
     var refreshMembers = $$(page.container).find('.pull-to-refresh-content');
     refreshMembers.on('refresh', function (e) {
-        GCTUser.GetMembers(limit, offset, filters, function(data){
-            var members = data.result;
-            $('#members-all').html('');
-
-            var content = "";
-            if(members.length > 0){
-                $('#members-all-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-all').fadeIn(1000);
-                });
-            } else {
-                $('#members-all-more').hide();
-                $(noMatches).hide().appendTo('#members-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, offset, filters, function(data){
-            var members = data.result;
-            $('#members-colleagues').html('');
-
-            var content = "";
-            if(members.length > 0){
-                $('#members-colleagues-more').show();
-                $.each(members, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#members-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#members-colleagues-more').hide();
-                $(noMatches).hide().appendTo('#members-colleagues').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        membersAllMoreOffset = 0;
-        membersColleaguesMoreOffset = 0;
-
+        filtersOpened = false;
+        filters = {};
+        $("#member-filters").val('');
+        $("#member-name").val('');
+        membersReset();
         myApp.pullToRefreshDone();
     });
 });
@@ -2435,39 +1982,89 @@ myApp.onPageInit('discussion', function (page) {
 myApp.onPageInit('blog', function (page) {
     $$('#blogs-navbar-inner').html(GCTLang.txtGlobalNav('blogs'));
     var limit = 20;
-    var offset = 0;
-    var blogsMoreOffset = 0;
     var filters = {};
     var filtersOpened = false;
-    var ld_colleagues = false;
-    var offset_colleagues = 0;
-    var ld_mine = false;
-    var offset_mine = 0;
+    var blogs = {}; //objects for each tab's variables.
+    blogs.all = listObject("blogs-all");
+    blogs.colleagues = listObject("blogs-colleagues");
+    blogs.mine = listObject("blogs-mine");
+    
+
+    function blogsAll(data) {
+        var info = data.result;
+        if (blogs.all.loaded == true) { $(blogs.all.appendMessage).appendTo('#content-' + blogs.all.id); } else { blogs.all.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Blog(value);
+                $(content).hide().appendTo('#content-' + blogs.all.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            $('#more-' + blogs.all.id).hide();
+            $(endOfContent).hide().appendTo('#content-' + blogs.all.id).fadeIn(1000);
+        }
+        blogs.all.offset += limit;
+        var focusNow = document.getElementById('focus-' + blogs.all.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function blogsMine(data) {
+        var info = data.result;
+        if (blogs.mine.loaded == true) { $(blogs.mine.appendMessage).appendTo('#content-' + blogs.mine.id); } else { blogs.mine.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Blog(value);
+                $(content).hide().appendTo('#content-' + blogs.mine.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            var content = endOfContent;
+            $(content).hide().appendTo('#content-' + blogs.mine.id).fadeIn(1000);
+            $('#more-' + blogs.mine.id).hide();
+        }
+        blogs.mine.offset += limit;
+        var focusNow = document.getElementById('focus-' + blogs.mine.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function blogsColleagues(data) {
+        var info = data.result;
+        if (blogs.colleagues.loaded == true) { $(blogs.colleagues.appendMessage).appendTo('#content-' + blogs.colleagues.id); } else { blogs.colleagues.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Blog(value);
+                $(content).hide().appendTo('#content-' + blogs.colleagues.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            var content = endOfContent;
+            $(content).hide().appendTo('#content-' + blogs.colleagues.id).fadeIn(1000);
+            $('#more-' + blogs.colleagues.id).hide();
+        }
+        blogs.colleagues.offset += limit;
+        var focusNow = document.getElementById('focus-' + blogs.colleagues.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function blogsReset() {
+        $.each(blogs, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
+        });
+
+        GCTUser.GetBlogs(limit, blogs.all.offset, filters, blogsAll, errorConsole);
+        GCTUser.GetBlogsByUser(limit, blogs.mine.offset, '', blogsMine, errorConsole);
+        GCTUser.GetBlogsByColleagues(limit, blogs.colleagues.offset, blogsColleagues, errorConsole);
+    }
 
     $('#clear-filters').on('click', function() {
         filtersOpened = false;
         filters = {};
         $("#blog-name").val('');
 
-        GCTUser.GetBlogs(limit, offset, filters, function(data){
-            var blogs = data.result;
-            $('#blogs-all').html('');
-
-            if(blogs.length > 0){
-                $('#blogs-all-more').show();
-                $.each(blogs, function (key, value) {
-                    var content = GCTEach.Blog(value);
-                    $(content).hide().appendTo('#blogs-all').fadeIn(1000);
-                });
-            } else {
-                $('#blogs-all-more').hide();
-                $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        blogsMoreOffset = 0;
+        blogsReset();
     });
 
     $('#save-filters').on('click', function() {
@@ -2477,171 +2074,38 @@ myApp.onPageInit('blog', function (page) {
             filters = "";
         }
 
-        GCTUser.GetBlogs(limit, offset, filters, function(data){
-            var blogs = data.result;
-            $('#blogs-all').html('');
-
-            if(blogs.length > 0){
-                $('#blogs-all-more').show();
-                $.each(blogs, function (key, value) {
-                    var content = GCTEach.Blog(value);
-                    $(content).hide().appendTo('#blogs-all').fadeIn(1000);
-                });
-            } else {
-                $('#blogs-all-more').hide();
-                $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        blogsMoreOffset = 0;
+        blogsReset();
     });
 
     if( !filtersOpened ){
-        GCTUser.GetBlogs(limit, offset, filters, function(data){
-            var blogs = data.result;
-
-            if(blogs.length > 0){
-                $('#blogs-all-more').show();
-                $.each(blogs, function (key, value) {
-                    var content = GCTEach.Blog(value);
-                    $(content).hide().appendTo('#blogs-all').fadeIn(1000);
-                });
-            } else {
-                $('#blogs-all-more').hide();
-                $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+        GCTUser.GetBlogs(limit, blogs.all.offset, filters, blogsAll, errorConsole);
     }
+    $$('#more-' + blogs.all.id).on('click', function (e) {
+        GCTUser.GetBlogs(limit, blogs.all.offset, filters, blogsAll, errorConsole);
+    });
     
-    $$('#tab-mine-blogs').on('show', function (e) {
-        if (!ld_mine) {
-            GCTUser.GetBlogsByUser(limit, 0, '', function (data) {
-                var blogs = data.result;
-                if (blogs.length > 0) {
-                    $.each(blogs, function (key, value) {
-                        var content = GCTEach.Blog(value);
-                        $(content).appendTo('#blogs-mine');
-                    });
-                }
-                if (blogs.length < limit) {
-                    var content = endOfContent;
-                    $(content).appendTo('#blogs-mine');
-                    $('#blogs-mine-more').hide();
-                }
-                ld_mine = true;
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $$('#tab-' + blogs.mine.id).on('show', function (e) {
+        if (!blogs.mine.loaded) {
+            GCTUser.GetBlogsByUser(limit, blogs.mine.offset, '', blogsMine, errorConsole);
         }
     });
-    $$('#blogs-mine-more').on('click', function (e) {
-        GCTUser.GetBlogsByUser(limit, offset_mine + limit, '', function (data) {
-            var blogs = data.result;
-            if (blogs.length > 0) {
-                $.each(blogs, function (key, value) {
-                    var content = GCTEach.Blog(value);
-                    $(content).appendTo('#blogs-mine');
-                });
-            }
-            if (blogs.length < limit) {
-                var content = endOfContent;
-                $(content).appendTo('#blogs-mine');
-                $('#blogs-mine-more').hide();
-            }
-            offset_mine += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + blogs.mine.id).on('click', function (e) {
+        GCTUser.GetBlogsByUser(limit, blogs.mine.offset, '', blogsMine, errorConsole);
     });
 
-    $$('#tab-colleagues-blogs').on('show', function (e) {
-        if (!ld_colleagues) {
-            GCTUser.GetBlogsByColleagues(limit, 0, function (data) {
-                var blogs = data.result;
-                if (blogs.length > 0) {
-                    $.each(blogs, function (key, value) {
-                        var content = GCTEach.Blog(value);
-                        $(content).appendTo('#blogs-colleagues');
-                    });
-                }
-                if (blogs.length < limit) {
-                    var content = endOfContent;
-                    $(content).appendTo('#blogs-colleagues');
-                    $('#blogs-colleagues-more').hide();
-                }
-                ld_colleagues = true;
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $$('#tab-' + blogs.colleagues.id).on('show', function (e) {
+        if (!blogs.colleagues.loaded) {
+            GCTUser.GetBlogsByColleagues(limit, blogs.colleagues.offset, blogsColleagues, errorConsole);
         }
     });
-    $$('#blogs-colleagues-more').on('click', function (e) {
-        GCTUser.GetBlogsByColleagues(limit, offset_colleagues + limit, function (data) {
-            var blogs = data.result;
-            if (blogs.length > 0) {
-                $.each(blogs, function (key, value) {
-                    var content = GCTEach.Blog(value);
-                    $(content).appendTo('#blogs-colleagues');
-                });
-            }
-            if (blogs.length < limit) {
-                var content = endOfContent;
-                $(content).appendTo('#blogs-colleagues');
-                $('#blogs-colleagues-more').hide();
-            }
-            offset_colleagues += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + blogs.colleagues.id).on('click', function (e) {
+        GCTUser.GetBlogsByColleagues(limit, blogs.colleagues.offset, blogsColleagues, errorConsole);
     });
-
-    var blogsMore = $$(page.container).find('#blogs-all-more');
-    blogsMore.on('click', function (e) {
-        GCTUser.GetBlogs(limit, blogsMoreOffset + limit, filters, function(data){
-            var blogs = data.result;
-
-            if(blogs.length > 0){
-                $('#blogs-all-more').show();
-                $.each(blogs, function (key, value) {
-                    var content = GCTEach.Blog(value);
-                    $(content).hide().appendTo('#blogs-all').fadeIn(1000);
-                });
-            } else {
-                $('#blogs-all-more').hide();
-                $(endOfContent).hide().appendTo('#blogs-all').fadeIn(1000);
-            }
-            blogsMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-    });
-
+    
     var refreshBlogs = $$(page.container).find('.pull-to-refresh-content');
     refreshBlogs.on('refresh', function (e) {
-        GCTUser.GetBlogs(limit, offset, filters, function(data){
-            var blogs = data.result;
-
-            if(blogs.length > 0){
-                $('#blogs-all-more').show();
-                var content = "";
-                $.each(blogs, function (key, value) {
-                    content += GCTEach.Blog(value);
-                });
-                $('#blogs-all').html('');
-                $(content).hide().appendTo('#blogs-all').fadeIn(1000);
-            } else {
-                $('#blogs-all-more').hide();
-                $(noMatches).hide().appendTo('#blogs-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        blogsMoreOffset = 0;
+        $("#blog-name").val('');
+        blogsReset();
 
         myApp.pullToRefreshDone();
     });
@@ -2650,55 +2114,90 @@ myApp.onPageInit('blog', function (page) {
 myApp.onPageInit('bookmarks', function (page) {
     $$('#bookmarks-navbar-inner').html(GCTLang.txtGlobalNav('bookmarks'));
     var limit = 10;
-    var offset = 0;
     var filters = [];
     var filtersOpened = false;
-    var bookmarksAllMoreOffset = 0;
-    var bookmarksColleaguesMoreOffset = 0;
-    var bookmarksMineMoreOffset = 0;
+    var bookmarks = {}; //objects for each tab's variables.
+    bookmarks.all = listObject("bookmarks-all");
+    bookmarks.colleagues = listObject("bookmarks-colleagues");
+    bookmarks.mine = listObject("bookmarks-mine");
+
+    function bookmarksAll(data) {
+        var info = data.result;
+        var content = '';
+        if (bookmarks.all.loaded == true) { $(bookmarks.all.appendMessage).appendTo('#content-' + bookmarks.all.id); } else { bookmarks.all.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                content = GCTEach.Bookmark(value);
+                $(content).hide().appendTo('#content-' + bookmarks.all.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            content = endOfContent;
+            $(content).hide().appendTo('#content-' + bookmarks.all.id).fadeIn(1000);
+            $('#more-' + bookmarks.all.id).hide();
+        }
+
+        bookmarks.all.offset += limit;
+        var focusNow = document.getElementById('focus-' + bookmarks.all.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function bookmarksColleagues(data) {
+        var info = data.result;
+        if (bookmarks.colleagues.loaded == true) { $(bookmarks.colleagues.appendMessage).appendTo('#content-' + bookmarks.colleagues.id); } else { bookmarks.colleagues.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Bookmark(value);
+                $(content).hide().appendTo('#content-' + bookmarks.colleagues.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            var content = endOfContent;
+            $(content).hide().appendTo('#content-' + bookmarks.colleagues.id).fadeIn(1000);
+            $('#more-' + bookmarks.colleagues.id).hide();
+        }
+        bookmarks.colleagues.offset += limit;
+        var focusNow = document.getElementById('focus-' + bookmarks.colleagues.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function bookmarksMine(data) {
+        var info = data.result;
+        if (bookmarks.mine.loaded == true) { $(bookmarks.mine.appendMessage).appendTo('#content-' + bookmarks.mine.id); } else { bookmarks.mine.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Wire(value);
+                $(content).hide().appendTo('#content-' + bookmarks.mine.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            var content = endOfContent;
+            $(content).hide().appendTo('#content-' + bookmarks.mine.id).fadeIn(1000);
+            $('#more-' + bookmarks.mine.id).hide();
+        }
+        bookmarks.mine.offset += limit;
+        var focusNow = document.getElementById('focus-' + bookmarks.mine.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function bookmarksReset() {
+        $.each(bookmarks, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
+        });
+        GCTUser.GetBookmarks(limit, bookmarks.all.offset, filters, bookmarksAll, errorConsole);
+        GCTUser.GetBookmarksByUserColleague(limit, bookmarks.colleagues.offset, filters, bookmarksColleagues, errorConsole);
+        GCTUser.GetBookmarksByUser(limit, bookmarks.mine.offset, '', bookmarksMine, errorConsole);
+    }
 
     $('#clear-filters').on('click', function () {
         filtersOpened = false;
         filters = {};
         $('#bookmark-filters').val('');
         $('#bookmark-name').val('');
-
-        GCTUser.GetBookmarks(limit, offset, filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-all').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-        GCTUser.GetBookmarksByUserColleague(limit, offset, filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                $.each(bookmarks, function (key, value) {
-                    console.log(value);
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-        //GCTUser.bookmarks here
-
-        bookmarksAllMoreOffset = 0;
-        bookmarksColleaguesMoreOffset = 0;
-        bookmarksMineMoreOffset = 0;
+        bookmarksReset();
     });
 
     $('#save-filters').on('click', function () {
@@ -2708,182 +2207,34 @@ myApp.onPageInit('bookmarks', function (page) {
         if ($("#bookmark-filters").val() == "" && $("#bookmark-name").val() == "") {
             filters = "";
         }
-
-       //GCTUser.bookmarks here
-
-        bookmarksAllMoreOffset = 0;
-        bookmarksColleaguesMoreOffset = 0;
-        bookmarksMineMoreOffset = 0;
+        bookmarksReset();
     });
 
     if (!filtersOpened) {
-        GCTUser.GetBookmarks(limit, offset, filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-all').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-        GCTUser.GetBookmarksByUserColleague(limit, offset, filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-            });
-        GCTUser.GetBookmarksByUser(limit, offset, '', function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-mine-more').show();
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-mine').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-mine-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-mine').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+        GCTUser.GetBookmarks(limit, bookmarks.all.offset, filters, bookmarksAll, errorConsole);
+        GCTUser.GetBookmarksByUserColleague(limit, bookmarks.colleagues.offset, filters, bookmarksColleagues, errorConsole);
+        GCTUser.GetBookmarksByUser(limit, bookmarks.mine.offset, '', bookmarksMine, errorConsole);
     }
 
-    var bookmarksAllMore = $$(page.container).find('#bookmarks-all-more');
-    bookmarksAllMore.on('click', function (e) {
-        GCTUser.GetBookmarks(limit, bookmarksAllMoreOffset + limit, filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-all').fadeIn(1000);
-            }
-            bookmarksAllMoreOffset += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+
+    $$('#more-' + bookmarks.all.id).on('click', function (e) {
+        $('#focus-' + bookmarks.all.id).remove();
+        GCTUser.GetBookmarks(limit, bookmarks.all.offset, filters, bookmarksAll, errorConsole);
     });
-
-
-    var bookmarksColleaguesMore = $$(page.container).find('#bookmarks-colleagues-more');
-    bookmarksColleaguesMore.on('click', function (e) {
-        GCTUser.GetBookmarksByUserColleague(limit, bookmarksColleaguesMoreOffset + limit , filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-            }
-            bookmarksColleaguesMoreOffset += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + bookmarks.colleagues.id).on('click', function (e) {
+        $('#focus-' + bookmarks.colleagues.id).remove();
+        GCTUser.GetBookmarksByUserColleague(limit, bookmarks.colleagues.offset, filters, bookmarksColleagues, errorConsole);
     });
-
-    var bookmarksMineMore = $$(page.container).find('#bookmarks-mine-more');
-    bookmarksAllMore.on('click', function (e) {
-        GCTUser.GetBookmarksByUser(limit, bookmarksMineMoreOffset + limit, '', function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-mine-more').show();
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).hide().appendTo('#bookmarks-mine').fadeIn(1000);
-                });
-            } else {
-                $('#bookmarks-mine-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-mine').fadeIn(1000);
-            }
-            bookmarksMineMoreOffset += limit;
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + bookmarks.mine.id).on('click', function (e) {
+        $('#focus-' + bookmarks.mine.id).remove();
+        GCTUser.GetBookmarksByUser(limit, bookmarks.mine.offset, '', bookmarksMine, errorConsole);
     });
 
     var refreshBookmarks = $$(page.container).find('.pull-to-refresh-content');
     refreshBookmarks.on('refresh', function (e) {
-        GCTUser.GetBookmarks(limit, offset, filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                var content = "";
-                $.each(bookmarks, function (key, value) {
-                    content += GCTEach.Bookmark(value);
-                });
-                $('#bookmarks-all').html('');
-                $(content).hide().appendTo('#bookmarks-all').fadeIn(1000);
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-all').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-        GCTUser.GetBookmarksByUserColleague(limit, offset, filters, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-all-more').show();
-                var content = "";
-                $.each(bookmarks, function (key, value) {
-                    content += GCTEach.Bookmark(value);
-                });
-                $('#bookmarks-colleagues').html('');
-                $(content).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-            } else {
-                $('#bookmarks-all-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-colleagues').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-        GCTUser.GetBookmarksByUser(limit, offset, '', function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $('#bookmarks-mine-more').show();
-                var content = "";
-                $.each(bookmarks, function (key, value) {
-                    console.log(value);
-                    content += GCTEach.Bookmark(value);
-                });
-                $('#bookmarks-mine').html('');
-                $(content).hide().appendTo('#bookmarks-mine').fadeIn(1000);
-            } else {
-                $('#bookmarks-mine-more').hide();
-                $(noMatches).hide().appendTo('#bookmarks-mine').fadeIn(1000);
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        bookmarksAllMoreOffset = 0;
-        bookmarksColleaguesMoreOffset = 0;
-        bookmarksMineMoreOffset = 0;
-
+        $('#bookmark-filters').val('');
+        $('#bookmark-name').val('');
+        bookmarksReset();
         myApp.pullToRefreshDone();
     });
 
