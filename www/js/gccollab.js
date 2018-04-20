@@ -607,6 +607,60 @@ myApp.onPageInit('group', function (page) {
     var ld_blogs = false;
     var group_public;
 
+    var group = {};
+    group.members = listObject("group-members");
+    group.discussions = listObject("group-discussions");
+    group.activity = listObject("group-activity");
+    group.bookmarks = listObject("group-bookmarks");
+    group.blogs = listObject("group-blogs");
+
+    function groupDiscussions(data) {
+        var info = data.result;
+        var content = '';
+        if (group.discussions.loaded == true) { $(group.discussions.appendMessage).appendTo('#content-' + group.discussions.id); } else { group.discussions.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                // Removes HTML components from Discussion
+                //var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
+                var text = "<blockquote class='item-text large'>" + value.description + "</blockquote>";
+                var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+                var replied = (value.replied) ? "replied" : "";
+                var liked = (value.liked) ? "liked" : "";
+                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+
+                content += GCTLang.txtDiscussion({
+                    icon: value.userDetails.iconURL,
+                    name: value.userDetails.displayName,
+                    date: prettyDate(value.time_created),
+                    group: group,
+                    description: text,
+                    title: value.title,
+                    all_text: 'all_text',
+                    action: action,
+                    owner: value.owner_guid,
+                    guid: value.guid,
+                    type: "gccollab_discussion_post",
+                    replied: replied,
+                    liked: liked,
+                    likes: likes
+                });
+
+            });
+            $(content).appendTo('#content-' + group.discussions.id);
+        }
+        if (info.length < limit) {
+            var content = endOfContent;
+            $(content).appendTo('#content-' + group.discussions.id);
+            $('#more-' + group.discussions.id).hide();
+        }
+        group.discussions.offset += limit;
+        var focusNow = document.getElementById('focus-' + group.discussions.id);
+        if (focusNow) { focusNow.focus(); }
+
+    }
+
     GCTUser.GetGroup(guid, function(data){
         var group = data.result;
        
@@ -643,9 +697,7 @@ myApp.onPageInit('group', function (page) {
         $("[data-guid]").data('guid', group.guid);
         $("[data-type]").data('type', group.type);
 
-    }, function(jqXHR, textStatus, errorThrown){
-        console.log(jqXHR, textStatus, errorThrown);
-    });
+    }, errorConsole);
 
     $("#group-menu").on('click', function (e) {
         var popoverHTML = '<div class="popover pop-group-menu">'
@@ -654,7 +706,7 @@ myApp.onPageInit('group', function (page) {
             + '<ul>';
         if (access) {
             popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#tab-group-activity" class="button tab-link close-popover" data-translate="activity">'+ GCTLang.Trans("activity") +'</a></li>' : "";
-            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-group-discussion" class="button tab-link close-popover" data-translate="discussion">'+ GCTLang.Trans("discussion") +'</a></li>' : "";
+            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-group-discussions" class="button tab-link close-popover" data-translate="discussion">'+ GCTLang.Trans("discussion") +'</a></li>' : "";
             popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#tab-group-bookmarks" class="button tab-link close-popover" data-translate="bookmarks">' + GCTLang.Trans("bookmarks") + '</a></li>' : "";
             popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#tab-group-blogs" class="button tab-link close-popover" data-translate="blogs">' + GCTLang.Trans("blogs") + '</a></li>' : "";
         } else {
@@ -685,99 +737,14 @@ myApp.onPageInit('group', function (page) {
         myApp.popover(popoverHTML, this);
     });
 
-    $("#tab-group-discussion").on('show', function (e) {
-        if (!ld_discussion) {
-            ld_discussion = true;
-            GCTUser.GetGroupDiscussions(guid,limit, offset, function(data){
-                var discussions = data.result;
-                var content = '';
-                if(discussions.length > 0){
-                    $.each(discussions, function (key, value) {
-                        // Removes HTML components from Discussion
-                        //var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
-                        var text = "<blockquote class='item-text large'>" + value.description + "</blockquote>";
-                        var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
-                        var replied = (value.replied) ? "replied" : "";
-                        var liked = (value.liked) ? "liked" : "";
-                        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                         content += GCTLang.txtDiscussion({
-                            icon: value.userDetails.iconURL,
-                            name: value.userDetails.displayName,
-                            date: prettyDate(value.time_created),
-                            group: group,
-                            description: text,
-                            title: value.title,
-                            all_text: 'all_text',
-                            action: action,
-                            owner: value.owner_guid,
-                            guid: value.guid,
-                            type: "gccollab_discussion_post",
-                            replied: replied,
-                            liked: liked,
-                            likes: likes
-                        });
-
-                    });
-                    $(content).appendTo('#group-discussion');
-                } 
-                if (discussions.length < limit) {
-                    var content = endOfContent;
-                    $(content).appendTo('#group-discussion');
-                    $('#group-discussion-more').hide();
-                }
-            
-            }, function(jqXHR, textStatus, errorThrown){
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $("#tab-" + group.discussions.id).on('show', function (e) {
+        if (!group.discussions.loaded) {
+            GCTUser.GetGroupDiscussions(guid, limit, group.discussions.offset, groupDiscussions, errorConsole);
         }
     });
-    $$("#group-discussion-more").on('click', function (e) {
-        GCTUser.GetGroupDiscussions(guid, limit, offset_discussion + limit , function(data){
-            var discussions = data.result;
-            var content = '';
-            offset_discussion += limit;
-            if(discussions.length > 0){
-                $.each(discussions, function (key, value) {
-                    console.log(value);
-                    // Removes HTML components from Discussion
-                    //var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
-                    var text = "<blockquote class='item-text large'>" + value.description + "</blockquote>";
-                    var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
-                    var replied = (value.replied) ? "replied" : "";
-                    var liked = (value.liked) ? "liked" : "";
-                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
-                     content += GCTLang.txtDiscussion({
-                        icon: value.userDetails.iconURL,
-                        name: value.userDetails.displayName,
-                        date: prettyDate(value.time_created),
-                        group: group,
-                        description: text,
-                        title: value.title,
-                        all_text: 'all_text',
-                        action: action,
-                        owner: value.owner_guid,
-                        guid: value.guid,
-                        type: "gccollab_discussion_post",
-                        replied: replied,
-                        liked: liked,
-                        likes: likes
-                    });
-                });
-                $(content).appendTo('#group-discussion');
-            } 
-            if (discussions.length < limit) {
-                var content = endOfContent;
-                $(content).appendTo('#group-discussion');
-                $('#group-discussion-more').hide();
-            }
-            
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$("#more-" + group.discussions.id).on('click', function (e) {
+        $('#focus-' + group.discussions.id).remove();
+        GCTUser.GetGroupDiscussions(guid, limit, group.discussions.offset, groupDiscussions, errorConsole);
     });
 
     $("#tab-group-bookmarks").on('show', function (e) {
