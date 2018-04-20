@@ -1409,94 +1409,108 @@ myApp.onPageInit('wire', function (page) {
     $$('#wire-navbar-inner').html(GCTLang.txtGlobalNav('the-wire'));
     var limit = 20;
     var offset = 0;
-    var offset_wiresAll = 0;
     var offset_wiresColleagues = 0;
     var offset_wiresMine = 0;
 
-    var wiresAllMoreOffset = 0;
-    var wiresColleaguesMoreOffset = 0;
-    var wiresMineMoreOffset = 0;
+    var wires = {}; //objects for each tab's variables.
+    wires.all = listObject("wires-all");
+    wires.colleagues = listObject("wires-colleagues");
+    wires.mine = listObject("wires-mine");
 
     function wiresWires(data) {
-        var wires = data.result;
+        var info = data.result;
         var imgs = [];
-        if (wires.length > 0) {
-            $.each(wires, function (key, value) {
-                var content = GCTEach.Wire(value);
-                $(content).hide().appendTo('#wires-all').fadeIn(1000);
+        var content = '';
+        if (wires.all.loaded == true) { $(wires.all.appendMessage).appendTo('#content-' + wires.all.id); } else { wires.all.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                content = GCTEach.Wire(value);
+                $(content).hide().appendTo('#content-' + wires.all.id).fadeIn(1000);
             });
         }
-        if (wires.length < limit) {
-            var content = endOfContent;
-            $(content).hide().appendTo('#wires-all').fadeIn(1000);
-            $('#wires-all-more').hide();
+        if (info.length < limit) {
+            content = endOfContent;
+            $(content).hide().appendTo('#content-' + wires.all.id).fadeIn(1000);
+            $('#more-' + wires.all.id).hide();
         }
         
-        offset_wiresAll += limit;
+        wires.all.offset += limit;
+        var focusNow = document.getElementById('focus-' + wires.all.id);
+        if (focusNow) { focusNow.focus(); }
     }
     function wiresColleagues(data) {
-        var wires = data.result;
+        var info = data.result;
         var imgs = [];
-        if (wires.length > 0) {
-            $.each(wires, function (key, value) {
+        if (wires.colleagues.loaded == true) { $(wires.colleagues.appendMessage).appendTo('#content-' + wires.colleagues.id); } else { wires.colleagues.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
                 var content = GCTEach.Wire(value);
-                $(content).hide().appendTo('#wires-colleagues').fadeIn(1000);
+                $(content).hide().appendTo('#content-' + wires.colleagues.id).fadeIn(1000);
             });
         }
-        if (wires.length < limit) {
+        if (info.length < limit) {
             var content = endOfContent;
-            $(content).hide().appendTo('#wires-colleagues').fadeIn(1000);
-            $('#wires-colleagues-more').hide();
+            $(content).hide().appendTo('#content-' + wires.colleagues.id).fadeIn(1000);
+            $('#more-' + wires.colleagues.id).hide();
         }
-        offset_wiresColleagues += limit;
-    }
+        wires.colleagues.offset += limit;
+        var focusNow = document.getElementById('focus-' + wires.colleagues.id);
+        if (focusNow) { focusNow.focus(); }
+    } 
     function wiresMine(data) {
-        var wires = data.result;
-        if (wires.length > 0) {
-            $.each(wires, function (key, value) {
+        var info = data.result;
+        if (wires.mine.loaded == true) { $(wires.mine.appendMessage).appendTo('#content-' + wires.mine.id); } else { wires.mine.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
                 var content = GCTEach.Wire(value);
-                $(content).hide().appendTo('#wires-mine').fadeIn(1000);
+                $(content).hide().appendTo('#content-' + wires.mine.id).fadeIn(1000);
             });
         }
-        if (wires.length < limit) {
+        if (info.length < limit) {
             var content = endOfContent;
-            $(content).hide().appendTo('#wires-mine').fadeIn(1000);
-            $('#wires-mine-more').hide();
+            $(content).hide().appendTo('#content-' + wires.mine.id).fadeIn(1000);
+            $('#more-' + wires.mine.id).hide();
         }
-        offset_wiresMine += limit;
+        wires.mine.offset += limit;
+        var focusNow = document.getElementById('focus-' + wires.mine.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function wiresReset() {
+        $.each(wires, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
+        });
+        GCTUser.GetWires(limit, wires.all.offset, '', wiresWires, errorConsole);
+        GCTUser.GetWiresByUserColleague(limit, wires.colleagues.offset, wiresColleagues, errorConsole);
+        GCTUser.GetWiresByUser(GCTUser.Email(), limit, wires.mine.offset, wiresMine, errorConsole);
     }
 
-    GCTUser.GetWires(limit, offset_wiresAll, '', wiresWires, errorConsole);
-    $$('#wires-all-more').on('click', function (e) {
-        GCTUser.GetWires(limit, offset_wiresAll, '', wiresWires, errorConsole);
+    GCTUser.GetWires(limit, wires.all.offset, '', wiresWires, errorConsole);
+    $$('#more-' + wires.all.id).on('click', function (e) {
+        $('#focus-' + wires.all.id).remove();
+        GCTUser.GetWires(limit, wires.all.offset, '', wiresWires, errorConsole);
     });
 
-    GCTUser.GetWiresByUserColleague(limit, offset_wiresColleagues, wiresColleagues, errorConsole);
-    $$('#wires-colleagues-more').on('click', function (e) {
-        GCTUser.GetWiresByUserColleague(limit, offset_wiresColleagues, wiresColleagues, errorConsole);
+    GCTUser.GetWiresByUserColleague(limit, wires.colleagues.offset, wiresColleagues, errorConsole);
+    $$('#more-' + wires.colleagues.id).on('click', function (e) {
+        $('#focus-' + wires.colleagues.id).remove();
+        GCTUser.GetWiresByUserColleague(limit, wires.colleagues.offset, wiresColleagues, errorConsole);
     });
 
-    GCTUser.GetWiresByUser(GCTUser.Email(), limit, offset_wiresMine, wiresMine , errorConsole);
-    $$('#wires-mine-more').on('click', function (e) {
-        GCTUser.GetWiresByUser(GCTUser.Email(), limit, offset_wiresMine, wiresMine, errorConsole);
+    GCTUser.GetWiresByUser(GCTUser.Email(), limit, wires.mine.offset, wiresMine , errorConsole);
+    $$('#more-' + wires.mine.id).on('click', function (e) {
+        $('#focus-' + wires.mine.id).remove();
+        GCTUser.GetWiresByUser(GCTUser.Email(), limit, wires.mine.offset, wiresMine, errorConsole);
     });
     
     var refreshWires = $$(page.container).find('.pull-to-refresh-content');
     refreshWires.on('refresh', function (e) {
-        $('#wires-all').html('');
-        $('#wires-colleagues').html('');
-        $('#wires-mine').html('');
-        offset_wiresAll = 0;
-        offset_wiresColleagues = 0;
-        offset_wiresMine = 0;
-        $('#wires-mine-more').show();
-        $('#wires-colleagues-more').show();
-        $('#wires-all-more').show();
-
-        GCTUser.GetWires(limit, offset_wiresAll, '', wiresWires, errorConsole);
-        GCTUser.GetWiresByUserColleague(limit, offset_wiresColleagues, wiresColleagues, errorConsole);
-        GCTUser.GetWiresByUser(GCTUser.Email(), limit, offset_wiresMine, wiresMine, errorConsole);
-        
+        wiresReset();
         myApp.pullToRefreshDone();
     });
 });
