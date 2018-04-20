@@ -3483,12 +3483,8 @@ myApp.onPageInit('opportunities', function (page) {
     });
 });
 myApp.onPageInit('new-opportunity', function (page) {
-
-$$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platform'));
-    
+$$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platform')); 
     $$('.next-form1').on('click', function (e) {
-
-
         var formData = myApp.formToData('#opt-form1');
         var title = formData['name'];
         var email = formData['email'];
@@ -3507,14 +3503,12 @@ $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platf
 
         } else {
             myApp.alert('Input required is missing');
-            //empty message, dont use, give feedback
         }
     });
 
     $$('.next-form2').on('click', function (e) {
 
         var formData = myApp.formToData('#opt-form2');
-
         var title = formData['title'];
         var type = formData['type'];
         var program = formData['program'];
@@ -3535,13 +3529,11 @@ $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platf
 
         } else {
             myApp.alert('Input required is missing');
-            //empty message, dont use, give feedback
         }
     });
 
     $$('.next-form3').on('click', function (e) {
         var formData = myApp.formToData('#opt-form3');
-       
         var hours = formData['hours'];
         var location = formData['location'];
 
@@ -3554,15 +3546,15 @@ $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platf
                 mainView.router.load({ url: 'NewOpportunity.html',context:{myTab:'#tab2'} });
                 var result = data.result;
                 console.log(result);
-                myApp.alert(result, 'Error');
+                myApp.alert(result, 'Congrat');
 
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                myApp.alert(textStatus, 'Error');
             });
 
         } else {
             myApp.alert('Input required is missing');
-            //empty message, dont use, give feedback
         }
     });
 
