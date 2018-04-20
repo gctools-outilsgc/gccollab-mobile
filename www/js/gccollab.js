@@ -1561,45 +1561,57 @@ myApp.onPageInit('groups', function (page) {
     var filters = {};
     var filtersOpened = false;
 
-    function groupsAll(data) {
-        var groups = data.result;
+    var groups = {};
+    groups.all = listObject("groups-all");
+    groups.mine = listObject("groups-mine");
 
-        if (groups.length > 0) {
-            $.each(groups, function (key, value) {
+    function groupsAll(data) {
+        var info = data.result;
+        if (groups.all.loaded == true) { $(groups.all.appendMessage).appendTo('#content-' + groups.all.id); } else { groups.all.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
                 var content = GCTEach.Group(value);
-                $(content).hide().appendTo('#groups-all').fadeIn(1000);
+                $(content).hide().appendTo('#content-' + groups.all.id).fadeIn(1000);
             });
         }
-        if (groups.length < limit) {
-            $('#groups-all-more').hide();
-            $(endOfContent).hide().appendTo('#groups-all').fadeIn(1000);
+        if (info.length < limit) {
+            $('#more-' + groups.all.id).hide();
+            $(endOfContent).hide().appendTo('#content-' + groups.all.id).fadeIn(1000);
         }
-        offset_groupsAll += limit;
+        groups.all.offset += limit;
+        var focusNow = document.getElementById('focus-' + groups.all.id);
+        if (focusNow) { focusNow.focus(); }
     }
     function groupsMine(data) {
-        var groups = data.result;
+        var info = data.result;
+        if (groups.mine.loaded == true) { $(groups.mine.appendMessage).appendTo('#content-' + groups.mine.id); } else { groups.mine.loaded = true; }
 
-        if (groups.length > 0) {
-            $('#groups-mine-more').show();
-            $.each(groups, function (key, value) {
+        if (info.length > 0) {
+            $('#more-' + groups.mine.id).show();
+            $.each(info, function (key, value) {
                 var content = GCTEach.Group(value);
-                $(content).hide().appendTo('#groups-mine').fadeIn(1000);
+                $(content).hide().appendTo('#content-' + groups.mine.id).fadeIn(1000);
             });
         } 
-        if (groups.length < limit) {
-            $('#groups-mine-more').hide();
-            $(endOfContent).hide().appendTo('#groups-mine').fadeIn(1000);
+        if (info.length < limit) {
+            $('#more-' + groups.mine.id).hide();
+            $(endOfContent).hide().appendTo('#content-' + groups.mine.id).fadeIn(1000);
         }
-        offset_groupsMine += limit;
+        groups.mine.offset += limit;
+        var focusNow = document.getElementById('focus-' + groups.mine.id);
+        if (focusNow) { focusNow.focus(); }
     }
     function groupsReset() {
-        $('#groups-all').html('');
-        $('#groups-mine').html('');
-        offset_groupsAll = 0;
-        offset_groupsMine = 0;
+        $.each(groups, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
+        });
 
-        GCTUser.GetGroups(limit, offset_groupsAll, filters, groupsAll, errorConsole);
-        GCTUser.GetGroupsMine(limit, offset_groupsMine, filters, groupsMine, errorConsole);
+        GCTUser.GetGroups(limit, groups.all.offset, filters, groupsAll, errorConsole);
+        GCTUser.GetGroupsMine(limit, groups.mine.offset, filters, groupsMine, errorConsole);
     }
 
     $('#clear-filters').on('click', function() {
@@ -1616,23 +1628,22 @@ myApp.onPageInit('groups', function (page) {
         if( $("#group-name").val() == "" ){
             filters = "";
         }
-
-        GCTUser.GetGroups(limit, offset_groupsAll, filters, groupsAll, errorConsole);
-        GCTUser.GetGroupsMine(limit, offset_groupsMine, filters, groupsMine, errorConsole);
-
+        groupsReset();
     });
 
     if( !filtersOpened ){
-        GCTUser.GetGroups(limit, offset_groupsAll, filters, groupsAll, errorConsole);
-        GCTUser.GetGroupsMine(limit, offset_groupsMine, filters, groupsMine, errorConsole);
+        GCTUser.GetGroups(limit, groups.all.offset, filters, groupsAll, errorConsole);
+        GCTUser.GetGroupsMine(limit, groups.mine.offset, filters, groupsMine, errorConsole);
     }
 
-    $$('#groups-all-more').on('click', function (e) {
-        GCTUser.GetGroups(limit, offset_groupsAll, filters, groupsAll, errorConsole);
+    $$('#more-' + groups.all.id).on('click', function (e) {
+        $('focus-' + groups.all.id).remove();
+        GCTUser.GetGroups(limit, groups.all.offset, filters, groupsAll, errorConsole);
     });
 
-    $$('#groups-mine-more').on('click', function (e) {
-        GCTUser.GetGroupsMine(limit, offset_groupsMine, filters, groupsMine, errorConsole);
+    $$('#more-' + groups.mine.id).on('click', function (e) {
+        $('focus-' + groups.mine.id).remove();
+        GCTUser.GetGroupsMine(limit, groups.mine.offset, filters, groupsMine, errorConsole);
     });
 
     var refreshGroups = $$(page.container).find('.pull-to-refresh-content');
@@ -1641,7 +1652,6 @@ myApp.onPageInit('groups', function (page) {
         filters = {};
         $("#group-name").val('');
         groupsReset();
-
         myApp.pullToRefreshDone();
     });
 });
