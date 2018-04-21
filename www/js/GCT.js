@@ -573,6 +573,10 @@ GCTUser = {
         });
     },
     Logout: function () {
+        $.ajax({
+            url: logout_url,
+            type: "GET"
+        });
         Cookies.remove('loggedin');
     },
     SetLoginCookie: function () {

@@ -945,10 +945,6 @@ myApp.onPageInit('group', function (page) {
 });
 
 myApp.onPageInit('sign-in', function (page) {
-    if( page.query.register ){
-        myApp.alert(GCTLang.Trans("verify"), '');
-    }
-
     var clientInfo = {
         client_id: openid_client_id,
         redirect_uri: 'gccollab-mobile'
@@ -959,13 +955,26 @@ myApp.onPageInit('sign-in', function (page) {
     OIDC.setProviderInfo(providerInfo);
     OIDC.storeInfo(providerInfo, clientInfo);
 
+    $$('#regBtn').on('click', function (e) {
+        var registerWindow = window.open(register_url, '_blank', 'location=yes');
+
+        registerWindow.addEventListener('loadstop', function(event) {
+            var url = event.url;
+            if(url.includes('/register/complete/')){
+                setTimeout(function(){
+                    registerWindow.close();
+                }, 3000);
+            }
+        });
+    });
+
     $$('#loginBtn').on('click', function (e) {
         var id_token = "";
         var access_token = "";
         var loginURL = OIDC.login({scope: 'openid email', response_type: 'id_token token'});
-        var ref = window.open(loginURL, '_blank', 'location=yes');
+        var loginWindow = window.open(loginURL, '_blank', 'location=yes');
 
-        ref.addEventListener('loadstop', function(event) {
+        loginWindow.addEventListener('loadstop', function(event) {
             var url = event.url;
 
             if(url.includes('id_token=')){
@@ -977,11 +986,11 @@ myApp.onPageInit('sign-in', function (page) {
             }
 
             if(id_token && access_token){
-                ref.close();
+                loginWindow.close();
             }
         });
 
-        ref.addEventListener('exit', function(event) {
+        loginWindow.addEventListener('exit', function(event) {
             if(id_token && access_token){
                 $.ajax({
                     url: openid_issuer + "/userinfo",
@@ -4807,142 +4816,6 @@ myApp.onPageInit('profile todoadd', function (page) {
     var calendarDateFormat = myApp.calendar({
         input: '#ks-calendar-date-format2',
         dateFormat: 'DD, MM dd, yyyy'
-    });
-});
-
-myApp.onPageInit('register', function (page) {
-
-    function validateEmail(email) { 
-        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
-        return re.test(email);
-    }
-
-    $(document).on('change', '#registerForm .error', function (e) {
-        if( $(this).val() != "" ){
-            $(this).removeClass('error');
-        }
-    });
-
-    $(document).on('change', '#reg-email', function() {
-        if( $(this).val() != "" ){
-            if( !validateEmail($(this).val()) ){
-                $(this).addClass('error');
-            } else {
-                $(this).removeClass('error');
-            }
-        }
-    });
-
-    $(document).on('change', '#toc', function() {
-        if( $('#toc').is(':checked') ){
-            $('#toc').closest('p').removeClass('error');
-        }
-    });
-
-    $('#registerBtn').on('click', function (e) {
-        var hasErrors = false;
-
-        $('#registerForm input:not(#toc):visible, #registerForm select:visible').each(function(key, value) {
-            var id = $(this).attr('id');
-            var val = $(this).val();
-
-            if( id == "password" && val.length < 6 ){
-                $(this).addClass('error');
-                hasErrors = true;
-            } else if( val == "" ){
-                $(this).addClass('error');
-                hasErrors = true;
-            }
-        });
-
-        if( !validateEmail($('#reg-email').val()) ){
-            hasErrors = true;
-        }
-
-        if( !$('#toc').is(':checked') ){
-            $('#toc').closest('p').addClass('error');
-            hasErrors = true;
-        }
-
-        if( hasErrors ){
-            return false;
-        }
-
-        var formValues = getFormData($('#registerForm'));
-
-        $$.ajax({
-            api_key: api_key_gccollab,
-            method: 'POST',
-            url: GCT.GCcollabURL,
-            data: { method:"register.user", email: formValues.email, userdata: JSON.stringify(formValues) },
-            timeout: 12000,
-            success: function (data) {
-                data = JSON.parse(data);
-                if (data.status == -1) {
-                    if (data.message.indexOf("ELGG") > -1) {
-                        mainView.router.loadPage({ url: 'sign-in.html?register=true&email=' + formValues.email });
-                    } else {
-                        var message = data.message;
-                        var alert = "";
-                        if( $.isArray(message) ){
-                            $.each(message, function( index, value ) {
-                                alert += $(value).text();
-                                if(index > 0 && index < message.length){
-                                    alert += "<br>";
-                                }
-                            });
-                        }
-                        myApp.alert(alert, 'Error');
-                    }
-                } else {
-                    mainView.router.loadPage({ url: 'sign-in.html?register=true&email=' + formValues.email });
-                }
-            }
-        });
-    });
-
-    $("#user_type").change(function() {
-        var type = $(this).val();
-        $('.occupation-choices').hide();
-
-        if (type == 'academic' || type == 'student') {
-            if( type == 'academic' ){
-                if( $("#institution").val() == 'highschool' ){ $("#institution").prop('selectedIndex', 0); }
-                $("#institution option[value='highschool']").hide();
-            } else {
-                $("#institution option[value='highschool']").show();
-            }
-            $('#institution-wrapper').fadeIn();
-            var institution = $('#institution').val();
-            $('#' + institution + '-wrapper').fadeIn();
-        } else if (type == 'provincial') {
-            $('#provincial-wrapper').fadeIn();
-            var province = $('#provincial').val();
-            province = province.replace(/\s+/g, '-').toLowerCase();
-            $('#' + province + '-wrapper').fadeIn();
-        } else {
-            $('#' + type + '-wrapper').fadeIn();
-        }
-    });
-
-    $("#institution").change(function() {
-        var type = $(this).val();
-        $('.student-choices').hide();
-        $('#' + type + '-wrapper').fadeIn();
-    });
-
-    $("#provincial").change(function() {
-        var province = $(this).val();
-        province = province.replace(/\s+/g, '-').toLowerCase();
-        $('.provincial-choices').hide();
-        $('#' + province + '-wrapper').fadeIn();
-    });
-
-    $('.terms').on('click', function (e) {
-        e.preventDefault();
-        $('.popup-generic .popup-title').html(GCTLang.Trans('terms-and-conditions'));
-        $('.popup-generic .popup-content').html($('#terms-content-' + GCTLang.Lang()).html());
-        myApp.popup('.popup-generic');
     });
 });
 
