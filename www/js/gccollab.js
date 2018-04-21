@@ -541,12 +541,9 @@ myApp.onPageInit('*', function (page) {
     GCTLang.TransPage();
 
     $$('#logoutBtn').on('click', function (e) {
-        GCTUser.Logout(function(success){
-            myApp.closePanel(false);
-            mainView.router.loadPage({ url: 'sign-in.html' });
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+        GCTUser.Logout();
+        myApp.closePanel(false);
+        mainView.router.loadPage({ url: 'sign-in.html' });
     });
 
     $$(document).on('click', 'a.social-share', function (e) {
@@ -948,61 +945,71 @@ myApp.onPageInit('group', function (page) {
 });
 
 myApp.onPageInit('sign-in', function (page) {
-    var email = GCTUser.LastLoginEmail();
-    if( page.query.email ){
-        email = page.query.email;
-    }
-    $$('#email').val(email);
-
-    var email = $('#email').val();
-    var password = $('#password').val();
-
     if( page.query.register ){
         myApp.alert(GCTLang.Trans("verify"), '');
     }
 
-    $("#email, #password").keyup(function (event) {
-        //event.preventDefault();
+    var clientInfo = {
+        client_id: openid_client_id,
+        redirect_uri: 'gccollab-mobile'
+    };
+    var providerInfo = OIDC.discover(openid_issuer);
 
-        var email = $('#email').val();
-        var password = $('#password').val();
-
-        if (event.keyCode == 13) {
-            if( email != "" && password != "" && email.length >= 3 && password.length >= 6 ){
-                GCTUser.Login(email, password, function (success) {
-                    if (success.result==true) {
-                        GCTUser.SaveLoginEmail(email);
-                        GCTUser.SetLoginCookie();
-                        GCTUser.SetUserProfile();
-                        mainView.router.loadPage({ url: 'home.html' });
-                    } else {
-                        myApp.alert(GCTLang.Trans("invalid"), 'Error');
-                    }
-                }, function (jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR, textStatus, errorThrown);
-                });
-            }
-        }
-    });
+    OIDC.setClientInfo(clientInfo);
+    OIDC.setProviderInfo(providerInfo);
+    OIDC.storeInfo(providerInfo, clientInfo);
 
     $$('#loginBtn').on('click', function (e) {
-        var email = $('#email').val();
-        var password = $('#password').val();
+        var id_token = "";
+        var access_token = "";
+        var loginURL = OIDC.login({scope: 'openid email', response_type: 'id_token token'});
+        var ref = window.open(loginURL, '_blank', 'location=yes');
 
-        if( email != "" && password != "" ){
-            GCTUser.Login(email, password, function (success) {
-                if (success.result == true) {
-                    GCTUser.SaveLoginEmail(email);
-                    GCTUser.SetLoginCookie();
-                    GCTUser.SetUserProfile();
-                    mainView.router.loadPage({ url: 'home.html' });
-                } else {
-                    myApp.alert(GCTLang.Trans("invalid"), 'Error');
-                }
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
-        }
+        ref.addEventListener('loadstop', function(event) {
+            var url = event.url;
+
+            if(url.includes('id_token=')){
+                id_token = url.substring(url.lastIndexOf('id_token=')+9, url.lastIndexOf('&token_type'));
+            }
+
+            if(url.includes('access_token=')){
+                access_token = url.substring(url.lastIndexOf('access_token=')+13, url.lastIndexOf('&id_token'));
+            }
+
+            if(id_token && access_token){
+                ref.close();
+            }
+        });
+
+        ref.addEventListener('exit', function(event) {
+            if(id_token && access_token){
+                $.ajax({
+                    url: openid_issuer + "/userinfo",
+                    type: "GET",
+                    dataType: "JSON",
+                    beforeSend: function (request){
+                        request.setRequestHeader("Authorization", "Bearer " + access_token);
+                    },
+                    success: function (result) {
+                        var email = result.email;
+                        var sub = result.sub;
+
+                        GCTUser.SSOLogin(email, sub, function (success) {
+                            if (success.result == true) {
+                                GCTUser.SaveLoginEmail(email);
+                                GCTUser.SetLoginCookie();
+                                GCTUser.SetUserProfile();
+                                mainView.router.loadPage({ url: 'home.html' });
+                            } else {
+                                myApp.alert(GCTLang.Trans("invalid"), 'Error');
+                            }
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        });
+                    }
+                });
+            }
+        });
     });
 });
 

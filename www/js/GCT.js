@@ -1,5 +1,4 @@
-﻿var apiVersion = 0.9; 
-var api_key_gccollab = "";
+﻿var apiVersion = 0.9;
 
 /*
 * txtType functions:
@@ -541,6 +540,22 @@ GCTUser = {
             }
         });
     },
+    SSOLogin: function (email, sub, successCallback, errorCallback) {
+        $$.ajax({
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "login.sso", email: email, sub: sub, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     Login: function (user, password, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
@@ -557,21 +572,8 @@ GCTUser = {
             }
         });
     },
-    Logout: function (successCallback, errorCallback) {
-        $$.ajax({
-            method: 'POST',
-            dataType: 'text',
-            url: GCT.GCcollabURL,
-            data: { method: "login.user", action: "logout", email: GCTUser.Email(), api_key: api_key_gccollab, lang: GCTLang.Lang() },
-            timeout: 12000,
-            success: function (data) {
-                data = JSON.parse(data);
-                successCallback(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                errorCallback(jqXHR, textStatus, errorThrown);
-            }
-        });
+    Logout: function () {
+        Cookies.remove('loggedin');
     },
     SetLoginCookie: function () {
         Cookies.set('loggedin', true, { expires: 7 });
