@@ -1182,20 +1182,6 @@ myApp.onPageInit('homeOld', function (page) {
         console.log(jqXHR, textStatus, errorThrown);
     });
 
-    //### This isn't working but should. Have to come back to this. For the time being login is done through the specific chat and external-pages pages.
-    //### The plan was for this to log the user into GCcollab within the app context and have it set cookies then we could use the 
-    //### iFrame to load site pages (until we get the functionality into the app one by one).
-    //$$.ajax({
-    //    method: 'POST',
-    //    dataType: 'text',
-    //    url: "https://gccollab.ca/services/api/rest/json/?",
-    //    data: { method: "login.userforchat", user: GCTUser.Email(), key: api_key_gccollab, _persistant: "true" },
-    //    timeout: 12000,
-    //    success: function (data) {
-    //        console.log(data);
-    //    }
-    //});
-
     var refreshHome = $$(page.container).find('.pull-to-refresh-content');
     refreshHome.on('refresh', function (e) {
         console.log("refresh");
@@ -1556,14 +1542,14 @@ myApp.onPageInit('groups', function (page) {
 myApp.onPageInit('chat', function (page) {
     $$('#chat-navbar-inner').html(GCTLang.txtGlobalNav('chat'));
     $("#user").val(GCTUser.Email());
-    $("#key").val(api_key_gccollab);
+    $("#api_key").val(api_key_gccollab);
     $("#chatForm").submit(); 
 });
 
 myApp.onPageInit('doc', function (page) {
     $$('#doc-navbar-inner').html(GCTLang.txtGlobalNav('doc-title'));
     $("#user").val(GCTUser.Email());
-    $("#key").val(api_key_gccollab);
+    $("#api_key").val(api_key_gccollab);
     $("#guid").val(page.query.guid);
     $("#docForm").submit(); 
 });
@@ -1572,7 +1558,7 @@ myApp.onPageInit('external-pages', function (page) {
     $$('#external-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
     //### log them in at app startup in background and do a check for if logged in later on so we don't do this every page hit
     $("#user").val(GCTUser.Email());
-    $("#key").val(api_key_gccollab);
+    $("#api_key").val(api_key_gccollab);
     $('#url').val(page.query.page);
     $("#formGCcollabLogin").submit();
    
