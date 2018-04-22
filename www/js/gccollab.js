@@ -943,27 +943,7 @@ myApp.onPageInit('sign-in', function (page) {
         var id_token = "";
         var access_token = "";
         var loginURL = OIDC.login({scope: 'openid email', response_type: 'id_token token'});
-        console.log(loginURL);
         var loginWindow = window.open(loginURL, '_blank', 'location=yes');
-        console.log(loginWindow);
-
-        var timer = setInterval(function() { 
-            if(loginWindow.closed) {
-                clearInterval(timer);
-                $.ajax({
-                    url: loginURL,
-                    type: "GET",
-                    success: function (result) {
-                        console.log(result);
-                    }
-                });
-            }
-        }, 1000);
-
-        loginWindow.addEventListener('load', function(event) {
-            console.log(event);
-            console.log("received load event");
-        }, false);
 
         loginWindow.addEventListener('loadstop', function(event) {
             var url = event.url;
