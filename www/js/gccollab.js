@@ -65,43 +65,6 @@ $$('.panel-right').on('open', function () {
     LoadMessageCentre();
 });
 
-function EnterCode() {
-    myApp.prompt(GCTLang.Trans("pleaseenterverification"), function (value) {
-        GCTUser.SendValidationCode(value, function (success) {
-            console.log(success);
-            var txt = "";
-            if (success.result == true) {
-                GCTUser.SetLoginCookie();
-                GCTUser.SetUserProfile();
-                mainView.router.loadPage({ url: 'home.html' });
-            } else {
-                myApp.confirm('Your code could not be validated. Press OK to enter your code again.', 'Code Not Valid',
-                    function () {
-                        EnterCode();
-                    }
-                );
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-            alert('strange error');
-        });
-    });
-    $('.modal-text-input').focus();
-}
-
-function GetNewCode() {
-    GCTUser.SendValidation(function(success){
-        if (success.message.length > 0) { ///### Going to have to make some of these returns more descriptive e.g. Invalid Email or Email Extension
-            EnterCode();        
-        } else {
-            myApp.alert('Sorry, we were unable to send you the verification code at this time.');
-        }
-    }, function(jqXHR, textStatus, errorThrown){
-        console.log(jqXHR, textStatus, errorThrown);
-        EnterCode();
-    });
-}
-
 function isValidEmailAddress(emailAddress) {
     var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
     return pattern.test(emailAddress);
@@ -501,7 +464,11 @@ function AppOpen() {
             GCTUser.SetUserProfile();
             mainView.router.loadPage({ url: 'home.html' });
         } else {
-            mainView.router.loadPage({ url: 'sign-in.html' });
+            if( openid_enabled ){
+                mainView.router.loadPage({ url: 'sign-in.html' });
+            } else {
+                mainView.router.loadPage({ url: 'sign-in-old.html' });
+            }
         }
     } else {
         //### Show lang buttons. This is first call and only happens until they click a lang link
@@ -543,7 +510,11 @@ myApp.onPageInit('*', function (page) {
     $$('#logoutBtn').on('click', function (e) {
         GCTUser.Logout();
         myApp.closePanel(false);
-        mainView.router.loadPage({ url: 'sign-in.html' });
+        if( openid_enabled ){
+            mainView.router.loadPage({ url: 'sign-in.html' });
+        } else {
+            mainView.router.loadPage({ url: 'sign-in-old.html' });
+        }
     });
 
     $$(document).on('click', 'a.social-share', function (e) {
@@ -956,7 +927,7 @@ myApp.onPageInit('sign-in', function (page) {
     OIDC.storeInfo(providerInfo, clientInfo);
 
     $$('#regBtn').on('click', function (e) {
-        var registerWindow = window.open(register_url, '_blank', 'location=yes');
+        var registerWindow = window.open(openid_register_url, '_blank', 'location=yes');
 
         registerWindow.addEventListener('loadstop', function(event) {
             var url = event.url;
@@ -972,7 +943,27 @@ myApp.onPageInit('sign-in', function (page) {
         var id_token = "";
         var access_token = "";
         var loginURL = OIDC.login({scope: 'openid email', response_type: 'id_token token'});
+        console.log(loginURL);
         var loginWindow = window.open(loginURL, '_blank', 'location=yes');
+        console.log(loginWindow);
+
+        var timer = setInterval(function() { 
+            if(loginWindow.closed) {
+                clearInterval(timer);
+                $.ajax({
+                    url: loginURL,
+                    type: "GET",
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            }
+        }, 1000);
+
+        loginWindow.addEventListener('load', function(event) {
+            console.log(event);
+            console.log("received load event");
+        }, false);
 
         loginWindow.addEventListener('loadstop', function(event) {
             var url = event.url;
@@ -1003,7 +994,7 @@ myApp.onPageInit('sign-in', function (page) {
                         var email = result.email;
                         var sub = result.sub;
 
-                        GCTUser.SSOLogin(email, sub, function (success) {
+                        GCTUser.LoginOpenID(email, sub, function (success) {
                             if (success.result == true) {
                                 GCTUser.SaveLoginEmail(email);
                                 GCTUser.SetLoginCookie();
@@ -1019,6 +1010,50 @@ myApp.onPageInit('sign-in', function (page) {
                 });
             }
         });
+    });
+});
+
+myApp.onPageInit('sign-in-old', function (page) {
+    $("#email, #password").keyup(function (event) {
+        var email = $('#email').val();
+        var password = $('#password').val();
+
+        if (event.keyCode == 13) {
+            if( email != "" && password != "" && email.length >= 3 && password.length >= 6 ){
+                GCTUser.Login(email, password, function (success) {
+                    if (success.result==true) {
+                        GCTUser.SaveLoginEmail(email);
+                        GCTUser.SetLoginCookie();
+                        GCTUser.SetUserProfile();
+                        mainView.router.loadPage({ url: 'home.html' });
+                    } else {
+                        myApp.alert(GCTLang.Trans("invalid"), 'Error');
+                    }
+                }, function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR, textStatus, errorThrown);
+                });
+            }
+        }
+    });
+
+    $$('#loginBtn').on('click', function (e) {
+        var email = $('#email').val();
+        var password = $('#password').val();
+
+        if( email != "" && password != "" ){
+            GCTUser.Login(email, password, function (success) {
+                if (success.result == true) {
+                    GCTUser.SaveLoginEmail(email);
+                    GCTUser.SetLoginCookie();
+                    GCTUser.SetUserProfile();
+                    mainView.router.loadPage({ url: 'home.html' });
+                } else {
+                    myApp.alert(GCTLang.Trans("invalid"), 'Error');
+                }
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        }
     });
 });
 

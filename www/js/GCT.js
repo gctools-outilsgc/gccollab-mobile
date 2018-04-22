@@ -508,39 +508,7 @@ function isAppleDevice(){
 }
 
 GCTUser = {
-    SendValidation: function (successCallback, errorCallback) {
-        $$.ajax({
-            method: 'POST',
-            dataType: 'text',
-            url: GCT.GCcollabURL,
-            data: { method: "login.user", email: GCTUser.Email(), action: "Activate", lang: GCTLang.Lang(), lang: GCTLang.Lang() },
-            timeout: 12000,
-            success: function (data) {
-                data = JSON.parse(data);
-                successCallback(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                errorCallback(jqXHR, textStatus, errorThrown);
-            }
-        });
-    },
-    SendValidationCode: function (Code, successCallback, errorCallback) {
-        $$.ajax({
-            method: 'POST',
-            dataType: 'text',
-            url: GCT.GCcollabURL,
-            data: { method: "login.user", email: GCTUser.Email(), action: "CheckCode", code: Code, lang: GCTLang.Lang() },
-            timeout: 12000,
-            success: function (data) {
-                data = JSON.parse(data);
-                successCallback(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                errorCallback(jqXHR, textStatus, errorThrown);
-            }
-        });
-    },
-    SSOLogin: function (email, sub, successCallback, errorCallback) {
+    LoginOpenID: function (email, sub, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
             dataType: 'text',
@@ -561,7 +529,7 @@ GCTUser = {
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "login.user", action: "loginpass", user: user, password: password, lang: GCTLang.Lang() },
+            data: { method: "login.user", user: user, password: password, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -573,10 +541,12 @@ GCTUser = {
         });
     },
     Logout: function () {
-        $.ajax({
-            url: logout_url,
-            type: "GET"
-        });
+        if( openid_enabled ){
+            $.ajax({
+                url: openid_logout_url,
+                type: "GET"
+            });
+        }
         Cookies.remove('loggedin');
     },
     SetLoginCookie: function () {
@@ -585,12 +555,8 @@ GCTUser = {
     IsLoggedIn: function () {
         return (typeof Cookies.get('loggedin') != 'undefined') ? Cookies.get('loggedin') : false;
     },
-    LastLoginEmail: function () {
-        return (Cookies.get('email')) ? Cookies.get('email') : "";
-    },
     Email: function(){
-        //### As currently designed, this will always be the same as LastLoginEmail. I think that makes sense if not we can change the logic.
-        return GCTUser.LastLoginEmail();
+        return (Cookies.get('email')) ? Cookies.get('email') : "";
     },
     SaveLoginEmail: function (txtObj) {
         Cookies.set("email", txtObj, { expires: 100000 });
@@ -679,7 +645,6 @@ GCTUser = {
         });
     },
     ViewPost: function (obj, type, title) {
-
         if (typeof obj == "object") {
             guid = obj.getAttribute("data-guid");
            
@@ -690,7 +655,6 @@ GCTUser = {
         } else {
             var guid = obj;
         }
-
         
         switch(type) {
             case "gccollab_blog_post":
