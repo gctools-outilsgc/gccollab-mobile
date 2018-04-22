@@ -956,7 +956,7 @@ myApp.onPageInit('sign-in', function (page) {
                 access_token = url.substring(url.lastIndexOf('access_token=')+13, url.lastIndexOf('&id_token'));
             }
 
-            if(id_token && access_token){
+            if(url.includes('/profile/') || (id_token && access_token)){
                 loginWindow.close();
             }
         });
