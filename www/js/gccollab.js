@@ -2896,11 +2896,11 @@ $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platf
     });
 
 });
+
 myApp.onPageInit('profile', function (page) {
     $$('#profile-navbar-inner').html(GCTLang.txtGlobalNav('profile'));
     var guid = page.query.guid; // Checks guid of page, as any link to profile should include the target guid
     var profile_limit = 10;
-    /* TODO: Tab objects to hold loaded and offset variables. */
     var ld_groups = false; //keeps track of group tab being loaded for the on show of tab
     var offset_groups = 0;
     var ld_activity = false; // Keeps track of activity tab being loaded for the on show of tab
@@ -2914,6 +2914,10 @@ myApp.onPageInit('profile', function (page) {
     var ld_colleagues = false;
     var offset_colleagues = 0;
 
+    var user = {};
+    user.activity = listObject('user-activity-' + guid);
+    user.bookmarks = listObject('user-bookmarks-' + guid);
+    console.log(user);
     /* Change needed ids to be guid specific */
     $("#TabLink-profile").attr('id', "TabLink-profile-" + guid);
     $("#TabLink-groups").attr('id', "TabLink-groups-" + guid);
@@ -2940,16 +2944,54 @@ myApp.onPageInit('profile', function (page) {
     $("#social-media").attr("id", "social-media-" + guid);
 
     $('#user-groups').attr("id", "user-groups-" + guid);
-    $("#user-activity").attr("id", "user-activity-" + guid);
-    $("#user-activity-more").attr("id", "user-activity-more-" + guid);
-    $("#user-bookmarks").attr("id", "user-bookmarks-" + guid);
-    $("#user-bookmarks-more").attr("id", "user-bookmarks-more-" + guid);
+    $("#content-user-activity").attr("id", "content-" + user.activity.id);
+    $("#more-user-activity").attr("id", "more-" + user.activity.id);
+    $("#content-user-bookmarks").attr("id", "content-" + user.bookmarks.id);
+    $("#more-user-bookmarks").attr("id", "more-" + user.bookmarks.id);
     $('#user-wires').attr("id", "user-wires-" + guid);
     $('#user-wires-more').attr("id", "user-wires-more-" + guid);
     $("#user-blogs").attr("id", "user-blogs-" + guid);
     $("#user-blogs-more").attr("id", "user-blogs-more-" + guid);
     $("#user-colleagues").attr("id", "user-colleagues-" + guid);
     $("#user-colleagues-more").attr("id", "user-colleagues-more-" + guid);
+
+    function userActivity(data3) {
+        var activityData = data3.result;
+
+        if (user.activity.loaded == true) { $(user.activity.appendMessage).appendTo('#content-' + user.activity.id); } else { user.activity.loaded = true; }
+
+        if (activityData.length > 0) {
+            $(activityData).each(function (key, value) {
+                var content = GCTEach.Activity(value);
+                $(content).appendTo('#content-' + user.activity.id);
+            });
+        }
+        if (activityData.length < profile_limit) {
+            $(endOfContent).appendTo('#content-' + user.activity.id);
+            $('#more-' + user.activity.id).hide();
+        }
+        user.activity.offset += profile_limit;
+        var focusNow = document.getElementById('focus-' + user.activity.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function userBookmarks(data) {
+        var info = data.result;
+        if (user.bookmarks.loaded == true) { $(user.bookmarks.appendMessage).appendTo('#content-' + user.bookmarks.id); } else { user.bookmarks.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Bookmark(value);
+                $(content).appendTo('#content-' + user.bookmarks.id);
+            });
+        }
+        if (info.length < profile_limit) {
+            $(endOfContent).appendTo('#content-' + user.bookmarks.id);
+            $('#more-' + user.bookmarks.id).hide();
+        }
+        user.bookmarks.offset += profile_limit;
+        var focusNow = document.getElementById('focus-' + user.bookmarks.id);
+        if (focusNow) { focusNow.focus(); }
+    }
 
     /* Fill profile tab of user profile. */
     GCTUser.GetUserProfile(guid, function (data) {
@@ -3162,93 +3204,22 @@ myApp.onPageInit('profile', function (page) {
         } 
     });
     
-    $$('#tab-user-activity-' + guid).on('show', function (e) {
-        if (!ld_activity) {
-            ld_activity = true;
-            GCTUser.GetUserActivity(guid, profile_limit, 0, function (data3) {
-                var activityData = data3.result;
-
-                var activity = "";
-                if (activityData.length > 0) {
-                    $(activityData).each(function (key, value) {
-                        var content = GCTEach.Activity(value);
-                        $(content).appendTo('#user-activity-' +guid);
-                    });
-                }
-                if (activityData.length < profile_limit) {
-                    var content = endOfContent;
-                    $(content).appendTo('#user-activity-' + guid);
-                    $('#user-activity-more-'+guid).hide();
-                }
-                
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $$('#tab-' + user.activity.id).on('show', function (e) {
+        if (!user.activity.loaded) {
+            GCTUser.GetUserActivity(guid, profile_limit, user.activity.offset, userActivity, errorConsole);
         }
     });
-    $$('#user-activity-more-'+guid).on('click', function (e) {
-        GCTUser.GetUserActivity(guid, profile_limit, offset_activity + profile_limit, function (data3) {
-            var activityData = data3.result;
-
-            var activity = "";
-            if (activityData.length > 0) {
-                $(activityData).each(function (key, value) {
-                    var content = GCTEach.Activity(value);
-
-                    $(content).appendTo('#user-activity-'+guid);
-                });
-            }
-            if (activityData.length < profile_limit) {
-                var content = endOfContent;
-                $(content).appendTo('#user-activity-'+guid);
-                $('#user-activity-more-'+guid).hide();
-            }
-            offset_activity += profile_limit;
-
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + user.activity.id).on('click', function (e) {
+        GCTUser.GetUserActivity(guid, profile_limit, user.activity.offset, userActivity, errorConsole);
     });
 
-    $$('#tab-user-bookmarks-' + guid).on('show', function (e) {
-        if (ld_bookmarks == false) {
-            ld_bookmarks = true;
-            GCTUser.GetBookmarksByUser(profile_limit, offset_bookmarks, guid, function (data) {
-                var bookmarks = data.result;
-                if (bookmarks.length > 0) {
-                    $.each(bookmarks, function (key, value) {
-                        var content = GCTEach.Bookmark(value);
-                        $(content).appendTo('#user-bookmarks-'+guid);
-                    });
-                }
-                if (bookmarks.length < profile_limit) {
-                    var content = endOfContent;
-                    $(content).appendTo('#user-bookmarks-' + guid);
-                    $('#user-bookmarks-more-' + guid).hide();
-                }
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $$('#tab-' + user.bookmarks.id).on('show', function (e) {
+        if (user.bookmarks.loaded == false) {
+            GCTUser.GetBookmarksByUser(profile_limit, user.bookmarks.offset, guid, userBookmarks, errorConsole);
         }
     });
-    $$('#user-bookmarks-more-' + guid).on('click', function (e) {
-        GCTUser.GetBookmarksByUser(profile_limit, offset_bookmarks + profile_limit, guid, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).appendTo('#user-bookmarks-' + guid);
-                });
-                offset_bookmarks += profile_limit;
-            }
-            if (bookmarks.length < profile_limit) {
-                var content = endOfContent;
-                $(content).appendTo('#user-bookmarks-' + guid);
-                $('#user-bookmarks-more-' + guid).hide();
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + user.bookmarks.id).on('click', function (e) {
+        GCTUser.GetBookmarksByUser(profile_limit, user.bookmarks.offset, guid, userBookmarks, errorConsole);
     });
 
     $$('#tab-user-wires-' + guid).on('show', function (e) {
