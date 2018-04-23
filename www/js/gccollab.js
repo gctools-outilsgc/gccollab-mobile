@@ -2596,10 +2596,41 @@ myApp.onPageInit('events', function (page) {
 myApp.onPageInit('opportunities', function (page) {
     $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platform'));
     var limit = 20;
-    var offset = 0;
-    var opportunitiesMoreOffset = 0;
     var filters = {};
     var filtersOpened = false;
+
+    var opportunities = {};
+    opportunities.all = listObject('opportunities-all');
+
+    function opportunitiesAll(data) {
+        var info = data.result;
+        if (opportunities.all.loaded == true) { $(opportunities.all.appendMessage).appendTo('#content-' + opportunities.all.id); } else { opportunities.all.loaded = true; }
+
+        if (info.length > 0) {
+            $('#more-' + opportunities.all.id).show();
+            $.each(info, function (key, value) {
+                var content = GCTEach.Opportunity(value);
+                $(content).hide().appendTo('#content-' + opportunities.all.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            $('#more-' + opportunities.all.id).hide();
+            $(endOfContent).hide().appendTo('#content-' + opportunities.all.id).fadeIn(1000);
+        }
+        opportunities.all.offset += limit;
+        var focusNow = document.getElementById('focus-' + opportunities.all.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function opportunitiesReset() {
+        $.each(opportunities, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
+        });
+
+        GCTUser.GetOpportunities(limit, opportunities.all.offset, filters, opportunitiesAll, errorConsole);
+    }
 
     $('#clear-filters').on('click', function() {
         filtersOpened = false;
@@ -2607,25 +2638,7 @@ myApp.onPageInit('opportunities', function (page) {
         $("#opportunity-filters").val('');
         $("#opportunity-name").val('');
 
-        GCTUser.GetOpportunities(limit, offset, filters, function(data){
-            var opportunities = data.result;
-            $('#opportunities-all').html('');
-
-            if(opportunities.length > 0){
-                $('#opportunities-more').show();
-                $.each(opportunities, function (key, value) {
-                    var content = GCTEach.Opportunity(value);
-                    $(content).hide().appendTo('#opportunities-all').fadeIn(1000);
-                });
-            } else {
-                $('#opportunities-more').hide();
-                $(noMatches).hide().appendTo('#opportunities-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        opportunitiesMoreOffset = 0;
+        opportunitiesReset();
     });
 
     $('#save-filters').on('click', function() {
@@ -2635,92 +2648,21 @@ myApp.onPageInit('opportunities', function (page) {
         if( $("#opportunity-filters").val() == "" && $("#opportunity-name").val() == "" ){
             filters = "";
         }
-
-        GCTUser.GetOpportunities(limit, offset, filters, function(data){
-            var opportunities = data.result;
-            $('#opportunities-all').html('');
-
-            if(opportunities.length > 0){
-                $('#opportunities-more').show();
-                $.each(opportunities, function (key, value) {
-                    var content = GCTEach.Opportunity(value);
-                    $(content).hide().appendTo('#opportunities-all').fadeIn(1000);
-                });
-            } else {
-                $('#opportunities-more').hide();
-                $(noMatches).hide().appendTo('#opportunities-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        opportunitiesMoreOffset = 0;
+        opportunitiesReset();
     });
 
     if( !filtersOpened ){
-        GCTUser.GetOpportunities(limit, offset, filters, function(data){
-            var opportunities = data.result;
-
-            if(opportunities.length > 0){
-                $('#opportunities-more').show();
-                $.each(opportunities, function (key, value) {
-                    var content = GCTEach.Opportunity(value);
-                    $(content).hide().appendTo('#opportunities-all').fadeIn(1000);
-                });
-            } else {
-                $('#opportunities-more').hide();
-                $(noMatches).hide().appendTo('#opportunities-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+        GCTUser.GetOpportunities(limit, opportunities.all.offset, filters, opportunitiesAll, errorConsole);
     }
-
-    var opportunitiesMore = $$(page.container).find('#opportunities-more');
-    opportunitiesMore.on('click', function (e) {
-        GCTUser.GetOpportunities(limit, opportunitiesMoreOffset + limit, filters, function(data){
-            var opportunities = data.result;
-
-            if(opportunities.length > 0){
-                $('#opportunities-more').show();
-                $.each(opportunities, function (key, value) {
-                    var content = GCTEach.Opportunity(value);
-                    $(content).hide().appendTo('#opportunities-all').fadeIn(1000);
-                });
-            } else {
-                $('#opportunities-more').hide();
-                $(noMatches).hide().appendTo('#opportunities-all').fadeIn(1000);
-            }
-
-            opportunitiesMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    
+    $$('#more-' + opportunities.all.id).on('click', function (e) {
+        $('#focus-' + opportunities.all.id).remove();
+        GCTUser.GetOpportunities(limit, opportunities.all.offset, filters, opportunitiesAll, errorConsole);
     });
 
     var refreshOpportunities = $$(page.container).find('.pull-to-refresh-content');
     refreshOpportunities.on('refresh', function (e) {
-        GCTUser.GetOpportunities(limit, offset, filters, function(data){
-            var opportunities = data.result;
-
-            if(opportunities.length > 0){
-                $('#opportunities-more').show();
-                var content = "";
-                $.each(opportunities, function (key, value) {
-                    content += GCTEach.Opportunity(value);
-                });
-                $('#opportunities-all').html('');
-                $(content).hide().appendTo('#opportunities-all').fadeIn(1000);
-            } else {
-                $('#opportunities-more').hide();
-                $(noMatches).hide().appendTo('#opportunities-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        opportunitiesMoreOffset = 0;
-
+        opportunitiesReset();
         myApp.pullToRefreshDone();
     });
 });
