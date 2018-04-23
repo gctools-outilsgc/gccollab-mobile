@@ -2900,7 +2900,7 @@ $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platf
 myApp.onPageInit('profile', function (page) {
     $$('#profile-navbar-inner').html(GCTLang.txtGlobalNav('profile'));
     var guid = page.query.guid; // Checks guid of page, as any link to profile should include the target guid
-    var profile_limit = 10;
+    var profile_limit = 12;
     var ld_groups = false; //keeps track of group tab being loaded for the on show of tab
     var offset_groups = 0;
     var ld_activity = false; // Keeps track of activity tab being loaded for the on show of tab
@@ -2917,7 +2917,10 @@ myApp.onPageInit('profile', function (page) {
     var user = {};
     user.activity = listObject('user-activity-' + guid);
     user.bookmarks = listObject('user-bookmarks-' + guid);
-    console.log(user);
+    user.wires = listObject('user-wires-' + guid);
+    user.blogs = listObject('user-blogs-' + guid);
+    user.colleagues = listObject('user-colleagues-' + guid);
+
     /* Change needed ids to be guid specific */
     $("#TabLink-profile").attr('id', "TabLink-profile-" + guid);
     $("#TabLink-groups").attr('id', "TabLink-groups-" + guid);
@@ -2925,13 +2928,13 @@ myApp.onPageInit('profile', function (page) {
     $("#TabLink-groups-" + guid).attr('href', "#tab-user-groups-" + guid);
 
     $("#tab-user-profile").attr('id', "tab-user-profile-" + guid);
-    $("#tab-user-colleagues").attr('id', "tab-user-colleagues-" + guid);
-    $("#tab-user-activity").attr('id', "tab-user-activity-" + guid);
+    $("#tab-user-colleagues").attr('id', "tab-" + user.colleagues.id);
+    $("#tab-user-activity").attr('id', "tab-" + user.activity.id);
     $("#tab-user-discussion").attr('id', "tab-user-discussion-" + guid);
-    $("#tab-user-bookmarks").attr('id', "tab-user-bookmarks-" + guid);
+    $("#tab-user-bookmarks").attr('id', "tab-" + user.bookmarks.id);
     $("#tab-user-groups").attr('id', "tab-user-groups-" + guid);
-    $("#tab-user-blogs").attr('id', "tab-user-blogs-" + guid);
-    $("#tab-user-wires").attr('id', "tab-user-wires-" + guid);
+    $("#tab-user-blogs").attr('id', "tab-" + user.blogs.id);
+    $("#tab-user-wires").attr('id', "tab-" + user.wires.id);
 
     $("#profile-menu").attr('id', "profile-menu-" + guid);
     $("#user-icon").attr('id', "user-icon-" + guid);
@@ -2948,12 +2951,12 @@ myApp.onPageInit('profile', function (page) {
     $("#more-user-activity").attr("id", "more-" + user.activity.id);
     $("#content-user-bookmarks").attr("id", "content-" + user.bookmarks.id);
     $("#more-user-bookmarks").attr("id", "more-" + user.bookmarks.id);
-    $('#user-wires').attr("id", "user-wires-" + guid);
-    $('#user-wires-more').attr("id", "user-wires-more-" + guid);
-    $("#user-blogs").attr("id", "user-blogs-" + guid);
-    $("#user-blogs-more").attr("id", "user-blogs-more-" + guid);
-    $("#user-colleagues").attr("id", "user-colleagues-" + guid);
-    $("#user-colleagues-more").attr("id", "user-colleagues-more-" + guid);
+    $('#content-user-wires').attr("id", "content-" + user.wires.id);
+    $('#more-user-wires').attr("id", "more-" + user.wires.id);
+    $("#content-user-blogs").attr("id", "content-" + user.blogs.id);
+    $("#more-user-blogs").attr("id", "more-" + user.blogs.id);
+    $("#content-user-colleagues").attr("id", "content-" + user.colleagues.id);
+    $("#more-user-colleagues").attr("id", "more-" + user.colleagues.id);
 
     function userActivity(data3) {
         var activityData = data3.result;
@@ -2990,6 +2993,62 @@ myApp.onPageInit('profile', function (page) {
         }
         user.bookmarks.offset += profile_limit;
         var focusNow = document.getElementById('focus-' + user.bookmarks.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function userWires(data) {
+        var info = data.result;
+        if (user.wires.loaded == true) { $(user.wires.appendMessage).appendTo('#content-' + user.wires.id); } else { user.wires.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Wire(value);
+                $(content).hide().appendTo('#content-' + user.wires.id).fadeIn(1000);
+            });
+        }
+        if (info.length < profile_limit) {
+            $(endOfContent).hide().appendTo('#content-' + user.wires.id).fadeIn(1000);
+            $('#more-' + user.wires.id).hide();
+        }
+        user.wires.offset += profile_limit;
+        var focusNow = document.getElementById('focus-' + user.wires.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function userBlogs(data) {
+        var info = data.result;
+        if (user.blogs.loaded == true) { $(user.blogs.appendMessage).appendTo('#content-' + user.blogs.id); } else { user.blogs.loaded = true; }
+
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Blog(value);
+                $(content).hide().appendTo('#content-' + user.blogs.id).fadeIn(1000);
+            });
+        }
+        if (info.length < profile_limit) {
+            $(endOfContent).hide().appendTo('#content-' + user.blogs.id).fadeIn(1000);
+            $('#more-' + user.blogs.id).hide();
+        }
+        user.blogs.offset += profile_limit;
+        var focusNow = document.getElementById('focus-' + user.blogs.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function userColleagues(data) {
+        var info = data.result;
+        if (user.colleagues.loaded == true) { $(user.colleagues.appendMessage).appendTo('#content-' + user.colleagues.id); } else { user.colleagues.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Member(value);
+                $(content).hide().appendTo('#content-' + user.colleagues.id).fadeIn(1000);
+            });
+        }
+        if (info.length < profile_limit) {
+            var content = endOfContent;
+            $(content).hide().appendTo('#content-' + user.colleagues.id).fadeIn(1000);
+            $('#more-' + user.colleagues.id).hide();
+        }
+        user.colleagues.offset += profile_limit;
+        var focusNow = document.getElementById('focus-' + user.colleagues.id);
         if (focusNow) { focusNow.focus(); }
     }
 
@@ -3210,6 +3269,7 @@ myApp.onPageInit('profile', function (page) {
         }
     });
     $$('#more-' + user.activity.id).on('click', function (e) {
+        $('#focus-' + user.activity.id).remove();
         GCTUser.GetUserActivity(guid, profile_limit, user.activity.offset, userActivity, errorConsole);
     });
 
@@ -3219,131 +3279,36 @@ myApp.onPageInit('profile', function (page) {
         }
     });
     $$('#more-' + user.bookmarks.id).on('click', function (e) {
+        $('#focus-' + user.bookmarks.id).remove();
         GCTUser.GetBookmarksByUser(profile_limit, user.bookmarks.offset, guid, userBookmarks, errorConsole);
     });
 
-    $$('#tab-user-wires-' + guid).on('show', function (e) {
-        if (ld_wires == false) {
-            ld_wires = true;
-            GCTUser.GetWiresByUser(guid, profile_limit, offset_wires, function (data) {
-                var wires = data.result;
-
-                if (wires.length > 0) {
-                    $.each(wires, function (key, value) {
-                        var content = GCTEach.Wire(value);
-                        $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
-                    });
-                }
-                if (wires.length < profile_limit) {
-                    var content = endOfContent;
-                    $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
-                    $('#user-wires-more-' + guid).hide();
-                }
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $$('#tab-' + user.wires.id).on('show', function (e) {
+        if (user.wires.loaded == false) {
+            GCTUser.GetWiresByUser(guid, profile_limit, user.wires.offset, userWires, errorConsole);
         }
     });
-    $$('#user-wires-more-' + guid).on('click', function (e) {
-        GCTUser.GetWiresByUser(guid, profile_limit, offset_wires + profile_limit, function (data) {
-            var wires = data.result;
-            if (wires.length > 0) {
-                $.each(wires, function (key, value) {
-                    var content = GCTEach.Wire(value);
-                    $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
-                });
-                offset_wires += profile_limit;
-            }
-            if (wires.length < profile_limit) {
-                var content = endOfContent;
-                $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
-                $('#user-wires-more-' + guid).hide();
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + user.wires.id).on('click', function (e) {
+        $('#focus-' + user.wires.id).remove();
+        GCTUser.GetWiresByUser(guid, profile_limit, user.wires.offset, userWires, errorConsole);
     });
 
-    $$('#tab-user-blogs-' + guid).on('show', function (e) {
-        if (ld_blogs == false) {
-            GCTUser.GetBlogsByUser(profile_limit, offset_blogs, guid, function (data) {
-                var blogs = data.result;
-
-                if (blogs.length > 0) {
-                    $.each(blogs, function (key, value) {
-                        var content = GCTEach.Blog(value);
-                        $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
-                    });
-                } 
-                if (blogs.length < profile_limit) {
-                    var content = endOfContent;
-                    $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
-                    $('#user-blogs-more-' + guid).hide();
-                }
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $$('#tab-' + user.blogs.id).on('show', function (e) {
+        if (user.blogs.loaded == false) {
+            GCTUser.GetBlogsByUser(profile_limit, user.blogs.offset, guid, userBlogs, errorConsole);
         }
     });
-    $$('#user-blogs-more-'+guid).on('click', function (e) {
-        GCTUser.GetBlogsByUser(profile_limit, offset_blogs + profile_limit, guid, function (data) {
-            var blogs = data.result;
-
-            if (blogs.length > 0) {
-                $.each(blogs, function (key, value) {
-                    var content = GCTEach.Blog(value);
-                    $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
-                });
-                offset_blogs += profile_limit;
-            }
-            if (blogs.length < profile_limit) {
-                var content = endOfContent;
-                $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
-                $('#user-blogs-more-' + guid).hide();
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + user.blogs.id).on('click', function (e) {
+        GCTUser.GetBlogsByUser(profile_limit, user.blogs.offset, guid, userBlogs, errorConsole);
     });
 
-    $$('#tab-user-colleagues-' + guid).on('show', function (e) {
-        if (!ld_colleagues) {
-            GCTUser.GetMembersByUserColleague(guid, profile_limit, offset_colleagues, '', function (data) {
-                var colleagues = data.result;
-                if (colleagues.length > 0) {
-                    $.each(colleagues, function (key, value) {
-                        var content = GCTEach.Member(value);
-                        $(content).hide().appendTo('#user-colleagues-' + guid).fadeIn(1000);
-                    });
-                }
-                if (colleagues.length < profile_limit) {
-                    var content = endOfContent;
-                    $(content).hide().appendTo('#user-colleagues-' + guid).fadeIn(1000);
-                    $('#user-colleagues-more-' + guid).hide();
-                }
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $$('#tab-' + user.colleagues.id).on('show', function (e) {
+        if (!user.colleagues.loaded) {
+            GCTUser.GetMembersByUserColleague(guid, profile_limit, user.colleagues.offset, '', userColleagues, errorConsole);
         }
     });
-    $$('#user-colleagues-more-' + guid).on('click', function (e) {
-        GCTUser.GetMembersByUserColleague(guid, profile_limit, offset_colleagues + profile_limit, '', function (data) {
-            var colleagues = data.result;
-            if (colleagues.length > 0) {
-                $.each(colleagues, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#user-colleagues-' + guid).fadeIn(1000);
-                    offset_colleagues += profile_limit;
-                });
-            }
-            if (colleagues.length < profile_limit) {
-                var content = endOfContent;
-                $(content).hide().appendTo('#user-colleagues-' + guid).fadeIn(1000);
-                $('#user-colleagues-more-' + guid).hide();
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + user.colleagues.id).on('click', function (e) {
+        GCTUser.GetMembersByUserColleague(guid, profile_limit, user.colleagues.offset, '', userColleagues, errorConsole);
     });
 
 });
