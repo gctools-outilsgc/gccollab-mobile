@@ -1401,44 +1401,6 @@ myApp.onPageInit('wire', function (page) {
     });
 });
 
-myApp.onPageInit('newsfeed', function (page) {
-    $$('#newsfeed-navbar-inner').html(GCTLang.txtGlobalNav('newsfeed'));
-    var limit = 20;
-    var offset_newsfeedPersonal = 0;
-
-    function newsfeedPersonal(data) {
-        var newsfeed = data.result;
-        var content = '';
-        if (newsfeed.length > 0) {
-            $.each(newsfeed, function (key, value) {
-                content = GCTEach.Newsfeed(value);
-                $(content).hide().appendTo('#newsfeed-all').fadeIn(1000);
-            });
-        }
-        if (newsfeed.length < limit) {
-            content = endOfContent;
-            $(content).hide().appendTo('#newsfeed-all').fadeIn(1000);
-            $('#newsfeed-more').hide();
-        }
-        offset_newsfeedPersonal += limit;
-    }
-
-    GCTUser.GetNewsfeed(limit, offset_newsfeedPersonal, newsfeedPersonal, errorConsole);
-    $$('#newsfeed-more').on('click', function (e) {
-        GCTUser.GetNewsfeed(limit, offset_newsfeedPersonal, newsfeedPersonal, errorConsole);
-    });
-    
-    var refreshNewsfeed = $$(page.container).find('.pull-to-refresh-content');
-    refreshNewsfeed.on('refresh', function (e) {
-        offset_newsfeedPersonal = 0;
-        $('#newsfeed-more').show();
-
-        GCTUser.GetNewsfeed(limit, offset_newsfeedPersonal, newsfeedPersonal, errorConsole);
-        
-        myApp.pullToRefreshDone();
-    });
-});
-
 myApp.onPageInit('groups', function (page) {
     $$('#groups-navbar-inner').html(GCTLang.txtGlobalNav('groups'));
     var limit = 20;
