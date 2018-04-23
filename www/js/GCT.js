@@ -1144,7 +1144,8 @@ GCTUser = {
         var popoverHTML = '<div class="popover more-options-choices">'
             + '<div class="popover-inner">'
                 + '<div class="list-block">'
-                    + '<ul>';
+                    + '<ul>'
+                        + '<span id="focus-new-popover" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans("more-options-opened") + '</span>';
                         if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post') {
                             popoverHTML += '<li><a href="#" class="item-link list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
                         }
@@ -1155,12 +1156,15 @@ GCTUser = {
                             if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
                             if (type != "gccollab_opportunity") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>'; }
                         }
+                        popoverHTML += '<li><a href="#" class="list-button item-link close-popover"><span data-translate="close">Close</span> </a></li>';
                     popoverHTML += '</ul>'
                 + '</div>'
             + '</div>'
         + '</div>';
 
         myApp.popover(popoverHTML, obj);
+        var focusNow = document.getElementById('#focus-new-popover');
+        if (focusNow) { focusNow.focus(); }
     },
     BlockUser: function (obj) {
         var guid = $(obj).data("guid");

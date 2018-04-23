@@ -278,7 +278,8 @@
     "reason-decline-opportunity":"Reason to decline the offer to participate in this opportunity",
     "message-creator-opportunity": "Message to opportunity creator",
 
-    "content-loaded": "New content appended to page."
+    "content-loaded": "New content appended to page.",
+    "more-options-opened": "More Options Menu Opened."
 }
 
 French = {
@@ -561,6 +562,7 @@ French = {
     "reason-decline-opportunity":"Raison pour le retrait de votre participation à cette possibilité",
     "message-creator-opportunity": "Message au gestionnaire",
 
-    "content-loaded": "Nouveau contenu ajouté à la page."
+    "content-loaded": "Nouveau contenu ajouté à la page.",
+    "more-options-opened": "Plus d'options menu ouvert."
     
 }
