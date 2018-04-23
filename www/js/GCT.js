@@ -564,9 +564,6 @@ GCTUser = {
     DisplayName: function () {
         return (Cookies.get('displayName')) ? Cookies.get('displayName') : "";
     },
-    Username: function () {
-        return (Cookies.get('username')) ? Cookies.get('username') : "";
-    },
     Guid: function () {
         return (Cookies.get('guid')) ? Cookies.get('guid') : "";
     },
@@ -578,7 +575,6 @@ GCTUser = {
                 $('#imgUserProfilePic').attr('src', profileData.iconURL);
                 $('#divUserProfileName').text(profileData.displayName);
                 $('#divUserProfileOrg').text(profileData.department);
-                Cookies.set("username", profileData.username, { expires: 100000 });
                 Cookies.set("displayName", profileData.displayName, { expires: 100000 });
                 Cookies.set("guid", profileData.id, { expires: 100000 });
             }
@@ -587,7 +583,7 @@ GCTUser = {
             console.log(jqXHR, textStatus, errorThrown);
         });
     },
-    GetUserProfile: function (profile, successCallback, errorCallback) { 
+    GetUserProfile: function (profile, successCallback, errorCallback) {
         if (typeof profile == 'undefined')
             profile = GCTUser.Email(); //### Get current users profile
 
