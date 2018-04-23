@@ -2894,7 +2894,18 @@ $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platf
             myApp.alert('Input required is missing');
         }
     });
-
+    $('#group').hide();
+    $('#level').hide();
+    $("#type").change(function() {
+        var type = $(this).val();
+        if (type == 'Casual Work' || type == 'Student Integration') {
+            $('#group').show();
+            $('#level').show();
+        }else{
+            $('#group').hide();
+            $('#level').hide();
+        }
+    });
 });
 myApp.onPageInit('profile', function (page) {
     $$('#profile-navbar-inner').html(GCTLang.txtGlobalNav('profile'));
