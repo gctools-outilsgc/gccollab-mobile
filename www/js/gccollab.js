@@ -2291,12 +2291,87 @@ myApp.onPageInit('events', function (page) {
 
     var eventCalendar = "";
     var limit = 10;
-    var offset = 0;
-    var eventsMoreOffset = 0;
     var counter = 1;
-    var filters = {};
     var filtersOpened = false;
 
+    var events = {};
+    events.all = listObject("events-all");
+    function eventsAll(data) {
+        var info = data.result;
+        if (events.all.loaded == true) { $(events.all.appendMessage).appendTo('#content-' + events.all.id); } else { events.all.loaded = true; }
+
+        if (info.length > 0) {
+            $('#more-' + events.all.id).show();
+            $.each(info, function (key, value) {
+                var date = (value.startDate).split(" ")[0];
+                var split = date.split("-");
+                var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
+                eventsArray.push(day)
+                var content = GCTEach.Event(value);
+                $(content).hide().appendTo('#content-' + events.all.id).fadeIn(1000);
+                counter++;
+            });
+
+            $('#events-calendar').html('');
+            eventCalendar = myApp.calendar({
+                container: '#events-calendar',
+                value: [new Date()],
+                events: eventsArray,
+                weekHeader: false,
+                header: false,
+                footer: false,
+                toolbarTemplate:
+                    '<div class="toolbar calendar-custom-toolbar">' +
+                    '<div class="toolbar-inner">' +
+                    '<div class="left">' +
+                    '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
+                    '</div>' +
+                    '<div class="center"></div>' +
+                    '<div class="right">' +
+                    '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>',
+                onOpen: function (p) {
+                    $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] + ', ' + p.currentYear);
+                    $$('.calendar-custom-toolbar .left .link').on('click', function () {
+                        eventCalendar.prevMonth();
+                    });
+                    $$('.calendar-custom-toolbar .right .link').on('click', function () {
+                        eventCalendar.nextMonth();
+                    });
+                },
+                onMonthYearChangeStart: function (p, year, month) {
+                    $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] + ', ' + p.currentYear);
+                },
+                onDayClick: function (p, dayContainer, year, month, day) {
+                    var date = $(dayContainer).data('date');
+                    if ($("#event-" + date).length > 0) {
+                        $$('.page-content').scrollTop($$("#event-" + date).offset().top, 300);
+                    }
+                }
+            });
+        }
+        if (info.length < limit) {
+            $('#more-' + events.all.id).hide();
+            $(endOfContent).hide().appendTo('#content-' + events.all.id).fadeIn(1000);
+        }
+        events.all.offset += limit;
+        var focusNow = document.getElementById('focus-' + events.all.id);
+        if (focusNow) { focusNow.focus(); }
+
+    }
+    function eventsReset() {
+        
+        $.each(events, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
+        });
+        GCTUser.GetEvents(from, to, limit, events.all.offset, eventsAll, errorConsole);
+
+    }
     var from = new Date().toString();
     var to = "";
     // var to = from.setMonth(from.getMonth() + 3);
@@ -2310,80 +2385,17 @@ myApp.onPageInit('events', function (page) {
 
     $('#clear-filters').on('click', function() {
         filtersOpened = false;
-        eventsArray = [];
-        filters = {};
         $("#events-from").val('');
         $("#events-to").val('');
         from = new Date().toString();
         to = "";
 
-        GCTUser.GetEvents(from, to, limit, offset, function(data){
-            var events = data.result;
-            $('#events-all').html('');
-
-            if(events.length > 0){
-                $('#events-more').show();
-                $('#events-calendar').html('');
-                $.each(events, function (key, value) {
-                    var date = (value.startDate).split(" ")[0];
-                    var split = date.split("-");
-                    var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
-                    eventsArray.push(day)
-                    var content = GCTEach.Event(value);
-                    $(content).hide().appendTo('#events-all').fadeIn(1000);
-                    counter++;
-                });
-
-                eventCalendar = myApp.calendar({
-                    container: '#events-calendar',
-                    value: [new Date()],
-                    events: eventsArray,
-                    weekHeader: false,
-                    header: false,
-                    footer: false,
-                    toolbarTemplate: 
-                        '<div class="toolbar calendar-custom-toolbar">' +
-                            '<div class="toolbar-inner">' +
-                                '<div class="left">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
-                                '</div>' +
-                                '<div class="center"></div>' +
-                                '<div class="right">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>',
-                    onOpen: function (p) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                        $$('.calendar-custom-toolbar .left .link').on('click', function () {
-                            eventCalendar.prevMonth();
-                        });
-                        $$('.calendar-custom-toolbar .right .link').on('click', function () {
-                            eventCalendar.nextMonth();
-                        });
-                    },
-                    onMonthYearChangeStart: function (p, year, month) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                    },
-                    onDayClick: function (p, dayContainer, year, month, day) {
-                        var date = $(dayContainer).data('date');
-                    }
-                });
-            } else {
-                $('#events-more').hide();
-                $(noMatches).hide().appendTo('#events-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        eventsMoreOffset = 0;
+        eventsReset();
     });
 
     $('#save-filters').on('click', function() {
         filtersOpened = true;
         eventsArray = [];
-        
         if( $("#events-from").val() != "" ){
             from = $("#events-from").val();
             from = new Date(from).toString();
@@ -2392,204 +2404,18 @@ myApp.onPageInit('events', function (page) {
             to = $("#events-to").val();
             to = new Date(to).toString();
         }
+        
+        eventsReset();
 
-        GCTUser.GetEvents(from, to, limit, offset, function(data){
-            var events = data.result;
-            $('#events-all').html('');
-
-            if(events.length > 0){
-                $('#events-more').show();
-                $('#events-calendar').html('');
-                $.each(events, function (key, value) {
-                    var date = (value.startDate).split(" ")[0];
-                    var split = date.split("-");
-                    var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
-                    eventsArray.push(day)
-                    var content = GCTEach.Event(value);
-                    $(content).hide().appendTo('#events-all').fadeIn(1000);
-                    counter++;
-                });
-
-                eventCalendar = myApp.calendar({
-                    container: '#events-calendar',
-                    value: [new Date()],
-                    events: eventsArray,
-                    weekHeader: false,
-                    header: false,
-                    footer: false,
-                    toolbarTemplate: 
-                        '<div class="toolbar calendar-custom-toolbar">' +
-                            '<div class="toolbar-inner">' +
-                                '<div class="left">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
-                                '</div>' +
-                                '<div class="center"></div>' +
-                                '<div class="right">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>',
-                    onOpen: function (p) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                        $$('.calendar-custom-toolbar .left .link').on('click', function () {
-                            eventCalendar.prevMonth();
-                        });
-                        $$('.calendar-custom-toolbar .right .link').on('click', function () {
-                            eventCalendar.nextMonth();
-                        });
-                    },
-                    onMonthYearChangeStart: function (p, year, month) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                    },
-                    onDayClick: function (p, dayContainer, year, month, day) {
-                        var date = $(dayContainer).data('date');
-                        if( $("#event-" + date).length > 0 ){
-                            $$('.page-content').scrollTop($$("#event-" + date).offset().top, 300);
-                        }
-                    }
-                });
-            } else {
-                $('#events-more').hide();
-                $(noMatches).hide().appendTo('#events-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        eventsMoreOffset = 0;
     });
 
     if (!filtersOpened) {
-        GCTUser.GetEvents(from, to, limit, offset, function(data){
-            var events = data.result;
-            $('#events-all').html('');
-
-            if(events.length > 0){
-                $('#events-more').show();
-                $('#events-calendar').html('');
-                $.each(events, function (key, value) {
-                    var date = (value.startDate).split(" ")[0];
-                    var split = date.split("-");
-                    var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
-                    eventsArray.push(day)
-                    var content = GCTEach.Event(value);
-                    $(content).hide().appendTo('#events-all').fadeIn(1000);
-
-                    counter++;
-                });
-
-                eventCalendar = myApp.calendar({
-                    container: '#events-calendar',
-                    value: [new Date()],
-                    events: eventsArray,
-                    weekHeader: false,
-                    header: false,
-                    footer: false,
-                    toolbarTemplate: 
-                        '<div class="toolbar calendar-custom-toolbar">' +
-                            '<div class="toolbar-inner">' +
-                                '<div class="left">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
-                                '</div>' +
-                                '<div class="center"></div>' +
-                                '<div class="right">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>',
-                    onOpen: function (p) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                        $$('.calendar-custom-toolbar .left .link').on('click', function () {
-                            eventCalendar.prevMonth();
-                        });
-                        $$('.calendar-custom-toolbar .right .link').on('click', function () {
-                            eventCalendar.nextMonth();
-                        });
-                    },
-                    onMonthYearChangeStart: function (p, year, month) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                    },
-                    onDayClick: function (p, dayContainer, year, month, day) {
-                        var date = $(dayContainer).data('date');
-                        if( $("#event-" + date).length > 0 ){
-                            $$('.page-content').scrollTop($$("#event-" + date).offset().top, 300);
-                        }
-                    }
-                });
-            } else {
-                $('#events-more').hide();
-                $(noMatches).hide().appendTo('#events-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+        GCTUser.GetEvents(from, to, limit, events.all.offset, eventsAll, errorConsole);
     }
 
-    var eventsMore = $$(page.container).find('#events-more');
-    eventsMore.on('click', function (e) {
-        GCTUser.GetEvents(from, to, limit, eventsMoreOffset + limit, function(data){
-            var events = data.result;
-
-            if( events.length > 0 ){
-                $('#events-more').show();
-                $.each(events, function (key, value) {
-                    var date = (value.startDate).split(" ")[0];
-                    var split = date.split("-");
-                    var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
-                    eventsArray.push(day)
-                    var content = GCTEach.Event(value);
-                    $(content).hide().appendTo('#events-all').fadeIn(1000);
-                    counter++;
-                });
-
-                eventsMoreOffset += limit;
-
-                $('#events-calendar').html('');
-                eventCalendar = myApp.calendar({
-                    container: '#events-calendar',
-                    value: [new Date()],
-                    events: eventsArray,
-                    weekHeader: false,
-                    header: false,
-                    footer: false,
-                    toolbarTemplate: 
-                        '<div class="toolbar calendar-custom-toolbar">' +
-                            '<div class="toolbar-inner">' +
-                                '<div class="left">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
-                                '</div>' +
-                                '<div class="center"></div>' +
-                                '<div class="right">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>',
-                    onOpen: function (p) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                        $$('.calendar-custom-toolbar .left .link').on('click', function () {
-                            eventCalendar.prevMonth();
-                        });
-                        $$('.calendar-custom-toolbar .right .link').on('click', function () {
-                            eventCalendar.nextMonth();
-                        });
-                    },
-                    onMonthYearChangeStart: function (p, year, month) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                    },
-                    onDayClick: function (p, dayContainer, year, month, day) {
-                        var date = $(dayContainer).data('date');
-                        if( $("#event-" + date).length > 0 ){
-                            $$('.page-content').scrollTop($$("#event-" + date).offset().top, 300);
-                        }
-                    }
-                });
-            } else {
-                $('#events-more').hide();
-                $(noMatches).hide().appendTo('#events-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + events.all.id).on('click', function (e) {
+        $('#focus-' + events.all.id).remove();
+        GCTUser.GetEvents(from, to, limit, events.all.offset, eventsAll, errorConsole);
     });
 });
 
