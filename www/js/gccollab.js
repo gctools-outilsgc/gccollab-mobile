@@ -2191,35 +2191,47 @@ myApp.onPageInit('bookmarks', function (page) {
 myApp.onPageInit('docs', function (page) {
     $$('#docs-navbar-inner').html(GCTLang.txtGlobalNav('docs'));
     var limit = 20;
-    var offset = 0;
-    var docsMoreOffset = 0;
     var filters = {};
     var filtersOpened = false;
+
+    var docs = {};
+    docs.all = listObject('docs-all');
+
+    function docsAll(data) {
+        var info = data.result;
+        if (docs.all.loaded == true) { $(docs.all.appendMessage).appendTo('#content-' + docs.all.id); } else { docs.all.loaded = true; }
+
+        if (info.length > 0) {
+            $('#more-' + docs.all.id).show();
+            $.each(info, function (key, value) {
+                var content = GCTEach.Doc(value);
+                $(content).hide().appendTo('#content-' + docs.all.id).fadeIn(1000);
+            });
+        } 
+        if (info.length < limit) {
+            $('#more-' + docs.all.id).hide();
+            $(endOfContent).hide().appendTo('#content-' + docs.all.id).fadeIn(1000);
+        }
+        docs.all.offset += limit;
+        var focusNow = document.getElementById('focus-' + docs.all.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function resetDocs() {
+        $.each(docs, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
+        });
+        GCTUser.GetDocs(limit, docs.all.offset, filters, docsAll, errorConsole);
+    }
 
     $('#clear-filters').on('click', function() {
         filtersOpened = false;
         filters = {};
         $("#doc-name").val('');
 
-        GCTUser.GetDocs(limit, offset, filters, function(data){
-            var docs = data.result;
-            $('#docs-all').html('');
-
-            if(docs.length > 0){
-                $('#docs-more').show();
-                $.each(docs, function (key, value) {
-                    var content = GCTEach.Doc(value);
-                    $(content).hide().appendTo('#docs-all').fadeIn(1000);
-                });
-            } else {
-                $('#docs-more').hide();
-                $(noMatches).hide().appendTo('#docs-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        docsMoreOffset = 0;
+        resetDocs();
     });
 
     $('#save-filters').on('click', function() {
@@ -2229,91 +2241,22 @@ myApp.onPageInit('docs', function (page) {
             filters = "";
         }
 
-        GCTUser.GetDocs(limit, offset, filters, function(data){
-            var docs = data.result;
-            $('#docs-all').html('');
-
-            if(docs.length > 0){
-                $('#docs-more').show();
-                $.each(docs, function (key, value) {
-                    var content = GCTEach.Doc(value);
-                    $(content).hide().appendTo('#docs-all').fadeIn(1000);
-                });
-            } else {
-                $('#docs-more').hide();
-                $(noMatches).hide().appendTo('#docs-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        docsMoreOffset = 0;
+        resetDocs();
     });
 
     if( !filtersOpened ){
-        GCTUser.GetDocs(limit, offset, filters, function(data){
-            var docs = data.result;
-
-            if(docs.length > 0){
-                $('#docs-more').show();
-                $.each(docs, function (key, value) {
-                    var content = GCTEach.Doc(value);
-                    $(content).hide().appendTo('#docs-all').fadeIn(1000);
-                });
-            } else {
-                $('#docs-more').hide();
-                $(noMatches).hide().appendTo('#docs-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+        GCTUser.GetDocs(limit, docs.all.offset, filters, docsAll, errorConsole);
     }
-
-    var docsMore = $$(page.container).find('#docs-more');
-    docsMore.on('click', function (e) {
-        GCTUser.GetDocs(limit, docsMoreOffset + limit, filters, function(data){
-            var docs = data.result;
-
-            if(docs.length > 0){
-                $('#docs-more').show();
-                $.each(docs, function (key, value) {
-                    var content = GCTEach.Doc(value);
-                    $(content).hide().appendTo('#docs-all').fadeIn(1000);
-                });
-            } else {
-                $('#docs-more').hide();
-                $(noMatches).hide().appendTo('#docs-all').fadeIn(1000);
-            }
-
-            docsMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    
+    $$('#more-' + docs.all.id).on('click', function (e) {
+        $('#focus-' + docs.all.id).remove();
+        GCTUser.GetDocs(limit, docs.all.offset, filters, docsAll, errorConsole);
     });
 
     var refreshDocs = $$(page.container).find('.pull-to-refresh-content');
     refreshDocs.on('refresh', function (e) {
-        GCTUser.GetDocs(limit, offset, filters, function(data){
-            var docs = data.result;
-
-            if(docs.length > 0){
-                $('#docs-more').show();
-                var content = "";
-                $.each(docs, function (key, value) {
-                    content += GCTEach.Doc(value);
-                });
-                $('#docs-all').html('');
-                $(content).hide().appendTo('#docs-all').fadeIn(1000);
-            } else {
-                $('#docs-more').hide();
-                $(noMatches).hide().appendTo('#docs-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        docsMoreOffset = 0;
-
+        $("#doc-name").val('');
+        resetDocs();
         myApp.pullToRefreshDone();
     });
 });
@@ -2863,18 +2806,6 @@ myApp.onPageInit('profile', function (page) {
     $$('#profile-navbar-inner').html(GCTLang.txtGlobalNav('profile'));
     var guid = page.query.guid; // Checks guid of page, as any link to profile should include the target guid
     var profile_limit = 12;
-    var ld_groups = false; //keeps track of group tab being loaded for the on show of tab
-    var offset_groups = 0;
-    var ld_activity = false; // Keeps track of activity tab being loaded for the on show of tab
-    var offset_activity = 0;
-    var ld_bookmarks = false;
-    var offset_bookmarks = 0;
-    var ld_wires = false;
-    var offset_wires = 0;
-    var ld_blogs = false;
-    var offset_blogs = 0;
-    var ld_colleagues = false;
-    var offset_colleagues = 0;
 
     var user = {};
     user.activity = listObject('user-activity-' + guid);
