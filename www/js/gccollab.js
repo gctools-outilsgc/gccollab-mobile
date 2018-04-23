@@ -2930,7 +2930,6 @@ myApp.onPageInit('profile', function (page) {
     $("#tab-user-profile").attr('id', "tab-user-profile-" + guid);
     $("#tab-user-colleagues").attr('id', "tab-" + user.colleagues.id);
     $("#tab-user-activity").attr('id', "tab-" + user.activity.id);
-    $("#tab-user-discussion").attr('id', "tab-user-discussion-" + guid);
     $("#tab-user-bookmarks").attr('id', "tab-" + user.bookmarks.id);
     $("#tab-user-groups").attr('id', "tab-user-groups-" + guid);
     $("#tab-user-blogs").attr('id', "tab-" + user.blogs.id);
