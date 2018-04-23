@@ -1401,44 +1401,6 @@ myApp.onPageInit('wire', function (page) {
     });
 });
 
-myApp.onPageInit('newsfeed', function (page) {
-    $$('#newsfeed-navbar-inner').html(GCTLang.txtGlobalNav('newsfeed'));
-    var limit = 20;
-    var offset_newsfeedPersonal = 0;
-
-    function newsfeedPersonal(data) {
-        var newsfeed = data.result;
-        var content = '';
-        if (newsfeed.length > 0) {
-            $.each(newsfeed, function (key, value) {
-                content = GCTEach.Newsfeed(value);
-                $(content).hide().appendTo('#newsfeed-all').fadeIn(1000);
-            });
-        }
-        if (newsfeed.length < limit) {
-            content = endOfContent;
-            $(content).hide().appendTo('#newsfeed-all').fadeIn(1000);
-            $('#newsfeed-more').hide();
-        }
-        offset_newsfeedPersonal += limit;
-    }
-
-    GCTUser.GetNewsfeed(limit, offset_newsfeedPersonal, newsfeedPersonal, errorConsole);
-    $$('#newsfeed-more').on('click', function (e) {
-        GCTUser.GetNewsfeed(limit, offset_newsfeedPersonal, newsfeedPersonal, errorConsole);
-    });
-    
-    var refreshNewsfeed = $$(page.container).find('.pull-to-refresh-content');
-    refreshNewsfeed.on('refresh', function (e) {
-        offset_newsfeedPersonal = 0;
-        $('#newsfeed-more').show();
-
-        GCTUser.GetNewsfeed(limit, offset_newsfeedPersonal, newsfeedPersonal, errorConsole);
-        
-        myApp.pullToRefreshDone();
-    });
-});
-
 myApp.onPageInit('groups', function (page) {
     $$('#groups-navbar-inner').html(GCTLang.txtGlobalNav('groups'));
     var limit = 20;
@@ -2229,35 +2191,47 @@ myApp.onPageInit('bookmarks', function (page) {
 myApp.onPageInit('docs', function (page) {
     $$('#docs-navbar-inner').html(GCTLang.txtGlobalNav('docs'));
     var limit = 20;
-    var offset = 0;
-    var docsMoreOffset = 0;
     var filters = {};
     var filtersOpened = false;
+
+    var docs = {};
+    docs.all = listObject('docs-all');
+
+    function docsAll(data) {
+        var info = data.result;
+        if (docs.all.loaded == true) { $(docs.all.appendMessage).appendTo('#content-' + docs.all.id); } else { docs.all.loaded = true; }
+
+        if (info.length > 0) {
+            $('#more-' + docs.all.id).show();
+            $.each(info, function (key, value) {
+                var content = GCTEach.Doc(value);
+                $(content).hide().appendTo('#content-' + docs.all.id).fadeIn(1000);
+            });
+        } 
+        if (info.length < limit) {
+            $('#more-' + docs.all.id).hide();
+            $(endOfContent).hide().appendTo('#content-' + docs.all.id).fadeIn(1000);
+        }
+        docs.all.offset += limit;
+        var focusNow = document.getElementById('focus-' + docs.all.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function resetDocs() {
+        $.each(docs, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
+        });
+        GCTUser.GetDocs(limit, docs.all.offset, filters, docsAll, errorConsole);
+    }
 
     $('#clear-filters').on('click', function() {
         filtersOpened = false;
         filters = {};
         $("#doc-name").val('');
 
-        GCTUser.GetDocs(limit, offset, filters, function(data){
-            var docs = data.result;
-            $('#docs-all').html('');
-
-            if(docs.length > 0){
-                $('#docs-more').show();
-                $.each(docs, function (key, value) {
-                    var content = GCTEach.Doc(value);
-                    $(content).hide().appendTo('#docs-all').fadeIn(1000);
-                });
-            } else {
-                $('#docs-more').hide();
-                $(noMatches).hide().appendTo('#docs-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        docsMoreOffset = 0;
+        resetDocs();
     });
 
     $('#save-filters').on('click', function() {
@@ -2267,91 +2241,22 @@ myApp.onPageInit('docs', function (page) {
             filters = "";
         }
 
-        GCTUser.GetDocs(limit, offset, filters, function(data){
-            var docs = data.result;
-            $('#docs-all').html('');
-
-            if(docs.length > 0){
-                $('#docs-more').show();
-                $.each(docs, function (key, value) {
-                    var content = GCTEach.Doc(value);
-                    $(content).hide().appendTo('#docs-all').fadeIn(1000);
-                });
-            } else {
-                $('#docs-more').hide();
-                $(noMatches).hide().appendTo('#docs-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        docsMoreOffset = 0;
+        resetDocs();
     });
 
     if( !filtersOpened ){
-        GCTUser.GetDocs(limit, offset, filters, function(data){
-            var docs = data.result;
-
-            if(docs.length > 0){
-                $('#docs-more').show();
-                $.each(docs, function (key, value) {
-                    var content = GCTEach.Doc(value);
-                    $(content).hide().appendTo('#docs-all').fadeIn(1000);
-                });
-            } else {
-                $('#docs-more').hide();
-                $(noMatches).hide().appendTo('#docs-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+        GCTUser.GetDocs(limit, docs.all.offset, filters, docsAll, errorConsole);
     }
-
-    var docsMore = $$(page.container).find('#docs-more');
-    docsMore.on('click', function (e) {
-        GCTUser.GetDocs(limit, docsMoreOffset + limit, filters, function(data){
-            var docs = data.result;
-
-            if(docs.length > 0){
-                $('#docs-more').show();
-                $.each(docs, function (key, value) {
-                    var content = GCTEach.Doc(value);
-                    $(content).hide().appendTo('#docs-all').fadeIn(1000);
-                });
-            } else {
-                $('#docs-more').hide();
-                $(noMatches).hide().appendTo('#docs-all').fadeIn(1000);
-            }
-
-            docsMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    
+    $$('#more-' + docs.all.id).on('click', function (e) {
+        $('#focus-' + docs.all.id).remove();
+        GCTUser.GetDocs(limit, docs.all.offset, filters, docsAll, errorConsole);
     });
 
     var refreshDocs = $$(page.container).find('.pull-to-refresh-content');
     refreshDocs.on('refresh', function (e) {
-        GCTUser.GetDocs(limit, offset, filters, function(data){
-            var docs = data.result;
-
-            if(docs.length > 0){
-                $('#docs-more').show();
-                var content = "";
-                $.each(docs, function (key, value) {
-                    content += GCTEach.Doc(value);
-                });
-                $('#docs-all').html('');
-                $(content).hide().appendTo('#docs-all').fadeIn(1000);
-            } else {
-                $('#docs-more').hide();
-                $(noMatches).hide().appendTo('#docs-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        docsMoreOffset = 0;
-
+        $("#doc-name").val('');
+        resetDocs();
         myApp.pullToRefreshDone();
     });
 });
@@ -2386,12 +2291,87 @@ myApp.onPageInit('events', function (page) {
 
     var eventCalendar = "";
     var limit = 10;
-    var offset = 0;
-    var eventsMoreOffset = 0;
     var counter = 1;
-    var filters = {};
     var filtersOpened = false;
 
+    var events = {};
+    events.all = listObject("events-all");
+    function eventsAll(data) {
+        var info = data.result;
+        if (events.all.loaded == true) { $(events.all.appendMessage).appendTo('#content-' + events.all.id); } else { events.all.loaded = true; }
+
+        if (info.length > 0) {
+            $('#more-' + events.all.id).show();
+            $.each(info, function (key, value) {
+                var date = (value.startDate).split(" ")[0];
+                var split = date.split("-");
+                var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
+                eventsArray.push(day)
+                var content = GCTEach.Event(value);
+                $(content).hide().appendTo('#content-' + events.all.id).fadeIn(1000);
+                counter++;
+            });
+
+            $('#events-calendar').html('');
+            eventCalendar = myApp.calendar({
+                container: '#events-calendar',
+                value: [new Date()],
+                events: eventsArray,
+                weekHeader: false,
+                header: false,
+                footer: false,
+                toolbarTemplate:
+                    '<div class="toolbar calendar-custom-toolbar">' +
+                    '<div class="toolbar-inner">' +
+                    '<div class="left">' +
+                    '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
+                    '</div>' +
+                    '<div class="center"></div>' +
+                    '<div class="right">' +
+                    '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>',
+                onOpen: function (p) {
+                    $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] + ', ' + p.currentYear);
+                    $$('.calendar-custom-toolbar .left .link').on('click', function () {
+                        eventCalendar.prevMonth();
+                    });
+                    $$('.calendar-custom-toolbar .right .link').on('click', function () {
+                        eventCalendar.nextMonth();
+                    });
+                },
+                onMonthYearChangeStart: function (p, year, month) {
+                    $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] + ', ' + p.currentYear);
+                },
+                onDayClick: function (p, dayContainer, year, month, day) {
+                    var date = $(dayContainer).data('date');
+                    if ($("#event-" + date).length > 0) {
+                        $$('.page-content').scrollTop($$("#event-" + date).offset().top, 300);
+                    }
+                }
+            });
+        }
+        if (info.length < limit) {
+            $('#more-' + events.all.id).hide();
+            $(endOfContent).hide().appendTo('#content-' + events.all.id).fadeIn(1000);
+        }
+        events.all.offset += limit;
+        var focusNow = document.getElementById('focus-' + events.all.id);
+        if (focusNow) { focusNow.focus(); }
+
+    }
+    function eventsReset() {
+        
+        $.each(events, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
+        });
+        GCTUser.GetEvents(from, to, limit, events.all.offset, eventsAll, errorConsole);
+
+    }
     var from = new Date().toString();
     var to = "";
     // var to = from.setMonth(from.getMonth() + 3);
@@ -2405,80 +2385,17 @@ myApp.onPageInit('events', function (page) {
 
     $('#clear-filters').on('click', function() {
         filtersOpened = false;
-        eventsArray = [];
-        filters = {};
         $("#events-from").val('');
         $("#events-to").val('');
         from = new Date().toString();
         to = "";
 
-        GCTUser.GetEvents(from, to, limit, offset, function(data){
-            var events = data.result;
-            $('#events-all').html('');
-
-            if(events.length > 0){
-                $('#events-more').show();
-                $('#events-calendar').html('');
-                $.each(events, function (key, value) {
-                    var date = (value.startDate).split(" ")[0];
-                    var split = date.split("-");
-                    var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
-                    eventsArray.push(day)
-                    var content = GCTEach.Event(value);
-                    $(content).hide().appendTo('#events-all').fadeIn(1000);
-                    counter++;
-                });
-
-                eventCalendar = myApp.calendar({
-                    container: '#events-calendar',
-                    value: [new Date()],
-                    events: eventsArray,
-                    weekHeader: false,
-                    header: false,
-                    footer: false,
-                    toolbarTemplate: 
-                        '<div class="toolbar calendar-custom-toolbar">' +
-                            '<div class="toolbar-inner">' +
-                                '<div class="left">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
-                                '</div>' +
-                                '<div class="center"></div>' +
-                                '<div class="right">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>',
-                    onOpen: function (p) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                        $$('.calendar-custom-toolbar .left .link').on('click', function () {
-                            eventCalendar.prevMonth();
-                        });
-                        $$('.calendar-custom-toolbar .right .link').on('click', function () {
-                            eventCalendar.nextMonth();
-                        });
-                    },
-                    onMonthYearChangeStart: function (p, year, month) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                    },
-                    onDayClick: function (p, dayContainer, year, month, day) {
-                        var date = $(dayContainer).data('date');
-                    }
-                });
-            } else {
-                $('#events-more').hide();
-                $(noMatches).hide().appendTo('#events-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        eventsMoreOffset = 0;
+        eventsReset();
     });
 
     $('#save-filters').on('click', function() {
         filtersOpened = true;
         eventsArray = [];
-        
         if( $("#events-from").val() != "" ){
             from = $("#events-from").val();
             from = new Date(from).toString();
@@ -2487,214 +2404,59 @@ myApp.onPageInit('events', function (page) {
             to = $("#events-to").val();
             to = new Date(to).toString();
         }
+        
+        eventsReset();
 
-        GCTUser.GetEvents(from, to, limit, offset, function(data){
-            var events = data.result;
-            $('#events-all').html('');
-
-            if(events.length > 0){
-                $('#events-more').show();
-                $('#events-calendar').html('');
-                $.each(events, function (key, value) {
-                    var date = (value.startDate).split(" ")[0];
-                    var split = date.split("-");
-                    var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
-                    eventsArray.push(day)
-                    var content = GCTEach.Event(value);
-                    $(content).hide().appendTo('#events-all').fadeIn(1000);
-                    counter++;
-                });
-
-                eventCalendar = myApp.calendar({
-                    container: '#events-calendar',
-                    value: [new Date()],
-                    events: eventsArray,
-                    weekHeader: false,
-                    header: false,
-                    footer: false,
-                    toolbarTemplate: 
-                        '<div class="toolbar calendar-custom-toolbar">' +
-                            '<div class="toolbar-inner">' +
-                                '<div class="left">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
-                                '</div>' +
-                                '<div class="center"></div>' +
-                                '<div class="right">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>',
-                    onOpen: function (p) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                        $$('.calendar-custom-toolbar .left .link').on('click', function () {
-                            eventCalendar.prevMonth();
-                        });
-                        $$('.calendar-custom-toolbar .right .link').on('click', function () {
-                            eventCalendar.nextMonth();
-                        });
-                    },
-                    onMonthYearChangeStart: function (p, year, month) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                    },
-                    onDayClick: function (p, dayContainer, year, month, day) {
-                        var date = $(dayContainer).data('date');
-                        if( $("#event-" + date).length > 0 ){
-                            $$('.page-content').scrollTop($$("#event-" + date).offset().top, 300);
-                        }
-                    }
-                });
-            } else {
-                $('#events-more').hide();
-                $(noMatches).hide().appendTo('#events-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        eventsMoreOffset = 0;
     });
 
     if (!filtersOpened) {
-        GCTUser.GetEvents(from, to, limit, offset, function(data){
-            var events = data.result;
-            $('#events-all').html('');
-
-            if(events.length > 0){
-                $('#events-more').show();
-                $('#events-calendar').html('');
-                $.each(events, function (key, value) {
-                    var date = (value.startDate).split(" ")[0];
-                    var split = date.split("-");
-                    var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
-                    eventsArray.push(day)
-                    var content = GCTEach.Event(value);
-                    $(content).hide().appendTo('#events-all').fadeIn(1000);
-
-                    counter++;
-                });
-
-                eventCalendar = myApp.calendar({
-                    container: '#events-calendar',
-                    value: [new Date()],
-                    events: eventsArray,
-                    weekHeader: false,
-                    header: false,
-                    footer: false,
-                    toolbarTemplate: 
-                        '<div class="toolbar calendar-custom-toolbar">' +
-                            '<div class="toolbar-inner">' +
-                                '<div class="left">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
-                                '</div>' +
-                                '<div class="center"></div>' +
-                                '<div class="right">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>',
-                    onOpen: function (p) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                        $$('.calendar-custom-toolbar .left .link').on('click', function () {
-                            eventCalendar.prevMonth();
-                        });
-                        $$('.calendar-custom-toolbar .right .link').on('click', function () {
-                            eventCalendar.nextMonth();
-                        });
-                    },
-                    onMonthYearChangeStart: function (p, year, month) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                    },
-                    onDayClick: function (p, dayContainer, year, month, day) {
-                        var date = $(dayContainer).data('date');
-                        if( $("#event-" + date).length > 0 ){
-                            $$('.page-content').scrollTop($$("#event-" + date).offset().top, 300);
-                        }
-                    }
-                });
-            } else {
-                $('#events-more').hide();
-                $(noMatches).hide().appendTo('#events-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+        GCTUser.GetEvents(from, to, limit, events.all.offset, eventsAll, errorConsole);
     }
 
-    var eventsMore = $$(page.container).find('#events-more');
-    eventsMore.on('click', function (e) {
-        GCTUser.GetEvents(from, to, limit, eventsMoreOffset + limit, function(data){
-            var events = data.result;
-
-            if( events.length > 0 ){
-                $('#events-more').show();
-                $.each(events, function (key, value) {
-                    var date = (value.startDate).split(" ")[0];
-                    var split = date.split("-");
-                    var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
-                    eventsArray.push(day)
-                    var content = GCTEach.Event(value);
-                    $(content).hide().appendTo('#events-all').fadeIn(1000);
-                    counter++;
-                });
-
-                eventsMoreOffset += limit;
-
-                $('#events-calendar').html('');
-                eventCalendar = myApp.calendar({
-                    container: '#events-calendar',
-                    value: [new Date()],
-                    events: eventsArray,
-                    weekHeader: false,
-                    header: false,
-                    footer: false,
-                    toolbarTemplate: 
-                        '<div class="toolbar calendar-custom-toolbar">' +
-                            '<div class="toolbar-inner">' +
-                                '<div class="left">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
-                                '</div>' +
-                                '<div class="center"></div>' +
-                                '<div class="right">' +
-                                    '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>',
-                    onOpen: function (p) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                        $$('.calendar-custom-toolbar .left .link').on('click', function () {
-                            eventCalendar.prevMonth();
-                        });
-                        $$('.calendar-custom-toolbar .right .link').on('click', function () {
-                            eventCalendar.nextMonth();
-                        });
-                    },
-                    onMonthYearChangeStart: function (p, year, month) {
-                        $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
-                    },
-                    onDayClick: function (p, dayContainer, year, month, day) {
-                        var date = $(dayContainer).data('date');
-                        if( $("#event-" + date).length > 0 ){
-                            $$('.page-content').scrollTop($$("#event-" + date).offset().top, 300);
-                        }
-                    }
-                });
-            } else {
-                $('#events-more').hide();
-                $(noMatches).hide().appendTo('#events-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + events.all.id).on('click', function (e) {
+        $('#focus-' + events.all.id).remove();
+        GCTUser.GetEvents(from, to, limit, events.all.offset, eventsAll, errorConsole);
     });
 });
 
 myApp.onPageInit('opportunities', function (page) {
     $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platform'));
     var limit = 20;
-    var offset = 0;
-    var opportunitiesMoreOffset = 0;
     var filters = {};
     var filtersOpened = false;
+
+    var opportunities = {};
+    opportunities.all = listObject('opportunities-all');
+
+    function opportunitiesAll(data) {
+        var info = data.result;
+        if (opportunities.all.loaded == true) { $(opportunities.all.appendMessage).appendTo('#content-' + opportunities.all.id); } else { opportunities.all.loaded = true; }
+
+        if (info.length > 0) {
+            $('#more-' + opportunities.all.id).show();
+            $.each(info, function (key, value) {
+                var content = GCTEach.Opportunity(value);
+                $(content).hide().appendTo('#content-' + opportunities.all.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            $('#more-' + opportunities.all.id).hide();
+            $(endOfContent).hide().appendTo('#content-' + opportunities.all.id).fadeIn(1000);
+        }
+        opportunities.all.offset += limit;
+        var focusNow = document.getElementById('focus-' + opportunities.all.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function opportunitiesReset() {
+        $.each(opportunities, function (key, value) {
+            value.offset = 0;
+            value.loaded = false;
+            $('#content-' + value.id).html('');
+            $('#more-' + value.id).show();
+        });
+
+        GCTUser.GetOpportunities(limit, opportunities.all.offset, filters, opportunitiesAll, errorConsole);
+    }
 
     $('#clear-filters').on('click', function() {
         filtersOpened = false;
@@ -2702,25 +2464,7 @@ myApp.onPageInit('opportunities', function (page) {
         $("#opportunity-filters").val('');
         $("#opportunity-name").val('');
 
-        GCTUser.GetOpportunities(limit, offset, filters, function(data){
-            var opportunities = data.result;
-            $('#opportunities-all').html('');
-
-            if(opportunities.length > 0){
-                $('#opportunities-more').show();
-                $.each(opportunities, function (key, value) {
-                    var content = GCTEach.Opportunity(value);
-                    $(content).hide().appendTo('#opportunities-all').fadeIn(1000);
-                });
-            } else {
-                $('#opportunities-more').hide();
-                $(noMatches).hide().appendTo('#opportunities-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        opportunitiesMoreOffset = 0;
+        opportunitiesReset();
     });
 
     $('#save-filters').on('click', function() {
@@ -2730,92 +2474,21 @@ myApp.onPageInit('opportunities', function (page) {
         if( $("#opportunity-filters").val() == "" && $("#opportunity-name").val() == "" ){
             filters = "";
         }
-
-        GCTUser.GetOpportunities(limit, offset, filters, function(data){
-            var opportunities = data.result;
-            $('#opportunities-all').html('');
-
-            if(opportunities.length > 0){
-                $('#opportunities-more').show();
-                $.each(opportunities, function (key, value) {
-                    var content = GCTEach.Opportunity(value);
-                    $(content).hide().appendTo('#opportunities-all').fadeIn(1000);
-                });
-            } else {
-                $('#opportunities-more').hide();
-                $(noMatches).hide().appendTo('#opportunities-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        opportunitiesMoreOffset = 0;
+        opportunitiesReset();
     });
 
     if( !filtersOpened ){
-        GCTUser.GetOpportunities(limit, offset, filters, function(data){
-            var opportunities = data.result;
-
-            if(opportunities.length > 0){
-                $('#opportunities-more').show();
-                $.each(opportunities, function (key, value) {
-                    var content = GCTEach.Opportunity(value);
-                    $(content).hide().appendTo('#opportunities-all').fadeIn(1000);
-                });
-            } else {
-                $('#opportunities-more').hide();
-                $(noMatches).hide().appendTo('#opportunities-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+        GCTUser.GetOpportunities(limit, opportunities.all.offset, filters, opportunitiesAll, errorConsole);
     }
-
-    var opportunitiesMore = $$(page.container).find('#opportunities-more');
-    opportunitiesMore.on('click', function (e) {
-        GCTUser.GetOpportunities(limit, opportunitiesMoreOffset + limit, filters, function(data){
-            var opportunities = data.result;
-
-            if(opportunities.length > 0){
-                $('#opportunities-more').show();
-                $.each(opportunities, function (key, value) {
-                    var content = GCTEach.Opportunity(value);
-                    $(content).hide().appendTo('#opportunities-all').fadeIn(1000);
-                });
-            } else {
-                $('#opportunities-more').hide();
-                $(noMatches).hide().appendTo('#opportunities-all').fadeIn(1000);
-            }
-
-            opportunitiesMoreOffset += limit;
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    
+    $$('#more-' + opportunities.all.id).on('click', function (e) {
+        $('#focus-' + opportunities.all.id).remove();
+        GCTUser.GetOpportunities(limit, opportunities.all.offset, filters, opportunitiesAll, errorConsole);
     });
 
     var refreshOpportunities = $$(page.container).find('.pull-to-refresh-content');
     refreshOpportunities.on('refresh', function (e) {
-        GCTUser.GetOpportunities(limit, offset, filters, function(data){
-            var opportunities = data.result;
-
-            if(opportunities.length > 0){
-                $('#opportunities-more').show();
-                var content = "";
-                $.each(opportunities, function (key, value) {
-                    content += GCTEach.Opportunity(value);
-                });
-                $('#opportunities-all').html('');
-                $(content).hide().appendTo('#opportunities-all').fadeIn(1000);
-            } else {
-                $('#opportunities-more').hide();
-                $(noMatches).hide().appendTo('#opportunities-all').fadeIn(1000);
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        opportunitiesMoreOffset = 0;
-
+        opportunitiesReset();
         myApp.pullToRefreshDone();
     });
 });
@@ -2907,23 +2580,18 @@ $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platf
         }
     });
 });
+
 myApp.onPageInit('profile', function (page) {
     $$('#profile-navbar-inner').html(GCTLang.txtGlobalNav('profile'));
     var guid = page.query.guid; // Checks guid of page, as any link to profile should include the target guid
-    var profile_limit = 10;
-    /* TODO: Tab objects to hold loaded and offset variables. */
-    var ld_groups = false; //keeps track of group tab being loaded for the on show of tab
-    var offset_groups = 0;
-    var ld_activity = false; // Keeps track of activity tab being loaded for the on show of tab
-    var offset_activity = 0;
-    var ld_bookmarks = false;
-    var offset_bookmarks = 0;
-    var ld_wires = false;
-    var offset_wires = 0;
-    var ld_blogs = false;
-    var offset_blogs = 0;
-    var ld_colleagues = false;
-    var offset_colleagues = 0;
+    var profile_limit = 12;
+
+    var user = {};
+    user.activity = listObject('user-activity-' + guid);
+    user.bookmarks = listObject('user-bookmarks-' + guid);
+    user.wires = listObject('user-wires-' + guid);
+    user.blogs = listObject('user-blogs-' + guid);
+    user.colleagues = listObject('user-colleagues-' + guid);
 
     /* Change needed ids to be guid specific */
     $("#TabLink-profile").attr('id', "TabLink-profile-" + guid);
@@ -2932,13 +2600,12 @@ myApp.onPageInit('profile', function (page) {
     $("#TabLink-groups-" + guid).attr('href', "#tab-user-groups-" + guid);
 
     $("#tab-user-profile").attr('id', "tab-user-profile-" + guid);
-    $("#tab-user-colleagues").attr('id', "tab-user-colleagues-" + guid);
-    $("#tab-user-activity").attr('id', "tab-user-activity-" + guid);
-    $("#tab-user-discussion").attr('id', "tab-user-discussion-" + guid);
-    $("#tab-user-bookmarks").attr('id', "tab-user-bookmarks-" + guid);
+    $("#tab-user-colleagues").attr('id', "tab-" + user.colleagues.id);
+    $("#tab-user-activity").attr('id', "tab-" + user.activity.id);
+    $("#tab-user-bookmarks").attr('id', "tab-" + user.bookmarks.id);
     $("#tab-user-groups").attr('id', "tab-user-groups-" + guid);
-    $("#tab-user-blogs").attr('id', "tab-user-blogs-" + guid);
-    $("#tab-user-wires").attr('id', "tab-user-wires-" + guid);
+    $("#tab-user-blogs").attr('id', "tab-" + user.blogs.id);
+    $("#tab-user-wires").attr('id', "tab-" + user.wires.id);
 
     $("#profile-menu").attr('id', "profile-menu-" + guid);
     $("#user-icon").attr('id', "user-icon-" + guid);
@@ -2951,16 +2618,110 @@ myApp.onPageInit('profile', function (page) {
     $("#social-media").attr("id", "social-media-" + guid);
 
     $('#user-groups').attr("id", "user-groups-" + guid);
-    $("#user-activity").attr("id", "user-activity-" + guid);
-    $("#user-activity-more").attr("id", "user-activity-more-" + guid);
-    $("#user-bookmarks").attr("id", "user-bookmarks-" + guid);
-    $("#user-bookmarks-more").attr("id", "user-bookmarks-more-" + guid);
-    $('#user-wires').attr("id", "user-wires-" + guid);
-    $('#user-wires-more').attr("id", "user-wires-more-" + guid);
-    $("#user-blogs").attr("id", "user-blogs-" + guid);
-    $("#user-blogs-more").attr("id", "user-blogs-more-" + guid);
-    $("#user-colleagues").attr("id", "user-colleagues-" + guid);
-    $("#user-colleagues-more").attr("id", "user-colleagues-more-" + guid);
+    $("#content-user-activity").attr("id", "content-" + user.activity.id);
+    $("#more-user-activity").attr("id", "more-" + user.activity.id);
+    $("#content-user-bookmarks").attr("id", "content-" + user.bookmarks.id);
+    $("#more-user-bookmarks").attr("id", "more-" + user.bookmarks.id);
+    $('#content-user-wires').attr("id", "content-" + user.wires.id);
+    $('#more-user-wires').attr("id", "more-" + user.wires.id);
+    $("#content-user-blogs").attr("id", "content-" + user.blogs.id);
+    $("#more-user-blogs").attr("id", "more-" + user.blogs.id);
+    $("#content-user-colleagues").attr("id", "content-" + user.colleagues.id);
+    $("#more-user-colleagues").attr("id", "more-" + user.colleagues.id);
+
+    function userActivity(data3) {
+        var activityData = data3.result;
+
+        if (user.activity.loaded == true) { $(user.activity.appendMessage).appendTo('#content-' + user.activity.id); } else { user.activity.loaded = true; }
+
+        if (activityData.length > 0) {
+            $(activityData).each(function (key, value) {
+                var content = GCTEach.Activity(value);
+                $(content).appendTo('#content-' + user.activity.id);
+            });
+        }
+        if (activityData.length < profile_limit) {
+            $(endOfContent).appendTo('#content-' + user.activity.id);
+            $('#more-' + user.activity.id).hide();
+        }
+        user.activity.offset += profile_limit;
+        var focusNow = document.getElementById('focus-' + user.activity.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function userBookmarks(data) {
+        var info = data.result;
+        if (user.bookmarks.loaded == true) { $(user.bookmarks.appendMessage).appendTo('#content-' + user.bookmarks.id); } else { user.bookmarks.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Bookmark(value);
+                $(content).appendTo('#content-' + user.bookmarks.id);
+            });
+        }
+        if (info.length < profile_limit) {
+            $(endOfContent).appendTo('#content-' + user.bookmarks.id);
+            $('#more-' + user.bookmarks.id).hide();
+        }
+        user.bookmarks.offset += profile_limit;
+        var focusNow = document.getElementById('focus-' + user.bookmarks.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function userWires(data) {
+        var info = data.result;
+        if (user.wires.loaded == true) { $(user.wires.appendMessage).appendTo('#content-' + user.wires.id); } else { user.wires.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Wire(value);
+                $(content).hide().appendTo('#content-' + user.wires.id).fadeIn(1000);
+            });
+        }
+        if (info.length < profile_limit) {
+            $(endOfContent).hide().appendTo('#content-' + user.wires.id).fadeIn(1000);
+            $('#more-' + user.wires.id).hide();
+        }
+        user.wires.offset += profile_limit;
+        var focusNow = document.getElementById('focus-' + user.wires.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function userBlogs(data) {
+        var info = data.result;
+        if (user.blogs.loaded == true) { $(user.blogs.appendMessage).appendTo('#content-' + user.blogs.id); } else { user.blogs.loaded = true; }
+
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Blog(value);
+                $(content).hide().appendTo('#content-' + user.blogs.id).fadeIn(1000);
+            });
+        }
+        if (info.length < profile_limit) {
+            $(endOfContent).hide().appendTo('#content-' + user.blogs.id).fadeIn(1000);
+            $('#more-' + user.blogs.id).hide();
+        }
+        user.blogs.offset += profile_limit;
+        var focusNow = document.getElementById('focus-' + user.blogs.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+    function userColleagues(data) {
+        var info = data.result;
+        if (user.colleagues.loaded == true) { $(user.colleagues.appendMessage).appendTo('#content-' + user.colleagues.id); } else { user.colleagues.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var content = GCTEach.Member(value);
+                $(content).hide().appendTo('#content-' + user.colleagues.id).fadeIn(1000);
+            });
+        }
+        if (info.length < profile_limit) {
+            var content = endOfContent;
+            $(content).hide().appendTo('#content-' + user.colleagues.id).fadeIn(1000);
+            $('#more-' + user.colleagues.id).hide();
+        }
+        user.colleagues.offset += profile_limit;
+        var focusNow = document.getElementById('focus-' + user.colleagues.id);
+        if (focusNow) { focusNow.focus(); }
+    }
 
     /* Fill profile tab of user profile. */
     GCTUser.GetUserProfile(guid, function (data) {
@@ -3173,217 +2934,52 @@ myApp.onPageInit('profile', function (page) {
         } 
     });
     
-    $$('#tab-user-activity-' + guid).on('show', function (e) {
-        if (!ld_activity) {
-            ld_activity = true;
-            GCTUser.GetUserActivity(guid, profile_limit, 0, function (data3) {
-                var activityData = data3.result;
-
-                var activity = "";
-                if (activityData.length > 0) {
-                    $(activityData).each(function (key, value) {
-                        var content = GCTEach.Activity(value);
-                        $(content).appendTo('#user-activity-' +guid);
-                    });
-                }
-                if (activityData.length < profile_limit) {
-                    var content = endOfContent;
-                    $(content).appendTo('#user-activity-' + guid);
-                    $('#user-activity-more-'+guid).hide();
-                }
-                
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $$('#tab-' + user.activity.id).on('show', function (e) {
+        if (!user.activity.loaded) {
+            GCTUser.GetUserActivity(guid, profile_limit, user.activity.offset, userActivity, errorConsole);
         }
     });
-    $$('#user-activity-more-'+guid).on('click', function (e) {
-        GCTUser.GetUserActivity(guid, profile_limit, offset_activity + profile_limit, function (data3) {
-            var activityData = data3.result;
-
-            var activity = "";
-            if (activityData.length > 0) {
-                $(activityData).each(function (key, value) {
-                    var content = GCTEach.Activity(value);
-
-                    $(content).appendTo('#user-activity-'+guid);
-                });
-            }
-            if (activityData.length < profile_limit) {
-                var content = endOfContent;
-                $(content).appendTo('#user-activity-'+guid);
-                $('#user-activity-more-'+guid).hide();
-            }
-            offset_activity += profile_limit;
-
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + user.activity.id).on('click', function (e) {
+        $('#focus-' + user.activity.id).remove();
+        GCTUser.GetUserActivity(guid, profile_limit, user.activity.offset, userActivity, errorConsole);
     });
 
-    $$('#tab-user-bookmarks-' + guid).on('show', function (e) {
-        if (ld_bookmarks == false) {
-            ld_bookmarks = true;
-            GCTUser.GetBookmarksByUser(profile_limit, offset_bookmarks, guid, function (data) {
-                var bookmarks = data.result;
-                if (bookmarks.length > 0) {
-                    $.each(bookmarks, function (key, value) {
-                        var content = GCTEach.Bookmark(value);
-                        $(content).appendTo('#user-bookmarks-'+guid);
-                    });
-                }
-                if (bookmarks.length < profile_limit) {
-                    var content = endOfContent;
-                    $(content).appendTo('#user-bookmarks-' + guid);
-                    $('#user-bookmarks-more-' + guid).hide();
-                }
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $$('#tab-' + user.bookmarks.id).on('show', function (e) {
+        if (user.bookmarks.loaded == false) {
+            GCTUser.GetBookmarksByUser(profile_limit, user.bookmarks.offset, guid, userBookmarks, errorConsole);
         }
     });
-    $$('#user-bookmarks-more-' + guid).on('click', function (e) {
-        GCTUser.GetBookmarksByUser(profile_limit, offset_bookmarks + profile_limit, guid, function (data) {
-            var bookmarks = data.result;
-            if (bookmarks.length > 0) {
-                $.each(bookmarks, function (key, value) {
-                    var content = GCTEach.Bookmark(value);
-                    $(content).appendTo('#user-bookmarks-' + guid);
-                });
-                offset_bookmarks += profile_limit;
-            }
-            if (bookmarks.length < profile_limit) {
-                var content = endOfContent;
-                $(content).appendTo('#user-bookmarks-' + guid);
-                $('#user-bookmarks-more-' + guid).hide();
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + user.bookmarks.id).on('click', function (e) {
+        $('#focus-' + user.bookmarks.id).remove();
+        GCTUser.GetBookmarksByUser(profile_limit, user.bookmarks.offset, guid, userBookmarks, errorConsole);
     });
 
-    $$('#tab-user-wires-' + guid).on('show', function (e) {
-        if (ld_wires == false) {
-            ld_wires = true;
-            GCTUser.GetWiresByUser(guid, profile_limit, offset_wires, function (data) {
-                var wires = data.result;
-
-                if (wires.length > 0) {
-                    $.each(wires, function (key, value) {
-                        var content = GCTEach.Wire(value);
-                        $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
-                    });
-                }
-                if (wires.length < profile_limit) {
-                    var content = endOfContent;
-                    $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
-                    $('#user-wires-more-' + guid).hide();
-                }
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $$('#tab-' + user.wires.id).on('show', function (e) {
+        if (user.wires.loaded == false) {
+            GCTUser.GetWiresByUser(guid, profile_limit, user.wires.offset, userWires, errorConsole);
         }
     });
-    $$('#user-wires-more-' + guid).on('click', function (e) {
-        GCTUser.GetWiresByUser(guid, profile_limit, offset_wires + profile_limit, function (data) {
-            var wires = data.result;
-            if (wires.length > 0) {
-                $.each(wires, function (key, value) {
-                    var content = GCTEach.Wire(value);
-                    $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
-                });
-                offset_wires += profile_limit;
-            }
-            if (wires.length < profile_limit) {
-                var content = endOfContent;
-                $(content).hide().appendTo('#user-wires-' + guid).fadeIn(1000);
-                $('#user-wires-more-' + guid).hide();
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + user.wires.id).on('click', function (e) {
+        $('#focus-' + user.wires.id).remove();
+        GCTUser.GetWiresByUser(guid, profile_limit, user.wires.offset, userWires, errorConsole);
     });
 
-    $$('#tab-user-blogs-' + guid).on('show', function (e) {
-        if (ld_blogs == false) {
-            GCTUser.GetBlogsByUser(profile_limit, offset_blogs, guid, function (data) {
-                var blogs = data.result;
-
-                if (blogs.length > 0) {
-                    $.each(blogs, function (key, value) {
-                        var content = GCTEach.Blog(value);
-                        $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
-                    });
-                } 
-                if (blogs.length < profile_limit) {
-                    var content = endOfContent;
-                    $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
-                    $('#user-blogs-more-' + guid).hide();
-                }
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $$('#tab-' + user.blogs.id).on('show', function (e) {
+        if (user.blogs.loaded == false) {
+            GCTUser.GetBlogsByUser(profile_limit, user.blogs.offset, guid, userBlogs, errorConsole);
         }
     });
-    $$('#user-blogs-more-'+guid).on('click', function (e) {
-        GCTUser.GetBlogsByUser(profile_limit, offset_blogs + profile_limit, guid, function (data) {
-            var blogs = data.result;
-
-            if (blogs.length > 0) {
-                $.each(blogs, function (key, value) {
-                    var content = GCTEach.Blog(value);
-                    $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
-                });
-                offset_blogs += profile_limit;
-            }
-            if (blogs.length < profile_limit) {
-                var content = endOfContent;
-                $(content).hide().appendTo('#user-blogs-' + guid).fadeIn(1000);
-                $('#user-blogs-more-' + guid).hide();
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + user.blogs.id).on('click', function (e) {
+        GCTUser.GetBlogsByUser(profile_limit, user.blogs.offset, guid, userBlogs, errorConsole);
     });
 
-    $$('#tab-user-colleagues-' + guid).on('show', function (e) {
-        if (!ld_colleagues) {
-            GCTUser.GetMembersByUserColleague(guid, profile_limit, offset_colleagues, '', function (data) {
-                var colleagues = data.result;
-                if (colleagues.length > 0) {
-                    $.each(colleagues, function (key, value) {
-                        var content = GCTEach.Member(value);
-                        $(content).hide().appendTo('#user-colleagues-' + guid).fadeIn(1000);
-                    });
-                }
-                if (colleagues.length < profile_limit) {
-                    var content = endOfContent;
-                    $(content).hide().appendTo('#user-colleagues-' + guid).fadeIn(1000);
-                    $('#user-colleagues-more-' + guid).hide();
-                }
-            }, function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    $$('#tab-' + user.colleagues.id).on('show', function (e) {
+        if (!user.colleagues.loaded) {
+            GCTUser.GetMembersByUserColleague(guid, profile_limit, user.colleagues.offset, '', userColleagues, errorConsole);
         }
     });
-    $$('#user-colleagues-more-' + guid).on('click', function (e) {
-        GCTUser.GetMembersByUserColleague(guid, profile_limit, offset_colleagues + profile_limit, '', function (data) {
-            var colleagues = data.result;
-            if (colleagues.length > 0) {
-                $.each(colleagues, function (key, value) {
-                    var content = GCTEach.Member(value);
-                    $(content).hide().appendTo('#user-colleagues-' + guid).fadeIn(1000);
-                    offset_colleagues += profile_limit;
-                });
-            }
-            if (colleagues.length < profile_limit) {
-                var content = endOfContent;
-                $(content).hide().appendTo('#user-colleagues-' + guid).fadeIn(1000);
-                $('#user-colleagues-more-' + guid).hide();
-            }
-        }, function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+    $$('#more-' + user.colleagues.id).on('click', function (e) {
+        GCTUser.GetMembersByUserColleague(guid, profile_limit, user.colleagues.offset, '', userColleagues, errorConsole);
     });
 
 });
