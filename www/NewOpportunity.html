@@ -377,10 +377,10 @@
                                     <div class="item-title label" data-translate="mission-type">*Type of opportunity</div>
                                     <div class="item-input">
                                       <select name="type" id="type">
-                                            <option data-translate="mission-mentoring">Mentoring</option>
-                                            <option data-translate="mission-casual">Casual Work</option>
-                                            <option data-translate="mission-student">Student Integration</option>
-                                            <option data-translate="mission-collaboration">Collaboration</option>
+                                            <option value="missions:mentoring" data-translate="mission-mentoring">Mentoring</option>
+                                            <option value="missions:casual" data-translate="mission-casual">Casual Work</option>
+                                            <option value="missions:student" data-translate="mission-student">Student Integration</option>
+                                            <option value="missions:collaboration" data-translate="mission-collaboration">Collaboration</option>
                                         </select>
                                     </div>
                                   </div>
@@ -388,7 +388,7 @@
 
                                 <div class="item-content" id="group">
                                     <div class="item-inner">
-                                      <div class="item-title label">*Group</div>
+                                      <div class="item-title label" data-translate="group">*Group</div>
                                       <div class="item-input">
                                         <select name="group">
                                             <option></option>
@@ -473,7 +473,7 @@
                                   </div>
                                   <div class="item-content" id="level" name="level">
                                       <div class="item-inner">
-                                        <div class="item-title label">*level</div>
+                                        <div class="item-title label" data-translate="level">*level</div>
                                         <div class="item-input">
                                             <input type="number" name="level" placeholder="">
                                         </div>
@@ -482,20 +482,20 @@
                             
                                     <div class="item-content">
                                       <div class="item-inner">
-                                        <div class="item-title label">*Program area</div>
+                                        <div class="item-title label" data-translate="program-area">*Program area</div>
                                         <div class="item-input">
                                           <select name="program">
-                                            <option>Administration</option>
-                                            <option>Client service</option>
-                                            <option>Communication</option>
-                                            <option>Finance</option>
-                                            <option>Human Resources</option>
-                                            <option>Information Technology</option>
-                                            <option>Legal/Regulatory</option>
-                                            <option>Policy</option>
-                                            <option>Science</option>
-                                            <option>Security/Enforrcement</option>
-                                            <option>Other</option>
+                                            <option data-translate="program-admin">Administration</option>
+                                            <option data-translate="program-client">Client service</option>
+                                            <option data-translate="program-comm">Communication</option>
+                                            <option data-translate="program-fin">Finance</option>
+                                            <option data-translate="program-human">Human Resources</option>
+                                            <option data-translate="program-info">Information Technology</option>
+                                            <option data-translate="program-legal">Legal/Regulatory</option>
+                                            <option data-translate="program-policy">Policy</option>
+                                            <option data-translate="program-science">Science</option>
+                                            <option data-translate="program-security">Security/Enforrcement</option>
+                                            <option data-translate="program-other">Other</option>
                                           </select>
                                         </div>
                                       </div>
@@ -503,7 +503,7 @@
                              
                                     <div class="item-content">
                                       <div class="item-inner">
-                                        <div class="item-title label">Number of opportunities</div>
+                                        <div class="item-title label" data-translate="number-opt">Number of opportunities</div>
                                         <div class="item-input">
                                           <select name="num_opt">
                                             <option>1</option>
@@ -516,7 +516,7 @@
                                             <option>8</option>
                                             <option>9</option>
                                             <option>10</option>
-                                            <option>Unlimited</option>
+                                            <option data-translate="unlimited">Unlimited</option>
                                           </select>
                                         </div>
                                       </div>
@@ -524,7 +524,7 @@
                                  
                                     <div class="item-content">
                                       <div class="item-inner">
-                                        <div class="item-title label">*Ideal start date</div>
+                                        <div class="item-title label" data-translate="start-date">*Ideal start date</div>
                                         <div class="item-input">
                                           <input type="date" name="start_date" placeholder="start" value="">
                                         </div>
@@ -533,7 +533,7 @@
                                
                                     <div class="item-content">
                                       <div class="item-inner">
-                                        <div class="item-title label">Ideal completion date</div>
+                                        <div class="item-title label" data-translate="completion-date">Ideal completion date</div>
                                         <div class="item-input">
                                           <input type="date" name="completion_date" placeholder="completion" value="">
                                         </div>
@@ -542,7 +542,7 @@
                                
                                     <div class="item-content">
                                       <div class="item-inner">
-                                        <div class="item-title label">*Application deadline</div>
+                                        <div class="item-title label" data-translate="deadline">*Application deadline</div>
                                         <div class="item-input">
                                           <input type="date" name="deadline" placeholder="deadline" value="">
                                         </div>
@@ -551,7 +551,7 @@
                             
                                     <div class="item-content">
                                       <div class="item-inner">
-                                        <div class="item-title label">Bilingual description of opportunity</div>
+                                        <div class="item-title label" data-translate="description-mission">Bilingual description of opportunity</div>
                                         <div class="item-input">
                                           <textarea name="description"></textarea>
                                         </div>
@@ -561,7 +561,7 @@
                               </div>
                             </form>
                             <div class="content-block" style="padding-bottom:30px">
-                                <a href="" data-my-tab-id="#tab3" class="button next-form2">Next</a>
+                                <a href="" data-my-tab-id="#tab3" class="button next-form2" data-translate="next">Next</a>
                              </div> 
                             </div>
                          
@@ -572,13 +572,13 @@
                     
                     <div class="block" style="height:100%; overflow-y:scroll;">
                         <form id="opt-form3" class="list-block">
-                        <div class="content-block-title">Full Layout</div>
+                        <div class="content-block-title" data-translate="skills">Step 3: Opportunity Requirements</div>
                         <div class="list-block">
                           <ul>
                             <li>
                               <div class="item-content">
                                 <div class="item-inner">
-                                  <div class="item-title label">Skills</div>
+                                  <div class="item-title label" data-translate="skills">Skills</div>
                                   <div class="item-input">
                                     <input type="text" name="skills" placeholder="skills">
                                   </div>
@@ -589,19 +589,19 @@
                             <li>
                               <div class="item-content">
                                 <div class="item-inner">
-                                  <div class="item-title label">*Time in hours</div>
+                                  <div class="item-title label" data-translate="time-hours">*Time in hours</div>
                                   <div class="item-input">
                                     <input type="text" name="hours" placeholder="hours">
                                   </div>
                                 </div>
                                 <div class="item-inner">
-                                  <div class="item-title label">Repetition</div>
+                                  <div class="item-title label" data-translate="repete">Repetition</div>
                                   <div class="item-input">
                                     <select name="repetition">
-                                      <option>Total</option>
-                                      <option>per day</option>
-                                      <option>per week</option>
-                                      <option>per month</option>
+                                      <option data-translate="repetition-total">Total</option>
+                                      <option data-translate="repetition-day">per day</option>
+                                      <option data-translate="repetition-week">per week</option>
+                                      <option data-translate="repetition-month">per month</option>
                                     </select>
                                   </div>
                                 </div>
@@ -613,22 +613,22 @@
                                   <li class="accordion-item">
                                     <a href="#" class="item-content item-link">
                                       <div class="item-inner">
-                                        <div class="item-title">Specific Time Requirements </div>
+                                        <div class="item-title" data-translate="specific-time">Specific Time Requirements </div>
                                       </div>
                                     </a>
                                     <div class="accordion-item-content">
                                       <div class="content-block">
                                         <div class="item-inner">
-                                          <div class="item-title label">Time zone</div>
+                                          <div class="item-title label" data-translate="time-zone">Time zone</div>
                                           <div class="item-input">
                                             <select name="timezone">
-                                              <option>Canada/Newfoundlang(-3.5)</option>
-                                              <option>Canada/Antlantic (-4)</option>
-                                              <option>Canada/Eastern (-5)</option>
-                                              <option>Canada/Central (-6)</option>
-                                              <option>Canada/Mountain (-7)</option>
-                                              <option>Canada/Pacific (-8)</option>
-                                              <option>Canada/Yukon (-9)</option>
+                                              <option data-translate="zone-newfoudlang">Canada/Newfoundlang(-3.5)</option>
+                                              <option data-translate="zone-atlantic">Canada/Atlantic (-4)</option>
+                                              <option data-translate="zone-eastern">Canada/Eastern (-5)</option>
+                                              <option data-translate="zone-central">Canada/Central (-6)</option>
+                                              <option data-translate="zone-mountain">Canada/Mountain (-7)</option>
+                                              <option data-translate="zone-pacific">Canada/Pacific (-8)</option>
+                                              <option data-translate="zone-yukon">Canada/Yukon (-9)</option>
                                             </select>
                                           </div>
                                         </div>
@@ -636,14 +636,14 @@
                                           <table>
                                             <thead>
                                               <tr>
-                                                <th class="label-cell">Day</th>
-                                                <th class="numeric-cell">Start time</th>
-                                                <th class="numeric-cell">Duration</th>
+                                                <th class="label-cell" data-translate="mission-day">Day</th>
+                                                <th class="numeric-cell" data-translate="mission-start-time">Start time</th>
+                                                <th class="numeric-cell" data-translate="mission-duration">Duration</th>
                                               </tr>
                                             </thead>
                                             <tbody>
                                               <tr>
-                                                <td class="label-cell">Monday</td>
+                                                <td class="label-cell" data-translate="monday">Monday</td>
                                                 <td class="numeric-cell"> 
                                                   <div class="item-input">
                                                     <input type="text" name="mon_start" placeholder="HH:mm">
@@ -656,7 +656,7 @@
                                                 </td>
                                               </tr>
                                               <tr>
-                                                <td class="label-cell">Tuesday</td>
+                                                <td class="label-cell" data-translate="tuesday">Tuesday</td>
                                                 <td class="numeric-cell">
                                                   <div class="item-input">
                                                     <input type="text" name="tue_start" placeholder="HH:mm">
@@ -669,7 +669,7 @@
                                                 </td>
                                               </tr>
                                               <tr>
-                                                <td class="label-cell">Wednasday</td>
+                                                <td class="label-cell" data-translate="wednasday">Wednasday</td>
                                                 <td class="numeric-cell">
                                                   <div class="item-input">
                                                     <input type="text" name="wed_start" placeholder="HH:mm">
@@ -682,7 +682,7 @@
                                                 </td>
                                               </tr>
                                               <tr>
-                                                <td class="label-cell">Thursday</td>
+                                                <td class="label-cell" data-translate="thursday">Thursday</td>
                                                 <td class="numeric-cell">
                                                   <div class="item-input">
                                                     <input type="text" name="thu_start" placeholder="HH:mm">
@@ -695,7 +695,7 @@
                                                 </td>
                                               </tr>
                                               <tr>
-                                                <td class="label-cell">Friday</td>
+                                                <td class="label-cell" data-translate="friday">Friday</td>
                                                 <td class="numeric-cell">
                                                   <div class="item-input">
                                                     <input type="text" name="fri_start" placeholder="HH:mm">
@@ -708,7 +708,7 @@
                                                 </td>
                                               </tr>
                                               <tr>
-                                                <td class="label-cell">Saturday</td>
+                                                <td class="label-cell" data-translate="saturday">Saturday</td>
                                                 <td class="numeric-cell">
                                                   <div class="item-input">
                                                     <input type="text" name="sat_start" placeholder="HH:mm">
@@ -721,7 +721,7 @@
                                                 </td>
                                               </tr>
                                               <tr>
-                                                <td class="label-cell">Sunday</td>
+                                                <td class="label-cell" data-translate="sunday">Sunday</td>
                                                 <td class="numeric-cell">
                                                   <div class="item-input">
                                                     <input type="text" name="sun_start" placeholder="HH:mm">
@@ -745,7 +745,7 @@
                             <!-- Switch (Checkbox) -->
                             <li>
                               <div class="item-content">
-                                <div class="item-media"><i class="icon f7-icons">The opportunity can be completed virtually:</i></div>
+                                <div class="item-media"><i class="icon f7-icons" data-translate="remotly">The opportunity can be completed virtually:</i></div>
                                 <div class="item-inner">
                                   <div class="item-input">
                                     <label class="label-switch">
@@ -759,38 +759,23 @@
                             <li>
                               <div class="item-content">
                                 <div class="item-inner">
-                                  <div class="item-title label">*Location</div>
+                                  <div class="item-title label" data-translate="location-mission">*Location</div>
                                   <div class="item-input">
                                     <select name="location">
-                                      <option>Alberta</option>
-                                      <option>British Colombia</option>
-                                      <option>Manitoba</option>
-                                      <option>New Brunswick</option>
-                                      <option>Newfoundland and Labrador</option>
-                                      <option>Northwest Territories</option>
-                                      <option>Nova Scotia</option>
-                                      <option>Nunavut</option>
-                                      <option>Ontario</option>
-                                      <option>Prince Edward Island</option>
-                                      <option>Quebec</option>
-                                      <option>Saskatchewan</option>
-                                      <option>Yukon</option>
-                                      <option>National Capital region</option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                            </li>
-                            <li>
-                              <div class="item-content">
-                                <div class="item-inner">
-                                  <div class="item-title label">Security level:</div>
-                                  <div class="item-input">
-                                    <select name="security">
-                                      <option>Reliability</option>
-                                      <option>Enhanced Reliability</option>
-                                      <option>Secret</option>
-                                      <option>Top secret</option>
+                                      <option data-translate="mission-alberta">Alberta</option>
+                                      <option data-translate="mission-colombia">British Colombia</option>
+                                      <option data-translate="mission-manitoba">Manitoba</option>
+                                      <option data-translate="mission-brunswick">New Brunswick</option>
+                                      <option data-translate="mission-labrador">Newfoundland and Labrador</option>
+                                      <option data-translate="mission-northwest">Northwest Territories</option>
+                                      <option data-translate="mission-scotia">Nova Scotia</option>
+                                      <option data-translate="mission-nunavut">Nunavut</option>
+                                      <option data-translate="mission-ontario">Ontario</option>
+                                      <option data-translate="mission-prince">Prince Edward Island</option>
+                                      <option data-translate="mission-quebec">Quebec</option>
+                                      <option data-translate="mission-saskatchewan">Saskatchewan</option>
+                                      <option data-translate="mission-yukon">Yukon</option>
+                                      <option data-translate="mission-national">National Capital region</option>
                                     </select>
                                   </div>
                                 </div>
@@ -802,7 +787,7 @@
                                   <li class="accordion-item">
                                     <a href="#" class="item-content item-link">
                                       <div class="item-inner">
-                                        <div class="item-title">Language requirements </div>
+                                        <div class="item-title" data-translate="language-requirements">Language requirements </div>
                                       </div>
                                     </a>
                                     <div class="accordion-item-content">
@@ -811,24 +796,24 @@
                                         <table>
                                           <thead>
                                             <tr>
-                                              <th class="label-cell">Type</th>
-                                              <th class="numeric-cell">English</th>
-                                              <th class="numeric-cell">French</th>
+                                              <th class="label-cell" data-translate="type-language">Type</th>
+                                              <th class="numeric-cell" data-translate="english">English</th>
+                                              <th class="numeric-cell" data-translate="french">French</th>
                                             </tr>
                                           </thead>
                                           <tbody>
                                             <tr>
-                                              <td class="label-cell">Written comprehension</td>
+                                              <td class="label-cell" data-translate="language-comprehension">Written comprehension</td>
                                               <td class="numeric-cell"></td>
                                               <td class="numeric-cell"></td>
                                             </tr>
                                             <tr>
-                                              <td class="label-cell">Written expression</td>
+                                              <td class="label-cell" data-translate="language-written">Written expression</td>
                                               <td class="numeric-cell"></td>
                                               <td class="numeric-cell"></td>
                                             </tr>
                                             <tr>
-                                              <td class="label-cell">Oral proficiency</td>
+                                              <td class="label-cell" data-translate="language-oral">Oral proficiency</td>
                                               <td class="numeric-cell"></td>
                                               <td class="numeric-cell"></td>
                                             </tr>
@@ -841,17 +826,10 @@
                               </div>
                             </li>
                           </ul>
-             
-                     
-                          
-            
-        
-       
-    
           </div>  
         </form>
         <div class="content-block" style="padding-bottom:30px">
-            <a href="" class="button next-form3">Done</a>
+            <a href="" class="button next-form3" data-translate="create-mission">Done</a>
          </div> 
         </div>
           </div> 
