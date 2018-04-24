@@ -187,6 +187,7 @@
     "private-group": "This group's membership is closed and its content is accessible only by members.To ask to be added, click the 'Request membership' menu link.",
     "no-profile": "Member has not set their description.",
     "profile": "Profile",
+    "user-avatar": "User's Avatar",
     "wire": "Wire",
     "wires": "Wires",
     "add-colleague": "Add Colleague",
@@ -279,6 +280,7 @@
 
     "content-loaded": "New content appended to page.",
     "more-options-opened": "More Options Menu Opened.",
+    "more-tab-menu-opened": "More Tabs List",
    
     "step1":"Step 1",
     "step2":"Step 2",
@@ -554,6 +556,7 @@ French = {
     "private-group": "Ceci est un groupe fermé. Le contenu de se groupe est accessible uniquement à ses membres. Pour y devenir membre, cliquez sur le lien 'Demande d'adhésion'",
     "no-profile": "Le membre n'a pas défini sa description.",
     "profile": "Profil",
+    "user-avatar": "Avatar de l'utilisateur",
     "wire": "Le fil",
     "wires": "Les fils",
     "add-colleague": "Ajouter collègue",
@@ -646,6 +649,7 @@ French = {
 
     "content-loaded": "Nouveau contenu ajouté à la page.",
     "more-options-opened": "Plus d'options menu ouvert.",
+    "more-tab-menu-opened": "Plus de liste d'onglets",
     
     "step1":"Étape 1",
     "step2":"Étape 2",

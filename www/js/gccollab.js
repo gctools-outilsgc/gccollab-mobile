@@ -729,9 +729,10 @@ myApp.onPageInit('group', function (page) {
 
     $("#group-menu").on('click', function (e) {
         var popoverHTML = '<div class="popover pop-group-menu">'
+            + '<span id="focus-tabs" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans('more-tab-menu-opened') + '</span>'
             + '<div class="popover-inner">'
             + '<div class="list-block">'
-            + '<ul>';
+            + '<ul aria-labelledby="focus-tabs">';
         if (access) {
             popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#tab-group-activity" class="button tab-link close-popover" data-translate="activity">'+ GCTLang.Trans("activity") +'</a></li>' : "";
             popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-group-discussions" class="button tab-link close-popover" data-translate="discussion">'+ GCTLang.Trans("discussion") +'</a></li>' : "";
@@ -740,12 +741,18 @@ myApp.onPageInit('group', function (page) {
         } else {
             popoverHTML += '<li><a href="#" class="item-link list-button">' + GCTLang.Trans("Private-Group") + '</a></li>';
         }
-        popoverHTML += '<li><a href="#" class="button close-popover">' + GCTLang.Trans("close") + '</a></li>'
+        popoverHTML += '<li><a href="#" id="close-more-tabs" class="button close-popover">' + GCTLang.Trans("close") + '</a></li>'
             + '</ul>'
             + '</div>'
             + '</div>'
             + '</div>';
         myApp.popover(popoverHTML, this);
+        var focusNow = document.getElementById('focus-tabs');
+        if (focusNow) { focusNow.focus(); }
+        $$('#close-more-tabs').on('click', function (e) {
+            var focusClose = document.getElementById('group-menu');
+            if (focusClose) { focusClose.focus(); }
+        });
     });
 
     $("#group-actions").on('click', function (e) {
@@ -2614,10 +2621,10 @@ $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platf
 });
 
 myApp.onPageInit('profile', function (page) {
-    $$('#profile-navbar-inner').html(GCTLang.txtGlobalNav('profile'));
     var guid = page.query.guid; // Checks guid of page, as any link to profile should include the target guid
     var profile_limit = 12;
-
+    $("#profile-navbar-inner").attr('id', "profile-navbar-inner-" + guid);
+    $$("#profile-navbar-inner-" + guid).html(GCTLang.txtGlobalNav('profile'));
     var user = {};
     user.activity = listObject('user-activity-' + guid);
     user.bookmarks = listObject('user-bookmarks-' + guid);
@@ -2776,6 +2783,7 @@ myApp.onPageInit('profile', function (page) {
         var listItem = '';
 
         $("#user-icon-" + guid).attr('src', profileData.iconURL);
+        $("#user-icon-" + guid).attr('aria-label', GCTLang.Trans("user-avatar"));
         $("#user-title-" + guid).html(profileData.displayName).text();
         $("#user-department-" + guid).html(profileData.department).text();
         
@@ -2902,10 +2910,10 @@ myApp.onPageInit('profile', function (page) {
         if (profileData.hasOwnProperty("links")) {
             var links = '<div class="center">' + GCTLang.Trans('social-media') + '</div>'
                 + '<ul class="socials">';
-            if (profileData.links.hasOwnProperty("github")) { links += '<li><a id="user-github" href="' + profileData.links.github + '" class="gh external"><i class="fa fa-github"></i></a></li>'; }
-            if (profileData.links.hasOwnProperty("twitter")) { links += '<li><a id="user-twitter" href="' + profileData.links.twitter + '" class="tw external"><i class="fa fa-twitter"></i></a></li>'; }
-            if (profileData.links.hasOwnProperty("linkedin")) { links += '<li><a id="user-linkedin" href="' + profileData.links.linkedin + '" class="li external"><i class="fa fa-linkedin"></i></a></li>'; }
-            if (profileData.links.hasOwnProperty("facebook")) { links += '<li><a id="user-facebook" href="' + profileData.links.facebook + '" class="fb external"><i class="fa fa-facebook"></i></a></li>'; }
+            if (profileData.links.hasOwnProperty("github")) { links += '<li><a id="user-github" aria-label="Github" href="' + profileData.links.github + '" class="gh external"><i class="fa fa-github"></i></a></li>'; }
+            if (profileData.links.hasOwnProperty("twitter")) { links += '<li><a id="user-twitter" aria-label="Twitter" href="' + profileData.links.twitter + '" class="tw external"><i class="fa fa-twitter"></i></a></li>'; }
+            if (profileData.links.hasOwnProperty("linkedin")) { links += '<li><a id="user-linkedin" aria-label="Linkedin" href="' + profileData.links.linkedin + '" class="li external"><i class="fa fa-linkedin"></i></a></li>'; }
+            if (profileData.links.hasOwnProperty("facebook")) { links += '<li><a id="user-facebook" aria-label="Facebook" href="' + profileData.links.facebook + '" class="fb external"><i class="fa fa-facebook"></i></a></li>'; }
             $("#social-media-" + guid).html(links).text();
         }
         
@@ -2916,9 +2924,10 @@ myApp.onPageInit('profile', function (page) {
     /* Generate the popover drop down for user profile navigation on click */
     $("#profile-menu-" + guid).on('click', function (e) {
         var popoverHTML = '<div class="popover pop-profile-menu">'
+            + '<span id="focus-tabs" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans('more-tab-menu-opened') + '</span>'
             + '<div class="popover-inner">'
             + '<div class="list-block">'
-            + '<ul>';
+            + '<ul aria-labelledby="focus-tabs">';
         
         popoverHTML += '<li><a id="TabLink-colleagues-' + guid + '" href="#tab-user-colleagues-' + guid + '" class="button tab-link close-popover">'+ GCTLang.Trans("colleagues") +'</a></li>';
         popoverHTML += '<li><a id="TabLink-wires-' + guid + '" href="#tab-user-wires-' + guid + '" class="button tab-link close-popover">'+ GCTLang.Trans("wires") +'</a></li>';
@@ -2927,12 +2936,18 @@ myApp.onPageInit('profile', function (page) {
         popoverHTML += '<li><a id="TabLink-bookmarks-' + guid + '" href="#tab-user-bookmarks-' + guid +'" class="button tab-link close-popover">'+ GCTLang.Trans("bookmarks") +'</a></li>';
         
         
-        popoverHTML += '<li><a href="#" class="button close-popover">' + GCTLang.Trans("close") + '</a></li>'
+        popoverHTML += '<li><a href="#" id="close-more-tabs" class="button close-popover">' + GCTLang.Trans("close") + '</a></li>'
             + '</ul>'
             + '</div>'
             + '</div>'
             + '</div>';
         myApp.popover(popoverHTML, this);
+        var focusNow = document.getElementById('focus-tabs');
+        if (focusNow) { focusNow.focus(); }
+        $$('#close-more-tabs').on('click', function (e) {
+            var focusClose = document.getElementById('profile-menu-'+guid);
+            if (focusClose) { focusClose.focus(); }
+        });
     });
 
     $$('#tab-user-groups-' + guid).on('show', function (e) {
@@ -3004,6 +3019,7 @@ myApp.onPageInit('profile', function (page) {
         }
     });
     $$('#more-' + user.blogs.id).on('click', function (e) {
+        $('#focus-' + user.blogs.id).remove();
         GCTUser.GetBlogsByUser(profile_limit, user.blogs.offset, guid, userBlogs, errorConsole);
     });
 
@@ -3013,6 +3029,7 @@ myApp.onPageInit('profile', function (page) {
         }
     });
     $$('#more-' + user.colleagues.id).on('click', function (e) {
+        $('#focus-' + user.colleagues.id).remove();
         GCTUser.GetMembersByUserColleague(guid, profile_limit, user.colleagues.offset, '', userColleagues, errorConsole);
     });
 
