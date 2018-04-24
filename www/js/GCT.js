@@ -1,6 +1,4 @@
-﻿var apiVersion = 0.9;
-
-/*
+﻿/*
 * txtType functions:
 * takes object of Type and creates the card for them as 'var content'. Content goes through GCT.SetLinks then returns.
 */
