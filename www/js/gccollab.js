@@ -772,7 +772,8 @@ myApp.onPageInit('group', function (page) {
         } else {
             popoverHTML += '<li><a href="#" class="item-link list-button">' + GCTLang.Trans("Private-Group") + '</a></li>';
         }
-        popoverHTML += '</ul>'
+        popoverHTML += '<li><a href="#" class="button close-popover">' + GCTLang.Trans("close") + '</a></li>'
+            + '</ul>'
             + '</div>'
             + '</div>'
             + '</div>';
@@ -2592,6 +2593,7 @@ myApp.onPageInit('profile', function (page) {
     user.wires = listObject('user-wires-' + guid);
     user.blogs = listObject('user-blogs-' + guid);
     user.colleagues = listObject('user-colleagues-' + guid);
+    user.groups = listObject('user-groups-' + guid);
 
     /* Change needed ids to be guid specific */
     $("#TabLink-profile").attr('id', "TabLink-profile-" + guid);
@@ -2603,7 +2605,7 @@ myApp.onPageInit('profile', function (page) {
     $("#tab-user-colleagues").attr('id', "tab-" + user.colleagues.id);
     $("#tab-user-activity").attr('id', "tab-" + user.activity.id);
     $("#tab-user-bookmarks").attr('id', "tab-" + user.bookmarks.id);
-    $("#tab-user-groups").attr('id', "tab-user-groups-" + guid);
+    $("#tab-user-groups").attr('id', "tab-" + user.groups.id);
     $("#tab-user-blogs").attr('id', "tab-" + user.blogs.id);
     $("#tab-user-wires").attr('id', "tab-" + user.wires.id);
 
@@ -2617,7 +2619,7 @@ myApp.onPageInit('profile', function (page) {
     $("#colleague-num").attr('id', "colleague-num-" + guid);
     $("#social-media").attr("id", "social-media-" + guid);
 
-    $('#user-groups').attr("id", "user-groups-" + guid);
+    $('#user-groups').attr("id", "content-" + user.groups.id);
     $("#content-user-activity").attr("id", "content-" + user.activity.id);
     $("#more-user-activity").attr("id", "more-" + user.activity.id);
     $("#content-user-bookmarks").attr("id", "content-" + user.bookmarks.id);
@@ -2894,7 +2896,8 @@ myApp.onPageInit('profile', function (page) {
         popoverHTML += '<li><a id="TabLink-bookmarks-' + guid + '" href="#tab-user-bookmarks-' + guid +'" class="button tab-link close-popover">'+ GCTLang.Trans("bookmarks") +'</a></li>';
         
         
-        popoverHTML += '</ul>'
+        popoverHTML += '<li><a href="#" class="button close-popover">' + GCTLang.Trans("close") + '</a></li>'
+            + '</ul>'
             + '</div>'
             + '</div>'
             + '</div>';
@@ -2902,8 +2905,8 @@ myApp.onPageInit('profile', function (page) {
     });
 
     $$('#tab-user-groups-' + guid).on('show', function (e) {
-        if (!ld_groups) {
-            ld_groups = true;
+        if (!user.groups.loaded) {
+            user.groups.loaded = true;
             GCTUser.GetUserGroups(guid, function (data2) {
                 var groupData = data2.result;
 
@@ -2927,7 +2930,7 @@ myApp.onPageInit('profile', function (page) {
                         + "</a></li>";
                 });
 
-                $("#user-groups-" + guid).html(groups);
+                $("#content-" + user.groups.id).html(groups);
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
             });
