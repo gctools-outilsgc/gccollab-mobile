@@ -1,7 +1,4 @@
-﻿var apiVersion = 0.9; 
-var api_key_gccollab = "";
-
-/*
+﻿/*
 * txtType functions:
 * takes object of Type and creates the card for them as 'var content'. Content goes through GCT.SetLinks then returns.
 */
@@ -512,28 +509,12 @@ function isAppleDevice(){
 }
 
 GCTUser = {
-    SendValidation: function (successCallback, errorCallback) {
+    LoginOpenID: function (email, sub, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "login.user", email: GCTUser.Email(), action: "Activate", lang: GCTLang.Lang(), lang: GCTLang.Lang() },
-            timeout: 12000,
-            success: function (data) {
-                data = JSON.parse(data);
-                successCallback(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                errorCallback(jqXHR, textStatus, errorThrown);
-            }
-        });
-    },
-    SendValidationCode: function (Code, successCallback, errorCallback) {
-        $$.ajax({
-            method: 'POST',
-            dataType: 'text',
-            url: GCT.GCcollabURL,
-            data: { method: "login.user", email: GCTUser.Email(), action: "CheckCode", code: Code, lang: GCTLang.Lang() },
+            data: { method: "login.sso", email: email, sub: sub, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -549,7 +530,7 @@ GCTUser = {
             method: 'POST',
             dataType: 'text',
             url: GCT.GCcollabURL,
-            data: { method: "login.user", action: "loginpass", user: user, password: password, lang: GCTLang.Lang() },
+            data: { method: "login.user", user: user, password: password, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
@@ -560,21 +541,14 @@ GCTUser = {
             }
         });
     },
-    Logout: function (successCallback, errorCallback) {
-        $$.ajax({
-            method: 'POST',
-            dataType: 'text',
-            url: GCT.GCcollabURL,
-            data: { method: "login.user", action: "logout", email: GCTUser.Email(), api_key: api_key_gccollab, lang: GCTLang.Lang() },
-            timeout: 12000,
-            success: function (data) {
-                data = JSON.parse(data);
-                successCallback(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                errorCallback(jqXHR, textStatus, errorThrown);
-            }
-        });
+    Logout: function () {
+        if( openid_enabled ){
+            $.ajax({
+                url: openid_logout_url,
+                type: "GET"
+            });
+        }
+        Cookies.remove('loggedin');
     },
     SetLoginCookie: function () {
         Cookies.set('loggedin', true, { expires: 7 });
@@ -582,21 +556,14 @@ GCTUser = {
     IsLoggedIn: function () {
         return (typeof Cookies.get('loggedin') != 'undefined') ? Cookies.get('loggedin') : false;
     },
-    LastLoginEmail: function () {
-        return (Cookies.get('email')) ? Cookies.get('email') : "";
-    },
     Email: function(){
-        //### As currently designed, this will always be the same as LastLoginEmail. I think that makes sense if not we can change the logic.
-        return GCTUser.LastLoginEmail();
+        return (Cookies.get('email')) ? Cookies.get('email') : "";
     },
     SaveLoginEmail: function (txtObj) {
         Cookies.set("email", txtObj, { expires: 100000 });
     },
     DisplayName: function () {
         return (Cookies.get('displayName')) ? Cookies.get('displayName') : "";
-    },
-    Username: function () {
-        return (Cookies.get('username')) ? Cookies.get('username') : "";
     },
     Guid: function () {
         return (Cookies.get('guid')) ? Cookies.get('guid') : "";
@@ -609,7 +576,6 @@ GCTUser = {
                 $('#imgUserProfilePic').attr('src', profileData.iconURL);
                 $('#divUserProfileName').text(profileData.displayName);
                 $('#divUserProfileOrg').text(profileData.department);
-                Cookies.set("username", profileData.username, { expires: 100000 });
                 Cookies.set("displayName", profileData.displayName, { expires: 100000 });
                 Cookies.set("guid", profileData.id, { expires: 100000 });
             }
@@ -618,7 +584,7 @@ GCTUser = {
             console.log(jqXHR, textStatus, errorThrown);
         });
     },
-    GetUserProfile: function (profile, successCallback, errorCallback) { 
+    GetUserProfile: function (profile, successCallback, errorCallback) {
         if (typeof profile == 'undefined')
             profile = GCTUser.Email(); //### Get current users profile
 
@@ -676,7 +642,6 @@ GCTUser = {
         });
     },
     ViewPost: function (obj, type, title) {
-
         if (typeof obj == "object") {
             guid = obj.getAttribute("data-guid");
            
@@ -687,7 +652,6 @@ GCTUser = {
         } else {
             var guid = obj;
         }
-
         
         switch(type) {
             case "gccollab_blog_post":
