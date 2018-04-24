@@ -2783,6 +2783,7 @@ myApp.onPageInit('profile', function (page) {
         var listItem = '';
 
         $("#user-icon-" + guid).attr('src', profileData.iconURL);
+        $("#user-icon-" + guid).attr('aria-label', GCTLang.Trans("user-avatar"));
         $("#user-title-" + guid).html(profileData.displayName).text();
         $("#user-department-" + guid).html(profileData.department).text();
         
