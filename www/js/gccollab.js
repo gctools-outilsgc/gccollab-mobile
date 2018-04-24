@@ -947,7 +947,7 @@ myApp.onPageInit('sign-in-old', function (page) {
 });
 
 myApp.onPageInit('home', function (page) {
-    $$('#home-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
+    $$('#home-navbar-inner').html(GCTLang.txtGlobalNav('home'));
     var limit = 12;
     var offset_blogs = 0;
     var loaded_blog = false;
@@ -1029,6 +1029,8 @@ myApp.onPageInit('home', function (page) {
 
 
     GCTUser.GetNewsfeed(limit, home.newsfeed.offset, homeNewsfeed, errorConsole);
+    var focusTitle = document.getElementById('home');
+    if (focusTitle) { focusTitle.focus(); }
     $$('#more-' + home.newsfeed.id).on('click', function (e) {
         $('#focus-' + home.newsfeed.id).remove();
         GCTUser.GetNewsfeed(limit, home.newsfeed.offset, homeNewsfeed, errorConsole);
