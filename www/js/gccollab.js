@@ -2535,12 +2535,21 @@ myApp.onPageInit('new-opportunity', function (page) {
 $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platform')); 
     $$('.next-form1').on('click', function (e) {
         var formData = myApp.formToData('#opt-form1');
-        var title = formData['name'];
-        var email = formData['email'];
         var agree = formData['agree'];
-        if (!(title === '' || email === '' || agree.length === 0)) {
+        var message_validation = '';
+        let arr = ['name', 'email'];
+        arr.forEach((num, index) => {
+            console.log(num);
+            if(formData[num] === ''){
+                message_validation += GCTLang.Trans("validation_"+ num) + '<br>';
+            }
+        });
+
+        if(agree.length === 0){
+            message_validation += GCTLang.Trans("validation_agree") + '<br>';
+        }
+        if (message_validation === '' ) {
             var selected=$$(this).attr('data-my-tab-id');
-            console.log(selected);
             myApp.showTab(selected);
             formData['agree'] = 'YES';
             GCTUser.CreateOpportinities1(formData, function (data) {
@@ -2551,21 +2560,23 @@ $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platf
             });
 
         } else {
-            myApp.alert('Input required is missing');
+            myApp.alert(message_validation);
         }
     });
 
     $$('.next-form2').on('click', function (e) {
 
         var formData = myApp.formToData('#opt-form2');
-        var title = formData['title'];
-        var type = formData['type'];
-        var program = formData['program'];
-        var start = formData['start_date'];
-        var deadline = formData['deadline'];
-        if (!(title === '' || type === ''|| program === '' || start === '' || deadline === '')) {
+        var message_validation = '';
+        let arr = ['title','offert', 'type', 'start_date', 'deadline'];
+        arr.forEach((num, index) => {
+            console.log(num);
+            if(formData[num] === ''){
+                message_validation += GCTLang.Trans("validation_"+ num) + '<br>';
+            }
+        });
+        if (message_validation === '' ) {
             var selected=$$(this).attr('data-my-tab-id');
-            console.log(selected);
             myApp.showTab(selected);
             GCTUser.CreateOpportinities2(formData, function (data) {
                 var selected=$$(this).attr('tab2');
@@ -2577,16 +2588,20 @@ $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platf
             });
 
         } else {
-            myApp.alert('Input required is missing');
+           
         }
     });
 
     $$('.next-form3').on('click', function (e) {
         var formData = myApp.formToData('#opt-form3');
-        var hours = formData['hours'];
-        var location = formData['location'];
-
-        if (!(hours === '' || location === '')) {
+        var message_validation = '';
+        let arr = ['hours','location'];
+        arr.forEach((num, index) => {
+            if(formData[num] === ''){
+                message_validation += GCTLang.Trans("validation_"+ num) + '<br>';
+            }
+        });
+        if (message_validation === '' ) {
             if(formData['remotly'].lenght != 0){
                 formData['remotly'] = 'on';
             }else{ formData['remotly'] == '';}
@@ -2603,7 +2618,7 @@ $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platf
             });
 
         } else {
-            myApp.alert('Input required is missing');
+            myApp.alert(message_validation);
         }
     });
     $('#group').hide();

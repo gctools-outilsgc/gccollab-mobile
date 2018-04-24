@@ -363,8 +363,17 @@
     "language-written":"Written expression",
     "language-oral":"Oral proficiency",
     "create-mission":"Create Opportunity",
-    "unlimited":"Unlimited"
-
+    "unlimited":"Unlimited",
+    "validation_name": "Please enter a name",
+    "validation_email": "Please enter an email address",
+    "validation_agree": "Please check the disclaimer below",
+    "validation_title": "Please entre an opportunity title.",
+    "validation_offert": "Please enter a role for this opportunity",
+    "validation_type": "Please enter a type of opportunity",
+    "validation_start_date": "Please enter an ideal start date.",
+    "validation_deadline": "Please enter an application deadline",
+    "validation_hours": "Please enter a time commitment for this opportunity",
+    "validation_location": "Please enter a location for this opportunity",
 }
 
 French = {
@@ -735,4 +744,14 @@ French = {
     "create-mission":"Créer une possibilité",
     "unlimited":"Ilimité",
     "language-requirements":"Exigences linguistiques",
+    "validation_name": "Veuillez entrer un nom.",
+    "validation_email": "S'il vous plait, entrer une addresse email",
+    "validation_agree": "Veuillez lire l'avertissement ci-dessous",
+    "validation_title": "Veuillez entrer un titre de possibilité.",
+    "validation_offert": "Veuillez entrer un rôle pour cette possibilité",
+    "validation_type": "Veuillez entrer un type de possibilité",
+    "validation_start_date": "Veuillez entrer une date de début idéale.",
+    "validation_deadline": "Veuillez entrer une date limite d'inscription",
+    "validation_hours": "Veuillez entrer une période d'engagement pour cette possibilité",
+    "validation_location": "Veuillez entrer un emplacement pour cette possibilité",
 }
