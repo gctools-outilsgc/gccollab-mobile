@@ -2147,7 +2147,7 @@ myApp.onPageInit('bookmarks', function (page) {
 
         if (info.length > 0) {
             $.each(info, function (key, value) {
-                var content = GCTEach.Wire(value);
+                var content = GCTEach.Bookmark(value);
                 $(content).hide().appendTo('#content-' + bookmarks.mine.id).fadeIn(1000);
             });
         }
