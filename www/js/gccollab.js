@@ -2614,10 +2614,10 @@ $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platf
 });
 
 myApp.onPageInit('profile', function (page) {
-    $$('#profile-navbar-inner').html(GCTLang.txtGlobalNav('profile'));
     var guid = page.query.guid; // Checks guid of page, as any link to profile should include the target guid
     var profile_limit = 12;
-
+    $("#profile-navbar-inner").attr('id', "profile-navbar-inner-" + guid);
+    $$("#profile-navbar-inner-" + guid).html(GCTLang.txtGlobalNav('profile'));
     var user = {};
     user.activity = listObject('user-activity-' + guid);
     user.bookmarks = listObject('user-bookmarks-' + guid);
