@@ -277,7 +277,24 @@
     "reason-decline-opportunity":"Reason to decline the offer to participate in this opportunity",
     "message-creator-opportunity": "Message to opportunity creator",
 
-    "content-loaded": "New content appended to page."
+    "content-loaded": "New content appended to page.",
+    "step1":"Step 1",
+    "step2":"Step 2",
+    "step3":"Step 3",
+    "poster-info":"Step 1: Poster Information",
+    "disclaimer-mission":"*I agree to provide all participants with the appropriate guidance and direction. I also agree to complete feedback forms which may be sent to me at the conclusion of the opportunity.",
+    "organization-agency":"*Your organization, agency or department",
+    "next":"Next",
+    "mission-detail":"Step 2: Opportunity Details",
+    "mission-title":"Bilingual opportunity title",
+    "mission-role":"Opportunity role",
+    "mission-offering":" Create an opportunity for others (offering)",
+    "mission-seeking":"Offer myself for an opportunity (seeking)",
+    "mission-type":"Type of opportunity",
+    "mission-mentoring":"Mentoring",
+    "mission-casual":"Casual Work",
+    "mission-student":"Student Integration",
+    "mission-collaboration":"Collaboration",
 }
 
 French = {
@@ -559,6 +576,24 @@ French = {
     "reason-decline-opportunity":"Raison pour le retrait de votre participation à cette possibilité",
     "message-creator-opportunity": "Message au gestionnaire",
 
-    "content-loaded": "Nouveau contenu ajouté à la page."
-    
+    "content-loaded": "Nouveau contenu ajouté à la page.",
+    "step1":"Étape 1",
+    "step2":"Étape 2",
+    "step3":"Étape 3",
+    "poster-info":"Étape 1 : Renseignements sur l'auteur",
+    "your-name":"*",
+    "disclaimer-mission":"*Je consens à fournir à tous les candidats sélectionnés les conseils et l'orientation appropriés. J'accepte aussi de remplir les formulaires de rétroaction qui peuvent m'être envoyés à la fin de la possibilité.",
+    "organization-agency":"*Votre organisation, agence ou département",
+    "next":"Prochaine étape",
+    "mission-detail":"Étape 2 : Détails de la possibilité",
+    "mission-title":"*Titre de la possibilité",
+    "mission-role":"*Rôle de la possibilité",
+    "mission-offering":"Créer une possibilité pour les autres (offre)",
+    "mission-seeking":"Offrire mes services pour une possibilité (recherche)",
+    "mission-type":"Type de possibilité",
+    "mission-mentoring":"Mentorat",
+    "mission-casual":"Emploi occasionnel",
+    "mission-student":"Intégration des étudiants",
+    "mission-collaboration":"Collaboration",
+
 }
