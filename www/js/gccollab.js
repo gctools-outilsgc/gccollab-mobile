@@ -2916,9 +2916,10 @@ myApp.onPageInit('profile', function (page) {
     /* Generate the popover drop down for user profile navigation on click */
     $("#profile-menu-" + guid).on('click', function (e) {
         var popoverHTML = '<div class="popover pop-profile-menu">'
+            + '<span id="focus-tabs" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans('more-tab-menu-opened') + '</span>'
             + '<div class="popover-inner">'
             + '<div class="list-block">'
-            + '<ul>';
+            + '<ul aria-labelledby="focus-tabs">';
         
         popoverHTML += '<li><a id="TabLink-colleagues-' + guid + '" href="#tab-user-colleagues-' + guid + '" class="button tab-link close-popover">'+ GCTLang.Trans("colleagues") +'</a></li>';
         popoverHTML += '<li><a id="TabLink-wires-' + guid + '" href="#tab-user-wires-' + guid + '" class="button tab-link close-popover">'+ GCTLang.Trans("wires") +'</a></li>';
@@ -2927,12 +2928,18 @@ myApp.onPageInit('profile', function (page) {
         popoverHTML += '<li><a id="TabLink-bookmarks-' + guid + '" href="#tab-user-bookmarks-' + guid +'" class="button tab-link close-popover">'+ GCTLang.Trans("bookmarks") +'</a></li>';
         
         
-        popoverHTML += '<li><a href="#" class="button close-popover">' + GCTLang.Trans("close") + '</a></li>'
+        popoverHTML += '<li><a href="#" id="close-more-tabs" class="button close-popover">' + GCTLang.Trans("close") + '</a></li>'
             + '</ul>'
             + '</div>'
             + '</div>'
             + '</div>';
         myApp.popover(popoverHTML, this);
+        var focusNow = document.getElementById('focus-tabs');
+        if (focusNow) { focusNow.focus(); }
+        $$('#close-more-tabs').on('click', function (e) {
+            var focusClose = document.getElementById('profile-menu-'+guid);
+            if (focusClose) { focusClose.focus(); }
+        });
     });
 
     $$('#tab-user-groups-' + guid).on('show', function (e) {
@@ -3004,6 +3011,7 @@ myApp.onPageInit('profile', function (page) {
         }
     });
     $$('#more-' + user.blogs.id).on('click', function (e) {
+        $('#focus-' + user.blogs.id).remove();
         GCTUser.GetBlogsByUser(profile_limit, user.blogs.offset, guid, userBlogs, errorConsole);
     });
 
@@ -3013,6 +3021,7 @@ myApp.onPageInit('profile', function (page) {
         }
     });
     $$('#more-' + user.colleagues.id).on('click', function (e) {
+        $('#focus-' + user.colleagues.id).remove();
         GCTUser.GetMembersByUserColleague(guid, profile_limit, user.colleagues.offset, '', userColleagues, errorConsole);
     });
 
