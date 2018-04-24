@@ -47,12 +47,13 @@
 <div class="panel-overlay"></div>
 
 <div class="panel panel-left panel-cover sidebar">
-  <div class="buttonbar row no-gutter">
-    <a id="logoutBtn" class="button button-fill col-100" data-translate="logout">Logout</a>
-  </div>
+    <div class="buttonbar row no-gutter">
+        <a id="logoutBtn" class="button button-fill col-100" data-translate="logout">Logout</a>
+    </div>
   <div class="view">
     <div class=" ">
       <div data-page="panel-left" class="sidemenu leftmenusmall gradient">
+          <a href="#" class="link close-panel" aria-label="Close Panel" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0"><i class="icon icon-close"></i></a>
         <div class="item-content userprofile">
           <div class="item-media"><a href="#" class="item-link close-panel" onclick="ShowProfile();"><img src="" width="44" alt="" id="imgUserProfilePic"/></a></div>
           <div class="item-inner">
@@ -192,6 +193,13 @@
                       <a href="#" onclick="GCTLang.ToggleLang(true);" class="item-link close-panel item-content">
                           <div class="itemmeniinner">
                               <div class="item-title"><i class="fa fa-language"></i><span data-translate="language">Français</span></div>
+                          </div>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="#" class="item-link close-panel item-content">
+                          <div class="itemmeniinner">
+                              <div class="item-title"><i class="fa fa-times"></i><span data-translate="close">Close</span></div>
                           </div>
                       </a>
                   </li>

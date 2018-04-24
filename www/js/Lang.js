@@ -278,6 +278,8 @@
     "message-creator-opportunity": "Message to opportunity creator",
 
     "content-loaded": "New content appended to page.",
+    "more-options-opened": "More Options Menu Opened.",
+   
     "step1":"Step 1",
     "step2":"Step 2",
     "step3":"Step 3",
@@ -643,6 +645,8 @@ French = {
     "message-creator-opportunity": "Message au gestionnaire",
 
     "content-loaded": "Nouveau contenu ajouté à la page.",
+    "more-options-opened": "Plus d'options menu ouvert.",
+    
     "step1":"Étape 1",
     "step2":"Étape 2",
     "step3":"Étape 3",
