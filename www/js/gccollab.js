@@ -2910,10 +2910,10 @@ myApp.onPageInit('profile', function (page) {
         if (profileData.hasOwnProperty("links")) {
             var links = '<div class="center">' + GCTLang.Trans('social-media') + '</div>'
                 + '<ul class="socials">';
-            if (profileData.links.hasOwnProperty("github")) { links += '<li><a id="user-github" href="' + profileData.links.github + '" class="gh external"><i class="fa fa-github"></i></a></li>'; }
-            if (profileData.links.hasOwnProperty("twitter")) { links += '<li><a id="user-twitter" href="' + profileData.links.twitter + '" class="tw external"><i class="fa fa-twitter"></i></a></li>'; }
-            if (profileData.links.hasOwnProperty("linkedin")) { links += '<li><a id="user-linkedin" href="' + profileData.links.linkedin + '" class="li external"><i class="fa fa-linkedin"></i></a></li>'; }
-            if (profileData.links.hasOwnProperty("facebook")) { links += '<li><a id="user-facebook" href="' + profileData.links.facebook + '" class="fb external"><i class="fa fa-facebook"></i></a></li>'; }
+            if (profileData.links.hasOwnProperty("github")) { links += '<li><a id="user-github" aria-label="Github" href="' + profileData.links.github + '" class="gh external"><i class="fa fa-github"></i></a></li>'; }
+            if (profileData.links.hasOwnProperty("twitter")) { links += '<li><a id="user-twitter" aria-label="Twitter" href="' + profileData.links.twitter + '" class="tw external"><i class="fa fa-twitter"></i></a></li>'; }
+            if (profileData.links.hasOwnProperty("linkedin")) { links += '<li><a id="user-linkedin" aria-label="Linkedin" href="' + profileData.links.linkedin + '" class="li external"><i class="fa fa-linkedin"></i></a></li>'; }
+            if (profileData.links.hasOwnProperty("facebook")) { links += '<li><a id="user-facebook" aria-label="Facebook" href="' + profileData.links.facebook + '" class="fb external"><i class="fa fa-facebook"></i></a></li>'; }
             $("#social-media-" + guid).html(links).text();
         }
         
