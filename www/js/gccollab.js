@@ -729,9 +729,10 @@ myApp.onPageInit('group', function (page) {
 
     $("#group-menu").on('click', function (e) {
         var popoverHTML = '<div class="popover pop-group-menu">'
+            + '<span id="focus-tabs" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans('more-tab-menu-opened') + '</span>'
             + '<div class="popover-inner">'
             + '<div class="list-block">'
-            + '<ul>';
+            + '<ul aria-labelledby="focus-tabs">';
         if (access) {
             popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#tab-group-activity" class="button tab-link close-popover" data-translate="activity">'+ GCTLang.Trans("activity") +'</a></li>' : "";
             popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-group-discussions" class="button tab-link close-popover" data-translate="discussion">'+ GCTLang.Trans("discussion") +'</a></li>' : "";
@@ -740,12 +741,18 @@ myApp.onPageInit('group', function (page) {
         } else {
             popoverHTML += '<li><a href="#" class="item-link list-button">' + GCTLang.Trans("Private-Group") + '</a></li>';
         }
-        popoverHTML += '<li><a href="#" class="button close-popover">' + GCTLang.Trans("close") + '</a></li>'
+        popoverHTML += '<li><a href="#" id="close-more-tabs" class="button close-popover">' + GCTLang.Trans("close") + '</a></li>'
             + '</ul>'
             + '</div>'
             + '</div>'
             + '</div>';
         myApp.popover(popoverHTML, this);
+        var focusNow = document.getElementById('focus-tabs');
+        if (focusNow) { focusNow.focus(); }
+        $$('#close-more-tabs').on('click', function (e) {
+            var focusClose = document.getElementById('group-menu');
+            if (focusClose) { focusClose.focus(); }
+        });
     });
 
     $("#group-actions").on('click', function (e) {
