@@ -8,11 +8,11 @@
           <!-- Buttons row as tabs controller in navbar-->
           <div class="buttons-row">
             <!-- Link to 1st tab, active -->
-            <a href="#tab1" class="tab-link active button">Step 1</a>
+            <a href="#tab1" class="tab-link active button" data-translate="step1">Step 1</a>
             <!-- Link to 2nd tab -->
-            <a href="#tab2" class="tab-link button">Step 2</a>
+            <a href="#tab2" class="tab-link button" data-translate="step2">Step 2</a>
             <!-- Link to 3rd tab -->
-            <a href="#tab3" class="tab-link button">Step 3</a>
+            <a href="#tab3" class="tab-link button" data-translate="step3">Step 3</a>
           </div>
         </div>
       </div>
@@ -35,12 +35,12 @@
               
                         <div class="block" style="height:100%; overflow-y:scroll;">
                           <form id="opt-form1" class="list-block"> 
-                          <div class="content-block-title">Step 1: Poster Information</div>
+                          <div class="content-block-title" data-translate="poster-info">Step 1: Poster Information</div>
                           <div class="list-block">
                           
                                 <div class="item-content">
                                   <div class="item-inner">
-                                    <div class="item-title label">*Name</div>
+                                    <div class="item-title label" data-translate="name">*Name</div>
                                     <div class="item-input">
                                       <input type="text" name="name" placeholder="Your name" required validate>
                                     </div>
@@ -49,7 +49,7 @@
                            
                                 <div class="item-content">
                                   <div class="item-inner">
-                                    <div class="item-title label">*E-mail</div>
+                                    <div class="item-title label" data-translate="email">*E-mail</div>
                                     <div class="item-input">
                                       <input type="email" name="email" placeholder="E-mail">
                                     </div>
@@ -58,7 +58,7 @@
                             
                                 <div class="item-content">
                                   <div class="item-inner">
-                                    <div class="item-title label">phone</div>
+                                    <div class="item-title label" data-translate="phone">phone</div>
                                     <div class="item-input">
                                       <input type="text" name="phone" placeholder="phone">
                                     </div>
@@ -315,7 +315,7 @@
                                   </select>
                                   <div class="item-content">
                                     <div class="item-inner">
-                                      <div class="item-title">*Your department/agency</div>
+                                      <div class="item-title" data-translate="organization-agency">Your organization, agency or department</div>
                                       <div class="item-after">---</div>
                                     </div>
                                   </div>
@@ -323,7 +323,7 @@
                            
                                 <div class="item-content">
                                   <div class="item-inner">
-                                    <p>*I agree to provide all selected employees with the appropriate guidance and direction for the tasks involved in this opportunity. I also agree to complete feedback forms which may be sent to me at the conclusion of the opportunity.	(required)</p>
+                                    <p data-translate="disclaimer-mission">I agree to provide all selected employees with the appropriate guidance and direction for the tasks involved in this opportunity. I also agree to complete feedback forms which may be sent to me at the conclusion of the opportunity.	(required)</p>
                                     <div class="item-input">
                                       <label class="label-switch">
                                         <input type="checkbox" name="agree">
@@ -336,7 +336,7 @@
                           </div>
                         </form>
                         <div class="content-block" style="padding-bottom:30px">
-                            <a href="" data-my-tab-id='#tab2' class="button next-form1">Next</a>
+                            <a href="" data-my-tab-id='#tab2' class="button next-form1" data-translate="next">Next</a>
                          </div> 
                         </div>
                         
@@ -347,47 +347,40 @@
                     
                         <div class="block" style="height:100%; overflow-y: scroll;">
                             <form id="opt-form2" class="list-block"> 
-                          <div class="content-block-title">Step 2: Opportunity Details</div>
+                          <div class="content-block-title" data-translate="mission-detail">Step 2: Opportunity Details</div>
                           <div class="list-block">
                      
                                 <div class="item-content">
                                   <div class="item-inner">
-                                    <div class="item-title label">*Bilingual opportunity title</div>
+                                    <div class="item-title label" data-translate="mission-title">*Bilingual opportunity title</div>
                                     <div class="item-input">
                                       <input type="text" name="title" placeholder="title">
                                     </div>
                                   </div>
                                 </div>
                          
-                                <label class="label-radio item-content">
-                                  <input type="radio" name="offert" value="offering" checked="checked">
-                                  <div class="item-media">
-                                    <i class="icon icon-form-radio"></i>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                      <div class="item-title label" data-translate="mission-role">*Opportunity role</div>
+                                      <div class="item-input">
+                                        <select name="offert" id="offert">
+                                              <option></option>
+                                              <option>Créer une possibilité pour les autres (offre)</option>
+                                              <option>Offrire mes services pour une possibilité (recherche)</option>
+                                          </select>
+                                      </div>
+                                    </div>
                                   </div>
-                                  <div class="item-inner">
-                                    <div class="item-title">Create an opportunity for others (offering)</div>
-                                  </div>
-                                </label>
-                      
-                                <label class="label-radio item-content">
-                                  <input type="radio" name="offert" value="seeking">
-                                  <div class="item-media">
-                                    <i class="icon icon-form-radio"></i>
-                                  </div>
-                                  <div class="item-inner">
-                                    <div class="item-title">Offer myself for an opportunity (seeking)</div>
-                                  </div>
-                                </label>
                       
                                 <div class="item-content">
                                   <div class="item-inner">
-                                    <div class="item-title label">*Type of opportunity</div>
+                                    <div class="item-title label" data-translate="mission-type">*Type of opportunity</div>
                                     <div class="item-input">
                                       <select name="type" id="type">
-                                            <option>Mentoring</option>
-                                            <option>Casual Work</option>
-                                            <option>Student Integration</option>
-                                            <option>Collaboration</option>
+                                            <option data-translate="mission-mentoring">Mentoring</option>
+                                            <option data-translate="mission-casual">Casual Work</option>
+                                            <option data-translate="mission-student">Student Integration</option>
+                                            <option data-translate="mission-collaboration">Collaboration</option>
                                         </select>
                                     </div>
                                   </div>

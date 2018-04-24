@@ -66,43 +66,6 @@ $$('.panel-right').on('open', function () {
     LoadMessageCentre();
 });
 
-function EnterCode() {
-    myApp.prompt(GCTLang.Trans("pleaseenterverification"), function (value) {
-        GCTUser.SendValidationCode(value, function (success) {
-            console.log(success);
-            var txt = "";
-            if (success.result == true) {
-                GCTUser.SetLoginCookie();
-                GCTUser.SetUserProfile();
-                mainView.router.loadPage({ url: 'home.html' });
-            } else {
-                myApp.confirm('Your code could not be validated. Press OK to enter your code again.', 'Code Not Valid',
-                    function () {
-                        EnterCode();
-                    }
-                );
-            }
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-            alert('strange error');
-        });
-    });
-    $('.modal-text-input').focus();
-}
-
-function GetNewCode() {
-    GCTUser.SendValidation(function(success){
-        if (success.message.length > 0) { ///### Going to have to make some of these returns more descriptive e.g. Invalid Email or Email Extension
-            EnterCode();        
-        } else {
-            myApp.alert('Sorry, we were unable to send you the verification code at this time.');
-        }
-    }, function(jqXHR, textStatus, errorThrown){
-        console.log(jqXHR, textStatus, errorThrown);
-        EnterCode();
-    });
-}
-
 function isValidEmailAddress(emailAddress) {
     var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
     return pattern.test(emailAddress);
@@ -502,7 +465,11 @@ function AppOpen() {
             GCTUser.SetUserProfile();
             mainView.router.loadPage({ url: 'home.html' });
         } else {
-            mainView.router.loadPage({ url: 'sign-in.html' });
+            if( openid_enabled ){
+                mainView.router.loadPage({ url: 'sign-in.html' });
+            } else {
+                mainView.router.loadPage({ url: 'sign-in-old.html' });
+            }
         }
     } else {
         //### Show lang buttons. This is first call and only happens until they click a lang link
@@ -542,12 +509,13 @@ myApp.onPageInit('*', function (page) {
     GCTLang.TransPage();
 
     $$('#logoutBtn').on('click', function (e) {
-        GCTUser.Logout(function(success){
-            myApp.closePanel(false);
+        GCTUser.Logout();
+        myApp.closePanel(false);
+        if( openid_enabled ){
             mainView.router.loadPage({ url: 'sign-in.html' });
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
+        } else {
+            mainView.router.loadPage({ url: 'sign-in-old.html' });
+        }
     });
 
     $$(document).on('click', 'a.social-share', function (e) {
@@ -850,22 +818,85 @@ myApp.onPageInit('group', function (page) {
 });
 
 myApp.onPageInit('sign-in', function (page) {
-    var email = GCTUser.LastLoginEmail();
-    if( page.query.email ){
-        email = page.query.email;
-    }
-    $$('#email').val(email);
+    var clientInfo = {
+        client_id: openid_client_id,
+        redirect_uri: 'gccollab-mobile'
+    };
+    var providerInfo = OIDC.discover(openid_issuer);
 
-    var email = $('#email').val();
-    var password = $('#password').val();
+    OIDC.setClientInfo(clientInfo);
+    OIDC.setProviderInfo(providerInfo);
+    OIDC.storeInfo(providerInfo, clientInfo);
 
-    if( page.query.register ){
-        myApp.alert(GCTLang.Trans("verify"), '');
-    }
+    $$('#regBtn').on('click', function (e) {
+        var registerWindow = window.open(openid_register_url, '_blank', 'location=yes');
 
+        registerWindow.addEventListener('loadstop', function(event) {
+            var url = event.url;
+            if(url.includes('/register/complete/')){
+                setTimeout(function(){
+                    registerWindow.close();
+                }, 3000);
+            }
+        });
+    });
+
+    $$('#loginBtn').on('click', function (e) {
+        var id_token = "";
+        var access_token = "";
+        var loginURL = OIDC.login({scope: 'openid email', response_type: 'id_token token'});
+        var loginWindow = window.open(loginURL, '_blank', 'location=yes');
+
+        loginWindow.addEventListener('loadstop', function(event) {
+            var url = event.url;
+
+            if(url.includes('id_token=')){
+                id_token = url.substring(url.lastIndexOf('id_token=')+9, url.lastIndexOf('&token_type'));
+            }
+
+            if(url.includes('access_token=')){
+                access_token = url.substring(url.lastIndexOf('access_token=')+13, url.lastIndexOf('&id_token'));
+            }
+
+            if(url.includes('/profile/') || (id_token && access_token)){
+                loginWindow.close();
+            }
+        });
+
+        loginWindow.addEventListener('exit', function(event) {
+            if(id_token && access_token){
+                $.ajax({
+                    url: openid_issuer + "/userinfo",
+                    type: "GET",
+                    dataType: "JSON",
+                    beforeSend: function (request){
+                        request.setRequestHeader("Authorization", "Bearer " + access_token);
+                    },
+                    success: function (result) {
+                        var email = result.email;
+                        var sub = result.sub;
+
+                        GCTUser.LoginOpenID(email, sub, function (success) {
+                            if (success.result == true) {
+                                GCTUser.SaveLoginEmail(email);
+                                GCTUser.SetLoginCookie();
+                                GCTUser.SetUserProfile();
+                                mainView.router.loadPage({ url: 'home.html' });
+                            } else {
+                                myApp.alert(GCTLang.Trans("invalid"), 'Error');
+                            }
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        });
+                    }
+                });
+            }
+        });
+    });
+});
+
+myApp.onPageInit('sign-in-old', function (page) {
     $("#email, #password").keyup(function (event) {
-        //event.preventDefault();
-
         var email = $('#email').val();
         var password = $('#password').val();
 
@@ -3747,142 +3778,6 @@ myApp.onPageInit('profile todoadd', function (page) {
     var calendarDateFormat = myApp.calendar({
         input: '#ks-calendar-date-format2',
         dateFormat: 'DD, MM dd, yyyy'
-    });
-});
-
-myApp.onPageInit('register', function (page) {
-
-    function validateEmail(email) { 
-        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
-        return re.test(email);
-    }
-
-    $(document).on('change', '#registerForm .error', function (e) {
-        if( $(this).val() != "" ){
-            $(this).removeClass('error');
-        }
-    });
-
-    $(document).on('change', '#reg-email', function() {
-        if( $(this).val() != "" ){
-            if( !validateEmail($(this).val()) ){
-                $(this).addClass('error');
-            } else {
-                $(this).removeClass('error');
-            }
-        }
-    });
-
-    $(document).on('change', '#toc', function() {
-        if( $('#toc').is(':checked') ){
-            $('#toc').closest('p').removeClass('error');
-        }
-    });
-
-    $('#registerBtn').on('click', function (e) {
-        var hasErrors = false;
-
-        $('#registerForm input:not(#toc):visible, #registerForm select:visible').each(function(key, value) {
-            var id = $(this).attr('id');
-            var val = $(this).val();
-
-            if( id == "password" && val.length < 6 ){
-                $(this).addClass('error');
-                hasErrors = true;
-            } else if( val == "" ){
-                $(this).addClass('error');
-                hasErrors = true;
-            }
-        });
-
-        if( !validateEmail($('#reg-email').val()) ){
-            hasErrors = true;
-        }
-
-        if( !$('#toc').is(':checked') ){
-            $('#toc').closest('p').addClass('error');
-            hasErrors = true;
-        }
-
-        if( hasErrors ){
-            return false;
-        }
-
-        var formValues = getFormData($('#registerForm'));
-
-        $$.ajax({
-            api_key: api_key_gccollab,
-            method: 'POST',
-            url: GCT.GCcollabURL,
-            data: { method:"register.user", email: formValues.email, userdata: JSON.stringify(formValues) },
-            timeout: 12000,
-            success: function (data) {
-                data = JSON.parse(data);
-                if (data.status == -1) {
-                    if (data.message.indexOf("ELGG") > -1) {
-                        mainView.router.loadPage({ url: 'sign-in.html?register=true&email=' + formValues.email });
-                    } else {
-                        var message = data.message;
-                        var alert = "";
-                        if( $.isArray(message) ){
-                            $.each(message, function( index, value ) {
-                                alert += $(value).text();
-                                if(index > 0 && index < message.length){
-                                    alert += "<br>";
-                                }
-                            });
-                        }
-                        myApp.alert(alert, 'Error');
-                    }
-                } else {
-                    mainView.router.loadPage({ url: 'sign-in.html?register=true&email=' + formValues.email });
-                }
-            }
-        });
-    });
-
-    $("#user_type").change(function() {
-        var type = $(this).val();
-        $('.occupation-choices').hide();
-
-        if (type == 'academic' || type == 'student') {
-            if( type == 'academic' ){
-                if( $("#institution").val() == 'highschool' ){ $("#institution").prop('selectedIndex', 0); }
-                $("#institution option[value='highschool']").hide();
-            } else {
-                $("#institution option[value='highschool']").show();
-            }
-            $('#institution-wrapper').fadeIn();
-            var institution = $('#institution').val();
-            $('#' + institution + '-wrapper').fadeIn();
-        } else if (type == 'provincial') {
-            $('#provincial-wrapper').fadeIn();
-            var province = $('#provincial').val();
-            province = province.replace(/\s+/g, '-').toLowerCase();
-            $('#' + province + '-wrapper').fadeIn();
-        } else {
-            $('#' + type + '-wrapper').fadeIn();
-        }
-    });
-
-    $("#institution").change(function() {
-        var type = $(this).val();
-        $('.student-choices').hide();
-        $('#' + type + '-wrapper').fadeIn();
-    });
-
-    $("#provincial").change(function() {
-        var province = $(this).val();
-        province = province.replace(/\s+/g, '-').toLowerCase();
-        $('.provincial-choices').hide();
-        $('#' + province + '-wrapper').fadeIn();
-    });
-
-    $('.terms').on('click', function (e) {
-        e.preventDefault();
-        $('.popup-generic .popup-title').html(GCTLang.Trans('terms-and-conditions'));
-        $('.popup-generic .popup-content').html($('#terms-content-' + GCTLang.Lang()).html());
-        myApp.popup('.popup-generic');
     });
 });
 
