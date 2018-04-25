@@ -175,6 +175,7 @@ function ShowMessage(obj) {
         if( thread ){
             content += '<div class="toolbar messagebar"><div class="toolbar-inner"><textarea id="reply-message" placeholder="' + GCTLang.Trans('message') + '"></textarea><a href="#" class="link send-message" data-guid="' + guid + '" onclick="GCTUser.ReplyMessage(this);">' + GCTLang.Trans('send') + '</a></div></div>';
         }
+        content = GCT.SetLinks(content);
 
         // var messageHTML = '<li>'
         //     + '<div class="item-link item-content">';

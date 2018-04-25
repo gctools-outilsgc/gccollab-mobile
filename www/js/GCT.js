@@ -2908,6 +2908,7 @@ GCT = {
         } else if (obj.href.indexOf("/bookmarks/view/") > -1) {
             console.log('loading bookmark...');
             lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            lnk = lnk.substring(0,lnk.indexOf("/"));
             console.log(lnk);
             GCTUser.ViewPost(lnk, "gccollab_bookmark");
 
@@ -2934,7 +2935,7 @@ GCT = {
     SetLinks: function (html) {
         var con = $.parseHTML(html);
         
-        $(con).find("a").each(function (i, a) {
+        $(con).find("a").each(function (i, a) {          
             h = a.href;
             o = a.onclick;
             if (h.indexOf('javascript:') != 0 && h.indexOf("#") != 0 && typeof o != "function") {
