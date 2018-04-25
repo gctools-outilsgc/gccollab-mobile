@@ -1187,3 +1187,9 @@ overflow:visible;
 #tab1, #tab2, #tab3{
     padding-top:60px;
 }
+
+
+.messages-auto-layout a {
+    color: #46246A;
+    text-decoration: underline;
+}
