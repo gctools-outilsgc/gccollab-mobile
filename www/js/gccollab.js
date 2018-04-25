@@ -1038,7 +1038,7 @@ myApp.onPageInit('home', function (page) {
 
 
     GCTUser.GetNewsfeed(limit, home.newsfeed.offset, homeNewsfeed, errorConsole);
-    var focusTitle = document.getElementById('home');
+    var focusTitle = document.getElementById('page-GCcollab');
     if (focusTitle) { focusTitle.focus(); }
     $$('#more-' + home.newsfeed.id).on('click', function (e) {
         $('#focus-' + home.newsfeed.id).remove();

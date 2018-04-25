@@ -406,7 +406,8 @@ GCTLang = {
         return content;
     },
     txtGlobalNav: function (title) {
-        var content = '<div class="left sliding"><a href="#" data-panel="left" class="open-panel link icon-only" aria-label="Open Navigation Menu"><i class="icon icon-bars"></i></a></div>' +
+        var content = '<div class="center" id="page-' + GCTLang.Trans(title) + '" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0" >' + GCTLang.Trans("page") + GCTLang.Trans(title) + '</div>' +
+            '<div class="left sliding"><a href="#" data-panel="left" class="open-panel link icon-only" aria-label="Open Navigation Menu"><i class="icon icon-bars"></i></a></div>' +
             '<div class="center" id="' + title +'" tabindex="0">' + GCTLang.Trans(title) + '</div>' +
             '<div class="right sliding"><a href="#" data-panel="right" class="open-panel link icon-only" aria-label="Open Notification Panel"><i class="fa fa-bell badge-wrapper"></i></a></div>';
         return content;

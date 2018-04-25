@@ -282,6 +282,7 @@
     "more-options-opened": "More Options Menu Opened.",
     "more-tab-menu-opened": "More Tabs List",
     "main-menu": "Main Menu",
+    "page": "Page ",
    
     "step1":"Step 1",
     "step2":"Step 2",
@@ -661,6 +662,7 @@ French = {
     "more-options-opened": "Plus d'options menu ouvert.",
     "more-tab-menu-opened": "Plus de liste d'onglets",
     "main-menu": "Menu Principal",
+    "page": "Page ",
     
     "step1":"Étape 1",
     "step2":"Étape 2",
