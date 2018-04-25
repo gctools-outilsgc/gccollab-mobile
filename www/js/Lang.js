@@ -281,6 +281,11 @@
     "content-loaded": "New content appended to page.",
     "more-options-opened": "More Options Menu Opened.",
     "more-tab-menu-opened": "More Tabs List",
+    "main-menu": "Main Menu",
+    "page": "Page ",
+    "navigation-bar": "Navigation Bar",
+    "tab-bar": "Tab Bar",
+    "toolbar": "Toolbar",
    
     "step1":"Step 1",
     "step2":"Step 2",
@@ -659,6 +664,11 @@ French = {
     "content-loaded": "Nouveau contenu ajouté à la page.",
     "more-options-opened": "Plus d'options menu ouvert.",
     "more-tab-menu-opened": "Plus de liste d'onglets",
+    "main-menu": "Menu Principal",
+    "page": "Page ",
+    "navigation-bar": "barre de navigation",
+    "tab-bar": "barre d'onglets",
+    "toolbar": "barre d'outils",
     
     "step1":"Étape 1",
     "step2":"Étape 2",
