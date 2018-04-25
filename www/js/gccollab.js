@@ -958,8 +958,6 @@ myApp.onPageInit('sign-in-old', function (page) {
 myApp.onPageInit('home', function (page) {
     $$('#home-navbar-inner').html(GCTLang.txtGlobalNav('home'));
     var limit = 12;
-    var offset_blogs = 0;
-    var loaded_blog = false;
 
     var home = {}; //variables for this page's content
     home.newsfeed = listObject("home-newsfeed");
@@ -1038,8 +1036,12 @@ myApp.onPageInit('home', function (page) {
 
 
     GCTUser.GetNewsfeed(limit, home.newsfeed.offset, homeNewsfeed, errorConsole);
-    var focusTitle = document.getElementById('page-GCcollab');
+    var focusTitle = document.getElementById('page-home');
     if (focusTitle) { focusTitle.focus(); }
+    $$('#tab-' + home.newsfeed.id).on('show', function (e) {
+        var focusTitle = document.getElementById('tabheader-home-newsfeed');
+        if (focusTitle) { focusTitle.focus(); }
+    });
     $$('#more-' + home.newsfeed.id).on('click', function (e) {
         $('#focus-' + home.newsfeed.id).remove();
         GCTUser.GetNewsfeed(limit, home.newsfeed.offset, homeNewsfeed, errorConsole);
@@ -1047,9 +1049,10 @@ myApp.onPageInit('home', function (page) {
 
     $$('#tab-' + home.wire.id).on('show', function (e) {
         if (!home.wire.loaded) {
-            home.wire.loaded = true;
             GCTUser.GetWires(limit, home.wire.offset, '', homeWires, errorConsole);
         }
+        var focusTitle = document.getElementById('tabheader-home-wires');
+        if (focusTitle) { focusTitle.focus(); }
     });
     $$('#more-' + home.wire.id).on('click', function (e) {
         $('#focus-' + home.wire.id).remove();
@@ -1057,10 +1060,11 @@ myApp.onPageInit('home', function (page) {
     });
 
     $$('#tab-' + home.blogs.id).on('show', function (e) {
-        if (!loaded_blog) {
-            loaded_blog = true;
+        if (!home.blogs.loaded) {
             GCTUser.GetBlogs(limit, home.blogs.offset, "", homeBlogs, errorConsole);
         }
+        var focusTitle = document.getElementById('tabheader-home-blogs');
+        if (focusTitle) { focusTitle.focus(); }
     });
     $$('#more-' + home.blogs.id).on('click', function (e) {
         $('#focus-' + home.blogs.id).remove();
