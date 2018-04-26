@@ -163,9 +163,9 @@ form .error {
 .home-section { min-height: 290px; }
 .theme-gccollab .time { color: #46246A; }
 .card-header { background: #46246A; color: #fff; }
-.card-header.plain { background: #fff; color: #46246A; }
+.card-header.plain { background: #fff; color: #46246A; text-shadow: none !important; }
 .card-header .time { color: #fff; }
-.card-header.plain .time { color: #46246A; }
+.card-header.plain .time { color: #46246A; text-shadow: none !important; }
 .card-content blockquote { margin-top: 10px; border-left: 2px solid #46246A; }
 .card-content-inner { color: #000; }
 .card-footer a.link, .card-header a.link, .card-footer { color: #46246A; }
@@ -507,6 +507,12 @@ i.icon-bars.theme-gccollab {
 .theme-gccollab .subnavbar {
     background-color: #e8e8e8;
     color: #46246A;
+}
+
+.theme-gccollab .subnavbar .button.active:not(.button-fill),
+.theme-gccollab.subnavbar .button.active:not(.button-fill) {
+    background-color: #555;
+    color: #fff;
 }
 
 .theme-gccollab .subnavbar {
