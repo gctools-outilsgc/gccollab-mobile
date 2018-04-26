@@ -513,12 +513,11 @@ GCTUser = {
     LoginOpenID: function (email, sub, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "login.sso", email: email, sub: sub, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -529,12 +528,11 @@ GCTUser = {
     Login: function (user, password, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "login.user", user: user, password: password, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -591,12 +589,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method:"get.user", user: GCTUser.Email(), api_key: api_key_gccollab, profileemail: profile, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -610,12 +607,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.useractivity", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang(), api_version: apiVersion },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -629,12 +625,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.usergroups", user: GCTUser.Email(), profileemail: profile, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -715,12 +710,11 @@ GCTUser = {
             $$.ajax({
                 api_key: api_key_gccollab,
                 method: 'POST',
-                dataType: 'text',
+                dataType: 'json',
                 url: GCT.GCcollabURL,
                 data: { method: "send.message", user: GCTUser.Email(), touser: guid, subject: subject, message: value, api_key: api_key_gccollab, lang: GCTLang.Lang() },
                 timeout: 12000,
                 success: function (data) {
-                    data = JSON.parse(data);
                     console.log(data);
                     myApp.alert(data.result);
                 },
@@ -738,12 +732,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "reply.message", user: GCTUser.Email(), message: message, guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 console.log(data);
                 myApp.alert(data.result);
             },
@@ -755,12 +748,11 @@ GCTUser = {
     ReadMessage: function(guid, successCallback, errorCallback){
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "read.message", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -781,12 +773,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: 'post.discussion', user: GCTUser.Email(), title: JSON.stringify(title), message: JSON.stringify(message), container_guid: container, topic_guid: topic, access: access, open: status, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -802,12 +793,11 @@ GCTUser = {
         if (!post_guid) { return "cannot edit nothing"; } //force back? with message 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.discussionedit", user: GCTUser.Email(), guid: post_guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -841,12 +831,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "save.blog", user: GCTUser.Email(), title: JSON.stringify(title), excerpt: JSON.stringify(excerpt), body: JSON.stringify(body), container_guid: container, blog_guid: blog_guid, comments: comments, access: access, status:status, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -862,12 +851,11 @@ GCTUser = {
         if (!post_guid) { return "cannot edit nothing"; } //force back? with message 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.blogedit", user: GCTUser.Email(), guid: post_guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -882,12 +870,11 @@ GCTUser = {
     PostWire: function (message, imageURI, successCallback, errorCallback) { 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "post.wire", user: GCTUser.Email(), message: message, image: imageURI, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -913,12 +900,11 @@ GCTUser = {
     ReplyWire: function (guid, message, successCallback, errorCallback) { 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "reply.wire", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -960,12 +946,11 @@ GCTUser = {
     EditWire: function (guid, message, successCallback, errorCallback) { 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "edit.wire", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -979,12 +964,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "like.item", user: encodeURI(GCTUser.Email()), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 if (typeof data.result == "undefined") {
                     if ($(obj).hasClass('liked')) {
                         $(obj).removeClass('liked');
@@ -1020,12 +1004,11 @@ GCTUser = {
                 $$.ajax({
                     api_key: api_key_gccollab,
                     method: 'POST',
-                    dataType: 'text',
+                    dataType: 'json',
                     url: GCT.GCcollabURL,
                     data: { method: "report.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
                     timeout: 12000,
                     success: function (data) {
-                        data = JSON.parse(data);
                         myApp.alert(GCTLang.Trans("reported"));
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -1036,35 +1019,29 @@ GCTUser = {
             function (value) { }
         );
     },
-    
-    ShareOnWire: function (obj) {
-        var guid = $(obj).data("guid");
-        var type = $(obj).data("type");
-        $(".popover").remove();
-
-        myApp.prompt('Share this post with others:', 'Share', function (value) {
-
-            GCTUser.ShareWire(guid, value, function(data){
-                console.log(data);
-                myApp.alert(data.result);
-                myApp.pullToRefreshTrigger(".pull-to-refresh-content");
-            }, function(jqXHR, textStatus, errorThrown){
-                console.log(jqXHR, textStatus, errorThrown);
-            });
+    GetEntityURL: function (guid, successCallback, errorCallback) {
+        $$.ajax({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "entity.url", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
         });
-
-            myApp.pullToRefreshTrigger(".pull-to-refresh-content");
     },
-
     ShareWire: function (guid, message, successCallback, errorCallback) { 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "share.post", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 console.log(data);
                 successCallback(data);
             },
@@ -1073,7 +1050,6 @@ GCTUser = {
             }
         });
     },
-
     Delete: function (obj) {
         var guid = $(obj).data("guid");
         $(".popover").remove();
@@ -1083,12 +1059,11 @@ GCTUser = {
                 $$.ajax({
                     api_key: api_key_gccollab,
                     method: 'POST',
-                    dataType: 'text',
+                    dataType: 'json',
                     url: GCT.GCcollabURL,
                     data: { method: "delete.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
                     timeout: 12000,
                     success: function (data) {
-                        data = JSON.parse(data);
                         myApp.alert(GCTLang.Trans("deleted"));
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -1112,9 +1087,9 @@ GCTUser = {
                     + '<ul>'
                         + '<span id="focus-new-popover" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans("more-options-opened") + '</span>';
                         if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post') {
-                            popoverHTML += '<li><a href="#" class="item-link list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
+                            popoverHTML += '<li><a href="#" class="item-link close-popover list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
                         }
-                        popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
+                        popoverHTML += '<li><a href="#" class="item-link close-popover list-button" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
                         if( mine ){
                             if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
                             if (type == "gccollab_discussion_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditDiscussionPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
@@ -1139,12 +1114,11 @@ GCTUser = {
                 $$.ajax({
                     api_key: api_key_gccollab,
                     method: 'POST',
-                    dataType: 'text',
+                    dataType: 'json',
                     url: GCT.GCcollabURL,
                     data: { method: "block.user", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
                     timeout: 12000,
                     success: function (data) {
-                        data = JSON.parse(data);
                         console.log("blocked");
                         Cookies.set("blocked", guid);
                         myApp.alert(GCTLang.Trans("blocked"));
@@ -1161,12 +1135,11 @@ GCTUser = {
     GetBlog: function (guid, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.blogpost", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1180,12 +1153,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.blogposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1199,12 +1171,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.blogpostsbyowner", user: GCTUser.Email(), limit: limit, offset: offset, target: target, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1217,12 +1188,11 @@ GCTUser = {
         offset = offset || 0;
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.blogpostsbycolleague", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1234,12 +1204,11 @@ GCTUser = {
     GetDiscussion: function (guid, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.discussion", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1254,12 +1223,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.discussions", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1270,12 +1238,11 @@ GCTUser = {
     GetDoc: function (guid, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.doc", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1289,12 +1256,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.docs", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1305,12 +1271,11 @@ GCTUser = {
     GetEvent: function (guid, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.event", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1326,12 +1291,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.events", user: GCTUser.Email(), from: from, to: to, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1342,12 +1306,11 @@ GCTUser = {
     GetGroup: function (guid, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.group", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1359,12 +1322,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.groupactivity", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang(), api_version: apiVersion },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1375,12 +1337,11 @@ GCTUser = {
     GetGroupBlogs: function (guid, limit, offset, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.blogpostsbycontainer", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1391,12 +1352,11 @@ GCTUser = {
     GetGroupDiscussions: function (guid, limit, offset, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.groupdiscussions", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1407,12 +1367,11 @@ GCTUser = {
     GetGroupDocs: function (guid, limit, offset, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.groupdocs", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1423,12 +1382,11 @@ GCTUser = {
     GetGroupEvents: function (guid, limit, offset, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.groupevents", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1439,12 +1397,11 @@ GCTUser = {
     GetGroupFiles: function (guid, limit, offset, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.groupfiles", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1455,12 +1412,11 @@ GCTUser = {
     GetGroupMembers: function (guid, limit, offset, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "group.members", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1473,13 +1429,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "group.join", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
-                myApp.alert(data.result);
                 $("#join-group").hide();
                 $("#leave-group").show();
             },
@@ -1493,13 +1447,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "group.leave", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
-                myApp.alert(data.result);
                 $("#leave-group").hide();
                 $("#join-group").show();
             },
@@ -1514,13 +1466,12 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "group.invite", user: GCTUser.Email(), profileemail: user, guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
-                myApp.alert(data.result);
+                console.log(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -1530,13 +1481,12 @@ GCTUser = {
     InviteMembersToGroup: function(users, group){
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "group.invitemembers", user: GCTUser.Email(), profileemail: users, guid: group, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
-                myApp.alert(data.result);
+                console.log(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -1548,13 +1498,12 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "group.decline", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
-                myApp.alert(data.result);
+                console.log(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -1567,12 +1516,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.groups", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1587,12 +1535,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.groups", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1606,12 +1553,11 @@ GCTUser = {
         offset = offset || 0;
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.commentsall", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1622,12 +1568,11 @@ GCTUser = {
     SubmitComment: function (guid, message, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "submit.comment", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1639,12 +1584,11 @@ GCTUser = {
     GetBookmark: function (guid, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.bookmark", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1658,12 +1602,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.bookmarks", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1679,12 +1622,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.bookmarkscolleague", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1698,12 +1640,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.bookmarksbyuser", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang(), target: target },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1718,12 +1659,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.members", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1740,12 +1680,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.memberscolleague", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1759,12 +1698,11 @@ GCTUser = {
         
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.message", user: GCTUser.Email(), guid: guid, thread: thread, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1778,12 +1716,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.messages", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1797,12 +1734,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.newsfeed", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1813,12 +1749,11 @@ GCTUser = {
     GetOpportunity: function (guid, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.opportunity", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1832,12 +1767,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.opportunities", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1850,12 +1784,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.wirepost", user: GCTUser.Email(), guid: guid, thread: thread, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1869,12 +1802,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.wireposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1888,12 +1820,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.wirepostsbycolleagues", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1910,12 +1841,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.wirepostsbyuser", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1929,12 +1859,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.sentmessages", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1948,12 +1877,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.notifications", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1967,12 +1895,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.colleaguerequests", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1985,13 +1912,12 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "add.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
-                myApp.alert(data.result);
+                console.log(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -2003,13 +1929,12 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "remove.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
-                myApp.alert(data.result);
+                console.log(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -2021,13 +1946,12 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "approve.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
-                myApp.alert(data.result);
+                console.log(data);
                 ShowColleagueRequests();
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -2040,13 +1964,12 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "decline.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
-                myApp.alert(data.result);
+                console.log(data);
                 ShowColleagueRequests();
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -2059,13 +1982,12 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "revoke.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
-                myApp.alert(data.result);
+                console.log(data);
                 ShowColleagueRequests();
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -2076,12 +1998,11 @@ GCTUser = {
     GetLikes: function (guid, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "like.count", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -2095,13 +2016,11 @@ GCTUser = {
 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "like.users", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
-                
                 var likeData = data.result;
 
                 var content = "";
@@ -2166,12 +2085,11 @@ GCTUser = {
     ApplyOpt: function (guid, message, successCallback, errorCallback) { 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "apply.post", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 console.log(data);
                 successCallback(data);
             },
@@ -2270,12 +2188,11 @@ GCTUser = {
     WithdrawOpt: function (guid, message, successCallback, errorCallback) { 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "withdraw.post", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 console.log(data);
                 successCallback(data);
             },
@@ -2307,12 +2224,11 @@ GCTUser = {
     AcceptOpt: function (guid, message, successCallback, errorCallback) { 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "accept.post", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 console.log(data);
                 successCallback(data);
             },
@@ -2330,12 +2246,11 @@ GCTUser = {
     PostWire: function (message, imageURI, successCallback, errorCallback) { 
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "post.wire", user: GCTUser.Email(), message: message, image: imageURI, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -2343,16 +2258,14 @@ GCTUser = {
             }
         });
     },
-
     CreateOpportinities1: function (formData, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
-            dataType: 'text',
+            dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "create.opportinities1", user: GCTUser.Email(), formData: formData, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                data = JSON.parse(data);
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -2361,41 +2274,35 @@ GCTUser = {
         });
     },
     CreateOpportinities2: function (formData, successCallback, errorCallback) {
-          $$.ajax({
-              method: 'POST',
-              dataType: 'text',
-              url: GCT.GCcollabURL,
-              data: { method: "create.opportinities2", user: GCTUser.Email(),formData:formData, api_key: api_key_gccollab, lang: GCTLang.Lang() },
-              timeout: 12000,
-              success: function (data) {
-                  console.log('data'+ data);
-                  data = JSON.parse(data);
-                  successCallback(data);
-              },
-              error: function (jqXHR, textStatus, errorThrown) {
-                  errorCallback(jqXHR, textStatus, errorThrown);
-              }
-          });
-      },
-      CreateOpportinities3: function (formData, successCallback, errorCallback) {
-          $$.ajax({
-              method: 'POST',
-              dataType: 'text',
-              url: GCT.GCcollabURL,
-              data: { method: "create.opportinities3", user: GCTUser.Email(),  formData:formData, api_key: api_key_gccollab, lang: GCTLang.Lang() },
-              timeout: 12000,
-              success: function (data) {
-                  
-                console.log('data is '+data);
-
-                  data = JSON.parse(data);
-                  successCallback(data);
-              },
-              error: function (jqXHR, textStatus, errorThrown) {
-                  errorCallback(jqXHR, textStatus, errorThrown);
-              }
-          });
-      },
+        $$.ajax({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "create.opportinities2", user: GCTUser.Email(),formData:formData, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    CreateOpportinities3: function (formData, successCallback, errorCallback) {
+        $$.ajax({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "create.opportinities3", user: GCTUser.Email(),  formData:formData, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
 }
 
 
