@@ -2876,8 +2876,18 @@ myApp.onPageInit('profile', function (page) {
 
 });
 $$(document).on('page:afteranimation', '.page[data-page="profile"]', function (e) {
+    var focusOld = document.getElementById('page-profile-old');
+    if (focusOld) {
+        var focusID = document.getElementById('page-profile');
+        if (focusID) { $(focusID).attr('id', 'page-profile-temp'); }
+        $(focusOld).attr('id', 'page-profile');
+        var focusTemp = document.getElementById('page-profile-temp');
+        if (focusTemp) { $(focusTemp).attr('id', 'page-profile-old'); }
+    }
+    var focusCurrent = document.getElementById('page-profile-current');
+    if (focusCurrent) { $(focusCurrent).attr('id', 'page-profile-old'); }
     var focusNav = document.getElementById('page-profile');
-    if (focusNav) { focusNav.focus(); }
+    if (focusNav) { focusNav.focus(); $(focusNav).attr('id', 'page-profile-current');}
 });
 
 
