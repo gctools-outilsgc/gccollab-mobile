@@ -170,7 +170,7 @@
     "new-wire-post": "New Wire Post",
     "reply-wire-post": "Reply to Wire Post",
     "submit-post": "Submit Wire",
-    "wire-image-warning": "Camera functionality not optimized. May causes crashes.",
+    "wire-image-warning": "Camera functionality not optimized. May cause crashes.",
     "new-picture": "New Picture",
     "photo-gallery": "Photo Gallery",
     "attach-image": "Attach Image: ",

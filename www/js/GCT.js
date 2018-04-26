@@ -1128,8 +1128,8 @@ GCTUser = {
         + '</div>';
 
         myApp.popover(popoverHTML, obj);
-        var focusNow = document.getElementById('#focus-new-popover');
-        if (focusNow) { focusNow.focus(); }
+        var focusPopover = document.getElementById('#focus-new-popover');
+        if (focusPopover) { focusPopover.focus(); }
     },
     BlockUser: function (obj) {
         var guid = $(obj).data("guid");
