@@ -547,20 +547,26 @@ myApp.onPageInit('*', function (page) {
         }
 
         if (typeof window.plugins.socialsharing !== 'undefined' && message != "") {
-            window.plugins.socialsharing.shareWithOptions({
-                message: message,
-                subject: subject,
-                files: files,
-                url: url,
-                chooserTitle: chooserTitle
-            }, function(success) {
-                console.log("Share completed? " + success.completed);
-                console.log("Shared to app: " + success.app);
-            }, function(failure) {
-                console.log("Sharing failed with message: " + failure);
+            GCTUser.GetEntityURL(guid, function(data){
+                url = data.result;
+                
+                window.plugins.socialsharing.shareWithOptions({
+                    message: message,
+                    subject: subject,
+                    files: files,
+                    url: url,
+                    chooserTitle: chooserTitle
+                }, function(success) {
+                    console.log("Share completed? " + success.completed);
+                    console.log("Shared to app: " + success.app);
+                }, function(failure) {
+                    console.log("Sharing failed with message: " + failure);
+                });
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
             });
         } else {
-            alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably Brandon\'s fault');
+            alert('Sorry, social sharing cannot be completed.');
         }
     });
 });
