@@ -833,6 +833,10 @@ myApp.onPageInit('group', function (page) {
         GCTUser.GetGroupBlogs(guid, limit, group.blogs.offset, groupBlogs, errorConsole);
     });
 });
+$$(document).on('page:afteranimation', '.page[data-page="group"]', function (e) {
+    var focusNav = document.getElementById('page-group');
+    if (focusNav) { focusNav.focus(); }
+});
 
 myApp.onPageInit('sign-in', function (page) {
     var clientInfo = {
