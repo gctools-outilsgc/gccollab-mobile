@@ -1571,18 +1571,6 @@ myApp.onPageInit('doc', function (page) {
     $("#docForm").submit(); 
 });
 
-myApp.onPageInit('external-pages', function (page) {
-    $$('#external-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
-    //### log them in at app startup in background and do a check for if logged in later on so we don't do this every page hit
-    $("#user").val(GCTUser.Email());
-    $("#api_key").val(api_key_gccollab);
-    $('#url').val(page.query.page);
-    $("#formGCcollabLogin").submit();
-   
-    //$('#iFrameChat').height($(window).height() - $('div:last').offset().top);
-    //$('#divChat').height($(window).height() - $('div:last').offset().top);
-});
-
 myApp.onPageInit('members', function (page) {
     $$('#members-navbar-inner').html(GCTLang.txtGlobalNav('members'));
     var limit = 20;
@@ -3364,8 +3352,6 @@ myApp.onPageInit('entity', function (page) {
                 $(content).hide().appendTo('#entity-main').fadeIn(500);
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
-                var eve_link = "https://gccollab.ca/event_calendar/view/" + guid;
-                mainView.router.loadPage('external-pages.html?page=' + eve_link);
             });
             break;
 

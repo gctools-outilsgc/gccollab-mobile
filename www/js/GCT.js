@@ -2843,7 +2843,7 @@ GCT = {
 
     /**  FireLink : Handles URLs/Pages
      Each 'if' handles different pages that have been setup. 
-     Last 'else if' handles any unimplemented gccollab pages, to be handled by 'external-pages.html'.
+     Last 'else if' handles any unimplemented gccollab pages, to be handled by InAppBrowser.
 
      New Pages: Add a new 'else if' before the last one to handle those urls.
     **/
@@ -2853,6 +2853,7 @@ GCT = {
             console.log('loading blog page...');
             lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
             lnk = lnk.substr(0, lnk.indexOf("/"));
+            console.log(lnk);
             GCTUser.ViewPost(lnk, "gccollab_blog_post");
 
         } else if (obj.href.indexOf("/thewire/view/") > -1) {
@@ -2880,13 +2881,18 @@ GCT = {
             GCTUser.ViewPost(lnk, "gccollab_group");
 
         } else if (obj.href.indexOf("/comment/view/") > -1) {
-            console.log('loading comment...');
-            var passtype = '';
-            switch (obj.id) { //use to check type and send correct type to ViewPost using passtype
-                default: mainView.router.loadPage('external-pages.html?page=' + obj.href); //unhandled case goes to external
-            }
+            console.log('loading comment... ' + obj);
             lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
-            GCTUser.ViewPost(lnk, passtype);
+
+            var the_guids = lnk.split('/');
+            var the_container_guid = the_guids[1];
+            var comment_guid = the_guids[0];
+
+            // TODO: Need to check what entity type the comment was made on, then route to the proper entity type
+            // GCTUser.ViewPost(the_container_guid, "???");
+            
+            console.log(the_container_guid, comment_guid);
+            window.open(obj.href, '_blank');
 
         } else if (obj.href.indexOf("/missions/view/") > -1) {
             console.log('loading mission...');
@@ -2915,7 +2921,7 @@ GCT = {
 
         } else if (obj.href.indexOf("https://gccollab.ca/") > -1) {
             console.log('loading collab page...');
-            mainView.router.loadPage('external-pages.html?page=' + obj.href);
+            window.open(obj.href, '_blank');
 
         } else {
             // This shouldn't happen
@@ -2927,7 +2933,7 @@ GCT = {
     SiteLink: function (obj) {
         if (obj.href.indexOf("https://gccollab.ca/") > -1) {
             console.log('loading collab page...');
-            mainView.router.loadPage('external-pages.html?page=' + obj.href);
+            window.open(obj.href, '_blank');
         } else {
             console.log('non-gccollab link through SiteLink function. (Error)');
             window.open(obj.href, '_system');
