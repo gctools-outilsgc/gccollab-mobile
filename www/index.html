@@ -47,7 +47,7 @@
 
     <div class="panel panel-left panel-cover sidebar">
       <div class="view">
-        <div class=" ">
+        <div class="page">
           <div data-page="panel-left" class="sidemenu leftmenusmall gradient">
               <a href="#" class="link close-panel" aria-label="Close Panel" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0"><i class="icon icon-close"></i></a>
               <div class="center" id="menu-panel" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0" data-translate="main-menu">Main Menu</div>
@@ -61,7 +61,7 @@
               </div>
             </div>
             <div class="page-content">
-              <div class="list-block accordion-list">
+              <div class="list accordion-list">
                   <ul class="menu">
                       <li>
                           <a href="home.html" class="item-link close-panel item-content">
@@ -216,12 +216,12 @@
         <a class="button button-fill col-100 close-panel" data-translate="close">Close</a>
       </div>
       <div class="view">
-        <div class=" ">
+        <div class="page">
           <div data-page="panel-right" class="sidemenu leftmenusmall gradient">
             <div class="navbar">
               <div class="navbar-inner">
                 <div class="left"><a href="#" class="link close-panel"><i class="icon icon-close"></i></a></div>
-                <div class="center" id="message-panel" tabindex="0" data-translate="message-centre">Message Centre</div>
+                <div class="title" id="message-panel" tabindex="0" data-translate="message-centre">Message Centre</div>
                 <div class="right"><a href="#" id="colleague-requests" class="link icon-only"><i class="fa fa-users badge-wrapper"></i></a></div>
               </div>
             </div>
@@ -264,27 +264,26 @@
       </div>
     </div>
 
-    <div class="views pageview">
-      <div class="view view-main">
+    
+    <div class="view view-main">
         <div class="pages">
-          <div data-page="index" class="page">
+            <div data-name="index" class="page">
             <div class="page-content landingpage">
-              <div class="logo main col12"><img src="img/icon.png" alt=""></div>
-              <div class="buttonbar row no-gutter">
+                <div class="logo main col12"><img src="img/icon.png" alt=""></div>
+                <div class="buttonbar row no-gutter">
                 <a id="aEN" href="sign-in.html" class="button button-fill col-50" style="display:none;" onclick="GCTLang.SetAsEnglish();">English</a>
                 <a id="aFR" href="sign-in.html" class="button color2 col-50" style="display:none;" onclick="GCTLang.SetAsFrench();">Français</a>
-              </div>
+                </div>
             </div>
-          </div>
+            </div>
         </div>
-      </div>
     </div>
-
+    
     <!-- Context Popover -->
     <div class="popover popover-links">
       <div class="popover-angle"></div>
       <div class="popover-inner">
-        <div class="list-block">
+        <div class="list">
           <ul>
             <li><a id="gccollab-context-option" class="list-button item-link close-popover" onclick="GCTUser.SetContextAsGCcollab();">GCcollab</a></li>
             <li><a id="gcconnex-context-option" class="list-button item-link close-popover" onclick="GCTUser.SetContextAsGCconnex();">GCconnex</a></li>
