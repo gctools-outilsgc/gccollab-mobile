@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="ca.tbs-sct.gccollab" version="1.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="ca.tbs-sct.gccollab" version="2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
 
     <name>GCcollab</name>
     <description>GCcollab Mobile Application</description>
@@ -81,9 +81,9 @@
     <access origin="*" />
     <allow-navigation href="*" />
 
-    <plugin name="cordova-plugin-whitelist"  />
-    <plugin name="cordova-plugin-console"  />
-    <plugin name="cordova-plugin-statusbar"  />
+    <plugin name="cordova-plugin-whitelist" />
+    <plugin name="cordova-plugin-console" />
+    <plugin name="cordova-plugin-statusbar" />
     <plugin name="cordova-plugin-inappbrowser" />
     <plugin name="cordova-plugin-x-socialsharing" />
     <plugin name="cordova-plugin-file-transfer" spec="~1.7.1" />

@@ -66,6 +66,15 @@ $$('.panel-right').on('open', function () {
     LoadMessageCentre();
 });
 
+$$('.panel-right').on('panel:opened', function () {
+    var focusTitle = document.getElementById('message-panel');
+    if (focusTitle) { focusTitle.focus(); }
+});
+$$('.panel-left').on('panel:opened', function () {
+    var focusTitle = document.getElementById('menu-panel');
+    if (focusTitle) { focusTitle.focus(); }
+});
+
 function isValidEmailAddress(emailAddress) {
     var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
     return pattern.test(emailAddress);
@@ -538,20 +547,26 @@ myApp.onPageInit('*', function (page) {
         }
 
         if (typeof window.plugins.socialsharing !== 'undefined' && message != "") {
-            window.plugins.socialsharing.shareWithOptions({
-                message: message,
-                subject: subject,
-                files: files,
-                url: url,
-                chooserTitle: chooserTitle
-            }, function(success) {
-                console.log("Share completed? " + success.completed);
-                console.log("Shared to app: " + success.app);
-            }, function(failure) {
-                console.log("Sharing failed with message: " + failure);
+            GCTUser.GetEntityURL(guid, function(data){
+                url = data.result;
+                
+                window.plugins.socialsharing.shareWithOptions({
+                    message: message,
+                    subject: subject,
+                    files: files,
+                    url: url,
+                    chooserTitle: chooserTitle
+                }, function(success) {
+                    console.log("Share completed? " + success.completed);
+                    console.log("Shared to app: " + success.app);
+                }, function(failure) {
+                    console.log("Sharing failed with message: " + failure);
+                });
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
             });
         } else {
-            alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably Brandon\'s fault');
+            alert('Sorry, social sharing cannot be completed.');
         }
     });
 });
@@ -690,14 +705,14 @@ myApp.onPageInit('group', function (page) {
         if (focusNow) { focusNow.focus(); }
     }
 
-    GCTUser.GetGroup(guid, function(data){
+    GCTUser.GetGroup(guid, function (data) {
         var group = data.result;
-       
+
         var tags = (group.tags) ? ($.isArray(group.tags) ? (group.tags).join(", ") : group.tags) : GCTLang.Trans('no-tags');
-        if( group.liked ){
+        if (group.liked) {
             $(".like").addClass('liked');
         }
-        if( group.member ){
+        if (group.member) {
             $("#leave-group").show();
         } else {
             $("#join-group").show();
@@ -735,8 +750,8 @@ myApp.onPageInit('group', function (page) {
             + '<div class="list-block">'
             + '<ul aria-labelledby="focus-tabs">';
         if (access) {
-            popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#tab-group-activity" class="button tab-link close-popover" data-translate="activity">'+ GCTLang.Trans("activity") +'</a></li>' : "";
-            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-group-discussions" class="button tab-link close-popover" data-translate="discussion">'+ GCTLang.Trans("discussion") +'</a></li>' : "";
+            popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#tab-group-activity" class="button tab-link close-popover" data-translate="activity">' + GCTLang.Trans("activity") + '</a></li>' : "";
+            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-group-discussions" class="button tab-link close-popover" data-translate="discussion">' + GCTLang.Trans("discussion") + '</a></li>' : "";
             popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#tab-group-bookmarks" class="button tab-link close-popover" data-translate="bookmarks">' + GCTLang.Trans("bookmarks") + '</a></li>' : "";
             popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#tab-group-blogs" class="button tab-link close-popover" data-translate="blogs">' + GCTLang.Trans("blogs") + '</a></li>' : "";
         } else {
@@ -763,7 +778,7 @@ myApp.onPageInit('group', function (page) {
             + '<ul>';
         if (access) {
             popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#" onclick="GCTUser.PostBlogPost(' + page.query.guid + ', ' + group_public + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostBlog") + '</span> </a></li>' : "";
-            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#" onclick="GCTUser.PostDiscussionPost(' + page.query.guid + ', '+ group_public + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostDiscussion") + '</span> </a></li>' : "";
+            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#" onclick="GCTUser.PostDiscussionPost(' + page.query.guid + ', ' + group_public + ');" class="list-button item-link close-popover"><i class="fa fa-pencil-square-o"></i>  <span>' + GCTLang.Trans("PostDiscussion") + '</span> </a></li>' : "";
         } else {
             popoverHTML += '<li><a href="#" class="item-link list-button">' + GCTLang.Trans("Private-Group") + '</a></li>';
         }
@@ -793,7 +808,7 @@ myApp.onPageInit('group', function (page) {
         $('#focus-' + group.bookmarks.id).remove();
         GCTUser.GetBookmarksByUser(limit, group.bookmarks.offset, guid, groupBookmarks, errorConsole);
     });
-    
+
     $$('#tab-' + group.members.id).on('show', function (e) {
         if (!group.members.loaded) {
             GCTUser.GetGroupMembers(guid, limit, group.members.offset, groupMembers, errorConsole);
@@ -823,6 +838,10 @@ myApp.onPageInit('group', function (page) {
         $('#focus-' + group.blogs.id).remove();
         GCTUser.GetGroupBlogs(guid, limit, group.blogs.offset, groupBlogs, errorConsole);
     });
+});
+$$(document).on('page:afteranimation', '.page[data-page="group"]', function (e) {
+    var focusNav = document.getElementById('page-group');
+    if (focusNav) { focusNav.focus(); }
 });
 
 myApp.onPageInit('sign-in', function (page) {
@@ -948,10 +967,8 @@ myApp.onPageInit('sign-in-old', function (page) {
 });
 
 myApp.onPageInit('home', function (page) {
-    $$('#home-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
+    $$('#home-navbar-inner').html(GCTLang.txtGlobalNav('home'));
     var limit = 12;
-    var offset_blogs = 0;
-    var loaded_blog = false;
 
     var home = {}; //variables for this page's content
     home.newsfeed = listObject("home-newsfeed");
@@ -1030,6 +1047,11 @@ myApp.onPageInit('home', function (page) {
 
 
     GCTUser.GetNewsfeed(limit, home.newsfeed.offset, homeNewsfeed, errorConsole);
+    
+    $$('#tab-' + home.newsfeed.id).on('show', function (e) {
+        var focusTitle = document.getElementById('tabheader-home-newsfeed');
+        if (focusTitle) { focusTitle.focus(); }
+    });
     $$('#more-' + home.newsfeed.id).on('click', function (e) {
         $('#focus-' + home.newsfeed.id).remove();
         GCTUser.GetNewsfeed(limit, home.newsfeed.offset, homeNewsfeed, errorConsole);
@@ -1037,9 +1059,10 @@ myApp.onPageInit('home', function (page) {
 
     $$('#tab-' + home.wire.id).on('show', function (e) {
         if (!home.wire.loaded) {
-            home.wire.loaded = true;
             GCTUser.GetWires(limit, home.wire.offset, '', homeWires, errorConsole);
         }
+        var focusTitle = document.getElementById('tabheader-home-wires');
+        if (focusTitle) { focusTitle.focus(); }
     });
     $$('#more-' + home.wire.id).on('click', function (e) {
         $('#focus-' + home.wire.id).remove();
@@ -1047,10 +1070,11 @@ myApp.onPageInit('home', function (page) {
     });
 
     $$('#tab-' + home.blogs.id).on('show', function (e) {
-        if (!loaded_blog) {
-            loaded_blog = true;
+        if (!home.blogs.loaded) {
             GCTUser.GetBlogs(limit, home.blogs.offset, "", homeBlogs, errorConsole);
         }
+        var focusTitle = document.getElementById('tabheader-home-blogs');
+        if (focusTitle) { focusTitle.focus(); }
     });
     $$('#more-' + home.blogs.id).on('click', function (e) {
         $('#focus-' + home.blogs.id).remove();
@@ -1064,237 +1088,9 @@ myApp.onPageInit('home', function (page) {
         myApp.pullToRefreshDone();
     });
 });
-
-myApp.onPageInit('homeOld', function (page) {
-    $$('#home-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
-
-    var limit = 15;
-    var offset = 0;
-
-    var wireSwiper = new Swiper('.swiper-container.swiper-wires', {
-        pagination: '.swiper-pagination',
-        effect: 'coverflow',
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: 'auto',
-        coverflow: {
-            rotate: 50,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            slideShadows: true
-        }
-    });
-
-    
-
-    GCTUser.GetWires(limit, offset, '', function(data){
-        var wires = data.result;
-        var imgs = [];
-        $('#GCcollabUserWireContent .loading').remove();
-
-        if(wires.length > 0){
-            $.each(wires, function (key, value) {
-                var content = GCTEach.Wire(value);
-                //### I think fades cause significant performance hits on devices when we have 30 concurrent ones like we do.
-                //### The below makes it so that it only fades the first, visible, post in the list.
-                if (key == 0) {
-                    $(content).hide().appendTo('#GCcollabUserWireContent').fadeIn(1000);
-                } else {
-                    $(content).appendTo('#GCcollabUserWireContent');
-                }
-            });
-        } else {
-            $(noContent).hide().appendTo('#GCcollabUserWireContent').fadeIn(1000);
-        }
-
-        if (!GCTLang.IsEnglish()) {
-            $("#GCcollabUserWireContent div.item-text").each(function (i, obj) {
-                //### TODO- check for different lang and only show translation button when diff
-                if ($(obj).html().indexOf("<block") == -1) {
-                    $(obj).html(TransIcon + $(obj).html());
-                }
-            });
-        }
-
-        wireSwiper.update();
-        
-    }, function(jqXHR, textStatus, errorThrown){
-        console.log(jqXHR, textStatus, errorThrown);
-    });
-
-    var newsfeedSwiper = new Swiper('.swiper-container.swiper-newsfeed', {
-        pagination: '.swiper-pagination',
-        effect: 'coverflow',
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: 'auto',
-        coverflow: {
-            rotate: 50,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            slideShadows: true
-        }
-    });
-
-    GCTUser.GetNewsfeed(limit, offset, function (data) {
-        var newsfeed = data.result;
-        $('#GCcollabUserNewsfeedContent .loading').remove();
-
-        if (newsfeed.length > 0) {
-            $.each(newsfeed, function (key, value) {
-                var content = GCTEach.Newsfeed(value);
-                
-                //### I think fades cause significant performance hits on devices when we have 30 concurrent ones like we do.
-                //### The below makes it so that it only fades the first, visible, post in the list.
-                if (key == 0) {
-                    $(content).hide().appendTo('#GCcollabUserNewsfeedContent').fadeIn(1000);
-                } else {
-                    $(content).appendTo('#GCcollabUserNewsfeedContent');
-                }
-            });
-        } else {
-            $(noContent).hide().appendTo('#GCcollabUserNewsfeedContent').fadeIn(1000);
-        }
-        
-
-        if (!GCTLang.IsEnglish()) {
-            $("#GCcollabUserNewsfeedContent div.item-text").each(function (i, obj) {
-                //### TODO- check for different lang and only show translation button when diff
-                if ($(obj).html().indexOf("<block") == -1) {
-                    $(obj).html(TransIcon + $(obj).html());
-                }
-            });
-        }
-
-        newsfeedSwiper.update();
-        
-    }, function (jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR, textStatus, errorThrown);
-    });
-
-    var blogSwiper = new Swiper('.swiper-container.swiper-blogs', {
-        pagination: '.swiper-pagination',
-        effect: 'coverflow',
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: 'auto',
-        coverflow: {
-            rotate: 50,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            slideShadows: true
-        }
-    });
-
-    GCTUser.GetBlogs(limit, offset, "", function(data){
-        var blogs = data.result;
-        $('#GCcollabUserBlogContent .loading').remove();
-
-        if(blogs.length > 0){
-            $.each(blogs, function (key, value) {
-                var content = GCTEach.Blog(value);
-                //### I think fades cause significant performance hits on devices when we have 30 concurrent ones like we do.
-                //### The below makes it so that it only fades the first, visible, post in the list.
-                if (key == 0) {
-                    $(content).hide().appendTo('#GCcollabUserBlogContent').fadeIn(1000);
-                } else {
-                    $(content).appendTo('#GCcollabUserBlogContent');
-                }
-            });
-        } else {
-            $(noContent).hide().appendTo('#GCcollabUserBlogContent').fadeIn(1000);
-        }
-
-        if (!GCTLang.IsEnglish()) {
-            $("#GCcollabUserBlogContent div.item-text").each(function (i, obj) {
-                //### TODO- check for different lang and only show translation button when diff
-                if ($(obj).html().indexOf("<block") == -1) {
-                    $(obj).html(TransIcon + $(obj).html());
-                }
-            });
-        }
-
-        blogSwiper.update();
-    }, function(jqXHR, textStatus, errorThrown){
-        console.log(jqXHR, textStatus, errorThrown);
-    });
-
-    var refreshHome = $$(page.container).find('.pull-to-refresh-content');
-    refreshHome.on('refresh', function (e) {
-        console.log("refresh");
-        $('#GCcollabUserWireContent').html('<span class="loading">' + GCTLang.Trans("loading") + '</span>');
-        GCTUser.GetWires(limit, offset, '', function(data){
-            var wires = data.result;
-            $('#GCcollabUserWireContent .loading').remove();
-
-            var content = "";
-            if(wires.length > 0){
-                $.each(wires, function (key, value) {
-                    content += GCTEach.Wire(value);
-                });
-
-                $(content).hide().appendTo('#GCcollabUserWireContent').fadeIn(1000);
-            } else {
-                $(noContent).hide().appendTo('#GCcollabUserWireContent').fadeIn(1000);
-            }
-
-            wireSwiper.update();
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        $('#GCcollabUserNewsfeedContent').html('<span class="loading">' + GCTLang.Trans("loading") + '</span>');
-        GCTUser.GetNewsfeed(limit, offset, function(data){
-            var newsfeed = data.result;
-            $('#GCcollabUserNewsfeedContent .loading').remove();
-
-            if (newsfeed.length > 0) {
-                $.each(newsfeed, function (key, value) {
-                    var content = GCTEach.Newsfeed(value);
-
-                    //### I think fades cause significant performance hits on devices when we have 30 concurrent ones like we do.
-                    //### The below makes it so that it only fades the first, visible, post in the list.
-                    if (key == 0) {
-                        $(content).hide().appendTo('#GCcollabUserNewsfeedContent').fadeIn(1000);
-                    } else {
-                        $(content).appendTo('#GCcollabUserNewsfeedContent');
-                    }
-                });
-            } else {
-                $(noContent).hide().appendTo('#GCcollabUserNewsfeedContent').fadeIn(1000);
-            }
-
-            newsfeedSwiper.update();
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        $('#GCcollabUserBlogContent').html('<span class="loading">' + GCTLang.Trans("loading") + '</span>');
-        GCTUser.GetBlogs(limit, offset, "", function(data){
-            var blogs = data.result;
-            $('#GCcollabUserBlogContent .loading').remove();
-
-            var content = "";
-            if(blogs.length > 0){
-                $.each(blogs, function (key, value) {
-                    content += GCTEach.Blog(value);
-                });
-
-                $(content).hide().appendTo('#GCcollabUserBlogContent').fadeIn(1000);
-            } else {
-                $(noContent).hide().appendTo('#GCcollabUserBlogContent').fadeIn(1000);
-            }
-
-            blogSwiper.update();
-        }, function(jqXHR, textStatus, errorThrown){
-            console.log(jqXHR, textStatus, errorThrown);
-        });
-
-        myApp.pullToRefreshDone();
-    });
+$$(document).on('page:afteranimation', '.page[data-page="home"]', function (e) {
+    var focusTitle = document.getElementById('page-home');
+    if (focusTitle) { focusTitle.focus(); }
 });
 
 function ShowTransOptions(obj) {
@@ -1415,7 +1211,7 @@ myApp.onPageInit('wire', function (page) {
         GCTUser.GetWiresByUserColleague(limit, wires.colleagues.offset, wiresColleagues, errorConsole);
         GCTUser.GetWiresByUser(GCTUser.Email(), limit, wires.mine.offset, wiresMine, errorConsole);
     }
-
+    
     GCTUser.GetWires(limit, wires.all.offset, '', wiresWires, errorConsole);
     $$('#more-' + wires.all.id).on('click', function (e) {
         $('#focus-' + wires.all.id).remove();
@@ -1439,6 +1235,10 @@ myApp.onPageInit('wire', function (page) {
         wiresReset();
         myApp.pullToRefreshDone();
     });
+});
+$$(document).on('page:afteranimation', '.page[data-page="wire"]', function (e) {
+    var focusNav = document.getElementById('page-the-wire');
+    if (focusNav) { focusNav.focus(); }
 });
 
 myApp.onPageInit('groups', function (page) {
@@ -1498,7 +1298,7 @@ myApp.onPageInit('groups', function (page) {
         GCTUser.GetGroups(limit, groups.all.offset, filters, groupsAll, errorConsole);
         GCTUser.GetGroupsMine(limit, groups.mine.offset, filters, groupsMine, errorConsole);
     }
-
+    
     $('#clear-filters').on('click', function() {
         filtersOpened = false;
         filters = {};
@@ -1540,12 +1340,20 @@ myApp.onPageInit('groups', function (page) {
         myApp.pullToRefreshDone();
     });
 });
+$$(document).on('page:afteranimation', '.page[data-page="groups"]', function (e) {
+    var focusNav = document.getElementById('page-groups');
+    if (focusNav) { focusNav.focus(); }
+});
 
 myApp.onPageInit('chat', function (page) {
     $$('#chat-navbar-inner').html(GCTLang.txtGlobalNav('chat'));
     $("#user").val(GCTUser.Email());
     $("#api_key").val(api_key_gccollab);
     $("#chatForm").submit(); 
+});
+$$(document).on('page:afteranimation', '.page[data-page="chat"]', function (e) {
+    var focusNav = document.getElementById('page-chat');
+    if (focusNav) { focusNav.focus(); }
 });
 
 myApp.onPageInit('doc', function (page) {
@@ -1555,17 +1363,9 @@ myApp.onPageInit('doc', function (page) {
     $("#guid").val(page.query.guid);
     $("#docForm").submit(); 
 });
-
-myApp.onPageInit('external-pages', function (page) {
-    $$('#external-navbar-inner').html(GCTLang.txtGlobalNav('gccollab'));
-    //### log them in at app startup in background and do a check for if logged in later on so we don't do this every page hit
-    $("#user").val(GCTUser.Email());
-    $("#api_key").val(api_key_gccollab);
-    $('#url').val(page.query.page);
-    $("#formGCcollabLogin").submit();
-   
-    //$('#iFrameChat').height($(window).height() - $('div:last').offset().top);
-    //$('#divChat').height($(window).height() - $('div:last').offset().top);
+$$(document).on('page:afteranimation', '.page[data-page="doc"]', function (e) {
+    var focusNav = document.getElementById('page-doc-title');
+    if (focusNav) { focusNav.focus(); }
 });
 
 myApp.onPageInit('members', function (page) {
@@ -1624,7 +1424,7 @@ myApp.onPageInit('members', function (page) {
         GCTUser.GetMembers(limit, members.all.offset, filters, membersAll, errorConsole);
         GCTUser.GetMembersByUserColleague(GCTUser.Email(), limit, members.colleagues.offset, filters, membersColleague, errorConsole);
     }
-
+    
     $('#clear-filters').on('click', function () {
         filtersOpened = false;
         filters = {};
@@ -1664,6 +1464,10 @@ myApp.onPageInit('members', function (page) {
         membersReset();
         myApp.pullToRefreshDone();
     });
+});
+$$(document).on('page:afteranimation', '.page[data-page="members"]', function (e) {
+    var focusNav = document.getElementById('page-members');
+    if (focusNav) { focusNav.focus(); }
 });
 
 myApp.onPageInit('geds', function (page) {
@@ -2046,7 +1850,7 @@ myApp.onPageInit('blog', function (page) {
         GCTUser.GetBlogsByUser(limit, blogs.mine.offset, '', blogsMine, errorConsole);
         GCTUser.GetBlogsByColleagues(limit, blogs.colleagues.offset, blogsColleagues, errorConsole);
     }
-
+    
     $('#clear-filters').on('click', function() {
         filtersOpened = false;
         filters = {};
@@ -2097,6 +1901,10 @@ myApp.onPageInit('blog', function (page) {
 
         myApp.pullToRefreshDone();
     });
+});
+$$(document).on('page:afteranimation', '.page[data-page="blog"]', function (e) {
+    var focusNav = document.getElementById('page-blogs');
+    if (focusNav) { focusNav.focus(); }
 });
 
 myApp.onPageInit('bookmarks', function (page) {
@@ -2179,7 +1987,7 @@ myApp.onPageInit('bookmarks', function (page) {
         GCTUser.GetBookmarksByUserColleague(limit, bookmarks.colleagues.offset, filters, bookmarksColleagues, errorConsole);
         GCTUser.GetBookmarksByUser(limit, bookmarks.mine.offset, '', bookmarksMine, errorConsole);
     }
-
+    
     $('#clear-filters').on('click', function () {
         filtersOpened = false;
         filters = {};
@@ -2227,6 +2035,10 @@ myApp.onPageInit('bookmarks', function (page) {
     });
 
 });
+$$(document).on('page:afteranimation', '.page[data-page="bookmarks"]', function (e) {
+    var focusNav = document.getElementById('page-bookmarks');
+    if (focusNav) { focusNav.focus(); }
+});
 
 myApp.onPageInit('docs', function (page) {
     $$('#docs-navbar-inner').html(GCTLang.txtGlobalNav('docs'));
@@ -2265,7 +2077,7 @@ myApp.onPageInit('docs', function (page) {
         });
         GCTUser.GetDocs(limit, docs.all.offset, filters, docsAll, errorConsole);
     }
-
+    
     $('#clear-filters').on('click', function() {
         filtersOpened = false;
         filters = {};
@@ -2299,6 +2111,10 @@ myApp.onPageInit('docs', function (page) {
         resetDocs();
         myApp.pullToRefreshDone();
     });
+});
+$$(document).on('page:afteranimation', '.page[data-page="docs"]', function (e) {
+    var focusNav = document.getElementById('page-docs');
+    if (focusNav) { focusNav.focus(); }
 });
 
 myApp.onPageInit('events', function (page) {
@@ -2412,6 +2228,7 @@ myApp.onPageInit('events', function (page) {
         GCTUser.GetEvents(from, to, limit, events.all.offset, eventsAll, errorConsole);
 
     }
+    
     var from = new Date().toString();
     var to = "";
     // var to = from.setMonth(from.getMonth() + 3);
@@ -2457,6 +2274,10 @@ myApp.onPageInit('events', function (page) {
         $('#focus-' + events.all.id).remove();
         GCTUser.GetEvents(from, to, limit, events.all.offset, eventsAll, errorConsole);
     });
+});
+$$(document).on('page:afteranimation', '.page[data-page="events"]', function (e) {
+    var focusNav = document.getElementById('page-event-calendar');
+    if (focusNav) { focusNav.focus(); }
 });
 
 myApp.onPageInit('opportunities', function (page) {
@@ -2532,8 +2353,14 @@ myApp.onPageInit('opportunities', function (page) {
         myApp.pullToRefreshDone();
     });
 });
+$$(document).on('page:afteranimation', '.page[data-page="opportunities"]', function (e) {
+    var focusNav = document.getElementById('page-opportunities-platform');
+    if (focusNav) { focusNav.focus(); }
+});
+
 myApp.onPageInit('new-opportunity', function (page) {
-$$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platform')); 
+    $$('#new-opportunities-navbar-inner').html(GCTLang.txtGlobalNav('new-opportunities-platform')); 
+    
     $$('.next-form1').on('click', function (e) {
         var formData = myApp.formToData('#opt-form1');
         var agree = formData['agree'];
@@ -2634,6 +2461,10 @@ $$('#opportunities-navbar-inner').html(GCTLang.txtGlobalNav('opportunities-platf
             $('#level').hide();
         }
     });
+});
+$$(document).on('page:afteranimation', '.page[data-page="new-opportunity"]', function (e) {
+    var focusNav = document.getElementById('page-new-opportunities-platform');
+    if (focusNav) { focusNav.focus(); }
 });
 
 myApp.onPageInit('profile', function (page) {
@@ -2778,7 +2609,7 @@ myApp.onPageInit('profile', function (page) {
         var focusNow = document.getElementById('focus-' + user.colleagues.id);
         if (focusNow) { focusNow.focus(); }
     }
-
+    
     /* Fill profile tab of user profile. */
     GCTUser.GetUserProfile(guid, function (data) {
         var profileData = data.result;
@@ -3050,6 +2881,21 @@ myApp.onPageInit('profile', function (page) {
     });
 
 });
+$$(document).on('page:afteranimation', '.page[data-page="profile"]', function (e) {
+    var focusOld = document.getElementById('page-profile-old');
+    if (focusOld) {
+        var focusID = document.getElementById('page-profile');
+        if (focusID) { $(focusID).attr('id', 'page-profile-temp'); }
+        $(focusOld).attr('id', 'page-profile');
+        var focusTemp = document.getElementById('page-profile-temp');
+        if (focusTemp) { $(focusTemp).attr('id', 'page-profile-old'); }
+    }
+    var focusCurrent = document.getElementById('page-profile-current');
+    if (focusCurrent) { $(focusCurrent).attr('id', 'page-profile-old'); }
+    var focusNav = document.getElementById('page-profile');
+    if (focusNav) { focusNav.focus(); $(focusNav).attr('id', 'page-profile-current');}
+});
+
 
 myApp.onPageInit('entity', function (page) {
     var guid = page.query.guid;
@@ -3349,8 +3195,6 @@ myApp.onPageInit('entity', function (page) {
                 $(content).hide().appendTo('#entity-main').fadeIn(500);
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
-                var eve_link = "https://gccollab.ca/event_calendar/view/" + guid;
-                mainView.router.loadPage('external-pages.html?page=' + eve_link);
             });
             break;
 
@@ -3444,7 +3288,6 @@ myApp.onPageInit('entity', function (page) {
         default:
             break;
     }
-
     $$('#comments-view').on('click', function (e) {
         GCTUser.GetComments(guid, limit, offset, function (data) {
             $("#comments-view").hide();
@@ -3505,6 +3348,11 @@ myApp.onPageInit('entity', function (page) {
         }
     });
 });
+$$(document).on('page:afteranimation', '.page[data-page="entity"]', function (e) {
+    var focusNav = document.getElementById('entity-title');
+    if (focusNav) { focusNav.focus(); }
+});
+
 
 myApp.onPageInit('PostWire', function (page) {
     $$('#postwire-navbar-inner').html(GCTLang.txtGlobalNav('new-wire-post'));
@@ -3531,7 +3379,7 @@ myApp.onPageInit('PostWire', function (page) {
                 $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
                 imageURI = imageData;
             }, function onFail(message) {
-                myApp.alert('Failed because: ' + message);
+                // myApp.alert('Failed because: ' + message);
             }, {
                     quality: 95,
                     sourceType: Camera.PictureSourceType.CAMERA,
@@ -3553,7 +3401,7 @@ myApp.onPageInit('PostWire', function (page) {
                 $("#picture-taken").attr('src', "data:image/jpeg;base64," +  imageData);
                 imageURI = imageData;
             }, function onFail(message) {
-                myApp.alert("Failed because: " + message);
+                // myApp.alert("Failed because: " + message);
             }, {
                     quality: 95,
                     sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
@@ -3568,14 +3416,18 @@ myApp.onPageInit('PostWire', function (page) {
             alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
         }
     });
-
+    
+});
+$$(document).on('page:afteranimation', '.page[data-page="PostWire"]', function (e) {
+    var focusNav = document.getElementById('page-new-wire-post');
+    if (focusNav) { focusNav.focus(); }
 });
 
 myApp.onPageInit('PostBlog', function (page) {
     var action = (page.query.action) ? page.query.action : ''; //Create or Edit
     var container_guid = ''; // guid of group, for posts on groups
     var blog_guid = ''; // guid of blog post, for edit
-
+    
     if (action == "create") {
         $$('#PostBlog-navbar-inner').html(GCTLang.txtGlobalNav('PostBlog'));
         $$('#submit-blog').html(GCTLang.Trans('PostBlog'));
@@ -3607,7 +3459,7 @@ myApp.onPageInit('PostBlog', function (page) {
 
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
-        });
+            });
     }
 
     $$('#submit-blog').on('click', function (e) {
@@ -3639,6 +3491,15 @@ myApp.onPageInit('PostBlog', function (page) {
         });
     });
 });
+$$(document).on('page:afteranimation', '.page[data-page="PostBlog"]', function (e) {
+    var focusNav = document.getElementById('page-PostBlog');
+    if (focusNav) {
+        focusNav.focus();
+    } else {
+        focusNav = document.getElementById('page-EditBlog');
+        if (focusNav) { focusNav.focus(); }
+    }
+});
 
 myApp.onPageInit('PostDiscussion', function (page) {
     var action = (page.query.action) ? page.query.action : '';
@@ -3662,7 +3523,7 @@ myApp.onPageInit('PostDiscussion', function (page) {
             if (!discussion.group.public) { $$('#PostDiscussion-public').remove(); }
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
-        });
+            });
     }
     
     $$('#submit-discussion').on('click', function (e) {
@@ -3693,6 +3554,16 @@ myApp.onPageInit('PostDiscussion', function (page) {
         
     });
 });
+$$(document).on('page:afteranimation', '.page[data-page="PostDiscussion"]', function (e) {
+    var focusNav = document.getElementById('page-PostDiscussion');
+    if (focusNav) {
+        focusNav.focus();
+    } else {
+        focusNav = document.getElementById('page-EditDiscussion');
+        if (focusNav) { focusNav.focus(); }
+    }
+});
+
  
 /* ===== Messages Page ===== */
 myApp.onPageInit('messages', function (page) {
@@ -3818,21 +3689,39 @@ myApp.onPageInit('privacy', function (page) {
     $$('#privacy-navbar-inner').html(GCTLang.txtGlobalNav('privacy-policy'));
     $('#privacy-content').html($('#privacy-content-' + GCTLang.Lang()).html());
 });
+$$(document).on('page:afteranimation', '.page[data-page="privacy"]', function (e) {
+    var focusNav = document.getElementById('page-privacy-policy');
+    if (focusNav) { focusNav.focus(); }
+});
+
 
 myApp.onPageInit('terms', function (page) {
     $$('#terms-navbar-inner').html(GCTLang.txtGlobalNav('terms-and-conditions'));
     $('#terms-content').html($('#terms-content-' + GCTLang.Lang()).html());
+});
+$$(document).on('page:afteranimation', '.page[data-page="terms"]', function (e) {
+    var focusNav = document.getElementById('page-terms-and-conditions');
+    if (focusNav) { focusNav.focus(); }
 });
 
 myApp.onPageInit('about', function (page) {
     $$('#about-navbar-inner').html(GCTLang.txtGlobalNav('about-gccollab'));
     $('#about-content').html($('#about-content-' + GCTLang.Lang()).html());
 });
+$$(document).on('page:afteranimation', '.page[data-page="about"]', function (e) {
+    var focusNav = document.getElementById('page-about-gccollab');
+    if (focusNav) { focusNav.focus(); }
+});
 
 myApp.onPageInit('faqs', function (page) {
     $$('#faq-navbar-inner').html(GCTLang.txtGlobalNav('faq'));
     $('#faqs-content').html($('#faqs-content-' + GCTLang.Lang()).html());
 });
+$$(document).on('page:afteranimation', '.page[data-page="faq"]', function (e) {
+    var focusNav = document.getElementById('page-faq');
+    if (focusNav) { focusNav.focus(); }
+});
+
 
 /* ===== Change statusbar bg when panel opened/closed ===== */
 $$('.panel-left').on('open', function () {
