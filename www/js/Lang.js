@@ -312,7 +312,7 @@
     "program-other": "Other",
     "level":"level",
     "number-opt":"Number of opportunities",
-    "start-date":"*Ideal start date",
+    "mission-start-date":"*Ideal start date",
     "completion-date":"Ideal completion date",
     "deadline":"*Application deadline",
     "description-mission":"Bilingual description of opportunity",
@@ -374,6 +374,7 @@
     "validation_deadline": "Please enter an application deadline",
     "validation_hours": "Please enter a time commitment for this opportunity",
     "validation_location": "Please enter a location for this opportunity",
+    "add-calendar":'Add to my calendar'
 }
 
 French = {
@@ -691,7 +692,7 @@ French = {
     "program-other": "Autre",
     "level":"Niveau",
     "number-opt":"Nombre de possibilités",
-    "start-date":"*Date de début idéale",
+    "mission-start-date":"*Date de début idéale",
     "completion-date":"Date d'achèvement idéale",
     "deadline":"*Date limite pour postuler",
     "description-mission":"Description de la possibilité",
@@ -754,4 +755,5 @@ French = {
     "validation_deadline": "Veuillez entrer une date limite d'inscription",
     "validation_hours": "Veuillez entrer une période d'engagement pour cette possibilité",
     "validation_location": "Veuillez entrer un emplacement pour cette possibilité",
+    "add-calendar":'Ajouter à mon calendrier'
 }
