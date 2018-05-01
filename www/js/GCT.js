@@ -146,7 +146,7 @@ GCTLang = {
                 + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
                     + "<div class='item-media rounded'><img alt='Profile Image of " + object.name +"' src='" + object.icon + "' /></div>"
                     + "<div class='item-inner'>"
-                        + "<div class='item-title-row'>"
+                            + "<div class='item-title-row'>"
                             + "<div class='author'>" + object.name + "</div>"
                         + "</div>"
                         + "<div class='time'>" + object.date + "</div>"
@@ -154,8 +154,9 @@ GCTLang = {
                 + "</div>"
                 + "<div class='card-content'>"
                     + "<div class='card-content-inner'>"
+                    + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
+               
                         + "<div class='blog-title'>" + object.title + "</div>"
-                        + "<div class='item-text large'>" + object.posted + "</div>"
                         + "<div class='item-text large'>" + object.startDate + "<br>" + object.endDate + "</div>"
                         + "<div class='item-text large'>" + object.location + "</div>"
                         + "<div class='item-text large " + object.all_text + "'>" +"<br>"+ object.description + "</div>";
@@ -178,6 +179,7 @@ GCTLang = {
                 + "<div class='card-footer'>"
                     + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
                     + object.action
+
                 + "</div>"
             + "</div>"
         + "</div>";
@@ -1112,6 +1114,10 @@ GCTUser = {
                         + '<span id="focus-new-popover" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans("more-options-opened") + '</span>';
                         if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post') {
                             popoverHTML += '<li><a href="#" class="item-link list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
+                        }
+                        if(type = "gccollab_event"){
+                            popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("add-calendar") + '</a></li>';
+                   
                         }
                         popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
                         if( mine ){
@@ -2383,10 +2389,8 @@ GCTUser = {
               url: GCT.GCcollabURL,
               data: { method: "create.opportinities3", user: GCTUser.Email(),  formData:formData, api_key: api_key_gccollab, lang: GCTLang.Lang() },
               timeout: 12000,
-              success: function (data) {
-                  
+              success: function (data) {   
                 console.log('data is '+data);
-
                   data = JSON.parse(data);
                   successCallback(data);
               },
@@ -2395,6 +2399,32 @@ GCTUser = {
               }
           });
       },
+
+      AddCalendar: function (obj) {
+        var guid = $(obj).data("guid");
+        $(".popover").remove();
+        
+        myApp.confirm(GCTLang.Trans("reportpost"),
+            function (value) {
+                $$.ajax({
+                    api_key: api_key_gccollab,
+                    method: 'POST',
+                    dataType: 'text',
+                    url: GCT.GCcollabURL,
+                    data: { method: "event.add.calendar", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+                    timeout: 12000,
+                    success: function (data) {
+                        data = JSON.parse(data);
+                        myApp.alert(GCTLang.Trans("reported"));
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                       console.log(jqXHR, textStatus, errorThrown);
+                    }
+                });
+            },
+            function (value) { }
+        );
+    },
 }
 
 
