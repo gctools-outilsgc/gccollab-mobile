@@ -605,7 +605,7 @@ myApp.onPageInit('group', function (page) {
                 var replied = (value.replied) ? "replied" : "";
                 var liked = (value.liked) ? "liked" : "";
                 var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+                var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
                 content += GCTLang.txtDiscussion({
                     icon: value.userDetails.iconURL,
@@ -1536,7 +1536,7 @@ myApp.onPageInit('discussion', function (page) {
                     var replied = (value.replied) ? "replied" : "";
                     var liked = (value.liked) ? "liked" : "";
                     var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+                    var action = "<a herf='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
                     var content = GCTLang.txtDiscussion({
                         icon: value.userDetails.iconURL,
@@ -1592,7 +1592,7 @@ myApp.onPageInit('discussion', function (page) {
                     var replied = (value.replied) ? "replied" : "";
                     var liked = (value.liked) ? "liked" : "";
                     var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+                    var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
                     var content = GCTLang.txtDiscussion({
                         icon: value.userDetails.iconURL,
@@ -1641,7 +1641,7 @@ myApp.onPageInit('discussion', function (page) {
                     var replied = (value.replied) ? "replied" : "";
                     var liked = (value.liked) ? "liked" : "";
                     var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+                    var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
                     var content = GCTLang.txtDiscussion({
                         icon: value.userDetails.iconURL,
@@ -1689,7 +1689,7 @@ myApp.onPageInit('discussion', function (page) {
                     var replied = (value.replied) ? "replied" : "";
                     var liked = (value.liked) ? "liked" : "";
                     var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+                    var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
                     var content = GCTLang.txtDiscussion({
                         icon: value.userDetails.iconURL,
@@ -1740,7 +1740,7 @@ myApp.onPageInit('discussion', function (page) {
                     var replied = (value.replied) ? "replied" : "";
                     var liked = (value.liked) ? "liked" : "";
                     var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                    var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+                    var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
                     content = GCTLang.txtDiscussion({
                         icon: value.userDetails.iconURL,
