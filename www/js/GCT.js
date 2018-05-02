@@ -1091,10 +1091,10 @@ GCTUser = {
                         if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post') {
                             popoverHTML += '<li><a href="#" class="item-link close-popover list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
                         }
-                        if(type = "gccollab_event"){
+                        if(type == "gccollab_event"){
                             popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("add-calendar") + '</a></li>';
                         }
-                         popoverHTML += '<li><a href="#" class="item-link close-popover list-button" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
+                         popoverHTML += '<li ><a href="#"  class="item-link close-popover list-button" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
                         if( mine ){
                             if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
                             if (type == "gccollab_discussion_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditDiscussionPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
@@ -1108,8 +1108,8 @@ GCTUser = {
         + '</div>';
 
         myApp.popover(popoverHTML, obj);
-        var focusPopover = document.getElementById('#focus-new-popover');
-        if (focusPopover) { focusPopover.focus(); }
+
+        $('#focus-new-popover').focus() ;
     },
     BlockUser: function (obj) {
         var guid = $(obj).data("guid");
