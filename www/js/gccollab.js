@@ -18,6 +18,10 @@ var $$ = Dom7;
 var mainView = myApp.addView('.view-main', {
 }); 
 
+//focus on input filter
+$$(document).on('click','.open-popup',function() {
+    $('.item-input input').focus();
+});
 
 // Show/hide preloader for remote ajax loaded pages
 // Probably should be removed on a production/local app
@@ -3776,4 +3780,3 @@ function handleTouchMove(evt) {
     xDown = null;
     yDown = null;
 };
-
