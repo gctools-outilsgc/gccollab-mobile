@@ -2316,28 +2316,22 @@ GCTUser = {
       AddCalendar: function (obj) {
         var guid = $(obj).data("guid");
         $(".popover").remove();
-        
-        myApp.confirm(GCTLang.Trans("addtocalendar"),
-            function (value) {
-                $$.ajax({
-                    api_key: api_key_gccollab,
-                    method: 'POST',
-                    dataType: 'text',
-                    url: GCT.GCcollabURL,
-                    data: { method: "event.add.calendar", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
-                    timeout: 12000,
-                    success: function (data) {
-                        data = JSON.parse(data);
-                        myApp.alert(GCTLang.Trans("addtocalendar"));
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                       console.log(jqXHR, textStatus, errorThrown);
-                    }
-                });
-            },
-            function (value) { }
-        );
-    },
+            $$.ajax({
+                api_key: api_key_gccollab,
+                method: 'POST',
+                dataType: 'text',
+                url: GCT.GCcollabURL,
+                data: { method: "event.add.calendar", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+                timeout: 12000,
+                success: function (data) {
+                    data = JSON.parse(data);
+                    myApp.alert(data.result);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR, textStatus, errorThrown);
+                }
+            });
+      },
 }
 
 
