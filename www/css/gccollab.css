@@ -509,8 +509,8 @@ i.icon-bars.theme-gccollab {
     color: #46246A;
 }
 
-.theme-gccollab .subnavbar .button.active:not(.button-fill),
-.theme-gccollab.subnavbar .button.active:not(.button-fill) {
+.theme-gccollab .subnavbar .button.tab-link-active:not(.button-fill),
+.theme-gccollab.subnavbar .button.tab-link-active:not(.button-fill) {
     background-color: #555;
     color: #fff;
 }
