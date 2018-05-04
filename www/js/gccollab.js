@@ -4,6 +4,9 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
     var limit = 12;
     var home = {}; //variables for this page's content
     home.newsfeed = listObject("home-newsfeed");
+    home.wire = listObject("home-wire");
+    home.blogs = listObject("home-blogs");
+
     function homeNewsfeed(data) {
         var info = data.result;
         var content = '';
@@ -24,15 +27,47 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
         var focusNow = document.getElementById('focus-' + home.newsfeed.id);
         if (focusNow) { focusNow.focus(); }
     }
+    function homeWires(data) {
+        var info = data.result;
+        var content = '';
+        if (home.wire.loaded == true) { $(home.wire.appendMessage).appendTo('#content-' + home.wire.id); } else { home.wire.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                content = GCTEach.Wire(value);
+                $(content).hide().appendTo('#content-' + home.wire.id).fadeIn(1000);
+            });
+        }
+        if (info.length < limit) {
+            content = endOfContent;
+            $(content).hide().appendTo('#content-' + home.wire.id).fadeIn(1000);
+            $('#more-' + home.wire.id).hide();
+        }
+        home.wire.offset += limit;
+        var focusNow = document.getElementById('focus-' + home.wire.id);
+        if (focusNow) { focusNow.focus(); }
+    }
 
     GCTrequests.GetNewsfeed(limit, home.newsfeed.offset, homeNewsfeed, errorConsole);
-    $$('#tab-' + home.newsfeed.id).on('show', function (e) {
+    $$('#tab-' + home.newsfeed.id).on('tab:show', function (e) {
         var focusTitle = document.getElementById('tabheader-home-newsfeed');
         if (focusTitle) { focusTitle.focus(); }
     });
     $$('#more-' + home.newsfeed.id).on('click', function (e) {
         $('#focus-' + home.newsfeed.id).remove();
         GCTrequests.GetNewsfeed(limit, home.newsfeed.offset, homeNewsfeed, errorConsole);
+    });
+
+    $$('#tab-' + home.wire.id).on('tab:show', function (e) {
+        if (!home.wire.loaded) {
+            GCTrequests.GetWires(limit, home.wire.offset, '', homeWires, errorConsole);
+        }
+        var focusTitle = document.getElementById('tabheader-home-wires');
+        if (focusTitle) { focusTitle.focus(); }
+    });
+    $$('#more-' + home.wire.id).on('click', function (e) {
+        $('#focus-' + home.wire.id).remove();
+        GCTrequests.GetWires(limit, home.wire.offset, '', homeWires, errorConsole);
     });
 })
 
