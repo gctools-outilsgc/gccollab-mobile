@@ -1,0 +1,123 @@
+<template>
+    <div class="page navbar-fixed with-subnavbar"></div>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div id="home-navbar-inner" class="navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar"> </div>
+            <div class="subnavbar" role="navigation" data-translate-target="aria-label">
+                <div class="subnavbar-inner">
+                    <a href="#tab-home-newsfeed" class="button tab-link-active tab-link" data-translate="newsfeed">Newsfeed</a>
+                    <a href="#tab-home-wire" class="button tab-link" data-translate="the-wire">The Wire</a>
+                    <a href="#tab-home-blogs" class="button tab-link" data-translate="blogs">Blogs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="toolbar toolbar-bottom-md">
+        <div class="toolbar-inner">
+            <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="far fa-arrow-alt-circle-left fa-2x"></i></a></div>
+            <div class="right sliding"><a id="home-actions" href="#" class="link open-popover" data-popover=".popover-actions" aria-label="Create a new Post Menu Options"><i class="fa fa-plus fa-2x"></i></a></div>
+        </div>
+    </div>
+
+    <div class="page with-subnavbar" style="overflow-x: hidden;">
+        <div class="tabs">
+            <div id="tab-home-newsfeed" class="page-content tab tab-active">
+                <div class="block small">
+                    <div class="row">
+                        <div class="col-66"><h2 class="no-margin" data-translate="newsfeed" tabindex="0" id="tabheader-home-newsfeed">Newsfeed</h2></div>
+                    </div>
+                </div>
+                <div id="content-home-newsfeed" class="context"></div>
+                <a id="more-home-newsfeed" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            </div>
+
+            <div id="tab-home-wire" class="page-content tab">
+                <div class="block small">
+                    <div class="row">
+                        <div class="col-66"><h2 class="no-margin" data-translate="the-wire" tabindex="0" id="tabheader-home-wires">The Wire</h2></div>
+                        <div class="col-33"><a href="wire.html" class="button button-fill pull-right" data-translate="view-all">VIEW ALL</a></div>
+                    </div>
+                </div>
+                <div id="content-home-wire" class="context"></div>
+                <a id="more-home-wire" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            </div>
+
+            <div id="tab-home-blogs" class="page-content tab">
+                <div class="block small">
+                    <div class="row">
+                        <div class="col-66"><h2 class="no-margin" data-translate="blogs" tabindex="0" id="tabheader-home-blogs">Blogs</h2></div>
+                        <div class="col-33"><a href="blog.html" class="button button-fill pull-right" data-translate="view-all">VIEW ALL</a></div>
+                    </div>
+                </div>
+                <div id="content-home-blogs" class="context"></div>
+                <a id="more-home-blogs" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            </div>
+        </div>
+    </div>
+</template>
+<style>
+
+</style>
+<script>
+    return {
+        // Lifecycle Hooks
+        beforeCreate() {
+            console.log('componentBeforeCreate', this)
+        },
+        created() {
+            console.log('componentCreated', this)
+        },
+        beforeMount() {
+            console.log('componentBeforeMount', this)
+        },
+        mounted() {
+            console.log('componentMounted', this);
+        },
+        beforeDestroy() {
+            console.log('componentBeforeDestroy', this);
+        },
+        destroyed() {
+            console.log('componentDestroyed', this);
+        },
+        // Component Data
+        data: function () {
+            // Must return an object
+            return {
+                name: 'Jimmy',
+                age: 25,
+                like: ['Tennis', 'Chess', 'Football'],
+            }
+        },
+        // Component Methods
+        methods: {
+            openAlert: function () {
+                var self = this;
+                self.$app.dialog.alert('Hello World');
+            },
+        },
+        // Page Events
+        on: {
+            pageMounted: function (e, page) {
+                console.log('pageMounted', page);
+            },
+            pageInit: function (e, page) {
+                console.log('pageInit', page);
+            },
+            pageBeforeIn: function (e, page) {
+                console.log('pageBeforeIn', page);
+            },
+            pageAfterIn: function (e, page) {
+                console.log('pageAfterIn', page);
+            },
+            pageBeforeOut: function (e, page) {
+                console.log('pageBeforeOut', page);
+            },
+            pageAfterOut: function (e, page) {
+                console.log('pageAfterOut', page);
+            },
+            pageBeforeRemove: function (e, page) {
+                console.log('pageBeforeRemove', page);
+            },
+        }
+    }
+</script>
