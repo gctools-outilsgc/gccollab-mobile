@@ -2,7 +2,9 @@
     <div class="page navbar-fixed with-subnavbar">
     <div class="navbar">
         <div class="navbar-inner">
-            <div id="home-navbar-inner" class="navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar"> </div>
+            <div id="{{page}}-navbar-inner" class="navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar">
+                {{navbar}}
+            </div>
             <div class="subnavbar" role="navigation" data-translate-target="aria-label">
                 <div class="subnavbar-inner">
                     {{#each tabs}}
@@ -86,6 +88,7 @@
         data: function () {
             // Must return an object
             //MOVE grabbing/creating tab info to be based on the passed in Page reference
+            var navbar = GCTtxt.txtGlobalNav('home');
             var tabs = {}; //variables for this page's content
             tabs.newsfeed = listObject("home-newsfeed");
             tabs.wire = listObject("home-wire");
@@ -93,6 +96,7 @@
             return {
                 tabs: tabs,
                 name: 'newsfeed',
+                navbar: navbar,
             }
         },
         // Component Methods
