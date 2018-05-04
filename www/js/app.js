@@ -49,3 +49,15 @@ $$(document).on('page:init', function (e) {
         }
     });
 })
+
+function ShowImage(img) {
+    var img = $(img).attr('src');
+    img = img.replace('medium', 'master');
+    var myPhotoBrowser = app.photoBrowser.create({
+        photos: [img],
+        theme: 'dark',
+        zoom: true,
+        toolbar: false
+    });
+    myPhotoBrowser.open();
+}
