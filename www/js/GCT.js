@@ -65,6 +65,37 @@
         content = GCT.SetLinks(content);
         return content;
     },
+    txtBlog: function (object) {
+        var content = "<div class='list cards-list'>"
+            + "<div class='card'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row'>"
+            + "<div class='author'>" + object.name + "</div>"
+            + "</div>"
+            + "<div class='time'>" + object.date + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-content card-content-padding'>"
+            + "<div id='blog-" + object.guid + "' class='card-content-inner'>"
+
+            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
+            + "<div class='blog-title'>" + object.title + "</div>"
+            + "<div class='blog-group'>" + object.group + "</div>"
+            + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-footer'>"
+            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
+            + object.action
+            + "</div>"
+            + "</div>"
+            + "</div>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
 }
 
 GCTEach = {
@@ -203,6 +234,37 @@ GCTEach = {
             image: img
         });
         return content;
+    },
+    Blog: function (value) {
+        var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
+        if (value.groupURL.indexOf("/groups/profile/") > -1) {
+            var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
+        } else {
+            var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+        }
+        var replied = (value.replied) ? "replied" : "";
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_blog_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+
+        var content = GCTtxt.txtBlog({
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            date: prettyDate(value.time_created),
+            group: group,
+            description: text.trunc(150),
+            title: value.title,
+            all_text: 'all_text',
+            action: action,
+            owner: value.owner_guid,
+            guid: value.guid,
+            type: "gccollab_blog_post",
+            replied: replied,
+            liked: liked,
+            likes: likes
+        });
+        return content;
+
     },
 }
 
@@ -378,6 +440,24 @@ GCTrequests = {
             dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.wireposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetBlogs: function (limit, offset, filters, successCallback, errorCallback) {
+        limit = limit || 12;
+        offset = offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.blogposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 successCallback(data);
