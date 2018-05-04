@@ -1,13 +1,13 @@
 <template>
-    <div class="page navbar-fixed with-subnavbar"></div>
+    <div class="page navbar-fixed with-subnavbar">
     <div class="navbar">
         <div class="navbar-inner">
             <div id="home-navbar-inner" class="navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar"> </div>
             <div class="subnavbar" role="navigation" data-translate-target="aria-label">
                 <div class="subnavbar-inner">
-                    <a href="#tab-home-newsfeed" class="button tab-link-active tab-link" data-translate="newsfeed">Newsfeed</a>
-                    <a href="#tab-home-wire" class="button tab-link" data-translate="the-wire">The Wire</a>
-                    <a href="#tab-home-blogs" class="button tab-link" data-translate="blogs">Blogs</a>
+                    {{#each tabs}}
+                        <a href="#tab-{{this.id}}" class="button tab-link-active tab-link" >Newsfeed</a>
+                    {{/each}}
                 </div>
             </div>
         </div>
@@ -54,9 +54,12 @@
             </div>
         </div>
     </div>
+        </div>
 </template>
 <style>
-
+    p {
+        margin: 10px 0;
+    }
 </style>
 <script>
     return {
@@ -82,10 +85,14 @@
         // Component Data
         data: function () {
             // Must return an object
+            //MOVE grabbing/creating tab info to be based on the passed in Page reference
+            var tabs = {}; //variables for this page's content
+            tabs.newsfeed = listObject("home-newsfeed");
+            tabs.wire = listObject("home-wire");
+            tabs.blogs = listObject("home-blogs");
             return {
-                name: 'Jimmy',
-                age: 25,
-                like: ['Tennis', 'Chess', 'Football'],
+                tabs: tabs,
+                name: 'newsfeed',
             }
         },
         // Component Methods
