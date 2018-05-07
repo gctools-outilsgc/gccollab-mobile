@@ -65,7 +65,7 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
         home.blogs.offset += limit;
     }
 
-    GCTrequests.TestGetNewsfeed(limit, home.newsfeed);
+    GCTrequests.TestGetNewsfeed(home.newsfeed);
     $$('#tab-' + home.newsfeed.id).on('tab:show', function (e) {
         var focusTitle = document.getElementById('tabheader-home-newsfeed');
         if (focusTitle) { focusTitle.focus(); }

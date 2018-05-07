@@ -508,6 +508,24 @@ GCTrequests = {
             }
         });
     },
+    NewGetWires: function (tabObject) {
+        limit = tabObject.limit || 12;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.wireposts", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
 }
 
 GCT = {
@@ -645,14 +663,18 @@ function listObject(id, limit, eachFunc) {
     console.log(object);
     return object;
 }
-function tabObject(page, tab) {
-    var object = {};
-    object.offset = 0;
-    object.loaded = false;
-    object.name = tab;
-    object.page = page;
-    object.id = page + '-' + tab;
-    object.appendMessage = GCTtxt.txtFocusMessage(page + '-' + tab);
+function tabObject(page, tab, limit, eachFunc, request) {
+    var object = {
+        offset: 0,
+        limit: limit,
+        loaded: false,
+        id: page + '-' + tab,
+        name: tab,
+        page: page,
+        appendMessage: GCTtxt.txtFocusMessage(page + '-' + tab),
+        eachFunc: eachFunc,
+        request: request,
+    };
     console.log(object);
     return object;
 }

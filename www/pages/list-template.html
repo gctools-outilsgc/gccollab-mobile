@@ -81,6 +81,7 @@
             },
             pageInit: function (e, page) {
                 console.log('pageInit', page);
+                this.tabs[0].request(this.tabs[0]);
             },
             pageBeforeIn: function (e, page) {
                 console.log('pageBeforeIn', page);

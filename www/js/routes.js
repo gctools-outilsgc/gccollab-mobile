@@ -37,7 +37,7 @@ routes = [
             console.log(pageInfo);
             var navbar = GCTtxt.txtGlobalNav(page);
             var tabs = [];
-            pageInfo.tabs.forEach(function (tab) { tabs.push(tabObject(page, tab)); });
+            pageInfo.tabs.forEach(function (tab) { tabs.push(tabObject(page, tab.id, pageInfo.limit, tab.each, tab.request)); });
             
             resolve(
                 {
