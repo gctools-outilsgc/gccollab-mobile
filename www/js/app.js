@@ -7,6 +7,13 @@ var app  = new Framework7({
   id: 'ca.tbs-sct.gccollab', // App bundle ID
   name: 'GCcollab', // App name
   theme: 'md', // Automatic theme detection
+    data: function () {
+        return {
+            home: {
+                tabs: ["newsfeed", "the-wire", "blogs"],
+            },
+        };
+    },
   // App routes
   routes: routes,
 });

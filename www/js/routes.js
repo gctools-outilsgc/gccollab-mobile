@@ -20,7 +20,34 @@ routes = [
     },
     {
         path: '/list-template/:page/:action/',
-        componentUrl: './pages/list-template.html',
+        async: function (routeTo, routeFrom, resolve, reject) {
+            var page = routeTo.params.page;
+            var pageInfo = [];
+            switch (page) {
+                case "home":
+                    pageInfo = app.data.home;
+                    break;
+
+                default: ;
+                    
+            }
+            console.log(pageInfo);
+            var navbar = GCTtxt.txtGlobalNav(page);
+            var tabs = [];
+            pageInfo.tabs.forEach(function (tab) { tabs.push(tabObject(page, tab)); });
+            
+            resolve(
+                {
+                    componentUrl: './pages/list-template.html',
+                },
+                {
+                    context: {
+                        navbar: navbar,
+                        tabs: tabs,
+                    }
+                }
+            )
+        }
     },
     {
         path: '/form/',

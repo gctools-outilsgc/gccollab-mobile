@@ -8,7 +8,7 @@
             <div class="subnavbar" role="navigation" data-translate-target="aria-label">
                 <div class="subnavbar-inner">
                     {{#each tabs}}
-                    <a href="#tab-{{this.id}}" class="button tab-link{{#if @first}}-active{{/if}} tab-link">{{this.name}}</a>
+                    <a href="#tab-{{this.id}}" class="button tab-link{{#if @first}}-active{{/if}} tab-link" data-translate="{{this.name}}"></a>
                     {{/each}}
                 </div>
             </div>
@@ -33,15 +33,15 @@
                 <a id="more-home-newsfeed" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
             </div>
 
-            <div id="tab-home-wire" class="page-content tab">
+            <div id="tab-home-the-wire" class="page-content tab">
                 <div class="block small">
                     <div class="row">
                         <div class="col-66"><h2 class="no-margin" data-translate="the-wire" tabindex="0" id="tabheader-home-wires">The Wire</h2></div>
                         <div class="col-33"><a href="wire.html" class="button button-fill pull-right" data-translate="view-all">VIEW ALL</a></div>
                     </div>
                 </div>
-                <div id="content-home-wire" class="context"></div>
-                <a id="more-home-wire" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+                <div id="content-home-the-wire" class="context"></div>
+                <a id="more-home-the-wire" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
             </div>
 
             <div id="tab-home-blogs" class="page-content tab">
@@ -86,17 +86,10 @@
         },
         // Component Data
         data: function () {
+            
             // Must return an object
-            //MOVE grabbing/creating tab info to be based on the passed in Page reference
-            var navbar = GCTtxt.txtGlobalNav('home');
-            var tabs = []; //variables for this page's content
-            tabs.push(tabObject("home","newsfeed"));
-            tabs.push(tabObject("home","wire"));
-            tabs.push(tabObject("home","blogs"));
+            
             return {
-                tabs: tabs,
-                name: 'newsfeed',
-                navbar: navbar,
             }
         },
         // Component Methods
