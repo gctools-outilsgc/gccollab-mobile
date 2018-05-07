@@ -27,8 +27,11 @@ routes = [
                 case "home":
                     pageInfo = app.data.home;
                     break;
+                case "wires":
+                    pageInfo = app.data.wires;
+                    break;
 
-                default: ;
+                default: reject();
                     
             }
             console.log(pageInfo);

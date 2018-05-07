@@ -12,6 +12,9 @@ var app  = new Framework7({
             home: {
                 tabs: ["newsfeed", "the-wire", "blogs"],
             },
+            wires: {
+                tabs: ["all", "my-colleagues", "mine"],
+            },
         };
     },
   // App routes

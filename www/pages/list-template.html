@@ -8,7 +8,7 @@
             <div class="subnavbar" role="navigation" data-translate-target="aria-label">
                 <div class="subnavbar-inner">
                     {{#each tabs}}
-                    <a href="#tab-{{this.id}}" class="button tab-link{{#if @first}}-active{{/if}} tab-link" data-translate="{{this.name}}"></a>
+                    <a href="#tab-{{this.id}}" class="button {{#if @first}}tab-link-active{{/if}} tab-link" data-translate="{{this.name}}"></a>
                     {{/each}}
                 </div>
             </div>
@@ -23,37 +23,12 @@
 
     <div class="page with-subnavbar" style="overflow-x: hidden;">
         <div class="tabs">
-            <div id="tab-home-newsfeed" class="page-content tab tab-active">
-                <div class="block small">
-                    <div class="row">
-                        <div class="col-66"><h2 class="no-margin" data-translate="newsfeed" tabindex="0" id="tabheader-home-newsfeed">Newsfeed</h2></div>
-                    </div>
-                </div>
-                <div id="content-home-newsfeed" class="context"></div>
-                <a id="more-home-newsfeed" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+            {{#each tabs}}
+            <div id="tab-{{this.id}}" class="page-content tab {{#if @first}}tab-active{{/if}}">
+                <div id="content-{{this.id}}" class="context"></div>
+                <a id="more-{{this.id}}" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
             </div>
-
-            <div id="tab-home-the-wire" class="page-content tab">
-                <div class="block small">
-                    <div class="row">
-                        <div class="col-66"><h2 class="no-margin" data-translate="the-wire" tabindex="0" id="tabheader-home-wires">The Wire</h2></div>
-                        <div class="col-33"><a href="wire.html" class="button button-fill pull-right" data-translate="view-all">VIEW ALL</a></div>
-                    </div>
-                </div>
-                <div id="content-home-the-wire" class="context"></div>
-                <a id="more-home-the-wire" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
-            </div>
-
-            <div id="tab-home-blogs" class="page-content tab">
-                <div class="block small">
-                    <div class="row">
-                        <div class="col-66"><h2 class="no-margin" data-translate="blogs" tabindex="0" id="tabheader-home-blogs">Blogs</h2></div>
-                        <div class="col-33"><a href="blog.html" class="button button-fill pull-right" data-translate="view-all">VIEW ALL</a></div>
-                    </div>
-                </div>
-                <div id="content-home-blogs" class="context"></div>
-                <a id="more-home-blogs" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
-            </div>
+            {{/each}}
         </div>
     </div>
         </div>
