@@ -266,6 +266,27 @@ GCTEach = {
         return content;
 
     },
+    ContentSuccess: function (data, obj) {
+        
+        var info = data.result;
+        var content = '';
+        if (obj.loaded == true) { $(obj.appendMessage).appendTo('#content-' + obj.id); } else { obj.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                content = obj.eachFunc(value);
+                $(content).hide().appendTo('#content-' + obj.id).fadeIn(1000);
+            });
+        }
+        if (info.length < obj.limit) {
+            content = endOfContent;
+            $(content).hide().appendTo('#content-' + obj.id).fadeIn(1000);
+            $('#more-' + obj.id).hide();
+        }
+        obj.offset += obj.limit;
+        var focusNow = document.getElementById('focus-' + obj.id);
+        if (focusNow) { focusNow.focus(); }
+    }
 }
 
 GCTLang = {
@@ -467,6 +488,26 @@ GCTrequests = {
             }
         });
     },
+    TestGetNewsfeed: function (tabObject) {
+        limit = tabObject.limit || 12;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.newsfeed", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log('worked');
+                GCTEach.ContentSuccess(data, tabObject);
+                //successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
 }
 
 GCT = {
@@ -592,12 +633,16 @@ GCT = {
     }
 }
 
-function listObject(id) {
-    var object = {};
-    object.offset = 0;
-    object.loaded = false;
-    object.id = id;
-    object.appendMessage = GCTtxt.txtFocusMessage(id);
+function listObject(id, limit, eachFunc) {
+    var object = {
+        offset : 0,
+        loaded : false,
+        id : id,
+        appendMessage: GCTtxt.txtFocusMessage(id),
+        eachFunc: eachFunc,
+        limit: limit
+    };
+    console.log(object);
     return object;
 }
 function tabObject(page, tab) {
