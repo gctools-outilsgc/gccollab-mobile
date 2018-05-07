@@ -81,7 +81,13 @@
             },
             pageInit: function (e, page) {
                 console.log('pageInit', page);
-                this.tabs[0].request(this.tabs[0]);
+                this.tabs[0].request(this.tabs[0]); //load first tab, which is active tab
+                this.tabs.forEach(function (tab) {
+                    $$('#more-' + tab.id).on('click', function (e) {
+                        $('#focus-' + tab.id).remove();
+                        tab.request(tab);
+                    });
+                });
             },
             pageBeforeIn: function (e, page) {
                 console.log('pageBeforeIn', page);
