@@ -600,6 +600,17 @@ function listObject(id) {
     object.appendMessage = GCTtxt.txtFocusMessage(id);
     return object;
 }
+function tabObject(page, tab) {
+    var object = {};
+    object.offset = 0;
+    object.loaded = false;
+    object.name = tab;
+    object.page = page;
+    object.id = page + '-' + tab;
+    object.appendMessage = GCTtxt.txtFocusMessage(page + '-' + tab);
+    console.log(object);
+    return object;
+}
 
 function isAppleDevice() {
     return (navigator.userAgent.match(/(iPhone|iPod|iPad)/) != null) ? true : false;
