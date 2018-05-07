@@ -242,7 +242,7 @@ function LoadMessageCentre() {
             }
 
             notifications += '<li class="swipeout">'
-              + '<div class="swipeout-content"><a onclick="ShowMessage(this);" class="item-link item-content tab-link" data-guid="' + value.guid + ' data-type="notification">'
+              + '<a style="float:left; width:80%;" onclick="ShowMessage(this);" class="item-title-row no-padding-rightitem-link item-content tab-link" data-guid="' + value.guid + ' data-type="notification">'
                 + '<div class="item-inner ' + unread + '">'
                   + '<div class="item-title-row no-padding-right">'
                     + '<div class="item-subtitle">GCcollab</div>'
@@ -250,10 +250,8 @@ function LoadMessageCentre() {
                   + '</div>'
                   + '<div class="item-text">' + value.title + '</div>'
                 + '</div>'
-                + '</a></div>'
-              + '<div class="swipeout-actions-left"><a href="#" class="bg-green swipeout-overswipe demo-reply">Reply</a><a href="#" class="demo-forward bg-blue">Forward</a></div>'
-              + '<div class="swipeout-actions-right"><a href="#" class="demo-actions">More</a><a href="#" class="demo-mark bg-orange">Mark</a><a href="#" data-confirm="Are you sure you want to delete this item?" class="swipeout-delete swipeout-overswipe">Delete</a></div>'
-            + '</li>';
+                + '</a><div class="item-after"><a href="#" class="link trash-notif" data-guid="'+value.guid+'" onclick="GCTUser.Delete(this);"><i class="fa fa-trash fa-2x"></i></a></div>'
+           + '</li>';
 
             if( !value.read ){
                 notificationsUnread++;

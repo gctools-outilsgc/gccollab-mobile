@@ -1199,3 +1199,9 @@ overflow:visible;
     color: #46246A;
     text-decoration: underline;
 }
+
+.trash-notif{
+    display:flex; 
+    min-height:90px;
+    align-items: center;
+}
