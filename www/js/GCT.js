@@ -540,6 +540,27 @@ GCTrequests = {
             }
         });
     },
+    GetWiresByUser: function (tabObject, profile) {
+        if (typeof profile == 'undefined')
+            profile = GCTUser.Email();
+
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.wirepostsbyuser", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
 }
 
 GCT = {
