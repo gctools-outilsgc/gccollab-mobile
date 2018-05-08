@@ -47,6 +47,7 @@ routes = [
                     context: {
                         navbar: navbar,
                         tabs: tabs,
+                        page: page,
                     }
                 }
             )
