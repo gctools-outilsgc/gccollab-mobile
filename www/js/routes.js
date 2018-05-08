@@ -14,11 +14,6 @@ routes = [
         url: './pages/sign-in-old.html',
     },
     {
-        name: 'home',
-        path: '/home/',
-        url: './pages/home.html',
-    },
-    {
         path: '/list-template/:page/',
         async: function (routeTo, routeFrom, resolve, reject) {
             var page = routeTo.params.page;
