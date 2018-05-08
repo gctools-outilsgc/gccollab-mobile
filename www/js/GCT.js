@@ -3,11 +3,34 @@
         var content = '<div class="center" id="page-' + title + '" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0" >' + GCTLang.Trans("page") + GCTLang.Trans(title) + '</div>' +
             '<div class="left sliding"><a href="#" data-panel="left" class="panel-open link icon-only" aria-label="Open Navigation Menu"><i class="fas fa-bars"></i></a></div>' +
             '<div class="title" id="' + title + '" tabindex="0">' + GCTLang.Trans(title) + '</div>' +
-            '<div class="right sliding"><a href="#" data-panel="right" class="panel-open link icon-only" aria-label="Open Notification Panel"><i class="fa fa-bell badge-wrapper"></i></a></div>';
+            '<div class="right sliding">' +
+            '<a href = "#" data-panel="right" class="panel-open link icon-only" aria - label="Open Notification Panel" > <i class="fa fa-bell badge-wrapper"></i></a >' +
+            '<a href="#" id="refresh-'+title+'" class="link icon-only" aria-label="refresh-content"><i class="fas fa-sync"></i></a></div > ';
         return content;
     },
     txtFocusMessage: function (id) {
         return '<span id="focus-' + id + '" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans('content-loaded') + '</span>';
+    },
+    txtAction: function (ref) {
+        var action = '';
+        switch (ref) {
+            case "post-home":
+                action = '<a id="home-actions" href="#" class="link open-popover" data-popover=".popover-actions" aria-label="Create a new Post Menu Options"><i class="fa fa-plus fa-2x"></i></a>';
+                break;
+            case "post-wire":
+                action = '<a href="#" class="link icon-only" onclick="GCTUser.PostWirePost();"><i class="fas fa-rss fa-2x"></i></a>';
+                break;
+            default: ;
+        }
+        console.log(action);
+        return action;
+    },
+    txtFilterButton: function (ref) {
+        var filter = '';
+        switch (ref) {
+            default: ;
+        }
+        return filter;
     },
 
     txtNewsfeed: function (object) {
@@ -266,6 +289,37 @@ GCTEach = {
         return content;
 
     },
+    ContentSuccess: function (data, obj) {
+        
+        var info = data.result;
+        var content = '';
+        if (obj.loaded == true) { $(obj.appendMessage).appendTo('#content-' + obj.id); } else { obj.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                content = obj.eachFunc(value);
+                $(content).hide().appendTo('#content-' + obj.id).fadeIn(1000);
+            });
+        }
+        if (info.length < obj.limit) {
+            content = endOfContent;
+            $(content).hide().appendTo('#content-' + obj.id).fadeIn(1000);
+            $('#more-' + obj.id).hide();
+        }
+        obj.offset += obj.limit;
+        var focusNow = document.getElementById('focus-' + obj.id);
+        if (focusNow) { focusNow.focus(); }
+    }
+}
+
+GCTtabs = {
+    TabReset: function (obj) {
+        obj.offset = 0;
+        obj.loaded = false;
+        $('#content-' + obj.id).html('');
+        $('#more-' + obj.id).show();
+        obj.request(obj);
+    },
 }
 
 GCTLang = {
@@ -413,45 +467,10 @@ GCTrequests = {
             }
         });
     },
-    GetNewsfeed: function (limit, offset, successCallback, errorCallback) {
-        limit = limit || 12;
-        offset = offset || 0;
-
-        app.request({
-            method: 'POST',
-            dataType: 'json',
-            url: GCT.GCcollabURL,
-            data: { method: "get.newsfeed", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
-            timeout: 12000,
-            success: function (data) {
-                successCallback(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                errorCallback(jqXHR, textStatus, errorThrown);
-            }
-        });
-    },
-    GetWires: function (limit, offset, filters, successCallback, errorCallback) {
-        limit = limit || 12;
-        offset = offset || 0;
-
-        app.request({
-            method: 'POST',
-            dataType: 'json',
-            url: GCT.GCcollabURL,
-            data: { method: "get.wireposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
-            timeout: 12000,
-            success: function (data) {
-                successCallback(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                errorCallback(jqXHR, textStatus, errorThrown);
-            }
-        });
-    },
-    GetBlogs: function (limit, offset, filters, successCallback, errorCallback) {
-        limit = limit || 12;
-        offset = offset || 0;
+    GetBlogs: function (tabObject) {
+        limit = tabObject.limit || 12;
+        offset = tabObject.offset || 0;
+        filters = tabObject.filters || '';
 
         app.request({
             method: 'POST',
@@ -460,10 +479,85 @@ GCTrequests = {
             data: { method: "get.blogposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                successCallback(data);
+                GCTEach.ContentSuccess(data, tabObject);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                errorCallback(jqXHR, textStatus, errorThrown);
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetNewsfeed: function (tabObject) {
+        limit = tabObject.limit || 12;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.newsfeed", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetWires: function (tabObject) {
+        limit = tabObject.limit || 12;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.wireposts", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetWiresByUserColleague: function (tabObject) {
+        limit = tabObject.limit || 12;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.wirepostsbycolleagues", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetWiresByUser: function (tabObject, profile) {
+        if (typeof profile == 'undefined')
+            profile = GCTUser.Email();
+
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.wirepostsbyuser", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
             }
         });
     },
@@ -592,12 +686,31 @@ GCT = {
     }
 }
 
-function listObject(id) {
-    var object = {};
-    object.offset = 0;
-    object.loaded = false;
-    object.id = id;
-    object.appendMessage = GCTtxt.txtFocusMessage(id);
+function listObject(id, limit, eachFunc) {
+    var object = {
+        offset : 0,
+        loaded : false,
+        id : id,
+        appendMessage: GCTtxt.txtFocusMessage(id),
+        eachFunc: eachFunc,
+        limit: limit
+    };
+    console.log(object);
+    return object;
+}
+function tabObject(page, tab, limit, eachFunc, request) {
+    var object = {
+        offset: 0,
+        limit: limit,
+        loaded: false,
+        id: page + '-' + tab,
+        name: tab,
+        page: page,
+        appendMessage: GCTtxt.txtFocusMessage(page + '-' + tab),
+        eachFunc: eachFunc,
+        request: request,
+    };
+    console.log(object);
     return object;
 }
 

@@ -7,6 +7,26 @@ var app  = new Framework7({
   id: 'ca.tbs-sct.gccollab', // App bundle ID
   name: 'GCcollab', // App name
   theme: 'md', // Automatic theme detection
+    data: function () {
+        return {
+            home: {
+                limit: 12,
+                tabs: [{ id: "newsfeed", each: GCTEach.Newsfeed, request: GCTrequests.GetNewsfeed },
+                    { id: "the-wire", each: GCTEach.Wire, request: GCTrequests.GetWires },
+                    { id: "blogs", each: GCTEach.Blog, request: GCTrequests.GetBlogs }],
+                action: 'post-home',
+                filters: '',
+            },
+            wires: {
+                limit: 15,
+                tabs: [{ id: "all", each: GCTEach.Wire, request: GCTrequests.GetWires },
+                    { id: "my-colleagues", each: GCTEach.Wire, request: GCTrequests.GetWiresByUserColleague },
+                    { id: "mine", each: GCTEach.Wire, request: GCTrequests.GetWiresByUser }],
+                action: 'post-wire',
+                filters: '',
+            },
+        };
+    },
   // App routes
   routes: routes,
 });
@@ -21,7 +41,7 @@ function AppOpen() {
     if (GCTLang.IsLangSet()) {
         if (GCTUser.IsLoggedIn()) {
             GCTUser.SetUserProfile();
-            mainView.router.navigate('/home/');
+            mainView.router.navigate('/list-template/home/');
         } else {
             if (openid_enabled) {
                 mainView.router.navigate('/sign-in/');

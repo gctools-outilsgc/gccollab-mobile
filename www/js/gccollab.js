@@ -3,7 +3,7 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
     $$('#home-navbar-inner').html(GCTtxt.txtGlobalNav('home'));
     var limit = 12;
     var home = {}; //variables for this page's content
-    home.newsfeed = listObject("home-newsfeed");
+    home.newsfeed = listObject("home-newsfeed", limit, GCTEach.Newsfeed);
     home.wire = listObject("home-wire");
     home.blogs = listObject("home-blogs");
 
@@ -65,7 +65,7 @@ $$(document).on('page:init', '.page[data-name="home"]', function (e) {
         home.blogs.offset += limit;
     }
 
-    GCTrequests.GetNewsfeed(limit, home.newsfeed.offset, homeNewsfeed, errorConsole);
+    GCTrequests.TestGetNewsfeed(home.newsfeed);
     $$('#tab-' + home.newsfeed.id).on('tab:show', function (e) {
         var focusTitle = document.getElementById('tabheader-home-newsfeed');
         if (focusTitle) { focusTitle.focus(); }
