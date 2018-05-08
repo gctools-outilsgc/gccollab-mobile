@@ -17,6 +17,8 @@ var app  = new Framework7({
                 tabs: [{ id: "all", each: GCTEach.Wire, request: GCTrequests.NewGetWires },
                     { id: "my-colleagues", each: GCTEach.Wire, request: GCTrequests.NewGetWires },
                     { id: "mine", each: GCTEach.Wire, request: GCTrequests.NewGetWires }],
+                action: 'post-wire',
+                filters: '',
             },
         };
     },

@@ -11,6 +11,24 @@
     txtFocusMessage: function (id) {
         return '<span id="focus-' + id + '" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans('content-loaded') + '</span>';
     },
+    txtAction: function (ref) {
+        var action = '';
+        switch (ref) {
+            case "post-wire":
+                action = '<a href="#" class="link icon-only" onclick="GCTUser.PostWirePost();"><i class="fas fa-rss fa-2x"></i></a>';
+                break;
+            default: ;
+        }
+        console.log(action);
+        return action;
+    },
+    txtFilterButton: function (ref) {
+        var filter = '';
+        switch (ref) {
+            default: ;
+        }
+        return filter;
+    },
 
     txtNewsfeed: function (object) {
         var content = "<div class='list cards-list'>"

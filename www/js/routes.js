@@ -36,6 +36,8 @@ routes = [
             }
             console.log(pageInfo);
             var navbar = GCTtxt.txtGlobalNav(page);
+            var action = GCTtxt.txtAction(pageInfo.action);
+            var filterButton = GCTtxt.txtFilterButton(pageInfo.filters);
             var tabs = [];
             pageInfo.tabs.forEach(function (tab) { tabs.push(tabObject(page, tab.id, pageInfo.limit, tab.each, tab.request)); });
             
@@ -48,6 +50,8 @@ routes = [
                         navbar: navbar,
                         tabs: tabs,
                         page: page,
+                        action: action,
+                        filter: filterButton,
                     }
                 }
             )
