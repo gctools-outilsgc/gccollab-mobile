@@ -20,6 +20,8 @@
             case "post-wire":
                 action = '<a href="#" class="link icon-only" onclick="GCTUser.PostWirePost();"><i class="fas fa-rss fa-2x"></i></a>';
                 break;
+            case "post-blog":
+                action = '<a href="#" onclick="GCTUser.PostBlogPost();" class="right link icon-only "><i class="fas fa-edit fa-2x"></i></a>'
             default: ;
         }
         console.log(action);
@@ -477,6 +479,42 @@ GCTrequests = {
             dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.blogposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetBlogsByUser: function (tabObject, target) {
+        limit = tabObject.limit || 12;
+        offset = tabObject.offset || 0;
+        target = target || '';
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.blogpostsbyowner", user: GCTUser.Email(), limit: limit, offset: offset, target: target, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetBlogsByColleagues: function (tabObject) {
+        limit = tabObject.limit || 12;
+        offset = tabObject.offset || 0;
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.blogpostsbycolleague", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);

@@ -25,6 +25,14 @@ var app  = new Framework7({
                 action: 'post-wire',
                 filters: '',
             },
+            blogs: {
+                limit: 15,
+                tabs: [{ id: "all", each: GCTEach.Blog, request: GCTrequests.GetBlogs },
+                    { id: "my-colleagues", each: GCTEach.Blog, request: GCTrequests.GetBlogsByColleagues },
+                    { id: "mine", each: GCTEach.Blog, request: GCTrequests.GetBlogsByUser }],
+                action: 'post-blog',
+                filters: '',
+            },
         };
     },
   // App routes

@@ -25,6 +25,9 @@ routes = [
                 case "wires":
                     pageInfo = app.data.wires;
                     break;
+                case "blogs":
+                    pageInfo = app.data.blogs;
+                    break;
 
                 default: reject();
                     
