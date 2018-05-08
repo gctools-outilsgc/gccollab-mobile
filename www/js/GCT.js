@@ -1056,26 +1056,35 @@ GCTUser = {
         var guid = $(obj).data("guid");
         $(".popover").remove();
         
-        myApp.confirm(GCTLang.Trans("deletepost"),
-            function (value) {
-                $$.ajax({
-                    api_key: api_key_gccollab,
-                    method: 'POST',
-                    dataType: 'json',
-                    url: GCT.GCcollabURL,
-                    data: { method: "delete.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
-                    timeout: 12000,
-                    success: function (data) {
-                        myApp.alert(GCTLang.Trans("deleted"));
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                       console.log(jqXHR, textStatus, errorThrown);
+        myApp.modal({
+            title: GCTLang.Trans("deletepost"),
+            text: GCTLang.Trans("deletepost"),
+            buttons: [
+                {
+                    text: GCTLang.Trans("cancel")
+                },
+                {
+                    text: GCTLang.Trans("ok"),
+                    bold: true,
+                    onClick: function () {
+                        $$.ajax({
+                            api_key: api_key_gccollab,
+                            method: 'POST',
+                            dataType: 'json',
+                            url: GCT.GCcollabURL,
+                            data: { method: "delete.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+                            timeout: 12000,
+                            success: function (data) {
+                                myApp.alert(GCTLang.Trans("deleted"));
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log(jqXHR, textStatus, errorThrown);
+                            }
+                        });     
                     }
-                });
-                myApp.pullToRefreshTrigger(".pull-to-refresh-content");
-            },
-            function (value) { }
-        );
+                },
+            ]
+        });
     },
     MoreOptions: function (obj) {
         var owner = $(obj).data("owner");
@@ -1101,8 +1110,9 @@ GCTUser = {
                             if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
                             if (type != "gccollab_opportunity") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>'; }
                         }
-                        popoverHTML += '<li><a href="#" class="list-button item-link close-popover"><span data-translate="close">Close</span> </a></li>';
-                    popoverHTML += '</ul>'
+                        popoverHTML += '<li><a href="#" class="list-button item-link close-popover">' + GCTLang.Trans("close") + ' </a></li>';
+                        popoverHTML += '</ul>'
+    
                 + '</div>'
             + '</div>'
         + '</div>';
