@@ -122,7 +122,7 @@
         return content;
     },
     txtGroup: function (object) {
-        var content = "<div class='swiper-slide list-block cards-list'>"
+        var content = "<div class='list cards-list'>"
             + "<div class='card' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>"
             + "<div class='card-header'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
@@ -132,7 +132,7 @@
             + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-content'>"
+            + "<div class='card-content card-content-padding'>"
             + "<div class='card-content-inner'>"
             + "<div class='item-text large'>" + object.description + "</div>"
             + "</div>"
