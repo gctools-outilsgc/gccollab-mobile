@@ -62,9 +62,9 @@ $$(document).on('keydown', '.modal-text-input', function(e){
     }
 });
 
-$$(document).on('taphold', '.like', function(e){
-    GCTUser.GetLikeUsers(this);
-});
+// $$(document).on('taphold', '.like', function(e){
+//     GCTUser.GetLikeUsers(this);
+// });
 
 $$('.panel-right').on('open', function () {
     LoadMessageCentre();
