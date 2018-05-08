@@ -14,6 +14,9 @@
     txtAction: function (ref) {
         var action = '';
         switch (ref) {
+            case "post-home":
+                action = '<a id="home-actions" href="#" class="link open-popover" data-popover=".popover-actions" aria-label="Create a new Post Menu Options"><i class="fa fa-plus fa-2x"></i></a>';
+                break;
             case "post-wire":
                 action = '<a href="#" class="link icon-only" onclick="GCTUser.PostWirePost();"><i class="fas fa-rss fa-2x"></i></a>';
                 break;
