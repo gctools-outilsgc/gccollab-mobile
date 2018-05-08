@@ -31,6 +31,9 @@ routes = [
                 case "groups":
                     pageInfo = app.data.groups;
                     break;
+                case "members":
+                    pageInfo = app.data.members;
+                    break;
 
                 default: reject();
                     

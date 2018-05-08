@@ -146,6 +146,21 @@
         content = GCT.SetLinks(content);
         return content;
     },
+    txtMember: function (object) {
+        var content = "<a class='item-link item-content close-popup close-panel' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row no-padding-right'>"
+            + "</div>"
+            + "<div class='row ptm'>"
+            + "<div class='col-20 members-icon'><img src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
+            + "<div class='col-80 item-title reg-text'>" + object.name + "<div class='item-text more_text'>" + object.organization + "</div> <div class='item-text more_text'> " + object.job + "</div></div>"
+            + "</div>";
+        (object.colleaguerequest == true) ? content += object.description : content += '';
+        content += "</div>"
+            + "</a>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
 }
 
 GCTEach = {
@@ -333,6 +348,19 @@ GCTEach = {
             type: "gccollab_group",
             liked: liked,
             likes: likes
+        });
+        return content;
+    },
+    Member: function (value) {
+        var description = value.about || GCTLang.Trans('no-profile');
+        var content = GCTtxt.txtMember({
+            guid: value.user_id,
+            icon: value.iconURL,
+            name: value.displayName,
+            job: (value.job) ? value.job : '',
+            date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
+            description: description,
+            organization: value.organization
         });
         return content;
     },
@@ -674,6 +702,45 @@ GCTrequests = {
             dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.groups", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetMembers: function (tabObject, filters) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.members", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetMembersByUserColleague: function (tabObject, filters, profile) {
+        if (typeof profile == 'undefined')
+            profile = GCTUser.Email(); //### Get current users profile
+
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.memberscolleague", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);

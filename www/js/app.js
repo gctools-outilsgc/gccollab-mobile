@@ -40,6 +40,13 @@ var app  = new Framework7({
                 action: '',
                 filters: '',
             },
+            members: {
+                limit: 15,
+                tabs: [{ id: "all", each: GCTEach.Member, request: GCTrequests.GetMembers },
+                    { id: "my-colleagues", each: GCTEach.Member, request: GCTrequests.GetMembersByUserColleague }],
+                action: '',
+                filters: '',
+            },
         };
     },
   // App routes
