@@ -28,6 +28,9 @@ routes = [
                 case "blogs":
                     pageInfo = app.data.blogs;
                     break;
+                case "groups":
+                    pageInfo = app.data.groups;
+                    break;
 
                 default: reject();
                     

@@ -33,6 +33,13 @@ var app  = new Framework7({
                 action: 'post-blog',
                 filters: '',
             },
+            groups: {
+                limit: 15,
+                tabs: [{ id: "all", each: GCTEach.Group, request: GCTrequests.GetGroups },
+                    { id: "my-groups", each: GCTEach.Group, request: GCTrequests.GetGroupsMine }],
+                action: '',
+                filters: '',
+            },
         };
     },
   // App routes

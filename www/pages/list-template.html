@@ -7,9 +7,11 @@
             </div>
             <div class="subnavbar" role="navigation" data-translate-target="aria-label">
                 <div class="subnavbar-inner">
-                    {{#each tabs}}
-                    <a href="#tab-{{this.id}}" class="button {{#if @first}}tab-link-active{{/if}} tab-link" data-translate="{{this.name}}"></a>
-                    {{/each}}
+                    <div class="segmented">
+                        {{#each tabs}}
+                        <a href="#tab-{{this.id}}" class="button {{#if @first}}tab-link-active{{/if}} tab-link" data-translate="{{this.name}}"></a>
+                        {{/each}}
+                    </div>
                 </div>
             </div>
         </div>

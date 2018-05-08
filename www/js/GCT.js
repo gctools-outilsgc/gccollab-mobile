@@ -121,6 +121,31 @@
         content = GCT.SetLinks(content);
         return content;
     },
+    txtGroup: function (object) {
+        var content = "<div class='swiper-slide list-block cards-list'>"
+            + "<div class='card' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>"
+            + "<div class='card-header'>"
+            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row'>"
+            + "<div class='author'>" + object.name + "</div>"
+            + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-content'>"
+            + "<div class='card-content-inner'>"
+            + "<div class='item-text large'>" + object.description + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-footer'>"
+            + "<div>" + object.count + "</div>"
+            + object.action
+            + "</div>"
+            + "</div>"
+            + "</div>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
 }
 
 GCTEach = {
@@ -290,6 +315,26 @@ GCTEach = {
         });
         return content;
 
+    },
+    Group: function (value) {
+        var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var members = (value.count > 0) ? value.count + (value.count == 1 ? " " + GCTLang.Trans("member") : " " + GCTLang.Trans("members")) : "";
+        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+
+        var content = GCTtxt.txtGroup({
+            icon: value.iconURL,
+            name: value.name,
+            description: text,
+            count: members,
+            action: action,
+            owner: value.guid,
+            type: "gccollab_group",
+            liked: liked,
+            likes: likes
+        });
+        return content;
     },
     ContentSuccess: function (data, obj) {
         
@@ -590,6 +635,45 @@ GCTrequests = {
             dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.wirepostsbyuser", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetGroups: function (tabObject, filters) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+        filters = tabObject.filters || '';
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.groups", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetGroupsMine: function (tabObject, filters) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+        filters = tabObject.filters || '';
+        filters = $.extend({ "mine": true }, filters);
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.groups", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);
