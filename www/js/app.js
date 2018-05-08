@@ -20,7 +20,7 @@ var app  = new Framework7({
             wires: {
                 limit: 15,
                 tabs: [{ id: "all", each: GCTEach.Wire, request: GCTrequests.GetWires },
-                    { id: "my-colleagues", each: GCTEach.Wire, request: GCTrequests.GetWires },
+                    { id: "my-colleagues", each: GCTEach.Wire, request: GCTrequests.GetWiresByUserColleague },
                     { id: "mine", each: GCTEach.Wire, request: GCTrequests.GetWires }],
                 action: 'post-wire',
                 filters: '',
