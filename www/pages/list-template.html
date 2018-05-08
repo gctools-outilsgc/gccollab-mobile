@@ -84,11 +84,19 @@
                 var tabs = this.tabs;
                 tabs[0].request(tabs[0]); //load first tab, which is active tab
                 tabs.forEach(function (tab) {
+                    //More Button
                     $$('#more-' + tab.id).on('click', function (e) {
                         $('#focus-' + tab.id).remove();
                         tab.request(tab);
                     });
+                    //Tab Show
+                    $$('#tab-' + tab.id).on('tab:show', function (e) {
+                        if (!tab.loaded) {
+                            tab.request(tab);
+                        }
+                    });
                 });
+                //Refresh Button - All
                 $$('#refresh-' + this.page).on('click', function (e) {
                     tabs.forEach(function (tab) {
                         GCTtabs.TabReset(tab);

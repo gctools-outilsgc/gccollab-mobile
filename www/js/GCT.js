@@ -464,45 +464,10 @@ GCTrequests = {
             }
         });
     },
-    GetNewsfeed: function (limit, offset, successCallback, errorCallback) {
-        limit = limit || 12;
-        offset = offset || 0;
-
-        app.request({
-            method: 'POST',
-            dataType: 'json',
-            url: GCT.GCcollabURL,
-            data: { method: "get.newsfeed", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
-            timeout: 12000,
-            success: function (data) {
-                successCallback(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                errorCallback(jqXHR, textStatus, errorThrown);
-            }
-        });
-    },
-    GetWires: function (limit, offset, filters, successCallback, errorCallback) {
-        limit = limit || 12;
-        offset = offset || 0;
-
-        app.request({
-            method: 'POST',
-            dataType: 'json',
-            url: GCT.GCcollabURL,
-            data: { method: "get.wireposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
-            timeout: 12000,
-            success: function (data) {
-                successCallback(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                errorCallback(jqXHR, textStatus, errorThrown);
-            }
-        });
-    },
-    GetBlogs: function (limit, offset, filters, successCallback, errorCallback) {
-        limit = limit || 12;
-        offset = offset || 0;
+    GetBlogs: function (tabObject) {
+        limit = tabObject.limit || 12;
+        offset = tabObject.offset || 0;
+        filters = tabObject.filters || '';
 
         app.request({
             method: 'POST',
@@ -511,14 +476,14 @@ GCTrequests = {
             data: { method: "get.blogposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                successCallback(data);
+                GCTEach.ContentSuccess(data, tabObject);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                errorCallback(jqXHR, textStatus, errorThrown);
+                errorConsole(jqXHR, textStatus, errorThrown);
             }
         });
     },
-    TestGetNewsfeed: function (tabObject) {
+    GetNewsfeed: function (tabObject) {
         limit = tabObject.limit || 12;
         offset = tabObject.offset || 0;
 
@@ -529,16 +494,14 @@ GCTrequests = {
             data: { method: "get.newsfeed", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                console.log('worked');
                 GCTEach.ContentSuccess(data, tabObject);
-                //successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorConsole(jqXHR, textStatus, errorThrown);
             }
         });
     },
-    NewGetWires: function (tabObject) {
+    GetWires: function (tabObject) {
         limit = tabObject.limit || 12;
         offset = tabObject.offset || 0;
 

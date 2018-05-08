@@ -19,7 +19,7 @@ routes = [
         url: './pages/home.html',
     },
     {
-        path: '/list-template/:page/:action/',
+        path: '/list-template/:page/',
         async: function (routeTo, routeFrom, resolve, reject) {
             var page = routeTo.params.page;
             var pageInfo = [];
@@ -34,7 +34,6 @@ routes = [
                 default: reject();
                     
             }
-            console.log(pageInfo);
             var navbar = GCTtxt.txtGlobalNav(page);
             var action = GCTtxt.txtAction(pageInfo.action);
             var filterButton = GCTtxt.txtFilterButton(pageInfo.filters);

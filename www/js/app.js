@@ -10,13 +10,18 @@ var app  = new Framework7({
     data: function () {
         return {
             home: {
-                tabs: ["newsfeed", "the-wire", "blogs"],
+                limit: 12,
+                tabs: [{ id: "newsfeed", each: GCTEach.Newsfeed, request: GCTrequests.GetNewsfeed },
+                    { id: "the-wire", each: GCTEach.Wire, request: GCTrequests.GetWires },
+                    { id: "blogs", each: GCTEach.Blog, request: GCTrequests.GetBlogs }],
+                action: 'post-home',
+                filters: '',
             },
             wires: {
                 limit: 15,
-                tabs: [{ id: "all", each: GCTEach.Wire, request: GCTrequests.NewGetWires },
-                    { id: "my-colleagues", each: GCTEach.Wire, request: GCTrequests.NewGetWires },
-                    { id: "mine", each: GCTEach.Wire, request: GCTrequests.NewGetWires }],
+                tabs: [{ id: "all", each: GCTEach.Wire, request: GCTrequests.GetWires },
+                    { id: "my-colleagues", each: GCTEach.Wire, request: GCTrequests.GetWires },
+                    { id: "mine", each: GCTEach.Wire, request: GCTrequests.GetWires }],
                 action: 'post-wire',
                 filters: '',
             },
@@ -36,7 +41,7 @@ function AppOpen() {
     if (GCTLang.IsLangSet()) {
         if (GCTUser.IsLoggedIn()) {
             GCTUser.SetUserProfile();
-            mainView.router.navigate('/home/');
+            mainView.router.navigate('/list-template/home/');
         } else {
             if (openid_enabled) {
                 mainView.router.navigate('/sign-in/');
