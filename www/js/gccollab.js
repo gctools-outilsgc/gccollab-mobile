@@ -8,7 +8,7 @@
             if (email != "" && password != "" && email.length >= 3 && password.length >= 6) {
                 GCTUser.Login(email, password, function (success) {
                     if (success.result == true) {
-                        mainView.router.navigate('/home/');
+                        mainView.router.navigate('/list-template/home/');
                         GCTUser.SaveLoginEmail(email);
                         GCTUser.SetLoginCookie();
                         GCTUser.SetUserProfile();
@@ -28,7 +28,7 @@
         if (email != "" && password != "") {
             GCTUser.Login(email, password, function (success) {
                 if (success.result == true) {
-                    mainView.router.navigate('/home/');
+                    mainView.router.navigate('/list-template/home/');
                     GCTUser.SaveLoginEmail(email);
                     GCTUser.SetLoginCookie();
                     GCTUser.SetUserProfile();

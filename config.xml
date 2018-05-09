@@ -7,7 +7,7 @@
     <!--
     <content src="https://gctools.ca/gctoolkit/index.html" />
     -->
-    <content src="www/index.html" />
+    <content src="index.html" />
     <preference name="phonegap-version" value="cli-8.0.0" />
     <preference name="SplashScreenDelay" value="1500" />
     <preference name="FadeSplashScreen" value="false" />
