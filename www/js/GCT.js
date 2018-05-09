@@ -22,6 +22,8 @@
                 break;
             case "post-blog":
                 action = '<a href="#" onclick="GCTUser.PostBlogPost();" class="right link icon-only "><i class="fas fa-edit fa-2x"></i></a>'
+            case "post-opp":
+                action = '<a href="#" aria-label="create mission Créer une mission" class="link icon-only" onclick="GCTUser.CreateNewOpportunity();"><i class="fa fa-briefcase fa-2x"></i></a>'
             default: ;
         }
         console.log(action);
@@ -120,6 +122,220 @@
             + "</div>";
         content = GCT.SetLinks(content);
         return content;
+    },
+    txtGroup: function (object) {
+        var content = "<div class='list cards-list'>"
+            + "<div class='card' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>"
+            + "<div class='card-header'>"
+            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row'>"
+            + "<div class='author'>" + object.name + "</div>"
+            + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-content card-content-padding'>"
+            + "<div class='card-content-inner'>"
+            + "<div class='item-text large'>" + object.description + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-footer'>"
+            + "<div>" + object.count + "</div>"
+            + object.action
+            + "</div>"
+            + "</div>"
+            + "</div>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
+    txtMember: function (object) {
+        var content = "<a class='item-link item-content close-popup close-panel' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row no-padding-right'>"
+            + "</div>"
+            + "<div class='row ptm'>"
+            + "<div class='col-20 members-icon'><img src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
+            + "<div class='col-80 item-title reg-text'>" + object.name + "<div class='item-text more_text'>" + object.organization + "</div> <div class='item-text more_text'> " + object.job + "</div></div>"
+            + "</div>";
+        (object.colleaguerequest == true) ? content += object.description : content += '';
+        content += "</div>"
+            + "</a>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
+    txtDoc: function (object) {
+        var content = "<div class='list cards-list'>"
+            + "<div class='card'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row'>"
+            + "<div class='author'>" + object.name + "</div>"
+            + "</div>"
+            + "<div class='time'>" + object.date + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-content card-content-padding'>"
+            + "<div class='card-content-inner'>"
+            + "<div class='blog-title'>" + object.title + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-footer'>"
+            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
+            + object.action
+            + "</div>"
+            + "</div>"
+            + "</div>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
+    txtEvent: function (object) {
+        var content = "<div class='list cards-list'>"
+            + "<div id='" + object.id + "' class='card'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row'>"
+            + "<div class='author'>" + object.name + "</div>"
+            + "</div>"
+            + "<div class='time'>" + object.date + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-content card-content-padding'>"
+            + "<div class='card-content-inner'>"
+            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
+
+            + "<div class='blog-title'>" + object.title + "</div>"
+            + "<div class='item-text large'>" + object.startDate + "<br>" + object.endDate + "</div>"
+            + "<div class='item-text large'>" + object.location + "</div>"
+            + "<div class='item-text large " + object.all_text + "'>" + "<br>" + object.description + "</div>";
+
+        if (object.fullview) { //implement parts for full events popup, rather than the events list
+            content += "<div class='item-text large'>" + "" + "</div>" //placeholder for text after desc
+                + "</div>"
+                + "</div>"
+                + "<div class='card-content'>" + "<hr>"
+                + "<div class='card-content-inner'>"
+                + "<div class='blog-title'>" + object.additionalTitle + "</div>"
+                + "<div class='item-text large'>" + object.org + "</div>"
+                + "<div class='item-text large'>" + object.phone + "</div>"
+                + "<div class='item-text large'>" + object.email + "</div>"
+                + "<div class='item-text large'>" + object.fee + "</div>"
+                + "<div class='item-text large'>" + object.eventLang + "</div>";
+        }
+        content += "</div>"
+            + "</div>"
+            + "<div class='card-footer'>"
+            + "<a href='#' aria-label='like aimer' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + object.action
+
+            + "</div>"
+            + "</div>"
+            + "</div>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
+    txtBookmark: function (object) {
+        var content = "<div class='list cards-list'>"
+            + "<div class='card'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row'>"
+            + "<div class='author'>" + object.name + "</div>"
+            + "</div>"
+            + "<div class='time'>" + object.date + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-content  card-content-padding'>"
+            + "<div class='card-content-inner'>"
+
+            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
+            + "<div class='blog-title'>" + object.title + "</div>"
+            + "<div class='blog-group'>" + object.posted + "</div>"
+            + "<div class='item-text large'>" + object.description + "</div>"
+            + "<div class='blog-group'>" + "Link: " + object.address + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-footer'>"
+            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+            + object.action
+            + "</div>"
+            + "</div>"
+            + "</div>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
+    txtOpps: function (object) {
+
+        if (object.state == 'posted') {
+            var content = "<div class='list cards-list'>"
+                + "<div class='card view view-main'>"
+                + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+                + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+                + "<div class='item-inner'>"
+                + "<div class='item-title-row'>"
+                + "<div class='author'>" + object.name + "</div>"
+                + "</div>"
+                + "<div class='time'>" + object.date + "</div>"
+                + "</div>"
+                + "</div>"
+                + "<div class='card-content card-content-padding'>"
+                + "<div class='card-content-inner'" + object.all_text + ">"
+                + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
+                + "<div class='blog-title'>" + object.title + "</div>"
+                + "<div class='title'> <b>" + object.jobtype + "(" + object.roletype + ")" + "</b></div>"
+                + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>";
+
+            if (object.fullview) { //implement parts for full events popup, rather than the events list
+                content += "<div class='item-text large'>" + "" + "</div>" //placeholder for text after desc
+                    + "</div>"
+                    + "</div>"
+                    + "<div class='card-content'>" + "<hr>"
+                    + "<div class='card-content-inner'>"
+                    + "<div class='blog-title'>" + object.additionalTitle + "</div>" //change from 'blog' title later
+                    + "<div class='item-text'>" + object.programArea + "</div>"
+                    + "<div class='item-text'>" + object.numOpportunities + "</div>"
+                    + "<div class='item-text'>" + object.idealComplete + "</div>"
+                    + "<div class='item-text large'>" + object.deadline + "</div>"
+                    + "<div class='item-text large'>" + object.oppVirtual + "</div>"
+                    + "<div class='item-text large'>" + object.oppOnlyIn + "</div>"
+                    + "<div class='item-text large'>" + object.location + "</div>"
+                    + "<div class='item-text large'>" + object.security + "</div>"
+                    + "<div class='item-text large'>" + object.skills + "</div>"
+                    + "<br>"
+                    + "<div class='blog-title'>" + GCTLang.Trans('opportunity-language-requirements') + "</div>" //change to smaller title later
+                    + "<div class='item-text large'>" + object.languageReq + "</div>"
+                    + "<br>"
+                    + "<div class='blog-title'>" + GCTLang.Trans("opportunity-scheduling-requirements") + "</div>" //change to smaller title later
+                    + "<div class='item-text large'>" + object.timecommitment + "</div>"
+                    + "<div class='item-text large'>" + object.timezone + "</div>"
+                    + "<div class='item-text large'>" + object.schedulingReq + "</div>"
+                    + "<br>"
+                    + "<div class='item-text large'>" + object.participants + "</div>"
+                    + "<div class='item-text large'>" + object.applicants + "</div>";
+            } else {
+                content += "<div class='item-text large'>" + object.deadline + "</div>"
+                    + "<div class='item-text'>" + object.programArea + "</div>";
+            }
+            content += "</div>"
+                + "</div>"
+                + "<div class='card-footer'>"
+            content += object.action
+            if (object.apply == 'mission_apply') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ApplyPost(this);'> <span>" + GCTLang.Trans('apply-opt') + "</span></a>"; }
+            else if (object.apply == 'withdraw') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('withdrawn-opt') + "</span></a>"; }
+            else if (object.apply == 'offered') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.AcceptPost(this);'> <span>" + GCTLang.Trans('accept-opt') + "</span></a><a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('decline-opt') + "</span></a>"; }
+
+            content += "</div>"
+                + "</div>"
+                + "</div>";
+        } else {
+            var content = "<div class='swiper-slide list-block cards-list'>";// need something hidden 
+        }
+        content = GCT.SetLinks(content);
+        return content;
+
     },
 }
 
@@ -287,6 +503,186 @@ GCTEach = {
             replied: replied,
             liked: liked,
             likes: likes
+        });
+        return content;
+
+    },
+    Group: function (value) {
+        var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var members = (value.count > 0) ? value.count + (value.count == 1 ? " " + GCTLang.Trans("member") : " " + GCTLang.Trans("members")) : "";
+        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+
+        var content = GCTtxt.txtGroup({
+            icon: value.iconURL,
+            name: value.name,
+            description: text,
+            count: members,
+            action: action,
+            owner: value.guid,
+            type: "gccollab_group",
+            liked: liked,
+            likes: likes
+        });
+        return content;
+    },
+    Member: function (value) {
+        var description = value.about || GCTLang.Trans('no-profile');
+        var content = GCTtxt.txtMember({
+            guid: value.user_id,
+            icon: value.iconURL,
+            name: value.displayName,
+            job: (value.job) ? value.job : '',
+            date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
+            description: description,
+            organization: value.organization
+        });
+        return content;
+    },
+    Event: function (value) {
+        var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
+
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_event' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+
+        var date = (value.startDate).split(" ")[0];
+        var split = date.split("-");
+        var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
+
+
+        var month = parseInt(split[1]) - 1;
+        var id = 'event-' + split[0] + '-' + month + '-' + split[2];
+        id = id.replace(/(^|-)0+/g, "$1");
+
+        var posted = "";
+        if (value.groupGUID !== null && typeof value.groupGUID !== 'undefined') {
+            posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.groupGUID + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.group + "</a>";
+        } else {
+            posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+        }
+
+        var startDate = GCTLang.Trans("start-date") + date;
+        var endDate = GCTLang.Trans("end-date") + (value.endDate).split(" ")[0];
+
+        var location = ((value.location !== null) && (typeof value.location !== 'undefined')) ? "<b>" + GCTLang.Trans("location") + "</b>" + value.location : "";
+        var fullview = false;
+
+        var content = GCTtxt.txtEvent({
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            startDate: startDate,
+            endDate: endDate,
+            date: prettyDate(value.startDate),
+            location: location,
+            posted: posted,
+            description: text.trunc(150),
+            title: value.title,
+            id: id,
+            action: action,
+            owner: value.owner_guid,
+            guid: value.guid,
+            type: "gccollab_event",
+            liked: liked,
+            likes: likes,
+            fullview: fullview
+        });
+        return content;
+    },
+    Doc: function (value) {
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var action = "<a href='#' class='link' data-title='" + value.title + "' data-guid='" + value.guid + "' data-type='gccollab_doc' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+
+        var content = GCTtxt.txtDoc({
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            date: prettyDate(value.time_created),
+            title: value.title,
+            action: action,
+            owner: value.owner_guid,
+            guid: value.guid,
+            type: "gccollab_doc",
+            liked: liked,
+            likes: likes
+        });
+        return content;
+    },
+    Bookmark: function (value) {
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var action = '';
+        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_bookmark' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        var posted = '';
+        if (value.group_guid) {
+            posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.group_guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.group + "</a>";
+        } else {
+            posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+        }
+        var address = "<a class='external' data-type='gccollab_bookmark' href='" + value.address + "'>" + value.address + "</a> ";
+        var content = GCTtxt.txtBookmark({
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            owner: value.owner_guid,
+            date: prettyDate(value.time_created),
+            title: value.title,
+            posted: posted,
+            description: value.description,
+            address: address,
+            type: "gccollab_bookmark",
+            guid: value.guid,
+            action: action,
+            liked: liked,
+            likes: likes
+        });
+        return content;
+    },
+    Opportunity: function (value) {
+        // Removes HTML components from Blog
+        var text = (value.description !== null) ? value.description : "";
+        var replied = (value.replied) ? "replied" : "";
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_opportunity' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+
+        var programArea = "<b>" + GCTLang.Trans("program-area") + "</b>";
+        if (value.programArea) { programArea += value.programArea; }
+
+        var deadline = "<b>" + GCTLang.Trans("deadline") + "</b>";
+        if (value.deadline) { deadline += value.deadline; }
+
+        var jobtype = '';
+        if (value.jobtype) { jobtype += value.jobtype; }
+
+        var roletype = '';
+        if (value.roletype) { roletype += value.roletype; }
+
+        var state = '';
+        if (value.state) { state += value.state; }
+
+        var apply = '';
+        if (value.apply) { apply = value.apply };
+
+        var content = GCTtxt.txtOpps({
+            guid: value.guid,
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            date: prettyDate(value.time_created),
+            jobtype: jobtype,
+            roletype: roletype,
+            description: text.trunc(150),
+            programArea: programArea,
+            deadline: deadline,
+            type: "gccollab_opportunity",
+            replied: replied,
+            action: action,
+            owner: value.owner_guid,
+            title: value.title,
+            liked: liked,
+            likes: likes,
+            state: state,
+            apply: apply
         });
         return content;
 
@@ -599,6 +995,194 @@ GCTrequests = {
             }
         });
     },
+    GetGroups: function (tabObject, filters) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+        filters = tabObject.filters || '';
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.groups", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetGroupsMine: function (tabObject, filters) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+        filters = tabObject.filters || '';
+        filters = $.extend({ "mine": true }, filters);
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.groups", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetMembers: function (tabObject, filters) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.members", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetMembersByUserColleague: function (tabObject, filters, profile) {
+        if (typeof profile == 'undefined')
+            profile = GCTUser.Email(); //### Get current users profile
+
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.memberscolleague", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetDocs: function (tabObject, filters) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.docs", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetEvents: function (tabObject, from, to) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+        from = from || "";
+        to = to || "";
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.events", user: GCTUser.Email(), from: from, to: to, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetBookmarks: function (tabObject, filters) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.bookmarks", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetBookmarksByUserColleague: function (tabObject, filters) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.bookmarkscolleague", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetBookmarksByUser: function (tabObject, target) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+        target = tabObject.target || '';
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.bookmarksbyuser", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang(), target: target },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetOpportunities: function (tabObject, filters) {
+        limit = tabObject.limit || 10;
+        offset = tabObject.offset || 0;
+        filters = tabObject.filters || '';
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.opportunities", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
 }
 
 GCT = {
@@ -802,5 +1386,5 @@ function errorConsole(jqXHR, textStatus, errorThrown) {
     console.log(jqXHR, textStatus, errorThrown);
 }
 
-var endOfContent = '<div class="card"><div class="card-content"><div class="card-content-inner"><div class="item-text">' + GCTLang.Trans("end-of-content") + '</div></div></div></div>';
+var endOfContent = '<div class="card"><div class="card-content card-content-padding"><div class="card-content-inner"><div class="item-text">' + GCTLang.Trans("end-of-content") + '</div></div></div></div>';
 

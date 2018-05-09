@@ -33,6 +33,46 @@ var app  = new Framework7({
                 action: 'post-blog',
                 filters: '',
             },
+            groups: {
+                limit: 15,
+                tabs: [{ id: "all", each: GCTEach.Group, request: GCTrequests.GetGroups },
+                    { id: "my-groups", each: GCTEach.Group, request: GCTrequests.GetGroupsMine }],
+                action: '',
+                filters: '',
+            },
+            members: {
+                limit: 15,
+                tabs: [{ id: "all", each: GCTEach.Member, request: GCTrequests.GetMembers },
+                    { id: "my-colleagues", each: GCTEach.Member, request: GCTrequests.GetMembersByUserColleague }],
+                action: '',
+                filters: '',
+            },
+            docs: {
+                limit: 10,
+                tabs: [{ id: "all", each: GCTEach.Doc, request: GCTrequests.GetDocs }],
+                action: '',
+                filters: '',
+            },
+            events: {
+                limit: 15,
+                tabs: [{ id: "all", each: GCTEach.Event, request: GCTrequests.GetEvents }],
+                action: '',
+                filters: '',
+            },
+            bookmarks: {
+                limit: 15,
+                tabs: [{ id: "all", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarks },
+                    { id: "my-colleagues", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarksByUserColleague },
+                    { id: "mine", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarksByUser }],
+                action: 'post-blog',
+                filters: '',
+            },
+            opportunities: {
+                limit: 8,
+                tabs: [{ id: "all", each: GCTEach.Opportunity, request: GCTrequests.GetOpportunities }],
+                action: 'post-opp',
+                filters: '',
+            },
         };
     },
   // App routes
