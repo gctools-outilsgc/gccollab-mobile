@@ -24,7 +24,7 @@ GCTLang = {
             + "</div>"
             + "</div>"
             + "<div class='card-footer'>"
-            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"            
+            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"            
             + object.reply
             + object.action
             + "</div>"
@@ -42,7 +42,7 @@ GCTLang = {
                         + '</div>'
             + '<div class="time">' + object.date + '<a href="#" class="link pull-right more-options" data-owner="' + object.owner + '" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="GCTUser.MoreOptions(this);" aria-label="More Options"><i class="fa fa-caret-down"></i></a></div>'
                         + object.description
-                        + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+                        + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
                         
                     + '</div>'
                 + '</div>'
@@ -72,7 +72,7 @@ GCTLang = {
                     + "</div>"
                 + "</div>"
                 + "<div class='card-footer'>"       
-                + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+                + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
                 // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
                     + object.action
                 + "</div>"
@@ -104,7 +104,7 @@ GCTLang = {
                     + "</div>"
                 + "</div>"
                 + "<div class='card-footer'>"
-                + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+                + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
                 // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
                     + object.action
                 + "</div>"
@@ -131,7 +131,7 @@ GCTLang = {
                     + "</div>"
                 + "</div>"
                 + "<div class='card-footer'>"
-                + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+                + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
                 // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
                     + object.action
                 + "</div>"
@@ -317,7 +317,7 @@ GCTLang = {
                     + "</div>"
                 + "</div>"
                 + "<div class='card-footer'>"
-                + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+                + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
                 + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyWirePost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
                     + object.action
                 + "</div>"
@@ -381,7 +381,7 @@ GCTLang = {
             + "</div>"
             + "</div>"
             + "<div class='card-footer'>"
-            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
             + object.action
             + "</div>"
             + "</div>"
