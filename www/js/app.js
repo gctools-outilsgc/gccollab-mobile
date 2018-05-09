@@ -59,6 +59,14 @@ var app  = new Framework7({
                 action: '',
                 filters: '',
             },
+            bookmarks: {
+                limit: 15,
+                tabs: [{ id: "all", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarks },
+                    { id: "my-colleagues", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarksByUserColleague },
+                    { id: "mine", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarksByUser }],
+                action: 'post-blog',
+                filters: '',
+            },
         };
     },
   // App routes
