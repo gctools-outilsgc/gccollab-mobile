@@ -47,6 +47,12 @@ var app  = new Framework7({
                 action: '',
                 filters: '',
             },
+            docs: {
+                limit: 15,
+                tabs: [{ id: "all", each: GCTEach.Doc, request: GCTrequests.GetDocs }],
+                action: '',
+                filters: '',
+            },
         };
     },
   // App routes
