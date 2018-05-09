@@ -188,6 +188,52 @@
         content = GCT.SetLinks(content);
         return content;
     },
+    txtEvent: function (object) {
+        var content = "<div class='list cards-list'>"
+            + "<div id='" + object.id + "' class='card'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row'>"
+            + "<div class='author'>" + object.name + "</div>"
+            + "</div>"
+            + "<div class='time'>" + object.date + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-content card-content-padding'>"
+            + "<div class='card-content-inner'>"
+            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
+
+            + "<div class='blog-title'>" + object.title + "</div>"
+            + "<div class='item-text large'>" + object.startDate + "<br>" + object.endDate + "</div>"
+            + "<div class='item-text large'>" + object.location + "</div>"
+            + "<div class='item-text large " + object.all_text + "'>" + "<br>" + object.description + "</div>";
+
+        if (object.fullview) { //implement parts for full events popup, rather than the events list
+            content += "<div class='item-text large'>" + "" + "</div>" //placeholder for text after desc
+                + "</div>"
+                + "</div>"
+                + "<div class='card-content'>" + "<hr>"
+                + "<div class='card-content-inner'>"
+                + "<div class='blog-title'>" + object.additionalTitle + "</div>"
+                + "<div class='item-text large'>" + object.org + "</div>"
+                + "<div class='item-text large'>" + object.phone + "</div>"
+                + "<div class='item-text large'>" + object.email + "</div>"
+                + "<div class='item-text large'>" + object.fee + "</div>"
+                + "<div class='item-text large'>" + object.eventLang + "</div>";
+        }
+        content += "</div>"
+            + "</div>"
+            + "<div class='card-footer'>"
+            + "<a href='#' aria-label='like aimer' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + object.action
+
+            + "</div>"
+            + "</div>"
+            + "</div>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
 }
 
 GCTEach = {
@@ -388,6 +434,56 @@ GCTEach = {
             date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
             description: description,
             organization: value.organization
+        });
+        return content;
+    },
+    Event: function (value) {
+        var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
+
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_event' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+
+        var date = (value.startDate).split(" ")[0];
+        var split = date.split("-");
+        var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
+
+
+        var month = parseInt(split[1]) - 1;
+        var id = 'event-' + split[0] + '-' + month + '-' + split[2];
+        id = id.replace(/(^|-)0+/g, "$1");
+
+        var posted = "";
+        if (value.groupGUID !== null && typeof value.groupGUID !== 'undefined') {
+            posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.groupGUID + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.group + "</a>";
+        } else {
+            posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+        }
+
+        var startDate = GCTLang.Trans("start-date") + date;
+        var endDate = GCTLang.Trans("end-date") + (value.endDate).split(" ")[0];
+
+        var location = ((value.location !== null) && (typeof value.location !== 'undefined')) ? "<b>" + GCTLang.Trans("location") + "</b>" + value.location : "";
+        var fullview = false;
+
+        var content = GCTtxt.txtEvent({
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            startDate: startDate,
+            endDate: endDate,
+            date: prettyDate(value.startDate),
+            location: location,
+            posted: posted,
+            description: text.trunc(150),
+            title: value.title,
+            id: id,
+            action: action,
+            owner: value.owner_guid,
+            guid: value.guid,
+            type: "gccollab_event",
+            liked: liked,
+            likes: likes,
+            fullview: fullview
         });
         return content;
     },
@@ -805,6 +901,26 @@ GCTrequests = {
             dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.docs", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetEvents: function (tabObject, from, to) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+        from = from || "";
+        to = to || "";
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.events", user: GCTUser.Email(), from: from, to: to, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);

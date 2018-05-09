@@ -53,6 +53,12 @@ var app  = new Framework7({
                 action: '',
                 filters: '',
             },
+            events: {
+                limit: 15,
+                tabs: [{ id: "all", each: GCTEach.Event, request: GCTrequests.GetEvents }],
+                action: '',
+                filters: '',
+            },
         };
     },
   // App routes
