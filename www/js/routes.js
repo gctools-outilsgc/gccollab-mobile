@@ -18,26 +18,8 @@ routes = [
         async: function (routeTo, routeFrom, resolve, reject) {
             var page = routeTo.params.page;
             var pageInfo = [];
-            switch (page) {
-                case "home":
-                    pageInfo = app.data.home;
-                    break;
-                case "wires":
-                    pageInfo = app.data.wires;
-                    break;
-                case "blogs":
-                    pageInfo = app.data.blogs;
-                    break;
-                case "groups":
-                    pageInfo = app.data.groups;
-                    break;
-                case "members":
-                    pageInfo = app.data.members;
-                    break;
-
-                default: reject();
-                    
-            }
+            pageInfo = app.data[page];
+            
             var navbar = GCTtxt.txtGlobalNav(page);
             var action = GCTtxt.txtAction(pageInfo.action);
             var filterButton = GCTtxt.txtFilterButton(pageInfo.filters);
