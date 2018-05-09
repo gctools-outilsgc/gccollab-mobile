@@ -48,7 +48,7 @@ var app  = new Framework7({
                 filters: '',
             },
             docs: {
-                limit: 15,
+                limit: 10,
                 tabs: [{ id: "all", each: GCTEach.Doc, request: GCTrequests.GetDocs }],
                 action: '',
                 filters: '',
@@ -65,6 +65,12 @@ var app  = new Framework7({
                     { id: "my-colleagues", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarksByUserColleague },
                     { id: "mine", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarksByUser }],
                 action: 'post-blog',
+                filters: '',
+            },
+            opportunities: {
+                limit: 8,
+                tabs: [{ id: "all", each: GCTEach.Opportunity, request: GCTrequests.GetOpportunities }],
+                action: 'post-opp',
                 filters: '',
             },
         };

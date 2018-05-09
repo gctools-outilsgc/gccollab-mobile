@@ -22,6 +22,8 @@
                 break;
             case "post-blog":
                 action = '<a href="#" onclick="GCTUser.PostBlogPost();" class="right link icon-only "><i class="fas fa-edit fa-2x"></i></a>'
+            case "post-opp":
+                action = '<a href="#" aria-label="create mission Créer une mission" class="link icon-only" onclick="GCTUser.CreateNewOpportunity();"><i class="fa fa-briefcase fa-2x"></i></a>'
             default: ;
         }
         console.log(action);
@@ -264,6 +266,76 @@
             + "</div>";
         content = GCT.SetLinks(content);
         return content;
+    },
+    txtOpps: function (object) {
+
+        if (object.state == 'posted') {
+            var content = "<div class='list cards-list'>"
+                + "<div class='card view view-main'>"
+                + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+                + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+                + "<div class='item-inner'>"
+                + "<div class='item-title-row'>"
+                + "<div class='author'>" + object.name + "</div>"
+                + "</div>"
+                + "<div class='time'>" + object.date + "</div>"
+                + "</div>"
+                + "</div>"
+                + "<div class='card-content card-content-padding'>"
+                + "<div class='card-content-inner'" + object.all_text + ">"
+                + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
+                + "<div class='blog-title'>" + object.title + "</div>"
+                + "<div class='title'> <b>" + object.jobtype + "(" + object.roletype + ")" + "</b></div>"
+                + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>";
+
+            if (object.fullview) { //implement parts for full events popup, rather than the events list
+                content += "<div class='item-text large'>" + "" + "</div>" //placeholder for text after desc
+                    + "</div>"
+                    + "</div>"
+                    + "<div class='card-content'>" + "<hr>"
+                    + "<div class='card-content-inner'>"
+                    + "<div class='blog-title'>" + object.additionalTitle + "</div>" //change from 'blog' title later
+                    + "<div class='item-text'>" + object.programArea + "</div>"
+                    + "<div class='item-text'>" + object.numOpportunities + "</div>"
+                    + "<div class='item-text'>" + object.idealComplete + "</div>"
+                    + "<div class='item-text large'>" + object.deadline + "</div>"
+                    + "<div class='item-text large'>" + object.oppVirtual + "</div>"
+                    + "<div class='item-text large'>" + object.oppOnlyIn + "</div>"
+                    + "<div class='item-text large'>" + object.location + "</div>"
+                    + "<div class='item-text large'>" + object.security + "</div>"
+                    + "<div class='item-text large'>" + object.skills + "</div>"
+                    + "<br>"
+                    + "<div class='blog-title'>" + GCTLang.Trans('opportunity-language-requirements') + "</div>" //change to smaller title later
+                    + "<div class='item-text large'>" + object.languageReq + "</div>"
+                    + "<br>"
+                    + "<div class='blog-title'>" + GCTLang.Trans("opportunity-scheduling-requirements") + "</div>" //change to smaller title later
+                    + "<div class='item-text large'>" + object.timecommitment + "</div>"
+                    + "<div class='item-text large'>" + object.timezone + "</div>"
+                    + "<div class='item-text large'>" + object.schedulingReq + "</div>"
+                    + "<br>"
+                    + "<div class='item-text large'>" + object.participants + "</div>"
+                    + "<div class='item-text large'>" + object.applicants + "</div>";
+            } else {
+                content += "<div class='item-text large'>" + object.deadline + "</div>"
+                    + "<div class='item-text'>" + object.programArea + "</div>";
+            }
+            content += "</div>"
+                + "</div>"
+                + "<div class='card-footer'>"
+            content += object.action
+            if (object.apply == 'mission_apply') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ApplyPost(this);'> <span>" + GCTLang.Trans('apply-opt') + "</span></a>"; }
+            else if (object.apply == 'withdraw') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('withdrawn-opt') + "</span></a>"; }
+            else if (object.apply == 'offered') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.AcceptPost(this);'> <span>" + GCTLang.Trans('accept-opt') + "</span></a><a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('decline-opt') + "</span></a>"; }
+
+            content += "</div>"
+                + "</div>"
+                + "</div>";
+        } else {
+            var content = "<div class='swiper-slide list-block cards-list'>";// need something hidden 
+        }
+        content = GCT.SetLinks(content);
+        return content;
+
     },
 }
 
@@ -565,6 +637,55 @@ GCTEach = {
             likes: likes
         });
         return content;
+    },
+    Opportunity: function (value) {
+        // Removes HTML components from Blog
+        var text = (value.description !== null) ? value.description : "";
+        var replied = (value.replied) ? "replied" : "";
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_opportunity' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+
+        var programArea = "<b>" + GCTLang.Trans("program-area") + "</b>";
+        if (value.programArea) { programArea += value.programArea; }
+
+        var deadline = "<b>" + GCTLang.Trans("deadline") + "</b>";
+        if (value.deadline) { deadline += value.deadline; }
+
+        var jobtype = '';
+        if (value.jobtype) { jobtype += value.jobtype; }
+
+        var roletype = '';
+        if (value.roletype) { roletype += value.roletype; }
+
+        var state = '';
+        if (value.state) { state += value.state; }
+
+        var apply = '';
+        if (value.apply) { apply = value.apply };
+
+        var content = GCTtxt.txtOpps({
+            guid: value.guid,
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            date: prettyDate(value.time_created),
+            jobtype: jobtype,
+            roletype: roletype,
+            description: text.trunc(150),
+            programArea: programArea,
+            deadline: deadline,
+            type: "gccollab_opportunity",
+            replied: replied,
+            action: action,
+            owner: value.owner_guid,
+            title: value.title,
+            liked: liked,
+            likes: likes,
+            state: state,
+            apply: apply
+        });
+        return content;
+
     },
     ContentSuccess: function (data, obj) {
         
@@ -1035,6 +1156,24 @@ GCTrequests = {
             dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.bookmarksbyuser", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang(), target: target },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetOpportunities: function (tabObject, filters) {
+        limit = tabObject.limit || 10;
+        offset = tabObject.offset || 0;
+        filters = tabObject.filters || '';
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.opportunities", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);

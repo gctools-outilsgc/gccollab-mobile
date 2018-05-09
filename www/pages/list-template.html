@@ -5,6 +5,7 @@
             <div id="{{page}}-navbar-inner" class="navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar">
                 {{navbar}}
             </div>
+            {{#js_if "this.tabs.length != 1" }}
             <div class="subnavbar" role="navigation" data-translate-target="aria-label">
                 <div class="subnavbar-inner">
                     <div class="segmented">
@@ -14,6 +15,7 @@
                     </div>
                 </div>
             </div>
+            {{/js_if}}
         </div>
     </div>
     <div class="toolbar toolbar-bottom-md">
