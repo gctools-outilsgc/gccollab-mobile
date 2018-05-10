@@ -1303,12 +1303,13 @@ function listObject(id, limit, eachFunc) {
     console.log(object);
     return object;
 }
-function tabObject(page, tab, limit, eachFunc, request) {
+function tabObject(page, tab, limit, type, eachFunc, request) {
     var object = {
         offset: 0,
         limit: limit,
         loaded: false,
         id: page + '-' + tab,
+        type: type,
         name: tab,
         page: page,
         appendMessage: GCTtxt.txtFocusMessage(page + '-' + tab),
