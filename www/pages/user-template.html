@@ -28,7 +28,38 @@
             {{#each tabs}}
             <div id="tab-{{this.id}}" class="page-content tab {{#if @first}}tab-active{{/if}}">
                 {{this.header}}
-                {{#js_if "this.type == 'user'"}}<div id="content-{{this.id}}" class='list cards-list'></div>{{/js_if}}
+                {{#js_if "this.type == 'user'"}}
+                <div class="item-content userprofile">
+                    <div class="item-media"><img id="user-icon" onclick="ShowImage(this);" src="" width="44"></div>
+                    <div class="item-inner">
+                        <div class="item-title-row">
+                            <div class="item-title" id="user-title">Title</div>
+                        </div>
+                        <div class="item-subtitle" id="user-department">Department</div>
+                    </div>
+                </div>
+                <div class="row margin-10" id="action-buttons">
+                    <!-- For message + add colleague -->
+                </div>
+                <div class="list-block inputs-list vmargin-0" id="user-info-list">
+                    <!-- For profile information: name, department, job, email, etc. -->
+                </div>
+                <hr>
+                <div class="content-block text-center vmargin-10">
+                    <div class="row profiles">
+                        <div class="col-33 profiles" id="wire-num"></div>
+                        <div class="col-33 profiles" id="blog-num"></div>
+                        <div class="col-33 profiles" id="colleague-num"></div>
+                    </div>
+                    <div class="row profile stats">
+                        <div class="col-33 profile stats font-13" data-translate="wires">Wires</div>
+                        <div class="col-33 profile stats font-13" data-translate="blogs">Blogs</div>
+                        <div class="col-33 profile stats font-13" data-translate="colleagues">Colleagues</div>
+                    </div>
+                </div>
+                <hr>
+                <div id="social-media" class="content-block vmargin-10"></div>
+                {{/js_if}}
                 {{#js_if "this.type == 'card'"}}<div id="content-{{this.id}}" class='list cards-list'></div>{{/js_if}}
                 {{#js_if "this.type == 'item'"}}<div class="list media-list"><ul id="content-{{this.id}}"></ul></div>{{/js_if}}
                 {{#js_if "this.type != 'user'"}}<a id="more-{{this.id}}" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>{{/js_if}}
@@ -38,3 +69,33 @@
     </div>
         </div>
 </template>
+<script>
+    return {
+        on: {
+            pageInit: function (e, page) {
+                console.log('pageInit', page);
+                var tabs = this.tabs;
+                tabs[0].request(tabs[0], this.guid); //load first tab, which is active tab
+                tabs.forEach(function (tab) {
+                    //More Button
+                    $$('#more-' + tab.id).on('click', function (e) {
+                        $('#focus-' + tab.id).remove();
+                        tab.request(tab);
+                    });
+                    //Tab Show
+                    $$('#tab-' + tab.id).on('tab:show', function (e) {
+                        if (!tab.loaded) {
+                            tab.request(tab);
+                        }
+                    });
+                });
+                //Refresh Button - All
+                $$('#refresh-' + this.guid).on('click', function (e) {
+                    tabs.forEach(function (tab) {
+                        GCTtabs.TabReset(tab);
+                    });
+                });
+            },
+        }
+    }
+</script>

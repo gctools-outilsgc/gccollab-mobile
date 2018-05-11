@@ -75,7 +75,7 @@ var app  = new Framework7({
             },
             userprofile: {
                 limit: 15,
-                tabs: [{ id: "profile", each: GCTEach.User, request: GCTrequests.GetUserProfile, type: 'user' },
+                tabs: [{ id: "profile", each: GCTEach.User, request: GCTrequests.GetUserProfileP, type: 'user' },
                     { id: "groups", each: GCTEach.Group, request: GCTrequests.GetUserGroups, type: 'card' }],
                 action: '',
                 filters: '',

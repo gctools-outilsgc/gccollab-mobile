@@ -694,11 +694,27 @@ GCTEach = {
         return content;
 
     },
-    User: function (value) {
+    User: function (value, obj) {
+        console.log(value);
+        var profileData = value.result;
+        if (typeof profileData == "string") {
+            myApp.alert(GCTLang.Trans("couldnotfindprofile"));
+            return;
+        }
+        var isOwnProfile = false;
+        if (profileData.displayName == GCTUser.DisplayName()) {
+            isOwnProfile = true;
+        }
+        var colleagueButton = (profileData.friend) ? '<a href="#" class="button button-fill button-raised" data-guid="' + profileData.id + '" onclick="GCTUser.RemoveColleague(this);">' + GCTLang.Trans("remove-colleague") + '</a>' : '<a href="#" class="button button-fill button-raised" data-guid="' + profileData.id + '" onclick="GCTUser.AddColleague(this);">' + GCTLang.Trans("add-colleague") + '</a>';
+        var profile = '';
+        var content = '';
+        var listItem = '';
 
+        $('#content-' + obj.id).html('yes');
+        console.log('#content-' + obj.id);
     },
     ContentSuccess: function (data, obj) {
-        
+        console.log(obj);
         var info = data.result;
         var content = '';
         if (obj.loaded == true) { $(obj.appendMessage).appendTo('#content-' + obj.id); } else { obj.loaded = true; }
@@ -872,6 +888,42 @@ GCTrequests = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetUserProfileP: function (tabObject, profile) {
+        if (typeof profile == 'undefined')
+            profile = GCTUser.Email(); //### Get current users profile
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.user", user: GCTUser.Email(), api_key: api_key_gccollab, profileemail: profile, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.User(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetUserGroups: function (tabObject, profile) {
+        if (typeof profile == 'undefined')
+            profile = GCTUser.Email(); //### Get current users profile
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.usergroups", user: GCTUser.Email(), profileemail: profile, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
             }
         });
     },
