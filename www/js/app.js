@@ -73,6 +73,13 @@ var app  = new Framework7({
                 action: 'post-opp',
                 filters: '',
             },
+            userprofile: {
+                limit: 15,
+                tabs: [{ id: "profile", each: GCTEach.User, request: GCTrequests.GetUserProfile, type: 'user' },
+                    { id: "groups", each: GCTEach.Group, request: GCTrequests.GetUserGroups, type: 'card' }],
+                action: '',
+                filters: '',
+            },
         };
     },
   // App routes

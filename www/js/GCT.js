@@ -694,6 +694,9 @@ GCTEach = {
         return content;
 
     },
+    User: function (value) {
+
+    },
     ContentSuccess: function (data, obj) {
         
         var info = data.result;
