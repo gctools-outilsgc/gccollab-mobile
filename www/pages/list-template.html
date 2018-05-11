@@ -29,6 +29,7 @@
         <div class="tabs">
             {{#each tabs}}
             <div id="tab-{{this.id}}" class="page-content tab {{#if @first}}tab-active{{/if}}">
+                {{this.header}}
                 {{#js_if "this.type == 'card'"}}<div id="content-{{this.id}}" class='list cards-list'></div>{{/js_if}}
                 {{#js_if "this.type == 'item'"}}<div class="list media-list"><ul id="content-{{this.id}}"></ul></div>{{/js_if}}
                 <a id="more-{{this.id}}" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>

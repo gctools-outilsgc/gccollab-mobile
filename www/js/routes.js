@@ -24,7 +24,7 @@ routes = [
             var action = GCTtxt.txtAction(pageInfo.action);
             var filterButton = GCTtxt.txtFilterButton(pageInfo.filters);
             var tabs = [];
-            pageInfo.tabs.forEach(function (tab) { tabs.push(tabObject(page, tab.id, pageInfo.limit, tab.type, tab.each, tab.request)); });
+            pageInfo.tabs.forEach(function (tab) { tabs.push(tabObject(page, tab.id, pageInfo.limit, tab.type, tab.header, tab.each, tab.request)); });
             
             resolve(
                 {
