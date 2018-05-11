@@ -53,6 +53,17 @@
         }
         return header;
     },
+    txtUserList: function (content) {
+        var contentNew = '<li>'
+            + '<div class="item-content">'
+            + '<div class="item-inner">'
+            + content
+            + '</div>'
+            + '</div>'
+            + '</li>'
+            + '<li>';
+        return contentNew;
+    },
 
     txtNewsfeed: function (object) {
         var content = "<div aria-label='"+object.label+"' tabindex='0'><div class='card' aria-hidden='true' >"
@@ -698,7 +709,7 @@ GCTEach = {
         console.log(value);
         var profileData = value.result;
         if (typeof profileData == "string") {
-            myApp.alert(GCTLang.Trans("couldnotfindprofile"));
+            app.alert(GCTLang.Trans("couldnotfindprofile"));
             return;
         }
         var isOwnProfile = false;
@@ -710,8 +721,27 @@ GCTEach = {
         var content = '';
         var listItem = '';
 
-        $('#content-' + obj.id).html('yes');
-        console.log('#content-' + obj.id);
+        $("#icon-" + obj.id).attr('src', profileData.iconURL);
+        $("#icon-" + obj.id).attr('aria-label', GCTLang.Trans("user-avatar"));
+        $("#title-" + obj.id).html(profileData.displayName).text();
+        $("#department-" + obj.id).html(profileData.department).text();
+
+        if (!isOwnProfile) {
+            var content = '<div class="col-50"><a href="#" class="button button-fill button-raised" data-name="' + profileData.displayName + '" data-guid="' + profileData.id + '" onclick="GCTUser.NewMessage(this);">' + GCTLang.Trans("message") + '</a></div>'
+                + '<div class="col-50">' + colleagueButton + '</div>'
+                // + '<div class="col-33"><a href="#" class="button button-fill button-raised" data-guid="' + profileData.displayName + '" onclick="GCTUser.BlockUser(this);">' + GCTLang.Trans("blockuser") + '</a></div>'
+                + '</div>';
+            $("#action-buttons-" + obj.id).html(content).text();
+        }
+
+        profile = '<ul>';
+        listItem = '<div class="item-title">' + GCTLang.Trans('name') + '</div>'
+            + '<div class="item-text">' + profileData.displayName + '</div>';
+        profile += GCTtxt.txtUserList(listItem);
+
+
+        profile += "</ul>";
+        $("#info-list-" + obj.id).html(profile).text();
     },
     ContentSuccess: function (data, obj) {
         console.log(obj);
@@ -868,6 +898,9 @@ GCTUser = {
             console.log("Set user profile error:");
             console.log(jqXHR, textStatus, errorThrown);
         });
+    },
+    DisplayName: function () {
+        return (Cookies.get('displayName')) ? Cookies.get('displayName') : "";
     },
 
 }

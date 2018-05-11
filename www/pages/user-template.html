@@ -30,18 +30,18 @@
                 {{this.header}}
                 {{#js_if "this.type == 'user'"}}
                 <div class="item-content userprofile">
-                    <div class="item-media"><img id="user-icon" onclick="ShowImage(this);" src="" width="44"></div>
+                    <div class="item-media"><img id="icon-{{this.id}}" onclick="ShowImage(this);" src="" width="44"></div>
                     <div class="item-inner">
                         <div class="item-title-row">
-                            <div class="item-title" id="user-title">Title</div>
+                            <div class="item-title" id="title-{{this.id}}">Title</div>
                         </div>
-                        <div class="item-subtitle" id="user-department">Department</div>
+                        <div class="item-subtitle" id="department-{{this.id}}">Department</div>
                     </div>
                 </div>
-                <div class="row margin-10" id="action-buttons">
+                <div class="row margin-10" id="action-buttons-{{this.id}}">
                     <!-- For message + add colleague -->
                 </div>
-                <div class="list-block inputs-list vmargin-0" id="user-info-list">
+                <div class="list vmargin-0" id="info-list-{{this.id}}">
                     <!-- For profile information: name, department, job, email, etc. -->
                 </div>
                 <hr>
