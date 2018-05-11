@@ -1318,6 +1318,48 @@ GCTUser = {
             }
         });
     },
+
+    GetEventsByUser: function (from, to, limit, successCallback, errorCallback) {
+        limit = limit || 10;
+       // offset = offset || 0;
+        from = from || "";
+        to = to || "";
+
+        $$.ajax({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.eventsbyowner", user: GCTUser.Email(), from: from, to: to, limit: limit, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+
+    GetEventsByColleagues: function (from, to, limit, successCallback, errorCallback) {
+        limit = limit || 10;
+        from = from || "";
+        to = to || "";
+
+        $$.ajax({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.eventsbycolleagues", user: GCTUser.Email(), from: from, to: to, limit: limit, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetGroup: function (guid, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
@@ -2948,7 +2990,6 @@ function prettyDate(date) {
 function urlify(text, context) {
     
     context = context || false;
-    
     var urlRegex = /(https:\/\/gccollab.ca\/thewire\/owner\/)(.*?)(?:"|\\|>|$)/g
     
     while (match = urlRegex.exec(text)) {
