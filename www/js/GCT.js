@@ -1330,7 +1330,7 @@ GCTUser = {
         });
     },
 
-    GetEventsByColleagues: function (from, to, limit, offset, successCallback, errorCallback) {
+    GetEventsByColleagues: function (from, to, limit, successCallback, errorCallback) {
         limit = limit || 10;
         from = from || "";
         to = to || "";
@@ -2980,7 +2980,6 @@ function prettyDate(date) {
 function urlify(text, context) {
     
     context = context || false;
-    
     var urlRegex = /(https:\/\/gccollab.ca\/thewire\/owner\/)(.*?)(?:"|\\|>|$)/g
     
     while (match = urlRegex.exec(text)) {

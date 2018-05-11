@@ -2422,7 +2422,7 @@ console.log(events.mine.id);
 
     $$('#tab-' + events.colleagues.id).on('show', function (e) {
         if (!events.colleagues.loaded) {
-            GCTUser.GetEventsByColleagues(limit, events.colleagues.offset, eventsColleagues, errorConsole);
+            GCTUser.GetEventsByColleagues(limit, events.colleagues.offset, '' ,eventsColleagues, errorConsole);
         }
     });
     $$('#more-' + events.colleagues.id).on('click', function (e) {
