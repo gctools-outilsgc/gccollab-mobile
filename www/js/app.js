@@ -11,9 +11,9 @@ var app  = new Framework7({
         return {
             home: {
                 limit: 12,
-                tabs: [{ id: "newsfeed", each: GCTEach.Newsfeed, request: GCTrequests.GetNewsfeed, type: 'card' },
-                    { id: "the-wire", each: GCTEach.Wire, request: GCTrequests.GetWires, type: 'card' },
-                    { id: "blogs", each: GCTEach.Blog, request: GCTrequests.GetBlogs, type: 'card' }],
+                tabs: [{ id: "newsfeed", each: GCTEach.Newsfeed, request: GCTrequests.GetNewsfeed, type: 'card', header: 'newsfeed' },
+                    { id: "the-wire", each: GCTEach.Wire, request: GCTrequests.GetWires, type: 'card', header: 'the-wire' },
+                    { id: "blogs", each: GCTEach.Blog, request: GCTrequests.GetBlogs, type: 'card', header: 'blogs' }],
                 action: 'post-home',
                 filters: '',
             },

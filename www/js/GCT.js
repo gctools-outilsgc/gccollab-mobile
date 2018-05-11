@@ -36,6 +36,23 @@
         }
         return filter;
     },
+    txtTabHeader: function (ref) {
+        var header = '';
+        switch (ref) {
+            case 'newsfeed':
+                header = '<div class="block small"><div class="row"><div class="col-66"><h2 class="no-margin" data-translate="newsfeed" tabindex="0" id="tabheader-home-newsfeed">' + GCTLang.Trans("newsfeed") +'</h2></div></div></div>';
+                break;
+            case 'the-wire':
+                header = '<div class="block small"><div class="row"><div class="col-66"><h2 class="no-margin" data-translate="the-wire" tabindex="0" id="tabheader-home-wire">' + GCTLang.Trans("the-wire") + '</h2></div>'
+                    + '<div class="col-33"><a href="/list-template/wires/" class="button button-fill pull-right" >' + GCTLang.Trans("view-all") +'</a></div></div></div>';
+                break;
+            case 'blogs':
+                header = '<div class="block small"><div class="row"><div class="col-66"><h2 class="no-margin" data-translate="blogs" tabindex="0" id="tabheader-home-wire">' + GCTLang.Trans("blogs") + '</h2></div>'
+                    + '<div class="col-33"><a href="/list-template/blogs/" class="button button-fill pull-right" >' + GCTLang.Trans("view-all") + '</a></div></div></div>';
+            default: ;
+        }
+        return header;
+    },
 
     txtNewsfeed: function (object) {
         var content = "<div aria-label='"+object.label+"' tabindex='0'><div class='card' aria-hidden='true' >"
@@ -1310,7 +1327,7 @@ function listObject(id, limit, eachFunc) {
     console.log(object);
     return object;
 }
-function tabObject(page, tab, limit, type, eachFunc, request) {
+function tabObject(page, tab, limit, type, header, eachFunc, request) {
     var object = {
         offset: 0,
         limit: limit,
@@ -1319,6 +1336,7 @@ function tabObject(page, tab, limit, type, eachFunc, request) {
         type: type,
         name: tab,
         page: page,
+        header: GCTtxt.txtTabHeader(header),
         appendMessage: GCTtxt.txtFocusMessage(page + '-' + tab),
         eachFunc: eachFunc,
         request: request,
