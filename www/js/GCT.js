@@ -736,10 +736,14 @@ GCTEach = {
 
         profile = '';
         profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('name') + '</div>' + profileData.displayName + '</div>';
-        
+        if (profileData.hasOwnProperty("jobTitle") && profileData.jobTitle !== null && profileData.jobTitle !== "") {
+            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('job-title') + '</div>' + profileData.jobTitle + '</div>';
+        }
+        profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('email') + '</div><a class="external" href = "mailto:' + profileData.email + '" > ' + profileData.email + '</a ></div>';
+        if (profileData.hasOwnProperty("telephone") && profileData.telephone !== null && profileData.telephone !== "") {
+            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('phone') + '</div><a class="external" href="tel:' + profileData.telephone + '">' + profileData.telephone + '</a></div>';
+        }
 
-
-        profile += "";
         $("#info-list-" + obj.id).html(profile).text();
     },
     ContentSuccess: function (data, obj) {
