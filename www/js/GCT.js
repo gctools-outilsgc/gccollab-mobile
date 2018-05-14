@@ -64,6 +64,13 @@
             + '<li>';
         return contentNew;
     },
+    txtProfileExp: function (object) {
+        var content = '<div class="item-text large" onclick="ToggleAllText(this);">'
+            + "<div class='bolder-title'>" + object.title + "</div> "
+            + "<div class='norm-text'><i>" + object.subtitle + "<br>" + object.startDate + " to " + object.endDate + "</i></div>"
+            + "<div class='norm-text all_text'>" + object.text + "</div>" + '</div>' + "<br>";
+        return content;
+    },
 
     txtNewsfeed: function (object) {
         var content = "<div aria-label='"+object.label+"' tabindex='0'><div class='card' aria-hidden='true' >"
@@ -743,8 +750,80 @@ GCTEach = {
         if (profileData.hasOwnProperty("telephone") && profileData.telephone !== null && profileData.telephone !== "") {
             profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('phone') + '</div><a class="external" href="tel:' + profileData.telephone + '">' + profileData.telephone + '</a></div>';
         }
-
+        if (profileData.hasOwnProperty("about_me") && profileData.about_me !== null && profileData.about_me !== "") {
+            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('about-me') + '</div>' + profileData.about_me + '</div>';
+        }
+        if (profileData.hasOwnProperty("education") && profileData.education !== null && profileData.education !== "") {
+            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('education') + '</div>';
+            $(profileData.education).each(function (key, value) {
+                var looper = 0; //dynamic variable counter
+                while (value["item_" + looper]) {
+                    var school = (value["item_" + looper].school_name) ? value["item_" + looper].school_name : "";
+                    var degree = (value["item_" + looper].degree) ? value["item_" + looper].degree : "";
+                    var fieldOfStudy = (value["item_" + looper].field_of_study) ? value["item_" + looper].field_of_study : "";
+                    var startDate = (value["item_" + looper].start_date) ? value["item_" + looper].start_date : "";
+                    var endDate = (value["item_" + looper].end_date) ? value["item_" + looper].end_date : "";
+                    profile += GCTtxt.txtProfileExp({
+                        title: school,
+                        subtitle: degree + " - " + fieldOfStudy,
+                        text: "",
+                        startDate: startDate,
+                        endDate: endDate
+                    });
+                    looper++;
+                }
+            });
+            profile += '</div>';
+        }
+        if (profileData.hasOwnProperty("experience") && profileData.experience !== null && profileData.experience !== "") {
+            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('experience') + '</div>';
+            $(profileData.experience).each(function (key, value) {
+                var looper = 0; //dynamic variable counter, sigh
+                while (value["item_" + looper]) {
+                    var job_title = (value["item_" + looper].job_title) ? value["item_" + looper].job_title : "";
+                    var organization = (value["item_" + looper].organization) ? value["item_" + looper].organization : "";
+                    var responsibilities = (value["item_" + looper].responsibilities) ? value["item_" + looper].responsibilities : "";
+                    var startDate = (value["item_" + looper].start_date) ? value["item_" + looper].start_date : "";
+                    var endDate = (value["item_" + looper].end_date) ? value["item_" + looper].end_date : "";
+                    profile += GCTtxt.txtProfileExp({
+                        title: job_title,
+                        subtitle: organization,
+                        text: responsibilities,
+                        startDate: startDate,
+                        endDate: endDate
+                    });
+                    looper++;
+                }
+            });
+            profile += '</div>';
+        }
+        if (profileData.hasOwnProperty("skills") && profileData.skills !== null && profileData.skills !== "") {
+            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('skills') + '</div>';
+            $(profileData.skills).each(function (key, value) {
+                var looper = 0; //dynamic variable counter
+                while (value["item_" + looper]) {
+                    var skill = (value["item_" + looper].skill) ? value["item_" + looper].skill : "";
+                    profile += '<div class="item-text large" onclick="ToggleAllText(this);">' + skill + '</div>';
+                    looper++;
+                }
+            });
+            profile += '</div>';
+        }
         $("#info-list-" + obj.id).html(profile).text();
+
+        $("#wire-num-" + obj.id).html(profileData.wires).text();
+        $("#blog-num-" + obj.id).html(profileData.blogs).text();
+        $("#colleague-num-" + obj.id).html(profileData.colleagues).text();
+
+        if (profileData.hasOwnProperty("links")) {
+            var links = '<div class="center">' + GCTLang.Trans('social-media') + '</div>'
+                + '<ul class="socials">';
+            if (profileData.links.hasOwnProperty("github")) { links += '<li><a id="user-github" aria-label="Github" href="' + profileData.links.github + '" class="gh external"><i class="fab fa-github"></i></a></li>'; }
+            if (profileData.links.hasOwnProperty("twitter")) { links += '<li><a id="user-twitter" aria-label="Twitter" href="' + profileData.links.twitter + '" class="tw external"><i class="fab fa-twitter"></i></a></li>'; }
+            if (profileData.links.hasOwnProperty("linkedin")) { links += '<li><a id="user-linkedin" aria-label="Linkedin" href="' + profileData.links.linkedin + '" class="li external"><i class="fab fa-linkedin"></i></a></li>'; }
+            if (profileData.links.hasOwnProperty("facebook")) { links += '<li><a id="user-facebook" aria-label="Facebook" href="' + profileData.links.facebook + '" class="fb external"><i class="fab fa-facebook"></i></a></li>'; }
+            $("#social-media-" + obj.id).html(links).text();
+        }
     },
     ContentSuccess: function (data, obj) {
         console.log(obj);
