@@ -1042,6 +1042,24 @@ GCTrequests = {
             }
         });
     },
+    GetUserActivity: function (tabObject, profile) {
+        if (typeof profile == 'undefined')
+            profile = GCTUser.Email(); //### Get current users profile
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.useractivity", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang(), api_version: apiVersion },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetBlogs: function (tabObject) {
         limit = tabObject.limit || 12;
         offset = tabObject.offset || 0;
@@ -1229,7 +1247,7 @@ GCTrequests = {
             }
         });
     },
-    GetMembersByUserColleague: function (tabObject, filters, profile) {
+    GetMembersByUserColleague: function (tabObject, profile, filters) {
         if (typeof profile == 'undefined')
             profile = GCTUser.Email(); //### Get current users profile
 
