@@ -734,13 +734,12 @@ GCTEach = {
             $("#action-buttons-" + obj.id).html(content).text();
         }
 
-        profile = '<ul>';
-        listItem = '<div class="item-title">' + GCTLang.Trans('name') + '</div>'
-            + '<div class="item-text">' + profileData.displayName + '</div>';
-        profile += GCTtxt.txtUserList(listItem);
+        profile = '';
+        profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('name') + '</div>' + profileData.displayName + '</div>';
+        
 
 
-        profile += "</ul>";
+        profile += "";
         $("#info-list-" + obj.id).html(profile).text();
     },
     ContentSuccess: function (data, obj) {
