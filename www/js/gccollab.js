@@ -41,3 +41,22 @@
         }
     });
 })
+
+function ShowProfile(email) {
+    if (typeof email == 'undefined')
+        email = GCTUser.Email(); //### Get current users profile
+    //If email, NaN, so get profile to get guid, else it is guid already, so just go to profile
+    if (isNaN(email)) {
+        GCTrequests.GetUserProfile(email, function (data) {
+            var profileData = data.result;
+            /* Temp ViewPost, replace with sheet modal of user profile eventaully */
+            mainView.router.navigate('/user-template/' + profileData.id + '/');
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    } else {
+        console.log('skip');
+        mainView.router.navigate('/user-template/' + email + '/');
+    }
+    
+}
