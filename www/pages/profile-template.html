@@ -60,9 +60,21 @@
                     <hr>
                     <div id="social-media-{{this.id}}" class="content-block vmargin-10"></div>
                     {{/js_if}}
+                    {{#js_if "this.type == 'group'"}}
+                    <div class="item-content">
+                        <div class="item-media"><img id="group-icon-{{this.id}}" onclick="ShowImage(this);" src="" width="44"></div>
+                        <div class="item-inner">
+                            <div class="item-title-row">
+                                <div class="item-title" id="group-title-{{this.id}}"></div>
+                                <div class="item-after"><a href="#" class="link pull-right more-options" data-owner-{{this.id}}="" data-guid-{{this.id}}="" data-type-{{this.id}}="gccollab_group" onclick="GCTUser.MoreOptions(this);"><i class="fa fa-caret-down"></i></a></div>
+                            </div>
+                            <div class="item-subtitle" style="color: #46246A !important;" id="group-owner-click-{{this.id}}"><span data-translate="owner">Owner</span>: <span id="group-owner-{{this.id}}"></span></div>
+                        </div>
+                    </div>
+                    {{/js_if}}
                     {{#js_if "this.type == 'card'"}}<div id="content-{{this.id}}" class='list cards-list'></div>{{/js_if}}
                     {{#js_if "this.type == 'item'"}}<div class="list media-list"><ul id="content-{{this.id}}"></ul></div>{{/js_if}}
-                    {{#js_if "this.type != 'user'"}}<a id="more-{{this.id}}" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>{{/js_if}}
+                    {{#js_if "this.type != 'user' && this.type != 'group'"}}<a id="more-{{this.id}}" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>{{/js_if}}
                 </div>
                 {{/each}}
             </div>
@@ -85,7 +97,6 @@
     return {
         on: {
             pageInit: function (e, page) {
-                console.log('pageInit', page);
                 var guid = this.guid;
                 var tabs = this.tabs;
                 tabs[0].request(tabs[0], guid); //load first tab, which is active tab

@@ -847,7 +847,40 @@ GCTEach = {
         return content;
     },
     GroupP: function (value, obj) {
-        console.log('ea group p');
+        var group = value.result;
+
+        var tags = (group.tags) ? ($.isArray(group.tags) ? (group.tags).join(", ") : group.tags) : GCTLang.Trans('no-tags');
+        if (group.liked) {
+            $(".like").addClass('liked');
+        }
+        if (group.member) {
+            $("#leave-group-" + obj.id).show();
+        } else {
+            $("#join-group-" + obj.id).show();
+        }
+        access = group.access;
+        $("#group-description-" + obj.id).html(group.description);
+        if (group.access) {
+            enabled = group.enabled;
+        } else {
+            enabled = false;
+        }
+
+        if (group.public == true) {
+            group_public = true;
+        } else { group_public = false; }
+
+        $("#group-icon-" + obj.id).attr('src', group.iconURL);
+        $("#group-icon-" + obj.id).attr('alt', "Group Icon of" + group.userDetails.displayName);
+        $("#group-title-" + obj.id).html(group.name).text();
+        $("#group-owner-" + obj.id).text(group.userDetails.displayName);
+        $("#group-owner-click-" + obj.id).attr('onclick', "ShowProfile(" + group.owner_guid + ");");
+        $("#group-count-" + obj.id).text("(" + group.count + ")");
+        $("#like-count-" + obj.id).text(group.likes);
+        $("#group-tags-" + obj.id).text(tags);
+        $("[data-owner-" + obj.id +"]").data('owner', group.owner);
+        $("[data-guid-" + obj.id +"]").data('guid', group.guid);
+        $("[data-type-" + obj.id +"]").data('type', group.type);
     },
     User: function (value, obj) {
         console.log(value);
@@ -1376,7 +1409,7 @@ GCTrequests = {
             data: { method: "get.group", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                GCTEach.ContentSuccess(data, tabObject);
+                GCTEach.GroupP(data, tabObject);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorConsole(jqXHR, textStatus, errorThrown);
