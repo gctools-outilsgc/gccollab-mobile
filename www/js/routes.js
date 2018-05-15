@@ -49,7 +49,7 @@ routes = [
             var pageInfo = [];
             pageInfo = app.data['userprofile'];
 
-            var navbar = GCTtxt.txtGlobalNav('profile');
+            var navbar = GCTtxt.txtGlobalNavGUID('profile', guid);
             var action = '';
             var filterButton = '';
             var tabs = [];
