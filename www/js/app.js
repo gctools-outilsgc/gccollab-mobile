@@ -88,7 +88,8 @@ var app  = new Framework7({
             groupprofile: {
                 limit: 15,
                 tabs: [{ id: "profile", each: GCTEach.GroupP, request: GCTrequests.GetGroupP, type: 'group' },
-                    { id: "members", each: GCTEach.Member, request: GCTrequests.GetGroupMembers, type: 'item' }],
+                    { id: "members", each: GCTEach.Member, request: GCTrequests.GetGroupMembers, type: 'item' },
+                    { id: "discussion", each: GCTEach.Discussion, request: GCTrequests.GetGroupDiscussions, type: 'card' }],
                 action: '',
                 filters: '',
             },
