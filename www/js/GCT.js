@@ -1417,6 +1417,40 @@ GCTrequests = {
             }
         });
     },
+    GetGroupActivity: function (tabObject, guid) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.groupactivity", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang(), api_version: apiVersion },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetGroupBlogs: function (tabObject, guid) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.blogpostsbycontainer", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetMembers: function (tabObject, filters) {
         limit = tabObject.limit || 15;
         offset = tabObject.offset || 0;
@@ -1533,7 +1567,7 @@ GCTrequests = {
     GetBookmarksByUser: function (tabObject, target) {
         limit = tabObject.limit || 15;
         offset = tabObject.offset || 0;
-        target = tabObject.target || '';
+        target = target || '';
         app.request({
             method: 'POST',
             dataType: 'json',
