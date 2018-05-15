@@ -85,6 +85,13 @@ var app  = new Framework7({
                 action: '',
                 filters: '',
             },
+            groupprofile: {
+                limit: 15,
+                tabs: [{ id: "profile", each: GCTEach.GroupP, request: GCTrequests.GetGroupP, type: 'group' },
+                    { id: "members", each: GCTEach.Member, request: GCTrequests.GetGroupMembers, type: 'item' }],
+                action: '',
+                filters: '',
+            },
         };
     },
   // App routes

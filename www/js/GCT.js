@@ -790,6 +790,9 @@ GCTEach = {
         return content;
 
     },
+    GroupP: function (value, obj) {
+        console.log('ea group p');
+    },
     User: function (value, obj) {
         console.log(value);
         var profileData = value.result;
@@ -1299,6 +1302,39 @@ GCTrequests = {
             dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.groups", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetGroupP: function (tabObject, guid) {
+        guid = guid;
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.group", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetGroupMembers: function (tabObject, guid) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "group.members", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);

@@ -72,6 +72,35 @@ routes = [
         }
     },
     {
+        path: '/profile-template/:guid/',
+        async: function (routeTo, routeFrom, resolve, reject) {
+            var guid = routeTo.params.guid;
+            var pageInfo = [];
+            pageInfo = app.data['groupprofile'];
+
+            var navbar = GCTtxt.txtGlobalNavGUID('profile', guid);
+            var action = '';
+            var filterButton = '';
+            var tabs = [];
+            pageInfo.tabs.forEach(function (tab) { tabs.push(tabObject('profile-' + guid, tab.id, pageInfo.limit, tab.type, tab.header, tab.each, tab.request)); });
+
+            resolve(
+                {
+                    componentUrl: './pages/profile-template.html',
+                },
+                {
+                    context: {
+                        navbar: navbar,
+                        tabs: tabs,
+                        guid: guid,
+                        action: action,
+                        filter: filterButton,
+                    }
+                }
+            )
+        }
+    },
+    {
         path: '/form/',
         url: './pages/form.html',
     },

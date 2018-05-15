@@ -1,0 +1,114 @@
+<template>
+    <div class="page navbar-fixed with-subnavbar">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div id="profile-{{guid}}-navbar-inner" class="navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar">
+                    {{navbar}}
+                </div>
+                <div class="subnavbar" role="navigation" data-translate-target="aria-label">
+                    <div class="subnavbar-inner">
+                        <div class="segmented">
+                            <a href="#tab-profile-{{guid}}-profile" class="button tab-link tab-link-active" data-translate="profile">Profile</a>
+                            <a href="#tab-profile-{{guid}}-members" class="button tab-link" data-translate="members">members</a>
+                            <a id="profile-menu-{{guid}}" class="button popover-open" href="#" data-popover=".popover-links-{{this.id}}" data-translate="more">More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="toolbar toolbar-bottom-md">
+            <div class="toolbar-inner">
+                <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="far fa-arrow-alt-circle-left fa-2x"></i></a></div>
+                <div class="right sliding">{{this.action}}{{this.filter}}</div>
+            </div>
+        </div>
+
+        <div class="page with-subnavbar" style="overflow-x: hidden;">
+            <div class="tabs">
+                {{#each tabs}}
+                <div id="tab-{{this.id}}" class="page-content tab {{#if @first}}tab-active{{/if}}">
+                    {{this.header}}
+                    {{#js_if "this.type == 'user'"}}
+                    <div class="item-content userprofile">
+                        <div class="item-media"><img id="icon-{{this.id}}" onclick="ShowImage(this);" src="" width="44"></div>
+                        <div class="item-inner">
+                            <div class="item-title-row">
+                                <div class="item-title" id="title-{{this.id}}">Title</div>
+                            </div>
+                            <div class="item-subtitle" id="department-{{this.id}}">Department</div>
+                        </div>
+                    </div>
+                    <div class="row margin-10" id="action-buttons-{{this.id}}">
+                        <!-- For message + add colleague -->
+                    </div>
+                    <div class="" id="info-list-{{this.id}}">
+                        <!-- For profile information: name, department, job, email, etc. -->
+                    </div>
+                    <hr>
+                    <div class="content-block text-center vmargin-10">
+                        <div class="row profiles">
+                            <div class="col-33 profiles" id="wire-num-{{this.id}}"></div>
+                            <div class="col-33 profiles" id="blog-num-{{this.id}}"></div>
+                            <div class="col-33 profiles" id="colleague-num-{{this.id}}"></div>
+                        </div>
+                        <div class="row profile stats">
+                            <div class="col-33 profile stats font-13" data-translate="wires">Wires</div>
+                            <div class="col-33 profile stats font-13" data-translate="blogs">Blogs</div>
+                            <div class="col-33 profile stats font-13" data-translate="colleagues">Colleagues</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div id="social-media-{{this.id}}" class="content-block vmargin-10"></div>
+                    {{/js_if}}
+                    {{#js_if "this.type == 'card'"}}<div id="content-{{this.id}}" class='list cards-list'></div>{{/js_if}}
+                    {{#js_if "this.type == 'item'"}}<div class="list media-list"><ul id="content-{{this.id}}"></ul></div>{{/js_if}}
+                    {{#js_if "this.type != 'user'"}}<a id="more-{{this.id}}" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>{{/js_if}}
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        <div class="popover popover-links-{{this.id}}">
+            <div class="popover-inner">
+                <div class="list">
+                    <ul>
+                        {{#each tabs}}
+                        <li><a class="list-button tab-link popover-close" href="#tab-{{this.id}}" data-translate="{{this.name}}">Link 1</a></li>
+                        {{/each}}
+                        <li><a class="list-button item-link popover-close" href="#" data-translate="close">close</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    return {
+        on: {
+            pageInit: function (e, page) {
+                console.log('pageInit', page);
+                var guid = this.guid;
+                var tabs = this.tabs;
+                tabs[0].request(tabs[0], guid); //load first tab, which is active tab
+                tabs.forEach(function (tab) {
+                    //More Button
+                    $$('#more-' + tab.id).on('click', function (e) {
+                        $('#focus-' + tab.id).remove();
+                        tab.request(tab, guid);
+                    });
+                    //Tab Show
+                    $$('#tab-' + tab.id).on('tab:show', function (e) {
+                        if (!tab.loaded) {
+                            tab.request(tab, guid);
+                        }
+                    });
+                });
+                //Refresh Button - All
+                $$('#refresh-profile-' + this.guid).on('click', function (e) {
+                    tabs.forEach(function (tab) {
+                        GCTtabs.TabReset(tab);
+                    });
+                });
+            },
+        }
+    }
+</script>
