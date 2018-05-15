@@ -5,7 +5,16 @@
             '<div class="title" id="' + title + '" tabindex="0">' + GCTLang.Trans(title) + '</div>' +
             '<div class="right sliding">' +
             '<a href = "#" data-panel="right" class="panel-open link icon-only" aria - label="Open Notification Panel" > <i class="fa fa-bell badge-wrapper"></i></a >' +
-            '<a href="#" id="refresh-'+title+'" class="link icon-only" aria-label="refresh-content"><i class="fas fa-sync"></i></a></div > ';
+            '<a href="#" id="refresh-'+ title +'" class="link icon-only" aria-label="refresh-content"><i class="fas fa-sync"></i></a></div > ';
+        return content;
+    },
+    txtGlobalNavGUID: function (title, guid) {
+        var content = '<div class="center" id="page-' + title + '-' + guid +'" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0" >' + GCTLang.Trans("page") + GCTLang.Trans(title) + '</div>' +
+            '<div class="left sliding"><a href="#" data-panel="left" class="panel-open link icon-only" aria-label="Open Navigation Menu"><i class="fas fa-bars"></i></a></div>' +
+            '<div class="title" id="' + title + '-' + guid + '" tabindex="0">' + GCTLang.Trans(title) + '</div>' +
+            '<div class="right sliding">' +
+            '<a href = "#" data-panel="right" class="panel-open link icon-only" aria - label="Open Notification Panel" > <i class="fa fa-bell badge-wrapper"></i></a >' +
+            '<a href="#" id="refresh-' + title + '-' + guid + '" class="link icon-only" aria-label="refresh-content"><i class="fas fa-sync"></i></a></div > ';
         return content;
     },
     txtFocusMessage: function (id) {
@@ -53,6 +62,24 @@
         }
         return header;
     },
+    txtUserList: function (content) {
+        var contentNew = '<li>'
+            + '<div class="item-content">'
+            + '<div class="item-inner">'
+            + content
+            + '</div>'
+            + '</div>'
+            + '</li>'
+            + '<li>';
+        return contentNew;
+    },
+    txtProfileExp: function (object) {
+        var content = '<div class="item-text large" onclick="ToggleAllText(this);">'
+            + "<div class='bolder-title'>" + object.title + "</div> "
+            + "<div class='norm-text'><i>" + object.subtitle + "<br>" + object.startDate + " to " + object.endDate + "</i></div>"
+            + "<div class='norm-text all_text'>" + object.text + "</div>" + '</div>' + "<br>";
+        return content;
+    },
 
     txtNewsfeed: function (object) {
         var content = "<div aria-label='"+object.label+"' tabindex='0'><div class='card' aria-hidden='true' >"
@@ -78,6 +105,21 @@
             + "</div>"
             + "</div></div>";
         return GCT.SetLinks(content);
+    },
+    txtActivity: function (object) {
+        var content = "<li class='item-link item-content'>"
+            + "<div class='item-inner'>"
+            + "<div class='row'>"
+            + "<div class='col-20'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
+            + "<div class='col-80 item-text more_text'>" + object.name + object.description + object.type;
+        if (object.showMore) {
+            content += "<blockquote>" + object.extra + "</blockquote>";
+        }
+        content += "</div>"
+            + "</div>"
+            + "</div>"
+            + "</li>";
+        return content;
     },
     txtWire: function (object) {
         var content = "<div class='card' role='article'>"
@@ -440,6 +482,60 @@ GCTEach = {
         
         return content;
     },
+    Activity: function (value) {
+        var description = "";
+        if (value.description == "river:update:user:default") {
+            description = GCTLang.Trans("new-avatar");
+        } else if (value.description == "river:reply:object:default") {
+            description = GCTLang.Trans("discussion-replied");
+        } else if (value.action == "comment") {
+            description = GCTLang.Trans("commented");
+        } else if (value.action == "friend") {
+            description = GCTLang.Trans("friend-added");
+        } else if (value.action == "join") {
+            description = GCTLang.Trans("joined-group");
+        } else if (value.object.type == "discussion-add") {
+            description = GCTLang.Trans("discussion-add");
+        } else if (value.object.type == "group" && value.action == "create") {
+            description = GCTLang.Trans("group-created");
+        } else if (value.object.type == "file" && value.action == "create") {
+            description = GCTLang.Trans("file-created");
+        } else if (value.object.type == "event" && value.action == "update") {
+            description = GCTLang.Trans("event-update");
+        } else if (value.object.type == "wire" && value.action == "create") {
+            description = GCTLang.Trans("wire-create");
+        } else {
+            description = value.description;
+        }
+
+        var type = "";
+        if (value.object.type == "wire") {
+            type = "";
+        } else if (value.description == "river:update:user:default") {
+            type = "";
+        } else if (value.object.type == "discussion-reply" || value.object.type == "file" || value.object.type == "group" || value.object.type == "discussion-add") {
+            type = "<strong>" + value.object.name + "</strong>";
+        } else {
+            type = "<strong>" + value.object.displayName + "</strong>";
+        }
+
+        var extra = "";
+        var showMore = false;
+        if (value.object.type == "wire") {
+            showMore = true;
+            extra = value.object.wire;
+        }
+
+        var content = GCTtxt.txtActivity({
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            description: description,
+            type: type,
+            showMore: showMore,
+            extra: extra
+        });
+        return content;
+    },
     Wire: function (value) {
         //var imgs = [];
         if (Cookies.get("blocked") == value.userDetails.displayName)
@@ -694,8 +790,121 @@ GCTEach = {
         return content;
 
     },
+    User: function (value, obj) {
+        console.log(value);
+        var profileData = value.result;
+        if (typeof profileData == "string") {
+            app.alert(GCTLang.Trans("couldnotfindprofile"));
+            return;
+        }
+        var isOwnProfile = false;
+        if (profileData.displayName == GCTUser.DisplayName()) {
+            isOwnProfile = true;
+        }
+        var colleagueButton = (profileData.friend) ? '<a href="#" class="button button-fill button-raised" data-guid="' + profileData.id + '" onclick="GCTUser.RemoveColleague(this);">' + GCTLang.Trans("remove-colleague") + '</a>' : '<a href="#" class="button button-fill button-raised" data-guid="' + profileData.id + '" onclick="GCTUser.AddColleague(this);">' + GCTLang.Trans("add-colleague") + '</a>';
+        var profile = '';
+        var content = '';
+        var listItem = '';
+
+        $("#icon-" + obj.id).attr('src', profileData.iconURL);
+        $("#icon-" + obj.id).attr('aria-label', GCTLang.Trans("user-avatar"));
+        $("#title-" + obj.id).html(profileData.displayName).text();
+        $("#department-" + obj.id).html(profileData.department).text();
+
+        if (!isOwnProfile) {
+            var content = '<div class="col-50"><a href="#" class="button button-fill button-raised" data-name="' + profileData.displayName + '" data-guid="' + profileData.id + '" onclick="GCTUser.NewMessage(this);">' + GCTLang.Trans("message") + '</a></div>'
+                + '<div class="col-50">' + colleagueButton + '</div>'
+                // + '<div class="col-33"><a href="#" class="button button-fill button-raised" data-guid="' + profileData.displayName + '" onclick="GCTUser.BlockUser(this);">' + GCTLang.Trans("blockuser") + '</a></div>'
+                + '</div>';
+            $("#action-buttons-" + obj.id).html(content).text();
+        }
+
+        profile = '';
+        profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('name') + '</div>' + profileData.displayName + '</div>';
+        if (profileData.hasOwnProperty("jobTitle") && profileData.jobTitle !== null && profileData.jobTitle !== "") {
+            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('job-title') + '</div>' + profileData.jobTitle + '</div>';
+        }
+        profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('email') + '</div><a class="external" href = "mailto:' + profileData.email + '" > ' + profileData.email + '</a ></div>';
+        if (profileData.hasOwnProperty("telephone") && profileData.telephone !== null && profileData.telephone !== "") {
+            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('phone') + '</div><a class="external" href="tel:' + profileData.telephone + '">' + profileData.telephone + '</a></div>';
+        }
+        if (profileData.hasOwnProperty("about_me") && profileData.about_me !== null && profileData.about_me !== "") {
+            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('about-me') + '</div>' + profileData.about_me + '</div>';
+        }
+        if (profileData.hasOwnProperty("education") && profileData.education !== null && profileData.education !== "") {
+            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('education') + '</div>';
+            $(profileData.education).each(function (key, value) {
+                var looper = 0; //dynamic variable counter
+                while (value["item_" + looper]) {
+                    var school = (value["item_" + looper].school_name) ? value["item_" + looper].school_name : "";
+                    var degree = (value["item_" + looper].degree) ? value["item_" + looper].degree : "";
+                    var fieldOfStudy = (value["item_" + looper].field_of_study) ? value["item_" + looper].field_of_study : "";
+                    var startDate = (value["item_" + looper].start_date) ? value["item_" + looper].start_date : "";
+                    var endDate = (value["item_" + looper].end_date) ? value["item_" + looper].end_date : "";
+                    profile += GCTtxt.txtProfileExp({
+                        title: school,
+                        subtitle: degree + " - " + fieldOfStudy,
+                        text: "",
+                        startDate: startDate,
+                        endDate: endDate
+                    });
+                    looper++;
+                }
+            });
+            profile += '</div>';
+        }
+        if (profileData.hasOwnProperty("experience") && profileData.experience !== null && profileData.experience !== "") {
+            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('experience') + '</div>';
+            $(profileData.experience).each(function (key, value) {
+                var looper = 0; //dynamic variable counter, sigh
+                while (value["item_" + looper]) {
+                    var job_title = (value["item_" + looper].job_title) ? value["item_" + looper].job_title : "";
+                    var organization = (value["item_" + looper].organization) ? value["item_" + looper].organization : "";
+                    var responsibilities = (value["item_" + looper].responsibilities) ? value["item_" + looper].responsibilities : "";
+                    var startDate = (value["item_" + looper].start_date) ? value["item_" + looper].start_date : "";
+                    var endDate = (value["item_" + looper].end_date) ? value["item_" + looper].end_date : "";
+                    profile += GCTtxt.txtProfileExp({
+                        title: job_title,
+                        subtitle: organization,
+                        text: responsibilities,
+                        startDate: startDate,
+                        endDate: endDate
+                    });
+                    looper++;
+                }
+            });
+            profile += '</div>';
+        }
+        if (profileData.hasOwnProperty("skills") && profileData.skills !== null && profileData.skills !== "") {
+            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('skills') + '</div>';
+            $(profileData.skills).each(function (key, value) {
+                var looper = 0; //dynamic variable counter
+                while (value["item_" + looper]) {
+                    var skill = (value["item_" + looper].skill) ? value["item_" + looper].skill : "";
+                    profile += '<div class="item-text large" onclick="ToggleAllText(this);">' + skill + '</div>';
+                    looper++;
+                }
+            });
+            profile += '</div>';
+        }
+        $("#info-list-" + obj.id).html(profile).text();
+
+        $("#wire-num-" + obj.id).html(profileData.wires).text();
+        $("#blog-num-" + obj.id).html(profileData.blogs).text();
+        $("#colleague-num-" + obj.id).html(profileData.colleagues).text();
+
+        if (profileData.hasOwnProperty("links")) {
+            var links = '<div class="center">' + GCTLang.Trans('social-media') + '</div>'
+                + '<ul class="socials">';
+            if (profileData.links.hasOwnProperty("github")) { links += '<li><a id="user-github" aria-label="Github" href="' + profileData.links.github + '" class="gh external"><i class="fab fa-github"></i></a></li>'; }
+            if (profileData.links.hasOwnProperty("twitter")) { links += '<li><a id="user-twitter" aria-label="Twitter" href="' + profileData.links.twitter + '" class="tw external"><i class="fab fa-twitter"></i></a></li>'; }
+            if (profileData.links.hasOwnProperty("linkedin")) { links += '<li><a id="user-linkedin" aria-label="Linkedin" href="' + profileData.links.linkedin + '" class="li external"><i class="fab fa-linkedin"></i></a></li>'; }
+            if (profileData.links.hasOwnProperty("facebook")) { links += '<li><a id="user-facebook" aria-label="Facebook" href="' + profileData.links.facebook + '" class="fb external"><i class="fab fa-facebook"></i></a></li>'; }
+            $("#social-media-" + obj.id).html(links).text();
+        }
+    },
     ContentSuccess: function (data, obj) {
-        
+        console.log(obj);
         var info = data.result;
         var content = '';
         if (obj.loaded == true) { $(obj.appendMessage).appendTo('#content-' + obj.id); } else { obj.loaded = true; }
@@ -850,6 +1059,9 @@ GCTUser = {
             console.log(jqXHR, textStatus, errorThrown);
         });
     },
+    DisplayName: function () {
+        return (Cookies.get('displayName')) ? Cookies.get('displayName') : "";
+    },
 
 }
 
@@ -869,6 +1081,61 @@ GCTrequests = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetUserProfileP: function (tabObject, profile) {
+        if (typeof profile == 'undefined')
+            profile = GCTUser.Email(); //### Get current users profile
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.user", user: GCTUser.Email(), api_key: api_key_gccollab, profileemail: profile, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.User(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetUserGroups: function (tabObject, profile) {
+        if (typeof profile == 'undefined')
+            profile = GCTUser.Email(); //### Get current users profile
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.usergroups", user: GCTUser.Email(), profileemail: profile, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetUserActivity: function (tabObject, profile) {
+        if (typeof profile == 'undefined')
+            profile = GCTUser.Email(); //### Get current users profile
+        limit = tabObject.limit || 12;
+        offset = tabObject.offset || 0;
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.useractivity", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang(), api_version: apiVersion },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
             }
         });
     },
@@ -1059,7 +1326,7 @@ GCTrequests = {
             }
         });
     },
-    GetMembersByUserColleague: function (tabObject, filters, profile) {
+    GetMembersByUserColleague: function (tabObject, profile, filters) {
         if (typeof profile == 'undefined')
             profile = GCTUser.Email(); //### Get current users profile
 

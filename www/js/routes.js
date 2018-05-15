@@ -43,6 +43,35 @@ routes = [
         }
     },
     {
+        path: '/user-template/:guid/',
+        async: function (routeTo, routeFrom, resolve, reject) {
+            var guid = routeTo.params.guid;
+            var pageInfo = [];
+            pageInfo = app.data['userprofile'];
+
+            var navbar = GCTtxt.txtGlobalNavGUID('profile', guid);
+            var action = '';
+            var filterButton = '';
+            var tabs = [];
+            pageInfo.tabs.forEach(function (tab) { tabs.push(tabObject('user-' + guid, tab.id, pageInfo.limit, tab.type, tab.header, tab.each, tab.request)); });
+
+            resolve(
+                {
+                    componentUrl: './pages/user-template.html',
+                },
+                {
+                    context: {
+                        navbar: navbar,
+                        tabs: tabs,
+                        guid: guid,
+                        action: action,
+                        filter: filterButton,
+                    }
+                }
+            )
+        }
+    },
+    {
         path: '/form/',
         url: './pages/form.html',
     },

@@ -73,6 +73,18 @@ var app  = new Framework7({
                 action: 'post-opp',
                 filters: '',
             },
+            userprofile: {
+                limit: 15,
+                tabs: [{ id: "profile", each: GCTEach.User, request: GCTrequests.GetUserProfileP, type: 'user' },
+                    { id: "groups", each: GCTEach.Group, request: GCTrequests.GetUserGroups, type: 'card' },
+                    { id: "colleagues", each: GCTEach.Member, request: GCTrequests.GetMembersByUserColleague, type: 'item' },
+                    { id: "wires", each: GCTEach.Wire, request: GCTrequests.GetWiresByUser, type: 'card' },
+                    { id: "blogs", each: GCTEach.Blog, request: GCTrequests.GetBlogsByUser, type: 'card' },
+                    { id: "activity", each: GCTEach.Activity, request: GCTrequests.GetUserActivity, type: 'item' },
+                    { id: "bookmarks", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarksByUser, type: 'card' }],
+                action: '',
+                filters: '',
+            },
         };
     },
   // App routes
