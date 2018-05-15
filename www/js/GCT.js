@@ -97,6 +97,21 @@
             + "</div></div>";
         return GCT.SetLinks(content);
     },
+    txtActivity: function (object) {
+        var content = "<li class='item-link item-content'>"
+            + "<div class='item-inner'>"
+            + "<div class='row'>"
+            + "<div class='col-20'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
+            + "<div class='col-80 item-text more_text'>" + object.name + object.description + object.type;
+        if (object.showMore) {
+            content += "<blockquote>" + object.extra + "</blockquote>";
+        }
+        content += "</div>"
+            + "</div>"
+            + "</div>"
+            + "</li>";
+        return content;
+    },
     txtWire: function (object) {
         var content = "<div class='card' role='article'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
@@ -456,6 +471,60 @@ GCTEach = {
             likes: likes
         });
         
+        return content;
+    },
+    Activity: function (value) {
+        var description = "";
+        if (value.description == "river:update:user:default") {
+            description = GCTLang.Trans("new-avatar");
+        } else if (value.description == "river:reply:object:default") {
+            description = GCTLang.Trans("discussion-replied");
+        } else if (value.action == "comment") {
+            description = GCTLang.Trans("commented");
+        } else if (value.action == "friend") {
+            description = GCTLang.Trans("friend-added");
+        } else if (value.action == "join") {
+            description = GCTLang.Trans("joined-group");
+        } else if (value.object.type == "discussion-add") {
+            description = GCTLang.Trans("discussion-add");
+        } else if (value.object.type == "group" && value.action == "create") {
+            description = GCTLang.Trans("group-created");
+        } else if (value.object.type == "file" && value.action == "create") {
+            description = GCTLang.Trans("file-created");
+        } else if (value.object.type == "event" && value.action == "update") {
+            description = GCTLang.Trans("event-update");
+        } else if (value.object.type == "wire" && value.action == "create") {
+            description = GCTLang.Trans("wire-create");
+        } else {
+            description = value.description;
+        }
+
+        var type = "";
+        if (value.object.type == "wire") {
+            type = "";
+        } else if (value.description == "river:update:user:default") {
+            type = "";
+        } else if (value.object.type == "discussion-reply" || value.object.type == "file" || value.object.type == "group" || value.object.type == "discussion-add") {
+            type = "<strong>" + value.object.name + "</strong>";
+        } else {
+            type = "<strong>" + value.object.displayName + "</strong>";
+        }
+
+        var extra = "";
+        var showMore = false;
+        if (value.object.type == "wire") {
+            showMore = true;
+            extra = value.object.wire;
+        }
+
+        var content = GCTtxt.txtActivity({
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            description: description,
+            type: type,
+            showMore: showMore,
+            extra: extra
+        });
         return content;
     },
     Wire: function (value) {
@@ -1045,7 +1114,8 @@ GCTrequests = {
     GetUserActivity: function (tabObject, profile) {
         if (typeof profile == 'undefined')
             profile = GCTUser.Email(); //### Get current users profile
-
+        limit = tabObject.limit || 12;
+        offset = tabObject.offset || 0;
         app.request({
             method: 'POST',
             dataType: 'json',
