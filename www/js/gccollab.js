@@ -50,13 +50,13 @@ function ShowProfile(email) {
         GCTrequests.GetUserProfile(email, function (data) {
             var profileData = data.result;
             /* Temp ViewPost, replace with sheet modal of user profile eventaully */
-            mainView.router.navigate('/user-template/' + profileData.id + '/');
+            mainView.router.navigate('/profile-template/user/' + profileData.id + '/');
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
         });
     } else {
         console.log('skip');
-        mainView.router.navigate('/user-template/' + email + '/');
+        mainView.router.navigate('/profile-template/user/' + email + '/');
     }
     
 }
