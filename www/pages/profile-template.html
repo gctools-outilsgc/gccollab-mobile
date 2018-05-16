@@ -71,6 +71,29 @@
                             <div class="item-subtitle" style="color: #46246A !important;" id="group-owner-click-{{this.id}}"><span data-translate="owner">Owner</span>: <span id="group-owner-{{this.id}}"></span></div>
                         </div>
                     </div>
+                    <div class="row margin-10">
+                        <div class="col-40" id="leave-group-{{this.id}}" hidden><a href="#" class="button button-fill button-raised" data-guid="{{guid}}" onclick="GCTUser.LeaveGroup(this);" data-translate="leave-group">Leave Group</a></div>
+                        <div class="col-40" id="join-group-{{this.id}}" hidden><a href="#" class="button button-fill button-raised" data-guid="{{guid}}" onclick="GCTUser.JoinGroup(this);" data-translate="join-group">Join Group</a></div>
+                        <div class="col-20 button button-fill button-raised"><a href="#" aria-label='like aimer' class="like_style" data-guid="{{guid}}" data-type="gccollab_group" onclick="GCTUser.LikePost(this);"><i class="far fa-thumbs-up"></i></a> <a href="#" aria-label='See who liked this Voir qui a aimer' class="like_style" data-guid="" data-type="gccollab_group" onclick="GCTUser.GetLikeUsers(this);"><span id="like-count"></span></a></div>
+                    </div>
+                    <div class="list inputs-list vmargin-0">
+                        <ul>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <i class="fa fa-tags"></i> <span id="group-tags-{{this.id}}"></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <span id="group-description-{{this.id}}"></span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                     {{/js_if}}
                     {{#js_if "this.type == 'card'"}}<div id="content-{{this.id}}" class='list cards-list'></div>{{/js_if}}
                     {{#js_if "this.type == 'item'"}}<div class="list media-list"><ul id="content-{{this.id}}"></ul></div>{{/js_if}}
