@@ -111,11 +111,13 @@
         <div class="popover popover-links-{{guid}}">
             <div class="popover-inner">
                 <div class="list">
-                    <ul>
+                    <ul id="popover-{{guid}}">
+                        {{#js_if "this.tabs[0].type == 'user'"}}
                         {{#each tabs}}
                         <li><a class="list-button tab-link popover-close" href="#tab-{{this.id}}" data-translate="{{this.name}}">Link 1</a></li>
                         {{/each}}
                         <li><a class="list-button item-link popover-close" href="#" data-translate="close">close</a></li>
+                        {{/js_if}}
                     </ul>
                 </div>
             </div>
