@@ -1758,18 +1758,6 @@ GCT = {
     }
 }
 
-function listObject(id, limit, eachFunc) {
-    var object = {
-        offset : 0,
-        loaded : false,
-        id : id,
-        appendMessage: GCTtxt.txtFocusMessage(id),
-        eachFunc: eachFunc,
-        limit: limit
-    };
-    console.log(object);
-    return object;
-}
 function tabObject(page, tab, limit, type, header, eachFunc, request) {
     var object = {
         offset: 0,
