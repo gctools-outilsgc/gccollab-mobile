@@ -10,7 +10,7 @@
                         <div class="segmented">
                             <a href="#tab-profile-{{guid}}-profile" class="button tab-link tab-link-active" data-translate="profile">Profile</a>
                             <a href="#tab-profile-{{guid}}-members" class="button tab-link" data-translate="members">members</a>
-                            <a id="profile-menu-{{guid}}" class="button popover-open" href="#" data-popover=".popover-links-{{this.id}}" data-translate="more">More</a>
+                            <a id="profile-menu-{{guid}}" class="button popover-open" href="#" data-popover=".popover-links-{{guid}}" data-translate="more">More</a>
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                 {{/each}}
             </div>
         </div>
-        <div class="popover popover-links-{{this.id}}">
+        <div class="popover popover-links-{{guid}}">
             <div class="popover-inner">
                 <div class="list">
                     <ul>
@@ -137,7 +137,7 @@
                     });
                 });
                 //Refresh Button - All
-                $$('#refresh-profile-' + this.guid).on('click', function (e) {
+                $$('#refresh-profile-' + guid).on('click', function (e) {
                     tabs.forEach(function (tab) {
                         GCTtabs.TabReset(tab);
                     });
