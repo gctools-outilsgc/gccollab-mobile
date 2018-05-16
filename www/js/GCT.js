@@ -587,7 +587,7 @@ GCTEach = {
         var replied = (value.replied) ? "replied" : "";
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
         // var action = (value.thread) ? "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>" : "";
 
         var content = GCTtxt.txtWire({
@@ -617,7 +617,7 @@ GCTEach = {
         var replied = (value.replied) ? "replied" : "";
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_blog_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_blog_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
         var content = GCTtxt.txtBlog({
             icon: value.userDetails.iconURL,
@@ -643,7 +643,7 @@ GCTEach = {
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
         var members = (value.count > 0) ? value.count + (value.count == 1 ? " " + GCTLang.Trans("member") : " " + GCTLang.Trans("members")) : "";
-        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
         var content = GCTtxt.txtGroup({
             icon: value.iconURL,
@@ -676,7 +676,7 @@ GCTEach = {
 
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_event' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_event' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
         var date = (value.startDate).split(" ")[0];
         var split = date.split("-");
@@ -724,7 +724,7 @@ GCTEach = {
     Doc: function (value) {
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-        var action = "<a href='#' class='link' data-title='" + value.title + "' data-guid='" + value.guid + "' data-type='gccollab_doc' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        var action = "<a class='link' data-title='" + value.title + "' data-guid='" + value.guid + "' data-type='gccollab_doc' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
         var content = GCTtxt.txtDoc({
             icon: value.userDetails.iconURL,
@@ -744,7 +744,7 @@ GCTEach = {
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
         var action = '';
-        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_bookmark' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_bookmark' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
         var posted = '';
         if (value.group_guid) {
             posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.group_guid + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + value.group + "</a>";
@@ -775,7 +775,7 @@ GCTEach = {
         var replied = (value.replied) ? "replied" : "";
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_opportunity' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_opportunity' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
         var programArea = "<b>" + GCTLang.Trans("program-area") + "</b>";
         if (value.programArea) { programArea += value.programArea; }
@@ -826,7 +826,7 @@ GCTEach = {
         var replied = (value.replied) ? "replied" : "";
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
         var content = GCTtxt.txtDiscussion({
             icon: value.userDetails.iconURL,
