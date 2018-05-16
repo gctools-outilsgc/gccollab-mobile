@@ -85,6 +85,17 @@ var app  = new Framework7({
                 action: '',
                 filters: '',
             },
+            groupprofile: {
+                limit: 15,
+                tabs: [{ id: "profile", each: GCTEach.GroupP, request: GCTrequests.GetGroupP, type: 'group' },
+                    { id: "members", each: GCTEach.Member, request: GCTrequests.GetGroupMembers, type: 'item' },
+                    { id: "discussion", each: GCTEach.Discussion, request: GCTrequests.GetGroupDiscussions, type: 'card' },
+                    { id: "blogs", each: GCTEach.Blog, request: GCTrequests.GetGroupBlogs, type: 'card' },
+                    { id: "activity", each: GCTEach.Activity, request: GCTrequests.GetGroupActivity, type: 'item' },
+                    { id: "bookmarks", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarksByUser, type: 'card' }],
+                action: '',
+                filters: '',
+            },
         };
     },
   // App routes

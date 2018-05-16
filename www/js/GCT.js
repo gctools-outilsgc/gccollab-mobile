@@ -176,7 +176,7 @@
         return content;
     },
     txtGroup: function (object) {
-        var content ="<div class='card' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>"
+        var content ="<div class='card' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>"
             + "<div class='card-header'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
@@ -379,6 +379,34 @@
         return content;
 
     },
+    txtDiscussion: function (object) {
+        var content = "<div class='list cards-list'>"
+            + "<div class='card'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row'>"
+            + "<div class='author'>" + object.name + "</div>"
+            + "</div>"
+            + "<div class='time'>" + object.date + "</div>"
+            + "</div>"
+            + "</div>"
+            + "<div class='card-content card-content-padding'>"
+            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
+            + "<div class='blog-title'>" + object.title + "</div>"
+            + "<div class='blog-group'>" + object.group + "</div>"
+            + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
+            + "</div>"
+            + "<div class='card-footer'>"
+            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+            // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
+            + object.action
+            + "</div>"
+            + "</div>"
+            + "</div>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
 }
 
 GCTEach = {
@@ -432,7 +460,7 @@ GCTEach = {
 
         var context = ""; //Currently only content to groups should need context
         if (value.object.group_guid) {
-            context = " " + GCTLang.Trans("group-context") + "<a class='link' data-guid='" + value.object.group_guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.object.group_title + "</a>";
+            context = " " + GCTLang.Trans("group-context") + "<a class='link' data-guid='" + value.object.group_guid + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + value.object.group_title + "</a>";
             label += ' ' + GCTLang.Trans("group-context") +' '+ value.object.group_title + '.';
         }
 
@@ -453,10 +481,10 @@ GCTEach = {
         var action = "";
         var reply = "";
         if (value.object.type == "wire") {
-            action = "<a class='link' data-guid='" + value.object_guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+            action = "<a class='link' data-guid='" + value.object_guid + "' data-type='gccollab_wire_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
             reply = "<a href='#' class='link' data-guid='" + value.object_guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ReplyWirePost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>";
         } else if (value.object.type == "blog") {
-            action = "<a class='link' data-guid='" + value.object_guid + "' data-type='gccollab_blog_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+            action = "<a class='link' data-guid='" + value.object_guid + "' data-type='gccollab_blog_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
         }
         
         
@@ -559,8 +587,8 @@ GCTEach = {
         var replied = (value.replied) ? "replied" : "";
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-        // var action = (value.thread) ? "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>" : "";
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        // var action = (value.thread) ? "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>" : "";
 
         var content = GCTtxt.txtWire({
             guid: value.guid,
@@ -589,7 +617,7 @@ GCTEach = {
         var replied = (value.replied) ? "replied" : "";
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_blog_post' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_blog_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
         var content = GCTtxt.txtBlog({
             icon: value.userDetails.iconURL,
@@ -615,7 +643,7 @@ GCTEach = {
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
         var members = (value.count > 0) ? value.count + (value.count == 1 ? " " + GCTLang.Trans("member") : " " + GCTLang.Trans("members")) : "";
-        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
         var content = GCTtxt.txtGroup({
             icon: value.iconURL,
@@ -648,7 +676,7 @@ GCTEach = {
 
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_event' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_event' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
         var date = (value.startDate).split(" ")[0];
         var split = date.split("-");
@@ -661,7 +689,7 @@ GCTEach = {
 
         var posted = "";
         if (value.groupGUID !== null && typeof value.groupGUID !== 'undefined') {
-            posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.groupGUID + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.group + "</a>";
+            posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.groupGUID + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + value.group + "</a>";
         } else {
             posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
         }
@@ -696,7 +724,7 @@ GCTEach = {
     Doc: function (value) {
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-        var action = "<a href='#' class='link' data-title='" + value.title + "' data-guid='" + value.guid + "' data-type='gccollab_doc' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        var action = "<a class='link' data-title='" + value.title + "' data-guid='" + value.guid + "' data-type='gccollab_doc' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
         var content = GCTtxt.txtDoc({
             icon: value.userDetails.iconURL,
@@ -716,10 +744,10 @@ GCTEach = {
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
         var action = '';
-        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_bookmark' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_bookmark' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
         var posted = '';
         if (value.group_guid) {
-            posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.group_guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.group + "</a>";
+            posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.group_guid + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + value.group + "</a>";
         } else {
             posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
         }
@@ -747,7 +775,7 @@ GCTEach = {
         var replied = (value.replied) ? "replied" : "";
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-        var action = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='gccollab_opportunity' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_opportunity' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
         var programArea = "<b>" + GCTLang.Trans("program-area") + "</b>";
         if (value.programArea) { programArea += value.programArea; }
@@ -789,6 +817,81 @@ GCTEach = {
         });
         return content;
 
+    },
+    Discussion: function (value) {
+        // Removes HTML components from Discussion
+        //var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
+        var text = "<blockquote class='item-text large'>" + value.description + "</blockquote>";
+        var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+        var replied = (value.replied) ? "replied" : "";
+        var liked = (value.liked) ? "liked" : "";
+        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_discussion_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+
+        var content = GCTtxt.txtDiscussion({
+            icon: value.userDetails.iconURL,
+            name: value.userDetails.displayName,
+            date: prettyDate(value.time_created),
+            group: group,
+            description: text,
+            title: value.title,
+            all_text: 'all_text',
+            action: action,
+            owner: value.owner_guid,
+            guid: value.guid,
+            type: "gccollab_discussion_post",
+            replied: replied,
+            liked: liked,
+            likes: likes
+        });
+        return content;
+    },
+    GroupP: function (value, obj) {
+        var group = value.result;
+
+        var tags = (group.tags) ? ($.isArray(group.tags) ? (group.tags).join(", ") : group.tags) : GCTLang.Trans('no-tags');
+        if (group.liked) {
+            $(".like").addClass('liked');
+        }
+        if (group.member) {
+            $("#leave-group-" + obj.id).show();
+        } else {
+            $("#join-group-" + obj.id).show();
+        }
+        access = group.access;
+        $("#group-description-" + obj.id).html(group.description);
+        if (group.access) {
+            enabled = group.enabled;
+        } else {
+            enabled = false;
+        }
+
+        if (group.public == true) {
+            group_public = true;
+        } else { group_public = false; }
+        var popoverHTML = '';
+        if (access) {
+            popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#tab-profile-' + group.guid + '-activity" class="list-button tab-link popover-close" data-translate="activity">' + GCTLang.Trans("activity") + '</a></li>' : "";
+            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-profile-' + group.guid + '-discussion" class="list-button tab-link popover-close" data-translate="discussion">' + GCTLang.Trans("discussion") + '</a></li>' : "";
+            popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#tab-profile-' + group.guid + '-bookmarks" class="list-button tab-link popover-close" data-translate="bookmarks">' + GCTLang.Trans("bookmarks") + '</a></li>' : "";
+            popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#tab-profile-' + group.guid + '-blogs" class="list-button tab-link popover-close" data-translate="blogs">' + GCTLang.Trans("blogs") + '</a></li>' : "";
+        } else {
+            popoverHTML += '<li><a href="#" class="item-link list-button">' + GCTLang.Trans("Private-Group") + '</a></li>';
+        }
+        popoverHTML += '<li><a class="list-button item-link popover-close" href="#" data-translate="close">close</a></li>';
+        $(popoverHTML).hide().appendTo('#popover-' + group.guid).fadeIn(1000);
+
+        $("#group-icon-" + obj.id).attr('src', group.iconURL);
+        $("#group-icon-" + obj.id).attr('alt', "Group Icon of" + group.userDetails.displayName);
+        $("#group-title-" + obj.id).html(group.name).text();
+        $("#group-owner-" + obj.id).text(group.userDetails.displayName);
+        $("#group-owner-click-" + obj.id).attr('onclick', "ShowProfile(" + group.owner_guid + ");");
+        $("#group-count-" + obj.id).text("(" + group.count + ")");
+        $("#like-count-" + obj.id).text(group.likes);
+        $("#group-tags-" + obj.id).text(tags);
+        $("[data-owner-" + obj.id +"]").data('owner', group.owner);
+        $("[data-guid-" + obj.id +"]").data('guid', group.guid);
+        $("[data-type-" + obj.id +"]").data('type', group.type);
     },
     User: function (value, obj) {
         console.log(value);
@@ -1308,6 +1411,90 @@ GCTrequests = {
             }
         });
     },
+    GetGroupP: function (tabObject, guid) {
+        guid = guid;
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.group", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.GroupP(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetGroupMembers: function (tabObject, guid) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "group.members", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetGroupDiscussions: function (tabObject, guid) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.groupdiscussions", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetGroupActivity: function (tabObject, guid) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.groupactivity", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang(), api_version: apiVersion },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetGroupBlogs: function (tabObject, guid) {
+        limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.blogpostsbycontainer", user: GCTUser.Email(), guid: guid, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetMembers: function (tabObject, filters) {
         limit = tabObject.limit || 15;
         offset = tabObject.offset || 0;
@@ -1424,7 +1611,7 @@ GCTrequests = {
     GetBookmarksByUser: function (tabObject, target) {
         limit = tabObject.limit || 15;
         offset = tabObject.offset || 0;
-        target = tabObject.target || '';
+        target = target || '';
         app.request({
             method: 'POST',
             dataType: 'json',
@@ -1474,7 +1661,7 @@ GCT = {
             lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
             lnk = lnk.substr(0, lnk.indexOf("/"));
             console.log(lnk);
-            GCTUser.ViewPost(lnk, "gccollab_blog_post");
+            GCT.ViewPost(lnk, "gccollab_blog_post");
 
         } else if (obj.href.indexOf("/thewire/view/") > -1) {
             console.log('loading wire page...');
@@ -1482,7 +1669,7 @@ GCT = {
             if (lnk.indexOf("/") > -1) {
                 lnk = lnk.substr(0, lnk.indexOf("/"));
             }
-            GCTUser.ViewPost(lnk, "gccollab_wire_post");
+            GCT.ViewPost(lnk, "gccollab_wire_post");
 
         } else if (obj.href.indexOf("/docs/view/") > -1) {
             console.log('loading doc page...');
@@ -1490,7 +1677,7 @@ GCT = {
             if (lnk.indexOf("/") > -1) {
                 lnk = lnk.substr(0, lnk.indexOf("/"));
             }
-            GCTUser.ViewPost(lnk, "gccollab_doc", "test");
+            GCT.ViewPost(lnk, "gccollab_doc", "test");
 
         } else if (obj.href.indexOf("/groups/profile/") > -1) {
             console.log('loading group profile...');
@@ -1498,7 +1685,7 @@ GCT = {
             console.log(lnk);
             lnk = lnk.substr(0, lnk.indexOf("/"));
             console.log(lnk);
-            GCTUser.ViewPost(lnk, "gccollab_group");
+            GCT.ViewPost(lnk, "gccollab_group");
 
         } else if (obj.href.indexOf("/comment/view/") > -1) {
             console.log('loading comment... ' + obj);
@@ -1509,7 +1696,7 @@ GCT = {
             var comment_guid = the_guids[0];
 
             // TODO: Need to check what entity type the comment was made on, then route to the proper entity type
-            // GCTUser.ViewPost(the_container_guid, "???");
+            // GCT.ViewPost(the_container_guid, "???");
 
             console.log(the_container_guid, comment_guid);
             window.open(obj.href, '_blank');
@@ -1518,26 +1705,26 @@ GCT = {
             console.log('loading mission...');
             lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
             console.log(lnk);
-            GCTUser.ViewPost(lnk, "gccollab_opportunity");
+            GCT.ViewPost(lnk, "gccollab_opportunity");
 
         } else if (obj.href.indexOf("/event_calendar/view/") > -1) {
             console.log('loading event...');
             lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
             console.log(lnk);
-            GCTUser.ViewPost(lnk, "gccollab_event");
+            GCT.ViewPost(lnk, "gccollab_event");
 
         } else if (obj.href.indexOf("/discussion/view/") > -1) {
             console.log('loading discussion...');
             lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
             console.log(lnk);
-            GCTUser.ViewPost(lnk, "gccollab_discussion_post");
+            GCT.ViewPost(lnk, "gccollab_discussion_post");
 
         } else if (obj.href.indexOf("/bookmarks/view/") > -1) {
             console.log('loading bookmark...');
             lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
             lnk = lnk.substring(0, lnk.indexOf("/"));
             console.log(lnk);
-            GCTUser.ViewPost(lnk, "gccollab_bookmark");
+            GCT.ViewPost(lnk, "gccollab_bookmark");
 
         } else if (obj.href.indexOf("https://gccollab.ca/") > -1) {
             console.log('loading collab page...');
@@ -1579,21 +1766,34 @@ GCT = {
 
         html = con[0].outerHTML;
         return html;
+    },
+    ViewPost: function (obj, type, title) {
+        var guid;
+        if (typeof obj == "object") {
+            guid = obj.getAttribute("data-guid");
+
+            if (typeof obj.getAttribute("data-type") == "string") {
+                type = obj.getAttribute("data-type");
+            }
+            title = $(obj).data("title");
+        } else {
+            guid = obj;
+        }
+
+        switch (type) {
+            case "gccollab_group":
+                mainView.router.navigate('/profile-template/group/' + guid + '/');
+                break;
+            case "group":
+                mainView.router.navigate('/profile-template/group/' + guid + '/');
+                break;
+
+            default:
+                break;
+        }
     }
 }
 
-function listObject(id, limit, eachFunc) {
-    var object = {
-        offset : 0,
-        loaded : false,
-        id : id,
-        appendMessage: GCTtxt.txtFocusMessage(id),
-        eachFunc: eachFunc,
-        limit: limit
-    };
-    console.log(object);
-    return object;
-}
 function tabObject(page, tab, limit, type, header, eachFunc, request) {
     var object = {
         offset: 0,

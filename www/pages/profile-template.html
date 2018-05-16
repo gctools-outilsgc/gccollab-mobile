@@ -2,15 +2,21 @@
     <div class="page navbar-fixed with-subnavbar">
         <div class="navbar">
             <div class="navbar-inner">
-                <div id="user-{{guid}}-navbar-inner" class="navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar">
+                <div id="profile-{{guid}}-navbar-inner" class="navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar">
                     {{navbar}}
                 </div>
                 <div class="subnavbar" role="navigation" data-translate-target="aria-label">
                     <div class="subnavbar-inner">
                         <div class="segmented">
-                            <a href="#tab-user-{{guid}}-profile" class="button tab-link tab-link-active" data-translate="profile">Profile</a>
-                            <a href="#tab-user-{{guid}}-groups" class="button tab-link" data-translate="groups">Groups</a>
-                            <a id="profile-menu-{{guid}}" class="button popover-open" href="#" data-popover=".popover-links-{{this.id}}" data-translate="more">More</a>
+                            {{#js_if "this.tabs[0].type == 'group'"}}
+                            <a href="#tab-profile-{{guid}}-profile" class="button tab-link tab-link-active" data-translate="profile">Profile</a>
+                            <a href="#tab-profile-{{guid}}-members" class="button tab-link" data-translate="members">members</a>
+                            {{/js_if}}
+                            {{#js_if "this.tabs[0].type == 'user'"}}
+                            <a href="#tab-profile-{{guid}}-profile" class="button tab-link tab-link-active" data-translate="profile">Profile</a>
+                            <a href="#tab-profile-{{guid}}-groups" class="button tab-link" data-translate="groups">Groups</a>
+                            {{/js_if}}
+                            <a id="profile-menu-{{guid}}" class="button popover-open" href="#" data-popover=".popover-links-{{guid}}" data-translate="more">More</a>
                         </div>
                     </div>
                 </div>
@@ -60,21 +66,58 @@
                     <hr>
                     <div id="social-media-{{this.id}}" class="content-block vmargin-10"></div>
                     {{/js_if}}
+                    {{#js_if "this.type == 'group'"}}
+                    <div class="item-content userprofile">
+                        <div class="item-media"><img id="group-icon-{{this.id}}" onclick="ShowImage(this);" src="" width="44"></div>
+                        <div class="item-inner">
+                            <div class="row">
+                                <div class="col-85 item-title" id="group-title-{{this.id}}"></div>
+                                <a href="#" class="col-15 link pull-right more-options" data-owner-{{this.id}}="" data-guid-{{this.id}}="" data-type-{{this.id}}="gccollab_group" onclick="GCTUser.MoreOptions(this);"><i class="fa fa-caret-down"></i></a>
+                            </div>
+                            <div class="item-subtitle" id="group-owner-click-{{this.id}}"><span data-translate="owner">Owner</span>: <span id="group-owner-{{this.id}}"></span></div>
+                        </div>
+                    </div>
+                    <div class="row margin-10">
+                        <div class="col-40" id="leave-group-{{this.id}}" hidden><a href="#" class="button button-fill button-raised" data-guid="{{guid}}" onclick="GCTUser.LeaveGroup(this);" data-translate="leave-group">Leave Group</a></div>
+                        <div class="col-40" id="join-group-{{this.id}}" hidden><a href="#" class="button button-fill button-raised" data-guid="{{guid}}" onclick="GCTUser.JoinGroup(this);" data-translate="join-group">Join Group</a></div>
+                        <div class="col-20 button button-fill button-raised"><a href="#" aria-label='like aimer' class="like_style" data-guid="{{guid}}" data-type="gccollab_group" onclick="GCTUser.LikePost(this);"><i class="far fa-thumbs-up white"></i></a> <a href="#" aria-label='See who liked this Voir qui a aimer' class="like_style" data-guid="" data-type="gccollab_group" onclick="GCTUser.GetLikeUsers(this);"><span id="like-count"></span></a></div>
+                    </div>
+                    <div class="list inputs-list vmargin-0">
+                        <ul>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <i class="fa fa-tags"></i> <span id="group-tags-{{this.id}}"></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <span id="group-description-{{this.id}}"></span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    {{/js_if}}
                     {{#js_if "this.type == 'card'"}}<div id="content-{{this.id}}" class='list cards-list'></div>{{/js_if}}
                     {{#js_if "this.type == 'item'"}}<div class="list media-list"><ul id="content-{{this.id}}"></ul></div>{{/js_if}}
-                    {{#js_if "this.type != 'user'"}}<a id="more-{{this.id}}" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>{{/js_if}}
+                    {{#js_if "this.type != 'user' && this.type != 'group'"}}<a id="more-{{this.id}}" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>{{/js_if}}
                 </div>
                 {{/each}}
             </div>
         </div>
-        <div class="popover popover-links-{{this.id}}">
+        <div class="popover popover-links-{{guid}}">
             <div class="popover-inner">
                 <div class="list">
-                    <ul>
+                    <ul id="popover-{{guid}}">
+                        {{#js_if "this.tabs[0].type == 'user'"}}
                         {{#each tabs}}
                         <li><a class="list-button tab-link popover-close" href="#tab-{{this.id}}" data-translate="{{this.name}}">Link 1</a></li>
                         {{/each}}
                         <li><a class="list-button item-link popover-close" href="#" data-translate="close">close</a></li>
+                        {{/js_if}}
                     </ul>
                 </div>
             </div>
@@ -85,10 +128,9 @@
     return {
         on: {
             pageInit: function (e, page) {
-                console.log('pageInit', page);
                 var guid = this.guid;
                 var tabs = this.tabs;
-                tabs[0].request(tabs[0], this.guid); //load first tab, which is active tab
+                tabs[0].request(tabs[0], guid); //load first tab, which is active tab
                 tabs.forEach(function (tab) {
                     //More Button
                     $$('#more-' + tab.id).on('click', function (e) {
@@ -103,7 +145,7 @@
                     });
                 });
                 //Refresh Button - All
-                $$('#refresh-profile-' + this.guid).on('click', function (e) {
+                $$('#refresh-profile-' + guid).on('click', function (e) {
                     tabs.forEach(function (tab) {
                         GCTtabs.TabReset(tab);
                     });

@@ -43,21 +43,25 @@ routes = [
         }
     },
     {
-        path: '/user-template/:guid/',
+        path: '/profile-template/:type/:guid/',
         async: function (routeTo, routeFrom, resolve, reject) {
             var guid = routeTo.params.guid;
             var pageInfo = [];
-            pageInfo = app.data['userprofile'];
-
+            if (routeTo.params.type == 'group') {
+                pageInfo = app.data['groupprofile'];
+            } else if (routeTo.params.type == 'user') {
+                pageInfo = app.data['userprofile'];
+            }
+            
             var navbar = GCTtxt.txtGlobalNavGUID('profile', guid);
             var action = '';
             var filterButton = '';
             var tabs = [];
-            pageInfo.tabs.forEach(function (tab) { tabs.push(tabObject('user-' + guid, tab.id, pageInfo.limit, tab.type, tab.header, tab.each, tab.request)); });
+            pageInfo.tabs.forEach(function (tab) { tabs.push(tabObject('profile-' + guid, tab.id, pageInfo.limit, tab.type, tab.header, tab.each, tab.request)); });
 
             resolve(
                 {
-                    componentUrl: './pages/user-template.html',
+                    componentUrl: './pages/profile-template.html',
                 },
                 {
                     context: {

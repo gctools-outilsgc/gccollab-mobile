@@ -1199,3 +1199,7 @@ overflow:visible;
     color: #46246A;
     text-decoration: underline;
 }
+
+.white {
+    color: #fff;
+}
