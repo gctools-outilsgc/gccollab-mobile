@@ -872,7 +872,7 @@ GCTEach = {
         var popoverHTML = '';
         if (access) {
             popoverHTML += (enabled.activity && enabled.activity == "yes") ? '<li><a href="#tab-profile-' + group.guid + '-activity" class="list-button tab-link popover-close" data-translate="activity">' + GCTLang.Trans("activity") + '</a></li>' : "";
-            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-profile-' + group.guid + '-discussions" class="list-button tab-link popover-close" data-translate="discussion">' + GCTLang.Trans("discussion") + '</a></li>' : "";
+            popoverHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#tab-profile-' + group.guid + '-discussion" class="list-button tab-link popover-close" data-translate="discussion">' + GCTLang.Trans("discussion") + '</a></li>' : "";
             popoverHTML += (enabled.bookmarks && enabled.bookmarks == "yes") ? '<li><a href="#tab-profile-' + group.guid + '-bookmarks" class="list-button tab-link popover-close" data-translate="bookmarks">' + GCTLang.Trans("bookmarks") + '</a></li>' : "";
             popoverHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#tab-profile-' + group.guid + '-blogs" class="list-button tab-link popover-close" data-translate="blogs">' + GCTLang.Trans("blogs") + '</a></li>' : "";
         } else {
