@@ -73,6 +73,14 @@ var app  = new Framework7({
                 action: 'post-opp',
                 filters: '',
             },
+            messagecentre: {
+                limit: 10,
+                tabs: [{ id: "notifications", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarks, type: 'item' },
+                    { id: "messages", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarksByUserColleague, type: 'item' },
+                    { id: "colleague-requests", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarksByUser, type: 'item' }],
+                action: '',
+                filters: '',
+            },
             userprofile: {
                 limit: 15,
                 tabs: [{ id: "profile", each: GCTEach.User, request: GCTrequests.GetUserProfileP, type: 'user' },
