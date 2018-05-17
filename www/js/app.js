@@ -77,7 +77,7 @@ var app  = new Framework7({
                 limit: 10,
                 tabs: [{ id: "notifications", each: GCTEach.Notification, request: GCTrequests.GetNotifications, type: 'item' },
                     { id: "messages", each: GCTEach.Message, request: GCTrequests.GetMessages, type: 'item' },
-                    { id: "colleague-requests", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarksByUser, type: 'item' }],
+                    { id: "colleague-requests", each: GCTEach.ColleagueRequest, request: GCTrequests.GetColleagueRequests, type: 'item' }],
                 action: '',
                 filters: '',
             },

@@ -1063,6 +1063,21 @@ GCTEach = {
         });
         return content;
     },
+    ColleagueRequest: function (value, obj) {
+        var description = '<div class="row"><div class="col-50"><span class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.ApproveColleague(this);">' + GCTLang.Trans("accept") + '</span></div><span class="col-50"><div class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.DeclineColleague(this);">' + GCTLang.Trans("decline") + '</span></div></div>';
+
+        var content = GCTtxt.txtMember({
+            guid: value.user_id,
+            icon: value.iconURL,
+            name: value.displayName,
+            date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
+            description: description,
+            organization: value.organization,
+            job: (value.job) ? value.job : '',
+            colleaguerequest: true
+        });
+        return content;
+    },
     ContentSuccess: function (data, obj) {
         console.log(obj);
         var info = data.result;
@@ -1728,6 +1743,24 @@ GCTrequests = {
             dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.messages", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetColleagueRequests: function (tabObject) {
+        limit = tabObject.limit || 10;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.colleaguerequests", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);
