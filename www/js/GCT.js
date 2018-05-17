@@ -174,25 +174,18 @@
         return content;
     },
     txtGroup: function (object) {
-        var content ="<div class='card' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>"
-            + "<div class='card-header'>"
-            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+        var content = "<li><a class='item-link item-content' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>"
             + "<div class='item-inner'>"
-            + "<div class='item-title-row'>"
-            + "<div class='author'>" + object.name + "</div>"
+            + "<div class='item-title-row no-padding-right'>"
+            + "<div class='item-title reg-text'>" + object.name + "</div>"
+            + "<div class='item-after'>" + object.count + "</div>"
             + "</div>"
+            + "<div class='row ptm'>"
+            + "<div class='col-20 members-icon'><img src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
+            + "<div class='col-80 item-text'>" + object.description.trunc(500) + "</div>"
             + "</div>"
-            + "</div>"
-            + "<div class='card-content card-content-padding'>"
-            + "<div class='card-content-inner'>"
-            + "<div class='item-text large'>" + object.description + "</div>"
-            + "</div>"
-            + "</div>"
-            + "<div class='card-footer'>"
-            + "<div>" + object.count + "</div>"
-            + object.action
-            + "</div>"
-            + "</div>";
+            + "</div></a></li>";
+        
         content = GCT.SetLinks(content);
         return content;
     },
