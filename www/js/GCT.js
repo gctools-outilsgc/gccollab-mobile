@@ -130,7 +130,7 @@
             + "<div class='time'>" + object.date + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-content  card-content-padding'>"
+            + "<div class='card-content  card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>"
             + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
             + "<div id='wire-" + object.guid + "' class='item-text large'>" + object.description + "</div>"
             + "<div class='item-media'>" + object.image + "</div>"
@@ -1993,6 +1993,7 @@ GCT = {
                 break;
 
             default:
+                console.log('Worked, but type not handled yet.');
                 break;
         }
     }
