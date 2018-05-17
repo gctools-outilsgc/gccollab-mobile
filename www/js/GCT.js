@@ -420,6 +420,19 @@
             + '</div></li>';
         return content;
     },
+    txtMessage: function (object) {
+        var content = '<li><div class="row">'
+            + '<div class="col-80 item-content" onclick="ShowMessage(this);" data-guid="' + object.guid + ' data-type="notification">'
+            + '<div class="item-inner ' + object.unread + '">'
+            + '<div class="item-title-row">'
+            + '<div class="item-title">GCcollab</div>'
+            + '<div class="item-after">' + object.time + '</div></div>'
+            + '<div class="item-text">' + object.title + '</div>'
+            + '</div></div>'
+            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" onclick="GCTUser.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
+            + '</div></li>';
+        return content;
+    },
 }
 
 GCTEach = {
@@ -1033,6 +1046,19 @@ GCTEach = {
             unread: unread,
             time: prettyDate(value.time_created),
             title: value.title,
+            guid: value.guid
+        });
+        return content;
+    },
+    Message: function (value, obj) {
+        var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : ""; //we don't use this so?
+        var unread = (value.read) ? "" : "unread";
+
+        var content = GCTtxt.txtMessage({
+            unread: unread,
+            time: prettyDate(value.time_created),
+            title: value.title,
+            sender: value.fromUserDetails.displayName,
             guid: value.guid
         });
         return content;
@@ -1684,6 +1710,24 @@ GCTrequests = {
             dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.notifications", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetMessages: function (tabObject) {
+        limit = tabObject.limit || 10;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.messages", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);
