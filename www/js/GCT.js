@@ -407,6 +407,19 @@
         content = GCT.SetLinks(content);
         return content;
     },
+    txtNotification: function (object) {
+        var content = '<li><div class="row">'
+            + '<div class="col-80 item-content" onclick="ShowMessage(this);" data-guid="' + object.guid + ' data-type="notification">'
+            + '<div class="item-inner ' + object.unread + '">'
+            + '<div class="item-title-row">'
+            + '<div class="item-title">GCcollab</div>'
+            + '<div class="item-after">' + object.time + '</div></div>'
+            + '<div class="item-text">' + object.title + '</div>'
+            + '</div></div>'
+            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" onclick="GCTUser.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
+            + '</div></li>';
+        return content;
+    },
 }
 
 GCTEach = {
@@ -1005,6 +1018,24 @@ GCTEach = {
             if (profileData.links.hasOwnProperty("facebook")) { links += '<li><a id="user-facebook" aria-label="Facebook" href="' + profileData.links.facebook + '" class="fb external"><i class="fab fa-facebook"></i></a></li>'; }
             $("#social-media-" + obj.id).html(links).text();
         }
+    },
+    Notification: function (value, obj) {
+        var description = "";
+        var unread = (value.read) ? "" : "unread";
+        var regex = /<!-- TITLE OF CONTENT -->([\s\S]*)<div>Need help?/;
+        var matches = (value.description).match(regex);
+        if (matches != null) {
+            description = matches[1];
+        } else {
+            description = value.description;
+        }
+        var content = GCTtxt.txtNotification({
+            unread: unread,
+            time: prettyDate(value.time_created),
+            title: value.title,
+            guid: value.guid
+        });
+        return content;
     },
     ContentSuccess: function (data, obj) {
         console.log(obj);
@@ -1635,6 +1666,24 @@ GCTrequests = {
             dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.opportunities", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetNotifications: function (tabObject) {
+        limit = tabObject.limit || 10;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.notifications", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);
