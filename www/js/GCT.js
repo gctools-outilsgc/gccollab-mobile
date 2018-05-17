@@ -1237,7 +1237,94 @@ GCTUser = {
     DisplayName: function () {
         return (Cookies.get('displayName')) ? Cookies.get('displayName') : "";
     },
+    AddColleague: function (obj) {
+        var guid = $(obj).data("guid");
 
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "add.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    RemoveColleague: function (obj) {
+        var guid = $(obj).data("guid");
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "remove.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    ApproveColleague: function (obj) {
+        var guid = $(obj).data("guid");
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "approve.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log(data);
+                ShowColleagueRequests();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    DeclineColleague: function (obj) {
+        var guid = $(obj).data("guid");
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "decline.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log(data);
+                ShowColleagueRequests();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    RevokeColleague: function (obj) {
+        var guid = $(obj).data("guid");
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "revoke.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log(data);
+                ShowColleagueRequests();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
 }
 
 GCTrequests = {
