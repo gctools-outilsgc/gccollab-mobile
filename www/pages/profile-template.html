@@ -147,7 +147,7 @@
                 //Refresh Button - All
                 $$('#refresh-profile-' + guid).on('click', function (e) {
                     tabs.forEach(function (tab) {
-                        GCTtabs.TabReset(tab);
+                        GCTtabs.TabReset(tab, guid);
                     });
                 });
             },

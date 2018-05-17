@@ -1100,12 +1100,12 @@ GCTEach = {
 }
 
 GCTtabs = {
-    TabReset: function (obj) {
+    TabReset: function (obj, guid) {
         obj.offset = 0;
         obj.loaded = false;
         $('#content-' + obj.id).html('');
         $('#more-' + obj.id).show();
-        obj.request(obj);
+        obj.request(obj, guid);
     },
 }
 
