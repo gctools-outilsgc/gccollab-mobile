@@ -4,7 +4,6 @@
             '<div class="left sliding"><a href="#" data-panel="left" class="panel-open link icon-only" aria-label="Open Navigation Menu"><i class="fas fa-bars"></i></a></div>' +
             '<div class="title" id="' + title + '" tabindex="0">' + GCTLang.Trans(title) + '</div>' +
             '<div class="right sliding">' +
-            '<a href = "#" data-panel="right" class="panel-open link icon-only" aria - label="Open Notification Panel" > <i class="fa fa-bell badge-wrapper"></i></a >' +
             '<a href="#" id="refresh-'+ title +'" class="link icon-only" aria-label="refresh-content"><i class="fas fa-sync"></i></a></div > ';
         return content;
     },
@@ -13,7 +12,6 @@
             '<div class="left sliding"><a href="#" data-panel="left" class="panel-open link icon-only" aria-label="Open Navigation Menu"><i class="fas fa-bars"></i></a></div>' +
             '<div class="title" id="' + title + '-' + guid + '" tabindex="0">' + GCTLang.Trans(title) + '</div>' +
             '<div class="right sliding">' +
-            '<a href = "#" data-panel="right" class="panel-open link icon-only" aria - label="Open Notification Panel" > <i class="fa fa-bell badge-wrapper"></i></a >' +
             '<a href="#" id="refresh-' + title + '-' + guid + '" class="link icon-only" aria-label="refresh-content"><i class="fas fa-sync"></i></a></div > ';
         return content;
     },
@@ -405,6 +403,32 @@
             + "</div>"
             + "</div>";
         content = GCT.SetLinks(content);
+        return content;
+    },
+    txtNotification: function (object) {
+        var content = '<li><div class="row">'
+            + '<div class="col-80 item-content" onclick="ShowMessage(this);" data-guid="' + object.guid + ' data-type="notification">'
+            + '<div class="item-inner ' + object.unread + '">'
+            + '<div class="item-title-row">'
+            + '<div class="item-title">GCcollab</div>'
+            + '<div class="item-after">' + object.time + '</div></div>'
+            + '<div class="item-text">' + object.title + '</div>'
+            + '</div></div>'
+            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" onclick="GCTUser.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
+            + '</div></li>';
+        return content;
+    },
+    txtMessage: function (object) {
+        var content = '<li><div class="row">'
+            + '<div class="col-80 item-content" onclick="ShowMessage(this);" data-guid="' + object.guid + ' data-type="notification">'
+            + '<div class="item-inner ' + object.unread + '">'
+            + '<div class="item-title-row">'
+            + '<div class="item-title">GCcollab</div>'
+            + '<div class="item-after">' + object.time + '</div></div>'
+            + '<div class="item-text">' + object.title + '</div>'
+            + '</div></div>'
+            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" onclick="GCTUser.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
+            + '</div></li>';
         return content;
     },
 }
@@ -1006,6 +1030,52 @@ GCTEach = {
             $("#social-media-" + obj.id).html(links).text();
         }
     },
+    Notification: function (value, obj) {
+        var description = "";
+        var unread = (value.read) ? "" : "unread";
+        var regex = /<!-- TITLE OF CONTENT -->([\s\S]*)<div>Need help?/;
+        var matches = (value.description).match(regex);
+        if (matches != null) {
+            description = matches[1];
+        } else {
+            description = value.description;
+        }
+        var content = GCTtxt.txtNotification({
+            unread: unread,
+            time: prettyDate(value.time_created),
+            title: value.title,
+            guid: value.guid
+        });
+        return content;
+    },
+    Message: function (value, obj) {
+        var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : ""; //we don't use this so?
+        var unread = (value.read) ? "" : "unread";
+
+        var content = GCTtxt.txtMessage({
+            unread: unread,
+            time: prettyDate(value.time_created),
+            title: value.title,
+            sender: value.fromUserDetails.displayName,
+            guid: value.guid
+        });
+        return content;
+    },
+    ColleagueRequest: function (value, obj) {
+        var description = '<div class="row"><div class="col-50"><span class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.ApproveColleague(this);">' + GCTLang.Trans("accept") + '</span></div><span class="col-50"><div class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.DeclineColleague(this);">' + GCTLang.Trans("decline") + '</span></div></div>';
+
+        var content = GCTtxt.txtMember({
+            guid: value.user_id,
+            icon: value.iconURL,
+            name: value.displayName,
+            date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
+            description: description,
+            organization: value.organization,
+            job: (value.job) ? value.job : '',
+            colleaguerequest: true
+        });
+        return content;
+    },
     ContentSuccess: function (data, obj) {
         console.log(obj);
         var info = data.result;
@@ -1165,7 +1235,94 @@ GCTUser = {
     DisplayName: function () {
         return (Cookies.get('displayName')) ? Cookies.get('displayName') : "";
     },
+    AddColleague: function (obj) {
+        var guid = $(obj).data("guid");
 
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "add.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    RemoveColleague: function (obj) {
+        var guid = $(obj).data("guid");
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "remove.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    ApproveColleague: function (obj) {
+        var guid = $(obj).data("guid");
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "approve.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log(data);
+                ShowColleagueRequests();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    DeclineColleague: function (obj) {
+        var guid = $(obj).data("guid");
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "decline.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log(data);
+                ShowColleagueRequests();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    RevokeColleague: function (obj) {
+        var guid = $(obj).data("guid");
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "revoke.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log(data);
+                ShowColleagueRequests();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
 }
 
 GCTrequests = {
@@ -1635,6 +1792,60 @@ GCTrequests = {
             dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "get.opportunities", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetNotifications: function (tabObject) {
+        limit = tabObject.limit || 10;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.notifications", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetMessages: function (tabObject) {
+        limit = tabObject.limit || 10;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.messages", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccess(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetColleagueRequests: function (tabObject) {
+        limit = tabObject.limit || 10;
+        offset = tabObject.offset || 0;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.colleaguerequests", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);

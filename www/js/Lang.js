@@ -138,7 +138,7 @@
     "require-body": "Content requires a body.",
     "require-same-lang": "Content requires a title and body for the same language.",
 
-    "message-centre": "Message Centre",
+    "messagecentre": "Message Centre",
     "colleague-requests": "Colleague Requests",
     "notifications": "Notifications",
     "inbox": "Inbox",
