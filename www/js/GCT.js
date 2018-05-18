@@ -156,8 +156,10 @@
         return content;
     },
     txtBlog: function (object) {
-        var content = "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+        var content = "<div class='hold-all-card'>"
+            + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
+            + "<div class='card'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
@@ -166,15 +168,18 @@
             + "<div class='time'>" + object.date + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-content card-content-padding'>"
+            + "<div class='row'>"
+            + "<div class='col-85'></div>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "</div>"
+            + "<div class='card-content card-content-padding' aria-hidden='true'>"
             + "<div id='blog-" + object.guid + "' class='card-content-inner'>"
-            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
             + "<div class='blog-title'>" + object.title + "</div>"
             + "<div class='blog-group'>" + object.group + "</div>"
             + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-footer'>"
+            + "<div class='card-footer' aria-hidden='true'>"
             + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
@@ -639,11 +644,16 @@ GCTEach = {
         return content;
     },
     Blog: function (value) {
+        var label = '';
         var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
+        text = text.trunc(150);
+        var date = prettyDate(value.time_created);
         if (value.groupURL.indexOf("/groups/profile/") > -1) {
             var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
+            label += value.userDetails.displayName + ' ' + date + '. ' + value.title + ' ' + GCTLang.Trans("posted-group") + value.group;
         } else {
             var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+            label += value.userDetails.displayName + ' ' + date + '. ' + value.title;
         }
         var replied = (value.replied) ? "replied" : "";
         var liked = (value.liked) ? "liked" : "";
@@ -653,9 +663,10 @@ GCTEach = {
         var content = GCTtxt.txtBlog({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
-            date: prettyDate(value.time_created),
+            date: date,
             group: group,
-            description: text.trunc(150),
+            description: text,
+            label: label,
             title: value.title,
             all_text: 'all_text',
             action: action,
