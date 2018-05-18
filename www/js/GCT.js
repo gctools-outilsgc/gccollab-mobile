@@ -174,7 +174,7 @@
         return content;
     },
     txtGroup: function (object) {
-        var content = "<li><a class='item-link item-content' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>"
+        var content = "<li><div class='item-link item-content' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row no-padding-right'>"
             + "<div class='item-title reg-text'>" + object.name + "</div>"
@@ -184,7 +184,7 @@
             + "<div class='col-20 members-icon'><img src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
             + "<div class='col-80 item-text'>" + object.description.trunc(500) + "</div>"
             + "</div>"
-            + "</div></a></li>";
+            + "</div></div></li>";
         
         content = GCT.SetLinks(content);
         return content;
@@ -1972,6 +1972,11 @@ GCT = {
         return html;
     },
     ViewPost: function (obj, type, title) {
+        //Stops outer events (onclick to the whole post) from triggering if this was reached from a child to it
+        if (!e) var e = window.event;
+        e.cancelBubble = true;
+        if (e.stopPropagation) e.stopPropagation();
+        //
         var guid;
         if (typeof obj == "object") {
             guid = obj.getAttribute("data-guid");
