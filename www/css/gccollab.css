@@ -1203,3 +1203,8 @@ overflow:visible;
 .white {
     color: #fff;
 }
+
+.reader-text {
+    position: absolute !important;
+    clip: rect(1px, 1px, 1px, 1px);
+}
