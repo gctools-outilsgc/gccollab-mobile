@@ -396,9 +396,11 @@
 
     },
     txtDiscussion: function (object) {
-        var content = "<div class='list cards-list'>"
+        var content = "<div class='hold-all-card'>"
+            + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
+            + "<div class='list cards-list'>"
             + "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
@@ -407,19 +409,20 @@
             + "<div class='time'>" + object.date + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-content card-content-padding'>"
-            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
+            + "<div class='row'>"
+            + "<div class='col-85'></div>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "</div>"
+            + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='blog-title'>" + object.title + "</div>"
             + "<div class='blog-group'>" + object.group + "</div>"
             + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
             + "</div>"
-            + "<div class='card-footer'>"
+            + "<div class='card-footer' aria-hidden='true'>"
             + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
             // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
-            + "</div>"
-            + "</div>"
-            + "</div>";
+            + "</div></div></div></div>";
         content = GCT.SetLinks(content);
         return content;
     },
@@ -883,6 +886,8 @@ GCTEach = {
     Discussion: function (value) {
         // Removes HTML components from Discussion
         //var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
+        var date = prettyDate(value.time_created);
+        var label = value.title + ' ' + date;
         var text = "<blockquote class='item-text large'>" + value.description + "</blockquote>";
         var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
         var replied = (value.replied) ? "replied" : "";
@@ -893,7 +898,8 @@ GCTEach = {
         var content = GCTtxt.txtDiscussion({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
-            date: prettyDate(value.time_created),
+            date: date,
+            label: label,
             group: group,
             description: text,
             title: value.title,
