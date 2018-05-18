@@ -178,7 +178,7 @@
     "new-message-info": "Send a message to ",
 
     "location": "Location: ",
-    "start-date": "Start Date: ",
+    "start-date1": "Start Date: ",
     "end-date": "End Date: ",
     "web-view": "Site",
     "additional-info": "Additional Information",

@@ -35,8 +35,8 @@ var app  = new Framework7({
             },
             groups: {
                 limit: 15,
-                tabs: [{ id: "all", each: GCTEach.Group, request: GCTrequests.GetGroups, type: 'card' },
-                    { id: "my-groups", each: GCTEach.Group, request: GCTrequests.GetGroupsMine, type: 'card' }],
+                tabs: [{ id: "all", each: GCTEach.Group, request: GCTrequests.GetGroups, type: 'item' },
+                    { id: "my-groups", each: GCTEach.Group, request: GCTrequests.GetGroupsMine, type: 'item' }],
                 action: '',
                 filters: '',
             },
@@ -84,7 +84,7 @@ var app  = new Framework7({
             userprofile: {
                 limit: 15,
                 tabs: [{ id: "profile", each: GCTEach.User, request: GCTrequests.GetUserProfileP, type: 'user' },
-                    { id: "groups", each: GCTEach.Group, request: GCTrequests.GetUserGroups, type: 'card' },
+                    { id: "groups", each: GCTEach.Group, request: GCTrequests.GetUserGroups, type: 'item' },
                     { id: "colleagues", each: GCTEach.Member, request: GCTrequests.GetMembersByUserColleague, type: 'item' },
                     { id: "wires", each: GCTEach.Wire, request: GCTrequests.GetWiresByUser, type: 'card' },
                     { id: "blogs", each: GCTEach.Blog, request: GCTrequests.GetBlogsByUser, type: 'card' },

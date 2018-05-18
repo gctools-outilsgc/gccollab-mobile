@@ -80,8 +80,10 @@
     },
 
     txtNewsfeed: function (object) {
-        var content = "<div aria-label='"+object.label+"' tabindex='0'><div class='card' aria-hidden='true' >"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+        var content = "<div class='hold-all-card'>"
+            + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
+            + "<div class='card'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
             + "<div class='item-media rounded'><img aria-hidden='true' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
@@ -90,22 +92,25 @@
             + "<div class='time-" + object.guid + "' tabindex='-1'>" + object.date + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-content card-content-padding'>"
-            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
+            + "<div class='row'>"
+            + "<div class='col-85'></div>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "</div>"
+            + "<div class='card-content card-content-padding' aria-hidden='true'>"
             + "<div role='article' id='text-" + object.guid + " 'class='text'><a onclick='ShowProfile(" + object.owner + ");'>" + object.name + "</a> " + object.description + " " + object.more + object.context 
             + object.text
             + object.source
             + "</div></div>"
-            + "<div class='card-footer'>"
+            + "<div class='card-footer' aria-hidden='true'>"
             + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             + object.reply
             + object.action
             + "</div>"
-            + "</div></div>";
+            + "</div></div> </div>";
         return GCT.SetLinks(content);
     },
     txtActivity: function (object) {
-        var content = "<li class='item-link item-content'>"
+        var content = "<li class='item-content'>"
             + "<div class='item-inner'>"
             + "<div class='row'>"
             + "<div class='col-20'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
@@ -120,8 +125,10 @@
         return content;
     },
     txtWire: function (object) {
-        var content = "<div class='card' role='article'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+        var content = "<div class='hold-all-card'>"
+            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+            + "<div class='card'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
@@ -130,24 +137,29 @@
             + "<div class='time'>" + object.date + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-content  card-content-padding'>"
-            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
+            + "<div class='row'>"
+            + "<div class='col-85'></div>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "</div>"
+            + "<div class='card-content  card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div id='wire-" + object.guid + "' class='item-text large'>" + object.description + "</div>"
             + "<div class='item-media'>" + object.image + "</div>"
             + object.source
             + "</div>"
-            + "<div class='card-footer'>"
+            + "<div class='card-footer' aria-hidden='true'>"
             + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyWirePost(this);'><i class='fas fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
             + "</div>"
-            + "</div>";
+            + "</div><div>";
         content = GCT.SetLinks(content);
         return content;
     },
     txtBlog: function (object) {
-        var content = "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+        var content = "<div class='hold-all-card'>"
+            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+            + "<div class='card'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
@@ -156,15 +168,18 @@
             + "<div class='time'>" + object.date + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-content card-content-padding'>"
+            + "<div class='row'>"
+            + "<div class='col-85'></div>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "</div>"
+            + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div id='blog-" + object.guid + "' class='card-content-inner'>"
-            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
             + "<div class='blog-title'>" + object.title + "</div>"
             + "<div class='blog-group'>" + object.group + "</div>"
             + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-footer'>"
+            + "<div class='card-footer' aria-hidden='true'>"
             + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
@@ -174,30 +189,27 @@
         return content;
     },
     txtGroup: function (object) {
-        var content ="<div class='card' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>"
-            + "<div class='card-header'>"
-            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+        var content = "<li><div class='hold-all-card'> "
+            + "<div id='label-" + object.owner + "' class='reader-text' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+            + "<div class='item-link item-content' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);' > "
             + "<div class='item-inner'>"
-            + "<div class='item-title-row'>"
-            + "<div class='author'>" + object.name + "</div>"
+            + "<div class='item-title-row no-padding-right'>"
+            + "<div class='item-title reg-text'>" + object.name + "</div>"
+            + "<div class='item-after'>" + object.count + "</div>"
             + "</div>"
+            + "<div class='row ptm'>"
+            + "<div class='col-20 members-icon'><img src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
+            + "<div class='col-80 item-text'>" + object.description.trunc(500) + "</div>"
             + "</div>"
-            + "</div>"
-            + "<div class='card-content card-content-padding'>"
-            + "<div class='card-content-inner'>"
-            + "<div class='item-text large'>" + object.description + "</div>"
-            + "</div>"
-            + "</div>"
-            + "<div class='card-footer'>"
-            + "<div>" + object.count + "</div>"
-            + object.action
-            + "</div>"
-            + "</div>";
+            + "</div></div></div></li>";
+        
         content = GCT.SetLinks(content);
         return content;
     },
     txtMember: function (object) {
-        var content = "<a class='item-link item-content close-popup close-panel' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>"
+        var content = "<div class='hold-all-card'>"
+            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>" + object.label + "</div>"
+            + "<div class='item-link item-content close-popup close-panel' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row no-padding-right'>"
             + "</div>"
@@ -207,13 +219,15 @@
             + "</div>";
         (object.colleaguerequest == true) ? content += object.description : content += '';
         content += "</div>"
-            + "</a>";
+            + "</div></div>";
         content = GCT.SetLinks(content);
         return content;
     },
     txtDoc: function (object) {
-        var content ="<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+        var content = "<div class='hold-all-card'>"
+            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+            + "<div class='card'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
@@ -222,23 +236,28 @@
             + "<div class='time'>" + object.date + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-content card-content-padding'>"
+            + "<div class='row'>"
+            + "<div class='col-85'></div>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "</div>"
+            + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='card-content-inner'>"
             + "<div class='blog-title'>" + object.title + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-footer'>"
+            + "<div class='card-footer' aria-hidden='true'>"
             + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
-            + "</div>"
-            + "</div>";
+            + "</div></div></div>";
         content = GCT.SetLinks(content);
         return content;
     },
     txtEvent: function (object) {
-        var content = "<div id='" + object.id + "' class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+        var content = "<div class='hold-all-card'>"
+            + "<div id='label-" + object.id + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+            + "<div id='" + object.id + "' class='card'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
@@ -247,10 +266,12 @@
             + "<div class='time'>" + object.date + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-content card-content-padding'>"
+            + "<div class='row'>"
+            + "<div class='col-85'></div>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "</div>"
+            + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='card-content-inner'>"
-            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
-
             + "<div class='blog-title'>" + object.title + "</div>"
             + "<div class='item-text large'>" + object.startDate + "<br>" + object.endDate + "</div>"
             + "<div class='item-text large'>" + object.location + "</div>"
@@ -271,18 +292,18 @@
         }
         content += "</div>"
             + "</div>"
-            + "<div class='card-footer'>"
+            + "<div class='card-footer' aria-hidden='true'>"
             + "<a href='#' aria-label='like aimer' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             + object.action
-
-            + "</div>"
-            + "</div>";
+            + "</div></div></div>";
         content = GCT.SetLinks(content);
         return content;
     },
     txtBookmark: function (object) {
-        var content = "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+        var content = "<div class='hold-all-card'>"
+            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+            + "<div class='card'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
@@ -291,29 +312,32 @@
             + "<div class='time'>" + object.date + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-content  card-content-padding'>"
+            + "<div class='row'>"
+            + "<div class='col-85'></div>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "</div>"
+            + "<div class='card-content  card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='card-content-inner'>"
-
-            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
             + "<div class='blog-title'>" + object.title + "</div>"
             + "<div class='blog-group'>" + object.posted + "</div>"
             + "<div class='item-text large'>" + object.description + "</div>"
             + "<div class='blog-group'>" + "Link: " + object.address + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-footer'>"
+            + "<div class='card-footer' aria-hidden='true'>"
             + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
             + object.action
-            + "</div>"
-            + "</div>";
+            + "</div></div></div>";
         content = GCT.SetLinks(content);
         return content;
     },
     txtOpps: function (object) {
 
         if (object.state == 'posted') {
-            var content = "<div class='card view view-main'>"
-                + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+            var content = "<div class='hold-all-card'>"
+                + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+                + "<div class='card view view-main'>"
+                + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
                 + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
                 + "<div class='item-inner'>"
                 + "<div class='item-title-row'>"
@@ -322,9 +346,12 @@
                 + "<div class='time'>" + object.date + "</div>"
                 + "</div>"
                 + "</div>"
-                + "<div class='card-content card-content-padding'>"
+                + "<div class='row'>"
+                + "<div class='col-85'></div>"
+                + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+                + "</div>"
+                + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
                 + "<div class='card-content-inner'" + object.all_text + ">"
-                + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
                 + "<div class='blog-title'>" + object.title + "</div>"
                 + "<div class='title'> <b>" + object.jobtype + "(" + object.roletype + ")" + "</b></div>"
                 + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>";
@@ -362,14 +389,14 @@
             }
             content += "</div>"
                 + "</div>"
-                + "<div class='card-footer'>"
+                + "<div class='card-footer' aria-hidden='true'>"
             content += object.action
             if (object.apply == 'mission_apply') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ApplyPost(this);'> <span>" + GCTLang.Trans('apply-opt') + "</span></a>"; }
             else if (object.apply == 'withdraw') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('withdrawn-opt') + "</span></a>"; }
             else if (object.apply == 'offered') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.AcceptPost(this);'> <span>" + GCTLang.Trans('accept-opt') + "</span></a><a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('decline-opt') + "</span></a>"; }
 
             content += "</div>"
-                + "</div>";
+                + "</div></div>";
         } else {
             var content = "<div class='swiper-slide list-block cards-list'>";// need something hidden 
         }
@@ -378,9 +405,11 @@
 
     },
     txtDiscussion: function (object) {
-        var content = "<div class='list cards-list'>"
+        var content = "<div class='hold-all-card'>"
+            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+            + "<div class='list cards-list'>"
             + "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
@@ -389,19 +418,20 @@
             + "<div class='time'>" + object.date + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-content card-content-padding'>"
-            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
+            + "<div class='row'>"
+            + "<div class='col-85'></div>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "</div>"
+            + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='blog-title'>" + object.title + "</div>"
             + "<div class='blog-group'>" + object.group + "</div>"
             + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
             + "</div>"
-            + "<div class='card-footer'>"
+            + "<div class='card-footer' aria-hidden='true'>"
             + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
             // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
-            + "</div>"
-            + "</div>"
-            + "</div>";
+            + "</div></div></div></div>";
         content = GCT.SetLinks(content);
         return content;
     },
@@ -437,7 +467,8 @@ GCTEach = {
     Newsfeed: function (value) {
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-        var label = value.userDetails.displayName;
+        var date = prettyDate(value.time_posted);
+        var label = date + ': ' + value.userDetails.displayName;
         var description = "";
         if (value.action == "update") { //UPDATE
             switch (value.object.type) {
@@ -515,7 +546,7 @@ GCTEach = {
         var content = GCTtxt.txtNewsfeed({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
-            date: prettyDate(value.time_posted),
+            date: date,
             more: more,
             context: context,
             description: description,
@@ -594,6 +625,8 @@ GCTEach = {
             return;
         // Removes HTML components from Wire
         var text = value.description;
+        var date = prettyDate(value.time_created);
+        var label = value.userDetails.displayName + ': ' + date + '. ' + value.description;
 
         var source = "";
         if (value.shareText && value.shareURL) {
@@ -618,8 +651,9 @@ GCTEach = {
             guid: value.guid,
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
-            date: prettyDate(value.time_created),
+            date: date,
             description: text,
+            label: label,
             source: source,
             type: "gccollab_wire_post",
             replied: replied,
@@ -632,11 +666,16 @@ GCTEach = {
         return content;
     },
     Blog: function (value) {
+        var label = '';
         var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
+        text = text.trunc(150);
+        var date = prettyDate(value.time_created);
         if (value.groupURL.indexOf("/groups/profile/") > -1) {
             var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
+            label += value.userDetails.displayName + ' ' + date + '. ' + value.title + ' ' + GCTLang.Trans("posted-group") + value.group;
         } else {
             var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+            label += value.userDetails.displayName + ' ' + date + '. ' + value.title;
         }
         var replied = (value.replied) ? "replied" : "";
         var liked = (value.liked) ? "liked" : "";
@@ -646,9 +685,10 @@ GCTEach = {
         var content = GCTtxt.txtBlog({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
-            date: prettyDate(value.time_created),
+            date: date,
             group: group,
-            description: text.trunc(150),
+            description: text,
+            label: label,
             title: value.title,
             all_text: 'all_text',
             action: action,
@@ -668,11 +708,12 @@ GCTEach = {
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
         var members = (value.count > 0) ? value.count + (value.count == 1 ? " " + GCTLang.Trans("member") : " " + GCTLang.Trans("members")) : "";
         var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
+        var label = value.name + '. ' + text;
         var content = GCTtxt.txtGroup({
             icon: value.iconURL,
             name: value.name,
             description: text,
+            label: label,
             count: members,
             action: action,
             owner: value.guid,
@@ -683,12 +724,14 @@ GCTEach = {
         return content;
     },
     Member: function (value) {
+        var label = value.displayName + ': ' + value.job + '. ' + value.organization;
         var description = value.about || GCTLang.Trans('no-profile');
         var content = GCTtxt.txtMember({
             guid: value.user_id,
             icon: value.iconURL,
             name: value.displayName,
             job: (value.job) ? value.job : '',
+            label: label,
             date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
             description: description,
             organization: value.organization
@@ -696,6 +739,7 @@ GCTEach = {
         return content;
     },
     Event: function (value) {
+        var label = value.title + '. ';
         var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
 
         var liked = (value.liked) ? "liked" : "";
@@ -717,13 +761,15 @@ GCTEach = {
         } else {
             posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
         }
-
-        var startDate = GCTLang.Trans("start-date") + date;
+        
+        var startDate = GCTLang.Trans("start-date1") + ': ' + date;
         var endDate = GCTLang.Trans("end-date") + (value.endDate).split(" ")[0];
 
         var location = ((value.location !== null) && (typeof value.location !== 'undefined')) ? "<b>" + GCTLang.Trans("location") + "</b>" + value.location : "";
         var fullview = false;
 
+        label += startDate + '. ' + endDate + '. ' + GCTLang.Trans("location") + ': ' + value.location;
+        
         var content = GCTtxt.txtEvent({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
@@ -733,6 +779,7 @@ GCTEach = {
             location: location,
             posted: posted,
             description: text.trunc(150),
+            label: label,
             title: value.title,
             id: id,
             action: action,
@@ -746,6 +793,8 @@ GCTEach = {
         return content;
     },
     Doc: function (value) {
+        var date = prettyDate(value.time_created);
+        var label = value.userDetails.displayName + ': ' + date + '. ' + value.title ;
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
         var action = "<a class='link' data-title='" + value.title + "' data-guid='" + value.guid + "' data-type='gccollab_doc' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
@@ -753,7 +802,8 @@ GCTEach = {
         var content = GCTtxt.txtDoc({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
-            date: prettyDate(value.time_created),
+            label: label,
+            date: date,
             title: value.title,
             action: action,
             owner: value.owner_guid,
@@ -765,6 +815,8 @@ GCTEach = {
         return content;
     },
     Bookmark: function (value) {
+        var label = '';
+        var date = prettyDate(value.time_created);
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
         var action = '';
@@ -776,12 +828,14 @@ GCTEach = {
             posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
         }
         var address = "<a class='external' data-type='gccollab_bookmark' href='" + value.address + "'>" + value.address + "</a> ";
+        label += value.userDetails.displayName + ': ' + date + '. ' + value.title;
         var content = GCTtxt.txtBookmark({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
             owner: value.owner_guid,
-            date: prettyDate(value.time_created),
+            date: date,
             title: value.title,
+            label: label,
             posted: posted,
             description: value.description,
             address: address,
@@ -795,35 +849,36 @@ GCTEach = {
     },
     Opportunity: function (value) {
         // Removes HTML components from Blog
+        var label = value.title + '. ';
         var text = (value.description !== null) ? value.description : "";
+        var date = prettyDate(value.time_created);
         var replied = (value.replied) ? "replied" : "";
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
         var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_opportunity' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
+        
         var programArea = "<b>" + GCTLang.Trans("program-area") + "</b>";
         if (value.programArea) { programArea += value.programArea; }
 
-        var deadline = "<b>" + GCTLang.Trans("deadline") + "</b>";
-        if (value.deadline) { deadline += value.deadline; }
-
         var jobtype = '';
-        if (value.jobtype) { jobtype += value.jobtype; }
+        if (value.jobtype) { jobtype += value.jobtype; label += value.jobtype + ': '; }
 
         var roletype = '';
-        if (value.roletype) { roletype += value.roletype; }
+        if (value.roletype) { roletype += value.roletype; label += value.roletype + '. '; }
+
+        var deadline = "<b>" + GCTLang.Trans("deadline") + "</b>";
+        if (value.deadline) { deadline += value.deadline; label += GCTLang.Trans("deadline") + ': ' + value.deadline; }
 
         var state = '';
         if (value.state) { state += value.state; }
 
         var apply = '';
         if (value.apply) { apply = value.apply };
-
         var content = GCTtxt.txtOpps({
             guid: value.guid,
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
-            date: prettyDate(value.time_created),
+            date: date,
             jobtype: jobtype,
             roletype: roletype,
             description: text.trunc(150),
@@ -834,6 +889,7 @@ GCTEach = {
             action: action,
             owner: value.owner_guid,
             title: value.title,
+            label: label,
             liked: liked,
             likes: likes,
             state: state,
@@ -845,6 +901,8 @@ GCTEach = {
     Discussion: function (value) {
         // Removes HTML components from Discussion
         //var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
+        var date = prettyDate(value.time_created);
+        var label = value.title + ' ' + date;
         var text = "<blockquote class='item-text large'>" + value.description + "</blockquote>";
         var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
         var replied = (value.replied) ? "replied" : "";
@@ -855,7 +913,8 @@ GCTEach = {
         var content = GCTtxt.txtDiscussion({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
-            date: prettyDate(value.time_created),
+            date: date,
+            label: label,
             group: group,
             description: text,
             title: value.title,
@@ -1979,6 +2038,11 @@ GCT = {
         return html;
     },
     ViewPost: function (obj, type, title) {
+        //Stops outer events (onclick to the whole post) from triggering if this was reached from a child to it
+        if (!e) var e = window.event;
+        e.cancelBubble = true;
+        if (e.stopPropagation) e.stopPropagation();
+        //
         var guid;
         if (typeof obj == "object") {
             guid = obj.getAttribute("data-guid");
@@ -2000,6 +2064,7 @@ GCT = {
                 break;
 
             default:
+                console.log('Worked, but type not handled yet.');
                 break;
         }
     }
