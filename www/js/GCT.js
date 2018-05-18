@@ -343,6 +343,23 @@ GCTLang = {
         content = GCT.SetLinks(content);
         return content;
     },
+    txtSubgroup: function (object) {
+        var content = "<div class='swiper-slide list-block cards-list'>"
+            + "<div class='card'>"
+                + "<div class='card-header plain' onclick='ShowProfile(" + object.owner + ");'>"
+                    + "<div class='item-media rounded'><img alt='Profile Image of " + object.name +"' src='" + object.icon + "' /></div>"
+                    + "<div class='item-inner'>"
+                        + "<div class='item-title-row'>"
+                            + "<div class='author'>" + object.name + "</div>"
+                        + "</div>"
+                        + "<div class='time'>" + object.date + "</div>"
+                    + "</div>"
+                + "</div>"
+            + "</div>"
+        + "</div>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
     txtActivity: function (object) {
         var content = "<li class='item-link item-content'>"
             + "<div class='item-inner'>"
@@ -991,6 +1008,43 @@ GCTUser = {
 
                 var likes = (count > 0) ? count + (count == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
                 $(obj).find('.like-count').text(likes);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetSubGroup: function (obj) {
+        var guid = $(obj).data("guid");
+        var type = $(obj).data("type");
+
+        $$.ajax({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.subgroup", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                var likeData = data.result;
+                console.log(likeData);
+                var content = "";
+                if (likeData) {
+                    
+                    $.each(likeData.groups, function (key, value) {
+                        content += GCTLang.txtSubgroup({
+                            icon: value.URL,
+                            name: value.name,
+                            date: prettyDate(value.time_created),
+                            owner: value.owner_guid
+                        });
+                    });
+                } else {
+                    content += noContent;
+                }
+
+                $('.popup-generic .popup-title').html(GCTLang.Trans("likes-header"));
+                $('.popup-generic .popup-content').html(content);
+                myApp.popup('.popup-generic');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -2822,7 +2876,7 @@ function listObject(id) {
 
 // Exemple of link : https://exemple.ca/services/api/rest/json/?
 GCT = {
-    GCcollabURL: "https://gccollab.ca/services/api/rest/json",
+    GCcollabURL: "http://localhost/gcconnex/services/api/rest/json",
     GEDSURL: "https://api.geds.gc.ca",
     IsInApp: function () {
         if (window.location.href.toLowerCase().indexOf("http") > -1) {
