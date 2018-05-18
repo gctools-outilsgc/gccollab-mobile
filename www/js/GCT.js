@@ -189,7 +189,9 @@
         return content;
     },
     txtGroup: function (object) {
-        var content = "<li><div class='item-link item-content' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>"
+        var content = "<li><div class='hold-all-card'> "
+            + "<div id='label-" + object.owner + "' class='reader-text'>" + object.label + "</div>"
+            + "<div class='item-link item-content' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);' > "
             + "<div class='item-inner'>"
             + "<div class='item-title-row no-padding-right'>"
             + "<div class='item-title reg-text'>" + object.name + "</div>"
@@ -199,13 +201,15 @@
             + "<div class='col-20 members-icon'><img src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
             + "<div class='col-80 item-text'>" + object.description.trunc(500) + "</div>"
             + "</div>"
-            + "</div></div></li>";
+            + "</div></div></div></li>";
         
         content = GCT.SetLinks(content);
         return content;
     },
     txtMember: function (object) {
-        var content = "<a class='item-link item-content close-popup close-panel' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>"
+        var content = "<div class='hold-all-card'>"
+            + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
+            + "<div class='item-link item-content close-popup close-panel' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row no-padding-right'>"
             + "</div>"
@@ -215,7 +219,7 @@
             + "</div>";
         (object.colleaguerequest == true) ? content += object.description : content += '';
         content += "</div>"
-            + "</a>";
+            + "</div></div>";
         content = GCT.SetLinks(content);
         return content;
     },
@@ -704,11 +708,12 @@ GCTEach = {
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
         var members = (value.count > 0) ? value.count + (value.count == 1 ? " " + GCTLang.Trans("member") : " " + GCTLang.Trans("members")) : "";
         var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
+        var label = value.name + '. ' + text;
         var content = GCTtxt.txtGroup({
             icon: value.iconURL,
             name: value.name,
             description: text,
+            label: label,
             count: members,
             action: action,
             owner: value.guid,
@@ -719,12 +724,14 @@ GCTEach = {
         return content;
     },
     Member: function (value) {
+        var label = value.displayName + ': ' + value.job + '. ' + value.organization;
         var description = value.about || GCTLang.Trans('no-profile');
         var content = GCTtxt.txtMember({
             guid: value.user_id,
             icon: value.iconURL,
             name: value.displayName,
             job: (value.job) ? value.job : '',
+            label: label,
             date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
             description: description,
             organization: value.organization
