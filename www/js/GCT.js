@@ -110,7 +110,7 @@
         return GCT.SetLinks(content);
     },
     txtActivity: function (object) {
-        var content = "<li class='item-link item-content'>"
+        var content = "<li class='item-content'>"
             + "<div class='item-inner'>"
             + "<div class='row'>"
             + "<div class='col-20'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
@@ -126,7 +126,7 @@
     },
     txtWire: function (object) {
         var content = "<div class='hold-all-card'>"
-            + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
+            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
@@ -157,7 +157,7 @@
     },
     txtBlog: function (object) {
         var content = "<div class='hold-all-card'>"
-            + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
+            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
@@ -190,7 +190,7 @@
     },
     txtGroup: function (object) {
         var content = "<li><div class='hold-all-card'> "
-            + "<div id='label-" + object.owner + "' class='reader-text'>" + object.label + "</div>"
+            + "<div id='label-" + object.owner + "' class='reader-text' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='item-link item-content' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);' > "
             + "<div class='item-inner'>"
             + "<div class='item-title-row no-padding-right'>"
@@ -208,7 +208,7 @@
     },
     txtMember: function (object) {
         var content = "<div class='hold-all-card'>"
-            + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
+            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>" + object.label + "</div>"
             + "<div class='item-link item-content close-popup close-panel' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row no-padding-right'>"
@@ -225,7 +225,7 @@
     },
     txtDoc: function (object) {
         var content = "<div class='hold-all-card'>"
-            + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
+            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
@@ -255,7 +255,7 @@
     },
     txtEvent: function (object) {
         var content = "<div class='hold-all-card'>"
-            + "<div id='label-" + object.id + "' class='reader-text'>" + object.label + "</div>"
+            + "<div id='label-" + object.id + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div id='" + object.id + "' class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
@@ -301,7 +301,7 @@
     },
     txtBookmark: function (object) {
         var content = "<div class='hold-all-card'>"
-            + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
+            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
@@ -335,7 +335,7 @@
 
         if (object.state == 'posted') {
             var content = "<div class='hold-all-card'>"
-                + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
+                + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
                 + "<div class='card view view-main'>"
                 + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
                 + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
@@ -406,7 +406,7 @@
     },
     txtDiscussion: function (object) {
         var content = "<div class='hold-all-card'>"
-            + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
+            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='list cards-list'>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
