@@ -80,8 +80,10 @@
     },
 
     txtNewsfeed: function (object) {
-        var content = "<div aria-label='"+object.label+"' tabindex='0'><div class='card' aria-hidden='true' >"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
+        var content = "<div class='hold-all-card'>"
+            + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
+            + "<div class='card'>"
+            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
             + "<div class='item-media rounded'><img aria-hidden='true' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
@@ -90,18 +92,21 @@
             + "<div class='time-" + object.guid + "' tabindex='-1'>" + object.date + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-content card-content-padding'>"
-            + "<a href='#' class='link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fa fa-caret-down'></i></a>"
+            + "<div class='row'>"
+            + "<div class='col-85'></div>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "</div>"
+            + "<div class='card-content card-content-padding' aria-hidden='true'>"
             + "<div role='article' id='text-" + object.guid + " 'class='text'><a onclick='ShowProfile(" + object.owner + ");'>" + object.name + "</a> " + object.description + " " + object.more + object.context 
             + object.text
             + object.source
             + "</div></div>"
-            + "<div class='card-footer'>"
+            + "<div class='card-footer' aria-hidden='true'>"
             + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             + object.reply
             + object.action
             + "</div>"
-            + "</div></div>";
+            + "</div></div> </div>";
         return GCT.SetLinks(content);
     },
     txtActivity: function (object) {
@@ -435,7 +440,8 @@ GCTEach = {
     Newsfeed: function (value) {
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-        var label = value.userDetails.displayName;
+        var date = prettyDate(value.time_posted);
+        var label = date + ': ' + value.userDetails.displayName;
         var description = "";
         if (value.action == "update") { //UPDATE
             switch (value.object.type) {
@@ -513,7 +519,7 @@ GCTEach = {
         var content = GCTtxt.txtNewsfeed({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
-            date: prettyDate(value.time_posted),
+            date: date,
             more: more,
             context: context,
             description: description,
