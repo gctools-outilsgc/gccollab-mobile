@@ -109,6 +109,44 @@
                             $(content).hide().appendTo('#content-entity-'+guid).fadeIn(500);
                         });
                         break;
+                    case 'blog':
+                        GCTrequests.GetBlog(guid, function (data) {
+                            var blog = data.result;
+                            var content = "";
+                            $(blog).each(function (key, value) {
+                                // Removes HTML components from Blog
+                                var text = (value.description !== null) ? value.description : "";
+                                if (value.groupURL.indexOf("/groups/profile/") > -1) {
+                                    var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
+                                } else {
+                                    var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+                                }
+                                var replied = (value.replied) ? "replied" : "";
+                                var liked = (value.liked) ? "liked" : "";
+                                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                                var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_blog_post' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
+
+                                content += GCTtxt.txtBlog({
+                                    icon: value.userDetails.iconURL,
+                                    name: value.userDetails.displayName,
+                                    date: prettyDate(value.time_created),
+                                    group: group,
+                                    description: text,
+                                    title: value.title,
+                                    all_text: "all_text",
+                                    action: action,
+                                    owner: value.owner_guid,
+                                    guid: value.guid,
+                                    type: "gccollab_blog_post",
+                                    replied: replied,
+                                    liked: liked,
+                                    likes: likes
+                                });
+                            });
+
+                            $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+                        });
+                        break;
                     default:
                         break;
                 }

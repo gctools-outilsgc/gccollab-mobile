@@ -91,8 +91,6 @@ routes = [
                     context: {
                         navbar: navbar,
                         comments: pageInfo.comments,
-                        each: pageInfo.each,
-                        request: pageInfo.request,
                         guid: guid,
                         type: type,
                     }

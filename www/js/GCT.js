@@ -1458,6 +1458,21 @@ GCTrequests = {
             }
         });
     },
+    GetBlog: function (guid, successCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.blogpost", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetBlogs: function (tabObject) {
         limit = tabObject.limit || 12;
         offset = tabObject.offset || 0;
@@ -2081,6 +2096,9 @@ GCT = {
                 break;
             case "gccollab_wire_post":
                 mainView.router.navigate('/entity-template/wire/' + guid + '/');
+                break;
+            case "gccollab_blog_post":
+                mainView.router.navigate('/entity-template/blog/' + guid + '/');
                 break;
             default:
                 console.log('Worked, but type not handled yet.');
