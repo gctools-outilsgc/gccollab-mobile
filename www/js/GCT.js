@@ -142,7 +142,7 @@
             + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content  card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
-            + "<div id='wire-" + object.guid + "' class='item-text large'>" + object.description + "</div>"
+            + "<div id='wire-" + object.guid + "'>" + object.description + "</div>"
             + "<div class='item-media'>" + object.image + "</div>"
             + object.source
             + "</div>"
@@ -1155,7 +1155,7 @@ GCTEach = {
         obj.offset += obj.limit;
         var focusNow = document.getElementById('focus-' + obj.id);
         if (focusNow) { focusNow.focus(); }
-    }
+    },
 }
 
 GCTtabs = {

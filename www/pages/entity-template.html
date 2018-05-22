@@ -62,13 +62,49 @@
                 var offset = 0;
                 console.log(guid + ' ' + type);
 
+                
                 switch (type) {
                     case 'wire':
                         GCTrequests.GetWire(guid, 1, function (data) {
                             var wires = data.result.reverse();
                             var content = "";
                             $(wires).each(function (key, value) {
-                                content += each(value);
+                                // Removes HTML components from Blog
+                                // var text = $(value.description).text();
+                                var text = value.description;
+
+                                var source = "";
+                                if (value.shareText && value.shareURL) {
+                                    source = "<blockquote>" + GCTLang.Trans("source") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_wire_post' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
+                                } else if (value.shareURL) {
+                                    source = "<blockquote>" + GCTLang.Trans("source") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_wire_post' href='" + value.shareURL + "'>" + text + "</a></blockquote>";
+                                }
+                                var img = '';
+                                var img = '';
+                                if (value.attachment) {
+                                    img = "<img class='WireImage' onclick='ShowImage(this)' id='image-" + value.guid + "' src='https://gccollab.ca/thewire_image/download/" + value.attachment.guid + "' style='' />";
+                                }
+
+                                var replied = (value.replied) ? "replied" : "";
+                                var liked = (value.liked) ? "liked" : "";
+                                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                                var action = '';
+
+                                content += GCTtxt.txtWire({
+                                    guid: value.guid,
+                                    icon: value.userDetails.iconURL,
+                                    name: value.userDetails.displayName,
+                                    date: prettyDate(value.time_created),
+                                    description: text,
+                                    source: source,
+                                    type: "gccollab_wire_post",
+                                    replied: replied,
+                                    action: action,
+                                    owner: value.owner_guid,
+                                    liked: liked,
+                                    likes: likes,
+                                    image: img
+                                });
                             });
                             $(content).hide().appendTo('#content-entity-'+guid).fadeIn(500);
                         });
