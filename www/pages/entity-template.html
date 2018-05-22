@@ -55,10 +55,9 @@
     return {
         on: {
             pageInit: function (e, page) {
-               
                 var guid = this.guid;
                 var type = this.type;
-                var each = this.each;
+                var comments = this.comments;
                 var limit = 10;
                 var offset = 0;
                 console.log(guid + ' ' + type);
@@ -422,6 +421,48 @@
                     default:
                         break;
                 }
+
+                $$('#comments-view-'+guid).on('click', function (e) {
+                    GCTrequests.GetComments(guid, limit, offset, function (data) {
+                        $("#comments-view-" + guid).hide();
+                        $("#comments-more-" + guid).show();
+                        var comments = data.result;
+                        var content = "";
+                        if (comments.length > 0) {
+                            $(comments).each(function (key, value) {
+                                content += GCTEach.Comment(value);
+                            });
+                            if (comments.length < limit) {
+                                $("#comments-more-" + guid).hide();
+                                content += endOfContent;
+                            }
+                        } else {
+                            content += noContent;
+                            $("#comments-more-" + guid).hide();
+                        }
+                        $(content).hide().appendTo("#entity-comments-"+ guid).fadeIn(500);
+                    });
+                });
+                $$('#comments-more-'+guid).on('click', function (e) {
+                    GCTrequests.GetComments(guid, limit, offset + limit, function (data) {
+                        offset += limit;
+                        var comments = data.result;
+                        var content = "";
+                        if (comments.length > 0) {
+                            $(comments).each(function (key, value) {
+                                content += GCTEach.Comment(value);
+                            });
+                            if (comments.length < limit) {
+                                content += endOfContent;
+                                $("#comments-more-" + guid).hide();
+                            }
+                        } else {
+                            content += endOfContent;
+                            $("#comments-more-" + guid).hide();
+                        }
+                        $(content).hide().appendTo("#entity-comments-" + guid).fadeIn(500);
+                    });
+                });
             },
 
            
