@@ -1743,6 +1743,21 @@ GCTrequests = {
             }
         });
     },
+    GetDiscussion: function (guid, successCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.discussion", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetMembers: function (tabObject, filters) {
         limit = tabObject.limit || 15;
         offset = tabObject.offset || 0;
@@ -2099,6 +2114,9 @@ GCT = {
                 break;
             case "gccollab_blog_post":
                 mainView.router.navigate('/entity-template/blog/' + guid + '/');
+                break;
+            case "gccollab_discussion_post":
+                mainView.router.navigate('/entity-template/discussion/' + guid + '/');
                 break;
             default:
                 console.log('Worked, but type not handled yet.');

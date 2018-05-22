@@ -111,6 +111,10 @@ var app  = new Framework7({
             blog: {
                 comments: true,
                 id: 'blog',
+            },
+            discussion: {
+                comments: true,
+                id: 'discussion',
             }
         };
     },
