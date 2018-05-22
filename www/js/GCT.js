@@ -1815,6 +1815,21 @@ GCTrequests = {
             }
         });
     },
+    GetEvent: function (guid, successCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.event", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetEvents: function (tabObject, from, to) {
         limit = tabObject.limit || 15;
         offset = tabObject.offset || 0;
@@ -2153,6 +2168,9 @@ GCT = {
                 break;
             case "gccollab_bookmark":
                 mainView.router.navigate('/entity-template/bookmark/' + guid + '/');
+                break;
+            case "gccollab_event":
+                mainView.router.navigate('/entity-template/event/' + guid + '/');
                 break;
             default:
                 console.log('Worked, but type not handled yet.');

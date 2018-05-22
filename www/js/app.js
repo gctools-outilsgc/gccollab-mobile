@@ -123,6 +123,10 @@ var app  = new Framework7({
             bookmark: {
                 comments: true,
                 id: 'bookmark',
+            },
+            event: {
+                comments: true,
+                id: 'event',
             }
             
         };
