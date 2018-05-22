@@ -1,0 +1,47 @@
+<template>
+    <div class="page navbar-fixed">
+        <div class="navbar">
+            <div class="entity-{{guid}}-navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar">
+                {{navbar}}
+            </div>
+        </div>
+    </div>
+    <div class="toolbar toolbar-bottom" role="navigation" data-translate-target="aria-label" data-translate="toolbar">
+        <div class="toolbar-inner">
+            <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="fa fa-arrow-circle-o-left fa-2x"></i></a></div>
+        </div>
+    </div>
+    <div class="page with-subnavbar" style="overflow-x: hidden;">
+        <div id="content-entity-{{guid}}"></div>
+        <div id="comment-card-{{guid}}">
+            <div class="content-block comment">
+                <div class="content-block-inner comment">
+                    <div class="row no-gutter">
+                        <div class="col">
+                            <div id="comment-count-{{guid}}" class="left number-comment" data-translate="comments">comments:</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list">
+            <ul class="message-comment">
+                <li class="align-top">
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-input">
+                                <textarea id="message-{{guid}}" class="comment-textarea" data-translate-target="placeholder" data-translate="write-comment" placeholder="write a comment"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="content-block"> <a id="comments-submit-{{guid}}" class="button button-big button-fill" data-translate="comment">Comment</a> </li>
+                <li class="content-block"><a id="comments-view-{{guid}}" class="button button-big button-fill" data-translate="view-comments">VIEW COMMENTS</a></li>
+            </ul>
+        </div>
+        <div id="comment-head" class="list media-list comment">
+            <ul id="entity-comments-{{guid}}" class="comment"></ul>
+            <a id="comments-more-{{guid}}" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+        </div>
+    </div>
+</template>
