@@ -178,6 +178,7 @@ GCTLang = {
                  + "</div>"
                 + "<div class='card-footer'>"
                     + "<a href='#' aria-label='like aimer' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+                    +'<a href="#" class="item-link list-button" data-guid="' + object.guid + '" onclick="GCTUser.SeeCalendar(this);" data-type="' + object.type + '">See calendar</a>'
                     + object.action
 
                 + "</div>"
@@ -1151,7 +1152,7 @@ GCTUser = {
                 + '<div class="list-block">'
                     + '<ul>'
                         + '<span id="focus-new-popover" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans("more-options-opened") + '</span>';
-                        if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post') {
+                        if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post' || type=="gccollab_event") {
                             popoverHTML += '<li><a href="#" class="item-link close-popover list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
                         }
                         if(type == "gccollab_event"){
@@ -1372,7 +1373,42 @@ GCTUser = {
             }
         });
     },
+    SeeCalendar: function(obj){
+        var guid = $(obj).data("guid");
+        var type = $(obj).data("type");
 
+        $$.ajax({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.seecalendar", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                var likeData = data.result;
+console.log(data.result);
+                var content = "";
+                if (likeData.count > 0) {
+                    $.each(likeData.users, function (key, value) {
+                        content += GCTLang.txtLikes({
+                            icon: value.iconURL,
+                            name: value.displayName,
+                            date: prettyDate(value.time_created),
+                            owner: value.user_id
+                        });
+                    });
+                } else {
+                    content += noContent;
+                }
+
+                $('.popup-generic .popup-title').html(GCTLang.Trans("likes-header"));
+                $('.popup-generic .popup-content').html(content);
+                myApp.popup('.popup-generic');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetEventsByUser: function (from, to, limit, successCallback, errorCallback) {
         limit = limit || 10;
        // offset = offset || 0;
@@ -2743,7 +2779,8 @@ GCTEach = {
             type: "gccollab_event",
             liked: liked,
             likes: likes,
-            fullview: fullview
+            fullview: fullview,
+            in_calendar:value.in_calendar
         });
         return content;
     },
@@ -2876,7 +2913,7 @@ function listObject(id) {
 
 // Exemple of link : https://exemple.ca/services/api/rest/json/?
 GCT = {
-    GCcollabURL: "http://localhost/gcconnex/services/api/rest/json",
+    GCcollabURL: "https://gccollab.ca/gcconnex/services/api/rest/json",
     GEDSURL: "https://api.geds.gc.ca",
     IsInApp: function () {
         if (window.location.href.toLowerCase().indexOf("http") > -1) {

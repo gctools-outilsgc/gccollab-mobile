@@ -544,6 +544,9 @@ myApp.onPageInit('*', function (page) {
         } else if (type == 'gccollab_blog_post') {
             message = $("#blog-" + guid + ' .blog-title').text();
             subject = 'GCcollab Blog';
+        }else if (type == 'gccollab_event') {
+            message = $("#event-" + guid + ' .blog-event').text();
+            subject = 'GCcollab event';
         }
 
         if (typeof window.plugins.socialsharing !== 'undefined' && message != "") {
