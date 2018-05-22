@@ -104,6 +104,12 @@ var app  = new Framework7({
                 action: '',
                 filters: '',
             },
+            wire: {
+                comments: false,
+                request: GCTrequests.GetWire,
+                each: GCTEach.Wire,
+                id: 'wire',
+            },
         };
     },
   // App routes
