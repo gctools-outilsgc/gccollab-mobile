@@ -119,6 +119,10 @@ var app  = new Framework7({
             opportunity: {
                 comments: false,
                 id: 'opportunity',
+            },
+            bookmark: {
+                comments: true,
+                id: 'bookmark',
             }
             
         };

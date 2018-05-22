@@ -305,6 +305,41 @@
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
                         });
                         break;
+                    case 'bookmark':
+                        GCTrequests.GetBookmark(guid, function (data) {
+                            var bookmark = data.result;
+                            var content = "";
+                            $(bookmark).each(function (key, value) {
+                                var liked = (value.liked) ? "liked" : "";
+                                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                                var action = '';
+                                var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_bookmark' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
+                                var posted = '';
+                                if (value.group_guid) {
+                                    posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.group_guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.group + "</a>";
+                                } else {
+                                    posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+                                }
+                                var address = "<a class='external' data-type='gccollab_bookmark' href='" + value.address + "'>" + value.address + "</a> ";
+                                content += GCTtxt.txtBookmark({
+                                    icon: value.userDetails.iconURL,
+                                    name: value.userDetails.displayName,
+                                    owner: value.owner_guid,
+                                    date: prettyDate(value.time_created),
+                                    title: value.title,
+                                    posted: posted,
+                                    description: value.description,
+                                    address: address,
+                                    type: "gccollab_bookmark",
+                                    guid: value.guid,
+                                    action: action,
+                                    liked: liked,
+                                    likes: likes
+                                })
+                            });
+                            $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+                        });
+                        break;
                     default:
                         break;
                 }
