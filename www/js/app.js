@@ -115,7 +115,12 @@ var app  = new Framework7({
             discussion: {
                 comments: true,
                 id: 'discussion',
+            },
+            opportunity: {
+                comments: false,
+                id: 'opportunity',
             }
+            
         };
     },
   // App routes

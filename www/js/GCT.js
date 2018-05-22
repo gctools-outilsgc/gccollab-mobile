@@ -1889,6 +1889,21 @@ GCTrequests = {
             }
         });
     },
+    GetOpportunity: function (guid, successCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.opportunity", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetOpportunities: function (tabObject, filters) {
         limit = tabObject.limit || 10;
         offset = tabObject.offset || 0;
@@ -2117,6 +2132,9 @@ GCT = {
                 break;
             case "gccollab_discussion_post":
                 mainView.router.navigate('/entity-template/discussion/' + guid + '/');
+                break;
+            case "gccollab_opportunity":
+                mainView.router.navigate('/entity-template/opportunity/' + guid + '/');
                 break;
             default:
                 console.log('Worked, but type not handled yet.');

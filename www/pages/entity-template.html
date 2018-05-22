@@ -186,6 +186,125 @@
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
                         });
                         break;
+                    case 'opportunity':
+                        $("#comment-card").hide();
+                        GCTrequests.GetOpportunity(guid, function (data) {
+                            var opportunity = data.result;
+                            var content = "";
+                            $(opportunity).each(function (key, value) {
+
+                                var text = (value.description) ? value.description : "";
+
+                                var oppType = (value.jobType) ? oppType += jobType : "";
+
+                                var source = "";
+                                if (value.shareText && value.shareURL)
+                                    source = "<blockquote>Source: <a onclick='GCT.FireLink(this);' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
+
+                                var jobtype = '';
+                                if (value.jobtype) { jobtype += value.jobtype; }
+
+                                var roletype = '';
+                                if (value.roletype) { roletype += value.roletype; }
+
+                                var programArea = "<b>" + GCTLang.Trans("program-area") + "</b>";
+                                if (value.programArea) { programArea += value.programArea; }
+
+                                var numOpportunities = "<b>" + GCTLang.Trans("num-opportunities") + "</b>";
+                                if (value.numOpportunities) { numOpportunities += value.numOpportunities; }
+
+                                var idealStart = "<b>" + GCTLang.Trans("ideal-start") + "</b>";
+                                if (value.idealStart) { idealStart += value.idealStart; }
+
+                                var idealComplete = "<b>" + GCTLang.Trans("ideal-complete") + "</b>";
+                                if (value.idealComplete) { idealComplete += value.idealComplete; }
+
+                                var deadline = "<b>" + GCTLang.Trans("deadline") + "</b>";
+                                if (value.deadline) { deadline += value.deadline; }
+
+                                var oppVirtual = "<b>" + GCTLang.Trans("opportunity-virtual") + "</b>";
+                                if (value.oppVirtual) { oppVirtual += value.oppVirtual; }
+
+                                var oppOnlyIn = "<b>" + GCTLang.Trans("opportunity-in") + "</b>";
+                                if (value.oppOnlyIn) { oppOnlyIn += value.oppOnlyIn; }
+
+                                var location = "<b>" + GCTLang.Trans("opportunity-location") + "</b>";
+                                if (value.location) { location += value.location; }
+
+                                var security = "<b>" + GCTLang.Trans("opportunity-security") + "</b>";
+                                if (value.security) { security += value.security; }
+
+                                var skills = "<b>" + GCTLang.Trans("opportunity-skills") + "</b>";
+                                if (value.skills) { skills += value.skills; }
+
+                                var languageReq = '';
+                                if (value.languageRequirements) { languageReq = value.languageRequirements; }
+
+                                var schedulingReq = "";
+                                if (value.schedulingRequirements) { schedulingReq += value.schedulingRequirements; }
+
+                                var timezone = "<b>" + GCTLang.Trans("opportunity-timezone") + "</b>";
+                                if (value.timezone) { timezone += value.timezone; }
+                                var timecommitment = "<b>" + GCTLang.Trans("opportunity-time-commitment") + "</b>";
+                                if (value.timecommitment) { timecommitment += value.timecommitment; }
+
+                                var participants = "<b>" + GCTLang.Trans("participants") + "</b>";
+                                if (value.participants) { participants += value.participants; }
+
+                                var applicants = "<b>" + GCTLang.Trans("applicants") + "</b>";
+                                if (value.applicants) { applicants += value.applicants; }
+
+                                var liked = (value.liked) ? "liked" : "";
+                                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                                var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_opportunity' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
+                                var fullview = true;
+
+                                var state = '';
+                                if (value.state) { state += value.state; }
+
+                                content += GCTtxt.txtOpps({
+                                    guid: value.guid,
+                                    icon: value.userDetails.iconURL,
+                                    name: value.userDetails.displayName,
+                                    date: prettyDate(value.time_created),
+                                    jobtype: jobtype,
+                                    roletype: roletype,
+                                    title: value.title,
+                                    oppType: oppType,
+                                    description: text,
+                                    all_text: "all_text",
+                                    source: source,
+
+                                    fullview: fullview,
+                                    additionalTitle: GCTLang.Trans("opportunity-details"),
+                                    programArea: programArea,
+                                    numOpportunities: numOpportunities,
+                                    idealStart: idealStart,
+                                    idealComplete: idealComplete,
+                                    deadline: deadline,
+                                    oppVirtual: oppVirtual,
+                                    oppOnlyIn: oppOnlyIn,
+                                    location: location,
+                                    security: security,
+                                    skills: skills,
+                                    languageReq: languageReq,
+                                    schedulingReq: schedulingReq,
+                                    timezone: timezone,
+                                    timecommitment: timecommitment,
+                                    participants: participants,
+                                    applicants: applicants,
+                                    state: state,
+                                    type: "gccollab_opportunity",
+                                    action: action,
+                                    owner: value.owner_guid,
+                                    liked: liked,
+                                    likes: likes
+                                });
+                            });
+
+                            $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+                        });
+                        break;
                     default:
                         break;
                 }
