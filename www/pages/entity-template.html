@@ -463,6 +463,20 @@
                         $(content).hide().appendTo("#entity-comments-" + guid).fadeIn(500);
                     });
                 });
+                $$('#comments-submit-' + guid).on('click', function (e) {
+                    var comment = $$('#message-' + guid).val();
+                    if (!(comment === '')) {
+                        GCTrequests.SubmitComment(guid, comment, function (data) {
+                            console.log("submited");
+                            var result = data.result;
+                            console.log(result);
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        });
+                    } else {
+                        //empty message, dont use, give feedback
+                    }
+                });
             },
 
            
