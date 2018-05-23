@@ -161,7 +161,7 @@
                                     var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
                                     var action = '';
 
-                                    content += GCTtxt.txtDiscussion({
+                                    content += GCTtxt.Discussion({
                                         icon: value.userDetails.iconURL,
                                         name: value.userDetails.displayName,
                                         date: prettyDate(value.time_created),
@@ -261,7 +261,7 @@
                                 var state = '';
                                 if (value.state) { state += value.state; }
 
-                                content += GCTtxt.txtOpps({
+                                content += GCTtxt.Opps({
                                     guid: value.guid,
                                     icon: value.userDetails.iconURL,
                                     name: value.userDetails.displayName,
@@ -320,7 +320,7 @@
                                     posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
                                 }
                                 var address = "<a class='external' data-type='gccollab_bookmark' href='" + value.address + "'>" + value.address + "</a> ";
-                                content += GCTtxt.txtBookmark({
+                                content += GCTtxt.Bookmark({
                                     icon: value.userDetails.iconURL,
                                     name: value.userDetails.displayName,
                                     owner: value.owner_guid,
@@ -334,7 +334,7 @@
                                     action: action,
                                     liked: liked,
                                     likes: likes
-                                })
+                                });
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
                         });
