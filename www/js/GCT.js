@@ -43,7 +43,7 @@
         }
         return filter;
     },
-    txtTabHeader: function (ref) {
+    txtTabHeader: function (ref, id) {
         var header = '';
         switch (ref) {
             case 'newsfeed':
@@ -56,6 +56,10 @@
             case 'blogs':
                 header = '<div class="block small"><div class="row"><div class="col-66"><h2 class="no-margin" data-translate="blogs" tabindex="0" id="tabheader-home-wire">' + GCTLang.Trans("blogs") + '</h2></div>'
                     + '<div class="col-33"><a href="/list-template/blogs/" class="button button-fill pull-right" >' + GCTLang.Trans("view-all") + '</a></div></div></div>';
+                break;
+            case 'event':
+                header = 'yes' + id;
+                break;
             default: ;
         }
         return header;
@@ -2447,7 +2451,7 @@ function tabObject(page, tab, limit, type, header, eachFunc, request) {
         type: type,
         name: tab,
         page: page,
-        header: GCTtxt.txtTabHeader(header),
+        header: GCTtxt.txtTabHeader(header, page + '-' + tab),
         appendMessage: GCTtxt.txtFocusMessage(page + '-' + tab),
         eachFunc: eachFunc,
         request: request,

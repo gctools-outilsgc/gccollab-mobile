@@ -55,7 +55,7 @@ var app  = new Framework7({
             },
             events: {
                 limit: 15,
-                tabs: [{ id: "all", each: GCTEach.Event, request: GCTrequests.GetEvents, type: 'card' }],
+                tabs: [{ id: "all", each: GCTEach.Event, request: GCTrequests.GetEvents, type: 'card', header: 'event' }],
                 action: '',
                 filters: '',
             },
