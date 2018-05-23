@@ -178,7 +178,7 @@ GCTLang = {
                  + "</div>"
                 + "<div class='card-footer'>"
                     + "<a href='#' aria-label='like aimer' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-                    +'<a href="#" class="item-link list-button" data-guid="' + object.guid + '" onclick="GCTUser.SeeCalendar(this);" data-type="' + object.type + '">See calendar</a>'
+                    +'<a href="#" class="item-link list-button" data-guid="' + object.guid + '" onclick="GCTUser.SeeCalendar(this);" data-type="' + object.type + '">'+ GCTLang.Trans('in-calendar') +'</a>'
                     + object.action
 
                 + "</div>"
@@ -337,6 +337,22 @@ GCTLang = {
                             + "<div class='author'>" + object.name + "</div>"
                         + "</div>"
                         + "<div class='time'>" + object.date + "</div>"
+                    + "</div>"
+                + "</div>"
+            + "</div>"
+        + "</div>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
+    txtSeeCalendar: function (object) {
+        var content = "<div class='swiper-slide list-block cards-list'>"
+            + "<div class='card'>"
+                + "<div class='card-header plain' onclick='ShowProfile(" + object.owner + ");'>"
+                    + "<div class='item-media rounded'><img alt='Profile Image of " + object.name +"' src='" + object.icon + "' /></div>"
+                    + "<div class='item-inner'>"
+                        + "<div class='item-title-row'>"
+                            + "<div class='author'>" + object.name + "</div>"
+                        + "</div>"
                     + "</div>"
                 + "</div>"
             + "</div>"
@@ -1384,23 +1400,18 @@ GCTUser = {
             data: { method: "get.seecalendar", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                var likeData = data.result;
-console.log(data.result);
+                var seeCalendar = data.result;
                 var content = "";
-                if (likeData.count > 0) {
-                    $.each(likeData.users, function (key, value) {
-                        content += GCTLang.txtLikes({
+                    $.each(seeCalendar, function (key, value) {
+                        content += GCTLang.txtSeeCalendar({
                             icon: value.iconURL,
                             name: value.displayName,
                             date: prettyDate(value.time_created),
                             owner: value.user_id
                         });
                     });
-                } else {
-                    content += noContent;
-                }
 
-                $('.popup-generic .popup-title').html(GCTLang.Trans("likes-header"));
+                $('.popup-generic .popup-title').html(GCTLang.Trans("see-calendar"));
                 $('.popup-generic .popup-content').html(content);
                 myApp.popup('.popup-generic');
             },

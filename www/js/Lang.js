@@ -383,7 +383,8 @@
     "validation_deadline": "Please enter an application deadline",
     "validation_hours": "Please enter a time commitment for this opportunity",
     "validation_location": "Please enter a location for this opportunity",
-    "add-calendar":'Add to my calendar'
+    "add-calendar":'Add to my calendar',
+    "in-calendar": "In calendar"
 }
 
 French = {
@@ -773,5 +774,6 @@ French = {
     "validation_deadline": "Veuillez entrer une date limite d'inscription",
     "validation_hours": "Veuillez entrer une période d'engagement pour cette possibilité",
     "validation_location": "Veuillez entrer un emplacement pour cette possibilité",
-    "add-calendar":'Ajouter à mon calendrier'
+    "add-calendar":'Ajouter à mon calendrier',
+    "in-calendar": "Dans le calendrier"
 }
