@@ -2913,7 +2913,7 @@ function listObject(id) {
 
 // Exemple of link : https://exemple.ca/services/api/rest/json/?
 GCT = {
-    GCcollabURL: "https://gccollab.ca/gcconnex/services/api/rest/json",
+    GCcollabURL: "https://gccollab.ca/services/api/rest/json",
     GEDSURL: "https://api.geds.gc.ca",
     IsInApp: function () {
         if (window.location.href.toLowerCase().indexOf("http") > -1) {
