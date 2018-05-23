@@ -2401,6 +2401,9 @@ GCT = {
         }
 
         switch (type) {
+            case "gccollab_profile":
+                mainView.router.navigate('/profile-template/user/' + guid + '/');
+                break;
             case "gccollab_group":
                 mainView.router.navigate('/profile-template/group/' + guid + '/');
                 break;
