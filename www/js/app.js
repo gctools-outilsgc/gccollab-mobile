@@ -104,6 +104,31 @@ var app  = new Framework7({
                 action: '',
                 filters: '',
             },
+            wire: {
+                comments: false,
+                id: 'wire',
+            },
+            blog: {
+                comments: true,
+                id: 'blog',
+            },
+            discussion: {
+                comments: true,
+                id: 'discussion',
+            },
+            opportunity: {
+                comments: false,
+                id: 'opportunity',
+            },
+            bookmark: {
+                comments: true,
+                id: 'bookmark',
+            },
+            event: {
+                comments: true,
+                id: 'event',
+            }
+            
         };
     },
   // App routes

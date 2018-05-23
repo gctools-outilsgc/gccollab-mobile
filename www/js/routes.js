@@ -76,6 +76,47 @@ routes = [
         }
     },
     {
+        path: '/entity-template/:type/:guid/',
+        async: function (routeTo, routeFrom, resolve, reject) {
+            var type = routeTo.params.type;
+            var guid = routeTo.params.guid;
+            var pageInfo = [];
+            pageInfo = app.data[type];
+            var navbar = GCTtxt.txtGlobalNavGUID(type, guid);
+            resolve(
+                {
+                    componentUrl: './pages/entity-template.html',
+                },
+                {
+                    context: {
+                        navbar: navbar,
+                        comments: pageInfo.comments,
+                        guid: guid,
+                        type: type,
+                    }
+                }
+            )
+        }
+    },
+    {
+        path: '/doc/:guid/',
+        async: function (routeTo, routeFrom, resolve, reject) {
+            var guid = routeTo.params.guid;
+            var navbar = GCTtxt.txtGlobalNav('docs');
+            resolve(
+                {
+                    componentUrl: './pages/doc.html',
+                },
+                {
+                    context: {
+                        navbar: navbar,
+                        guid: guid,
+                    }
+                }
+            )
+        }
+    },
+    {
         path: '/form/',
         url: './pages/form.html',
     },

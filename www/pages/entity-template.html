@@ -1,0 +1,485 @@
+<template>
+    <div class="page navbar-fixed">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div id="entity-{{guid}}-navbar-inner" class="navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar">
+                    {{navbar}}
+                </div>
+            </div>
+        </div>
+
+            <div class="toolbar toolbar-bottom-md">
+                <div class="toolbar-inner">
+                    <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="far fa-arrow-alt-circle-left fa-2x"></i></a></div>
+                </div>
+            </div>
+
+            <div class="page-content" style="overflow-x: hidden;">
+                <div id="content-entity-{{guid}}" class='list cards-list'></div>
+                {{#js_if "this.comments"}}
+                <div id="comment-card-{{guid}}">
+                    <div class="content-block comment">
+                        <div class="content-block-inner comment">
+                            <div class="row no-gutter">
+                                <div class="col">
+                                    <div id="comment-count-{{guid}}" class="left number-comment" data-translate="comments">comments:</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list">
+                    <ul class="message-comment">
+                        <li class="align-top">
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-input">
+                                        <textarea id="message-{{guid}}" class="comment-textarea" data-translate-target="placeholder" data-translate="write-comment" placeholder="write a comment"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="content-block"> <a id="comments-submit-{{guid}}" class="button button-big button-fill" data-translate="comment">Comment</a> </li>
+                        <li class="content-block"><a id="comments-view-{{guid}}" class="button button-big button-fill" data-translate="view-comments">VIEW COMMENTS</a></li>
+                    </ul>
+                </div>
+                <div id="comment-head" class="list media-list comment">
+                    <ul id="entity-comments-{{guid}}" class="comment"></ul>
+                    <a id="comments-more-{{guid}}" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+                </div>
+                {{/js_if}}
+            </div>
+        </div>
+</template>
+<script>
+    return {
+        on: {
+            pageInit: function (e, page) {
+                var guid = this.guid;
+                var type = this.type;
+                var comments = this.comments;
+                var limit = 10;
+                var offset = 0;
+                console.log(guid + ' ' + type);
+                $("#comments-more-"+ guid).hide();
+                
+                switch (type) {
+                    case 'wire':
+                        GCTrequests.GetWire(guid, 1, function (data) {
+                            var wires = data.result.reverse();
+                            var content = "";
+                            $(wires).each(function (key, value) {
+                                // Removes HTML components from Blog
+                                // var text = $(value.description).text();
+                                var text = value.description;
+
+                                var source = "";
+                                if (value.shareText && value.shareURL) {
+                                    source = "<blockquote>" + GCTLang.Trans("source") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_wire_post' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
+                                } else if (value.shareURL) {
+                                    source = "<blockquote>" + GCTLang.Trans("source") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_wire_post' href='" + value.shareURL + "'>" + text + "</a></blockquote>";
+                                }
+                                var img = '';
+                                var img = '';
+                                if (value.attachment) {
+                                    img = "<img class='WireImage' onclick='ShowImage(this)' id='image-" + value.guid + "' src='https://gccollab.ca/thewire_image/download/" + value.attachment.guid + "' style='' />";
+                                }
+
+                                var replied = (value.replied) ? "replied" : "";
+                                var liked = (value.liked) ? "liked" : "";
+                                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                                var action = '';
+
+                                content += GCTtxt.Wire({
+                                    guid: value.guid,
+                                    icon: value.userDetails.iconURL,
+                                    name: value.userDetails.displayName,
+                                    date: prettyDate(value.time_created),
+                                    description: text,
+                                    source: source,
+                                    type: "gccollab_wire_post",
+                                    replied: replied,
+                                    action: action,
+                                    owner: value.owner_guid,
+                                    liked: liked,
+                                    likes: likes,
+                                    image: img
+                                });
+                            });
+                            $(content).hide().appendTo('#content-entity-'+guid).fadeIn(500);
+                        });
+                        break;
+                    case 'blog':
+                        GCTrequests.GetBlog(guid, function (data) {
+                            var blog = data.result;
+                            var content = "";
+                            $(blog).each(function (key, value) {
+                                // Removes HTML components from Blog
+                                var text = (value.description !== null) ? value.description : "";
+                                if (value.groupURL.indexOf("/groups/profile/") > -1) {
+                                    var group = GCTLang.Trans("posted-group") + " <a onclick='GCT.FireLink(this);' data-type='gccollab_group' href='" + value.groupURL + "'>" + value.group + "</a>";
+                                } else {
+                                    var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+                                }
+                                var replied = (value.replied) ? "replied" : "";
+                                var liked = (value.liked) ? "liked" : "";
+                                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                                var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_blog_post' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
+
+                                content += GCTtxt.Blog({
+                                    icon: value.userDetails.iconURL,
+                                    name: value.userDetails.displayName,
+                                    date: prettyDate(value.time_created),
+                                    group: group,
+                                    description: text,
+                                    title: value.title,
+                                    all_text: "all_text",
+                                    action: action,
+                                    owner: value.owner_guid,
+                                    guid: value.guid,
+                                    type: "gccollab_blog_post",
+                                    replied: replied,
+                                    liked: liked,
+                                    likes: likes
+                                });
+                            });
+
+                            $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+                        });
+                        break;
+                    case 'discussion':
+                        GCTrequests.GetDiscussion(guid, function (data) {
+                            var discussion = data.result;
+                            var content = "";
+                            $(discussion).each(function (key, value) {
+                                if (value.subtype == "groupforumtopic") {
+                                    // Removes HTML components from Discussion
+                                    var text = (value.description !== null) ? value.description : "";
+                                    var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+                                    var replied = (value.replied) ? "replied" : "";
+                                    var liked = (value.liked) ? "liked" : "";
+                                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                                    var action = '';
+
+                                    content += GCTtxt.Discussion({
+                                        icon: value.userDetails.iconURL,
+                                        name: value.userDetails.displayName,
+                                        date: prettyDate(value.time_created),
+                                        group: group,
+                                        description: text,
+                                        title: value.title,
+                                        all_text: "all_text",
+                                        action: action,
+                                        owner: value.owner_guid,
+                                        guid: value.guid,
+                                        type: "gccollab_discussion_post",
+                                        replied: replied,
+                                        liked: liked,
+                                        likes: likes
+                                    });
+                                } else if (value.subtype == "discussion_reply") {
+                                    //not needed
+                                }
+
+                            });
+                            $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+                        });
+                        break;
+                    case 'opportunity':
+                        $("#comment-card").hide();
+                        GCTrequests.GetOpportunity(guid, function (data) {
+                            var opportunity = data.result;
+                            var content = "";
+                            $(opportunity).each(function (key, value) {
+
+                                var text = (value.description) ? value.description : "";
+
+                                var oppType = (value.jobType) ? oppType += jobType : "";
+
+                                var source = "";
+                                if (value.shareText && value.shareURL)
+                                    source = "<blockquote>Source: <a onclick='GCT.FireLink(this);' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
+
+                                var jobtype = '';
+                                if (value.jobtype) { jobtype += value.jobtype; }
+
+                                var roletype = '';
+                                if (value.roletype) { roletype += value.roletype; }
+
+                                var programArea = "<b>" + GCTLang.Trans("program-area") + "</b>";
+                                if (value.programArea) { programArea += value.programArea; }
+
+                                var numOpportunities = "<b>" + GCTLang.Trans("num-opportunities") + "</b>";
+                                if (value.numOpportunities) { numOpportunities += value.numOpportunities; }
+
+                                var idealStart = "<b>" + GCTLang.Trans("ideal-start") + "</b>";
+                                if (value.idealStart) { idealStart += value.idealStart; }
+
+                                var idealComplete = "<b>" + GCTLang.Trans("ideal-complete") + "</b>";
+                                if (value.idealComplete) { idealComplete += value.idealComplete; }
+
+                                var deadline = "<b>" + GCTLang.Trans("deadline") + "</b>";
+                                if (value.deadline) { deadline += value.deadline; }
+
+                                var oppVirtual = "<b>" + GCTLang.Trans("opportunity-virtual") + "</b>";
+                                if (value.oppVirtual) { oppVirtual += value.oppVirtual; }
+
+                                var oppOnlyIn = "<b>" + GCTLang.Trans("opportunity-in") + "</b>";
+                                if (value.oppOnlyIn) { oppOnlyIn += value.oppOnlyIn; }
+
+                                var location = "<b>" + GCTLang.Trans("opportunity-location") + "</b>";
+                                if (value.location) { location += value.location; }
+
+                                var security = "<b>" + GCTLang.Trans("opportunity-security") + "</b>";
+                                if (value.security) { security += value.security; }
+
+                                var skills = "<b>" + GCTLang.Trans("opportunity-skills") + "</b>";
+                                if (value.skills) { skills += value.skills; }
+
+                                var languageReq = '';
+                                if (value.languageRequirements) { languageReq = value.languageRequirements; }
+
+                                var schedulingReq = "";
+                                if (value.schedulingRequirements) { schedulingReq += value.schedulingRequirements; }
+
+                                var timezone = "<b>" + GCTLang.Trans("opportunity-timezone") + "</b>";
+                                if (value.timezone) { timezone += value.timezone; }
+                                var timecommitment = "<b>" + GCTLang.Trans("opportunity-time-commitment") + "</b>";
+                                if (value.timecommitment) { timecommitment += value.timecommitment; }
+
+                                var participants = "<b>" + GCTLang.Trans("participants") + "</b>";
+                                if (value.participants) { participants += value.participants; }
+
+                                var applicants = "<b>" + GCTLang.Trans("applicants") + "</b>";
+                                if (value.applicants) { applicants += value.applicants; }
+
+                                var liked = (value.liked) ? "liked" : "";
+                                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                                var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_opportunity' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
+                                var fullview = true;
+
+                                var state = '';
+                                if (value.state) { state += value.state; }
+
+                                content += GCTtxt.Opps({
+                                    guid: value.guid,
+                                    icon: value.userDetails.iconURL,
+                                    name: value.userDetails.displayName,
+                                    date: prettyDate(value.time_created),
+                                    jobtype: jobtype,
+                                    roletype: roletype,
+                                    title: value.title,
+                                    oppType: oppType,
+                                    description: text,
+                                    all_text: "all_text",
+                                    source: source,
+
+                                    fullview: fullview,
+                                    additionalTitle: GCTLang.Trans("opportunity-details"),
+                                    programArea: programArea,
+                                    numOpportunities: numOpportunities,
+                                    idealStart: idealStart,
+                                    idealComplete: idealComplete,
+                                    deadline: deadline,
+                                    oppVirtual: oppVirtual,
+                                    oppOnlyIn: oppOnlyIn,
+                                    location: location,
+                                    security: security,
+                                    skills: skills,
+                                    languageReq: languageReq,
+                                    schedulingReq: schedulingReq,
+                                    timezone: timezone,
+                                    timecommitment: timecommitment,
+                                    participants: participants,
+                                    applicants: applicants,
+                                    state: state,
+                                    type: "gccollab_opportunity",
+                                    action: action,
+                                    owner: value.owner_guid,
+                                    liked: liked,
+                                    likes: likes
+                                });
+                            });
+
+                            $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+                        });
+                        break;
+                    case 'bookmark':
+                        GCTrequests.GetBookmark(guid, function (data) {
+                            var bookmark = data.result;
+                            var content = "";
+                            $(bookmark).each(function (key, value) {
+                                var liked = (value.liked) ? "liked" : "";
+                                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                                var action = '';
+                                var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_bookmark' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
+                                var posted = '';
+                                if (value.group_guid) {
+                                    posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.group_guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.group + "</a>";
+                                } else {
+                                    posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+                                }
+                                var address = "<a class='external' data-type='gccollab_bookmark' href='" + value.address + "'>" + value.address + "</a> ";
+                                content += GCTtxt.Bookmark({
+                                    icon: value.userDetails.iconURL,
+                                    name: value.userDetails.displayName,
+                                    owner: value.owner_guid,
+                                    date: prettyDate(value.time_created),
+                                    title: value.title,
+                                    posted: posted,
+                                    description: value.description,
+                                    address: address,
+                                    type: "gccollab_bookmark",
+                                    guid: value.guid,
+                                    action: action,
+                                    liked: liked,
+                                    likes: likes
+                                });
+                            });
+                            $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+                        });
+                        break;
+                    case 'event':
+                        GCTrequests.GetEvent(guid, function (data) {
+                            var event = data.result;
+                            var content = "";
+
+                            $(event).each(function (key, value) {
+                                var text = (value.description !== null) ? value.description : "";
+
+                                var liked = (value.liked) ? "liked" : "";
+                                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                                var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_event' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
+
+                                var date = (value.startDate).split(" ")[0];
+                                var split = date.split("-");
+                                var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
+                                var month = parseInt(split[1]) - 1;
+                                var id = 'event-' + split[0] + '-' + month + '-' + split[2];
+                                id = id.replace(/(^|-)0+/g, "$1");
+
+                                var posted = "";
+                                if (value.groupGUID !== null && typeof value.groupGUID !== 'undefined') {
+                                    posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.groupGUID + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.group + "</a>";
+                                } else {
+                                    posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
+                                }
+
+                                var startDate = GCTLang.Trans("start-date") + date;
+                                var endDate = GCTLang.Trans("end-date") + (value.endDate).split(" ")[0];
+
+                                var location = ((value.location !== null) && (typeof value.location !== 'undefined')) ? "<b>" + GCTLang.Trans("location") + "</b>" + value.location : "";
+
+                                var fullview = true;
+                                var additionalTitle = GCTLang.Trans("additional-info");
+                                var org = GCTLang.Trans("organizer");
+                                if (value.organizer !== null && typeof value.organizer !== 'undefined')
+                                    org += value.organizer;
+                                var phone = GCTLang.Trans("phone") + ": ";
+                                if (value.phone !== null && typeof value.phone !== 'undefined')
+                                    phone += value.phone;
+                                var email = GCTLang.Trans("email") + ": ";
+                                if (value.email !== null && typeof value.email !== 'undefined')
+                                    email += value.email;
+                                var fee = GCTLang.Trans("fee");
+                                if (value.fee !== null && typeof value.fee !== 'undefined')
+                                    fee += value.fee;
+                                var eventLang = GCTLang.Trans("lang");
+                                if (value.eventLang !== null && typeof value.eventLang !== 'undefined')
+                                    eventLang += value.eventLang;
+
+                                content = GCTtxt.Event({
+                                    icon: value.userDetails.iconURL,
+                                    name: value.userDetails.displayName,
+                                    startDate: startDate,
+                                    endDate: endDate,
+                                    date: prettyDate(value.startDate),
+                                    location: location,
+                                    posted: posted,
+                                    description: text,
+                                    title: value.title,
+                                    id: id,
+                                    action: action,
+                                    owner: value.owner_guid,
+                                    guid: value.guid,
+                                    all_text: "all_text",
+                                    type: "gccollab_event",
+                                    liked: liked,
+                                    likes: likes,
+                                    fullview: fullview,
+                                    additionalTitle: additionalTitle,
+                                    org: org,
+                                    phone: phone,
+                                    email: email,
+                                    fee: fee,
+                                    eventLang: eventLang
+                                });
+                            });
+                            $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+                        });
+                        break;
+                    default:
+                        break;
+                }
+
+                $$('#comments-view-'+guid).on('click', function (e) {
+                    GCTrequests.GetComments(guid, limit, offset, function (data) {
+                        $("#comments-view-" + guid).hide();
+                        $("#comments-more-" + guid).show();
+                        var comments = data.result;
+                        var content = "";
+                        if (comments.length > 0) {
+                            $(comments).each(function (key, value) {
+                                content += GCTEach.Comment(value);
+                            });
+                            if (comments.length < limit) {
+                                $("#comments-more-" + guid).hide();
+                                content += endOfContent;
+                            }
+                        } else {
+                            content += endOfContent;
+                            $("#comments-more-" + guid).hide();
+                        }
+                        $(content).hide().appendTo("#entity-comments-"+ guid).fadeIn(500);
+                    });
+                });
+                $$('#comments-more-'+guid).on('click', function (e) {
+                    GCTrequests.GetComments(guid, limit, offset + limit, function (data) {
+                        offset += limit;
+                        var comments = data.result;
+                        var content = "";
+                        if (comments.length > 0) {
+                            $(comments).each(function (key, value) {
+                                content += GCTEach.Comment(value);
+                            });
+                            if (comments.length < limit) {
+                                content += endOfContent;
+                                $("#comments-more-" + guid).hide();
+                            }
+                        } else {
+                            content += endOfContent;
+                            $("#comments-more-" + guid).hide();
+                        }
+                        $(content).hide().appendTo("#entity-comments-" + guid).fadeIn(500);
+                    });
+                });
+                $$('#comments-submit-' + guid).on('click', function (e) {
+                    var comment = $$('#message-' + guid).val();
+                    if (!(comment === '')) {
+                        GCTrequests.SubmitComment(guid, comment, function (data) {
+                            console.log("submited");
+                            var result = data.result;
+                            console.log(result);
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        });
+                    } else {
+                        //empty message, dont use, give feedback
+                    }
+                });
+            },
+
+           
+        }
+    }
+</script>
