@@ -2410,6 +2410,9 @@ GCT = {
             case "group":
                 mainView.router.navigate('/profile-template/group/' + guid + '/');
                 break;
+            case "gccollab_doc":
+                mainView.router.navigate('/doc/' + guid + '/');
+                break;
             case "gccollab_wire_post":
                 mainView.router.navigate('/entity-template/wire/' + guid + '/');
                 break;
