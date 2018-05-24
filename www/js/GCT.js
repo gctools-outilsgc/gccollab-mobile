@@ -1385,6 +1385,8 @@ GCTEach = {
         console.log(obj);
         var info = data.result;
         var content = '';
+        //clear old calendar, destroy and clear
+        if (obj.calendar) { obj.calendar.destroy(); $('#event-calendar-' + obj.id).html(''); }
 
         var monthNames = "";
         if (GCTLang.IsEnglish()) {
@@ -1400,12 +1402,11 @@ GCTEach = {
                 var date = (value.startDate).split(" ")[0];
                 var split = date.split("-");
                 var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
-                console.log(day);
                 obj.events.push(day);
                 content = obj.eachFunc(value);
                 $(content).hide().appendTo('#content-' + obj.id).fadeIn(1000);
             });
-            var calendar = app.calendar.create({
+            obj.calendar = app.calendar.create({
                 containerEl: '#event-calendar-' + obj.id,
                 value: [new Date()],
                 weekHeader: false,
@@ -1428,10 +1429,10 @@ GCTEach = {
                     init: function (c) {
                         $$('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
                         $$('.calendar-custom-toolbar .left .link').on('click', function () {
-                            calendar.prevMonth();
+                            obj.calendar.prevMonth();
                         });
                         $$('.calendar-custom-toolbar .right .link').on('click', function () {
-                            calendar.nextMonth();
+                            obj.calendar.nextMonth();
                         });
                     },
                     monthYearChangeStart: function (c) {
