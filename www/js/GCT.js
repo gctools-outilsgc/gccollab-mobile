@@ -1381,10 +1381,81 @@ GCTEach = {
         var focusNow = document.getElementById('focus-' + obj.id);
         if (focusNow) { focusNow.focus(); }
     },
+    ContentSuccessEvent: function (data, obj) {
+        console.log(obj);
+        var info = data.result;
+        var content = '';
+
+        var monthNames = "";
+        if (GCTLang.IsEnglish()) {
+            monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        } else {
+            monthNames = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+        }
+
+        if (obj.loaded == true) { $(obj.appendMessage).appendTo('#content-' + obj.id); } else { obj.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var date = (value.startDate).split(" ")[0];
+                var split = date.split("-");
+                var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
+                console.log(day);
+                obj.events.push(day);
+                content = obj.eachFunc(value);
+                $(content).hide().appendTo('#content-' + obj.id).fadeIn(1000);
+            });
+            var calendar = app.calendar.create({
+                containerEl: '#event-calendar-' + obj.id,
+                value: [new Date()],
+                weekHeader: false,
+                events: obj.events,
+                dateFormat: 'M dd yyyy',
+                renderToolbar: function () {
+                    return '<div class="toolbar calendar-custom-toolbar no-shadow">' +
+                        '<div class="toolbar-inner">' +
+                        '<div class="left">' +
+                        '<a href="#" class="link icon-only"><i class="icon icon-back ' + (app.theme === 'md' ? 'color-black' : '') + '"></i></a>' +
+                        '</div>' +
+                        '<div class="center"></div>' +
+                        '<div class="right">' +
+                        '<a href="#" class="link icon-only"><i class="icon icon-forward ' + (app.theme === 'md' ? 'color-black' : '') + '"></i></a>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                },
+                on: {
+                    init: function (c) {
+                        $$('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+                        $$('.calendar-custom-toolbar .left .link').on('click', function () {
+                            calendar.prevMonth();
+                        });
+                        $$('.calendar-custom-toolbar .right .link').on('click', function () {
+                            calendar.nextMonth();
+                        });
+                    },
+                    monthYearChangeStart: function (c) {
+                        $$('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+                    }
+                }
+            });
+        }
+        if (info.length < obj.limit) {
+            content = endOfContent;
+            $(content).hide().appendTo('#content-' + obj.id).fadeIn(1000);
+            $('#more-' + obj.id).hide();
+        }
+        obj.offset += obj.limit;
+        var focusNow = document.getElementById('focus-' + obj.id);
+        if (focusNow) { focusNow.focus(); }
+    },
 }
 
 GCTtabs = {
     TabReset: function (obj, guid) {
+        if (obj.events) {
+            obj.events = [];
+        }
         obj.offset = 0;
         obj.loaded = false;
         $('#content-' + obj.id).html('');
@@ -2068,7 +2139,7 @@ GCTrequests = {
             data: { method: "get.events", user: GCTUser.Email(), from: from, to: to, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                GCTEach.ContentSuccess(data, tabObject);
+                GCTEach.ContentSuccessEvent(data, tabObject);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorConsole(jqXHR, textStatus, errorThrown);
@@ -2456,6 +2527,9 @@ function tabObject(page, tab, limit, type, header, eachFunc, request) {
         eachFunc: eachFunc,
         request: request,
     };
+    if (header === 'event') {
+        object.events = [];
+    }
     console.log(object);
     return object;
 }
