@@ -2147,6 +2147,45 @@ GCTrequests = {
             }
         });
     },
+    GetEventsByUser: function (tabObject, from, to) {
+        limit = tabObject.limit || 15;
+        // offset = offset || 0;
+        from = from || "";
+        to = to || "";
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.eventsbyowner", user: GCTUser.Email(), from: from, to: to, limit: limit, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccessEvent(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetEventsByColleagues: function (tabObject, from, to) {
+        limit = tabObject.limit || 15;
+        from = from || "";
+        to = to || "";
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.eventsbycolleagues", user: GCTUser.Email(), from: from, to: to, limit: limit, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccessEvent(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetBookmark: function (guid, successCallback) {
         app.request({
             method: 'POST',
