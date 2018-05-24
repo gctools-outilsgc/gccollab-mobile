@@ -58,7 +58,7 @@
                     + '<div class="col-33"><a href="/list-template/blogs/" class="button button-fill pull-right" >' + GCTLang.Trans("view-all") + '</a></div></div></div>';
                 break;
             case 'event':
-                header = 'yes' + id;
+                header = '<div id="event-calendar-'+ id +'"></div>';
                 break;
             default: ;
         }
