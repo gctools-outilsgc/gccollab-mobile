@@ -1437,6 +1437,13 @@ GCTEach = {
                     },
                     monthYearChangeStart: function (c) {
                         $$('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+                    },
+                    dayClick: function (c, dayEl, year, month, day) {
+                        console.log('clicked day');
+                        var date = $(dayEl).data('date');
+                        if ($("#event-" + date).length > 0) {
+                            $$('.page-content').scrollTop($$("#event-" + date).offset().top, 300);
+                        }
                     }
                 }
             });
