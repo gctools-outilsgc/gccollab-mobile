@@ -384,7 +384,8 @@
     "validation_hours": "Please enter a time commitment for this opportunity",
     "validation_location": "Please enter a location for this opportunity",
     "add-calendar":'Add to my calendar',
-    "in-calendar": "In calendar"
+    "in-calendar": "In calendar",
+    "subgroup-header":"Subgroups"
 }
 
 French = {
@@ -775,5 +776,6 @@ French = {
     "validation_hours": "Veuillez entrer une période d'engagement pour cette possibilité",
     "validation_location": "Veuillez entrer un emplacement pour cette possibilité",
     "add-calendar":'Ajouter à mon calendrier',
-    "in-calendar": "Dans le calendrier"
+    "in-calendar": "Dans le calendrier",
+    "subgroup-header":"Sous-groupes"
 }

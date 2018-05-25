@@ -362,21 +362,29 @@ GCTLang = {
     },
     txtSubgroup: function (object) {
         var content = "<div class='swiper-slide list-block cards-list'>"
-            + "<div class='card'>"
-                + "<div class='card-header plain' onclick='ShowProfile(" + object.owner + ");'>"
-                    + "<div class='item-media rounded'><img alt='Profile Image of " + object.name +"' src='" + object.icon + "' /></div>"
-                    + "<div class='item-inner'>"
-                        + "<div class='item-title-row'>"
-                            + "<div class='author'>" + object.name + "</div>"
-                        + "</div>"
-                        + "<div class='time'>" + object.date + "</div>"
+        + "<div class='card' data-guid='" + object.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>"
+            + "<div class='card-header'>"
+                + "<div class='item-media rounded'><img alt='Profile Image of " + object.name +"' src='" + object.icon + "' /></div>"
+                + "<div class='item-inner'>"
+                    + "<div class='item-title-row'>"
+                        + "<div class='author'>" + object.name + "</div>"
                     + "</div>"
                 + "</div>"
             + "</div>"
-        + "</div>";
-        content = GCT.SetLinks(content);
-        return content;
-    },
+            + "<div class='card-content'>"
+                + "<div class='card-content-inner'>"
+                    + "<div class='item-text large'>" + object.description + "</div>"
+                + "</div>"
+            + "</div>"
+            + "<div class='card-footer'>"
+                + "<div>" + object.count + "</div>"
+                + object.action
+            + "</div>"
+        + "</div>"
+    + "</div>";
+    content = GCT.SetLinks(content);
+    return content;
+},
     txtActivity: function (object) {
         var content = "<li class='item-link item-content'>"
             + "<div class='item-inner'>"
@@ -1042,24 +1050,32 @@ GCTUser = {
             data: { method: "get.subgroup", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                var likeData = data.result;
-                console.log(likeData);
+                var subgroupData = data.result;
                 var content = "";
-                if (likeData) {
-                    
-                    $.each(likeData.groups, function (key, value) {
+                
+                if (subgroupData) {
+                    $.each(subgroupData, function (key, value) {
+                        var text = (value.description != "") ? value.description : GCTLang.Trans('no-group');
+                        var action = "<a href='#' class='link close-panel close-popup' data-guid='" + value.guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
+                        var members = (value.count > 0) ? value.count + (value.count == 1 ? " " + GCTLang.Trans("member") : " " + GCTLang.Trans("members")) : "";
+     
                         content += GCTLang.txtSubgroup({
-                            icon: value.URL,
+                            icon: value.iconURL,
                             name: value.name,
+                            description: text,
                             date: prettyDate(value.time_created),
-                            owner: value.owner_guid
+                            owner: value.user_id,
+                            action: action,
+                            type: "gccollab_group",
+                            count: members,
+                            guid:value.guid
                         });
                     });
                 } else {
                     content += noContent;
                 }
 
-                $('.popup-generic .popup-title').html(GCTLang.Trans("likes-header"));
+                $('.popup-generic .popup-title').html(GCTLang.Trans("subgroup-header"));
                 $('.popup-generic .popup-content').html(content);
                 myApp.popup('.popup-generic');
             },
