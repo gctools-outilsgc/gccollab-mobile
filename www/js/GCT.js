@@ -2384,6 +2384,27 @@ GCTrequests = {
             }
         });
     },
+    Delete: function (obj) {
+        var guid = $(obj).data("guid");
+        $(".popover").remove();
+
+        app.dialog.confirm(GCTLang.Trans("deletepost"), GCTLang.Trans("deletepost"), function () {
+            app.request({
+                api_key: api_key_gccollab,
+                method: 'POST',
+                dataType: 'json',
+                url: GCT.GCcollabURL,
+                data: { method: "delete.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+                timeout: 12000,
+                success: function (data) {
+                    app.alert(GCTLang.Trans("deleted"));
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR, textStatus, errorThrown);
+                }
+            });
+        }, '');
+    },
 }
 
 GCT = {
@@ -2574,19 +2595,19 @@ GCT = {
             +'<ul>' 
             + '<span id="focus-new-popover" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans("more-options-opened") + '</span>';
         if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post' || type == "gccollab_event") {
-            popoverHTML += '<li><a href="#" class="item-link close-popover list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
+            popoverHTML += '<li><a href="#" class="item-link popover-close list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
         }
         if (type == "gccollab_event") {
-            popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("add-calendar") + '</a></li>';
+            popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("add-calendar") + '</a></li>';
         }
-        popoverHTML += '<li ><a href="#"  class="item-link close-popover list-button" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
+        popoverHTML += '<li ><a href="#"  class="item-link close-popover list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
         if (mine) {
-            if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
-            if (type == "gccollab_discussion_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditDiscussionPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
-            if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
-            if (type != "gccollab_opportunity") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>'; }
+            if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+            if (type == "gccollab_discussion_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.EditDiscussionPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+            if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+            if (type != "gccollab_opportunity") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>'; }
         }
-        popoverHTML += '<li><a href="#" class="list-button item-link close-popover">' + GCTLang.Trans("close") + ' </a></li>';
+        popoverHTML += '<li><a href="#" class="list-button item-link popover-close">' + GCTLang.Trans("close") + ' </a></li>';
         popoverHTML += '</ul>'
             + '</div>'
             +'</div>'
