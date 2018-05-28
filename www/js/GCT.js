@@ -43,7 +43,7 @@
         }
         return filter;
     },
-    txtTabHeader: function (ref) {
+    txtTabHeader: function (ref, id) {
         var header = '';
         switch (ref) {
             case 'newsfeed':
@@ -56,6 +56,10 @@
             case 'blogs':
                 header = '<div class="block small"><div class="row"><div class="col-66"><h2 class="no-margin" data-translate="blogs" tabindex="0" id="tabheader-home-wire">' + GCTLang.Trans("blogs") + '</h2></div>'
                     + '<div class="col-33"><a href="/list-template/blogs/" class="button button-fill pull-right" >' + GCTLang.Trans("view-all") + '</a></div></div></div>';
+                break;
+            case 'event':
+                header = '<div id="event-calendar-' + id +'" aria-hidden="true"></div>';
+                break;
             default: ;
         }
         return header;
@@ -955,7 +959,7 @@ GCTEach = {
 
 
         var month = parseInt(split[1]) - 1;
-        var id = 'event-' + split[0] + '-' + month + '-' + split[2];
+        var id = 'event-' + value.tab + '-' + split[0] + '-' + month + '-' + split[2];
         id = id.replace(/(^|-)0+/g, "$1");
 
         var posted = "";
@@ -1377,10 +1381,89 @@ GCTEach = {
         var focusNow = document.getElementById('focus-' + obj.id);
         if (focusNow) { focusNow.focus(); }
     },
+    ContentSuccessEvent: function (data, obj) {
+        var info = data.result;
+        var content = '';
+        //clear old calendar, destroy and clear
+        if (obj.calendar) { obj.calendar.destroy(); $('#event-calendar-' + obj.id).html(''); }
+
+        var monthNames = "";
+        if (GCTLang.IsEnglish()) {
+            monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        } else {
+            monthNames = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+        }
+
+        if (obj.loaded == true) { $(obj.appendMessage).appendTo('#content-' + obj.id); } else { obj.loaded = true; }
+
+        if (info.length > 0) {
+            $.each(info, function (key, value) {
+                var date = (value.startDate).split(" ")[0];
+                var split = date.split("-");
+                var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
+                obj.events.push(day);
+                value.tab = obj.name;
+                content = obj.eachFunc(value);
+                $(content).hide().appendTo('#content-' + obj.id).fadeIn(1000);
+            });
+            obj.calendar = app.calendar.create({
+                containerEl: '#event-calendar-' + obj.id,
+                value: [new Date()],
+                weekHeader: false,
+                events: obj.events,
+                dateFormat: 'M dd yyyy',
+                renderToolbar: function () {
+                    return '<div class="toolbar calendar-custom-toolbar no-shadow">' +
+                        '<div class="toolbar-inner">' +
+                        '<div class="left">' +
+                        '<a href="#" class="link icon-only"><i class="icon icon-back ' + (app.theme === 'md' ? 'color-black' : '') + '"></i></a>' +
+                        '</div>' +
+                        '<div class="center"></div>' +
+                        '<div class="right">' +
+                        '<a href="#" class="link icon-only"><i class="icon icon-forward ' + (app.theme === 'md' ? 'color-black' : '') + '"></i></a>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                },
+                on: {
+                    init: function (c) {
+                        $$('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+                        $$('.calendar-custom-toolbar .left .link').on('click', function () {
+                            obj.calendar.prevMonth();
+                        });
+                        $$('.calendar-custom-toolbar .right .link').on('click', function () {
+                            obj.calendar.nextMonth();
+                        });
+                    },
+                    monthYearChangeStart: function (c) {
+                        $$('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+                    },
+                    dayClick: function (c, dayEl, year, month, day) {
+                        console.log('clicked day');
+                        var date = $(dayEl).data('date');
+                        if ($("#event-" + obj.name + '-' + date).length > 0) {
+                            $$('.page-content').scrollTop($$("#event-" + obj.name + '-' + date).offset().top, 300);
+                        }
+                    }
+                }
+            });
+        }
+        if (info.length < obj.limit) {
+            content = endOfContent;
+            $(content).hide().appendTo('#content-' + obj.id).fadeIn(1000);
+            $('#more-' + obj.id).hide();
+        }
+        obj.offset += obj.limit;
+        var focusNow = document.getElementById('focus-' + obj.id);
+        if (focusNow) { focusNow.focus(); }
+    },
 }
 
 GCTtabs = {
     TabReset: function (obj, guid) {
+        if (obj.events) {
+            obj.events = [];
+        }
         obj.offset = 0;
         obj.loaded = false;
         $('#content-' + obj.id).html('');
@@ -2064,7 +2147,46 @@ GCTrequests = {
             data: { method: "get.events", user: GCTUser.Email(), from: from, to: to, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                GCTEach.ContentSuccess(data, tabObject);
+                GCTEach.ContentSuccessEvent(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetEventsByUser: function (tabObject, from, to) {
+        limit = tabObject.limit || 15;
+        // offset = offset || 0;
+        from = from || "";
+        to = to || "";
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.eventsbyowner", user: GCTUser.Email(), from: from, to: to, limit: limit, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccessEvent(data, tabObject);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetEventsByColleagues: function (tabObject, from, to) {
+        limit = tabObject.limit || 15;
+        from = from || "";
+        to = to || "";
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.eventsbycolleagues", user: GCTUser.Email(), from: from, to: to, limit: limit, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                GCTEach.ContentSuccessEvent(data, tabObject);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorConsole(jqXHR, textStatus, errorThrown);
@@ -2447,11 +2569,14 @@ function tabObject(page, tab, limit, type, header, eachFunc, request) {
         type: type,
         name: tab,
         page: page,
-        header: GCTtxt.txtTabHeader(header),
+        header: GCTtxt.txtTabHeader(header, page + '-' + tab),
         appendMessage: GCTtxt.txtFocusMessage(page + '-' + tab),
         eachFunc: eachFunc,
         request: request,
     };
+    if (header === 'event') {
+        object.events = [];
+    }
     console.log(object);
     return object;
 }
