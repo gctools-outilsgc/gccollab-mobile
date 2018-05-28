@@ -959,7 +959,7 @@ GCTEach = {
 
 
         var month = parseInt(split[1]) - 1;
-        var id = 'event-' + split[0] + '-' + month + '-' + split[2];
+        var id = 'event-' + value.tab + '-' + split[0] + '-' + month + '-' + split[2];
         id = id.replace(/(^|-)0+/g, "$1");
 
         var posted = "";
@@ -1382,7 +1382,6 @@ GCTEach = {
         if (focusNow) { focusNow.focus(); }
     },
     ContentSuccessEvent: function (data, obj) {
-        console.log(obj);
         var info = data.result;
         var content = '';
         //clear old calendar, destroy and clear
@@ -1403,6 +1402,7 @@ GCTEach = {
                 var split = date.split("-");
                 var day = new Date(split[0], parseInt(split[1]) - 1, split[2]);
                 obj.events.push(day);
+                value.tab = obj.name;
                 content = obj.eachFunc(value);
                 $(content).hide().appendTo('#content-' + obj.id).fadeIn(1000);
             });
@@ -1441,8 +1441,8 @@ GCTEach = {
                     dayClick: function (c, dayEl, year, month, day) {
                         console.log('clicked day');
                         var date = $(dayEl).data('date');
-                        if ($("#event-" + date).length > 0) {
-                            $$('.page-content').scrollTop($$("#event-" + date).offset().top, 300);
+                        if ($("#event-" + obj.name + '-' + date).length > 0) {
+                            $$('.page-content').scrollTop($$("#event-" + obj.name + '-' + date).offset().top, 300);
                         }
                     }
                 }
