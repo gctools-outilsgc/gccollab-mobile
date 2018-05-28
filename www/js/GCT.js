@@ -98,7 +98,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding' aria-hidden='true'>"
             + "<div role='article' id='text-" + object.guid + " 'class='text'><a onclick='ShowProfile(" + object.owner + ");'>" + object.name + "</a> " + object.description + " " + object.more + object.context 
@@ -143,7 +143,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content  card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div id='wire-" + object.guid + "'>" + object.description + "</div>"
@@ -173,7 +173,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content  card-content-padding'>"
             + "<div id='wire-" + object.guid + "'>" + object.description + "</div>"
@@ -204,7 +204,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div id='blog-" + object.guid + "' class='card-content-inner'>"
@@ -236,7 +236,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding'>"
             + "<div id='blog-" + object.guid + "' class='card-content-inner'>"
@@ -304,7 +304,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='card-content-inner'>"
@@ -334,7 +334,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='card-content-inner'>"
@@ -365,7 +365,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding'>"
             + "<div class='card-content-inner'>"
@@ -408,7 +408,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content  card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='card-content-inner'>"
@@ -439,7 +439,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content  card-content-padding'>"
             + "<div class='card-content-inner'>"
@@ -472,7 +472,7 @@
                 + "</div>"
                 + "<div class='row'>"
                 + "<div class='col-85'></div>"
-                + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+                + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
                 + "</div>"
                 + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
                 + "<div class='card-content-inner'" + object.all_text + ">"
@@ -513,7 +513,7 @@
                 + "</div>"
                 + "<div class='row'>"
                 + "<div class='col-85'></div>"
-                + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+                + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
                 + "</div>"
                 + "<div class='card-content card-content-padding'>"
                 + "<div class='card-content-inner'" + object.all_text + ">"
@@ -579,7 +579,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='blog-title'>" + object.title + "</div>"
@@ -609,7 +609,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding'>"
             + "<div class='blog-title'>" + object.title + "</div>"
@@ -658,7 +658,7 @@
             + '<div class="item-title-row">'
             + '<div class="item-title author-comment">' + object.name + '</div>'
             + '</div>'
-            + '<div class="time">' + object.date + '<a href="#" class="link pull-right more-options" data-owner="' + object.owner + '" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="GCTUser.MoreOptions(this);" aria-label="More Options"><i class="fa fa-caret-down"></i></a></div>'
+            + '<div class="time">' + object.date + '<a href="#" class="link pull-right more-options" data-owner="' + object.owner + '" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="GCT.MoreOptions(this);" aria-label="More Options"><i class="fa fa-caret-down"></i></a></div>'
             + object.description
             + "<br><div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
 
@@ -1686,6 +1686,9 @@ GCTUser = {
             }
         });
     },
+    Guid: function () {
+        return (Cookies.get('guid')) ? Cookies.get('guid') : "";
+    },
 }
 
 GCTrequests = {
@@ -2557,7 +2560,39 @@ GCT = {
                 console.log('Worked, but type not handled yet.');
                 break;
         }
-    }
+    },
+    MoreOptions: function (obj) {
+        var owner = $(obj).data("owner");
+        var guid = $(obj).data("guid");
+        var type = $(obj).data("type");
+
+        var mine = (owner == GCTUser.Guid());
+        
+
+        optionsPopover = app.popover.create({
+            targetEl: '#label-'+ guid,
+            content: '<div class="popover">' +
+                '<div class="popover-inner">' +
+                '<div class="block">' +
+                '<p>Popover created dynamically.</p>' +
+                '<p><a href="#" class="link popover-close">Close me</a></p>' +
+                '</div>' +
+                '</div>' +
+                '</div>',
+            // Events
+            on: {
+                open: function (popover) {
+                    console.log('Popover open');
+                },
+                opened: function (popover) {
+                    console.log('Popover opened');
+                },
+            }
+        });
+
+        optionsPopover.open();
+        $('#focus-new-popover').focus();
+    },
 }
 
 function tabObject(page, tab, limit, type, header, eachFunc, request) {
