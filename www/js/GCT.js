@@ -2567,18 +2567,34 @@ GCT = {
         var type = $(obj).data("type");
 
         var mine = (owner == GCTUser.Guid());
-        
+
+        var popoverHTML = '<div class="popover">'
+            +'<div class="popover-inner">' 
+            +'<div class="list">' 
+            +'<ul>' 
+            + '<span id="focus-new-popover" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans("more-options-opened") + '</span>';
+        if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post' || type == "gccollab_event") {
+            popoverHTML += '<li><a href="#" class="item-link close-popover list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
+        }
+        if (type == "gccollab_event") {
+            popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("add-calendar") + '</a></li>';
+        }
+        popoverHTML += '<li ><a href="#"  class="item-link close-popover list-button" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
+        if (mine) {
+            if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+            if (type == "gccollab_discussion_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditDiscussionPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+            if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+            if (type != "gccollab_opportunity") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTUser.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>'; }
+        }
+        popoverHTML += '<li><a href="#" class="list-button item-link close-popover">' + GCTLang.Trans("close") + ' </a></li>';
+        popoverHTML += '</ul>'
+            + '</div>'
+            +'</div>'
+            +'</div>';
 
         optionsPopover = app.popover.create({
-            targetEl: '#label-'+ guid,
-            content: '<div class="popover">' +
-                '<div class="popover-inner">' +
-                '<div class="block">' +
-                '<p>Popover created dynamically.</p>' +
-                '<p><a href="#" class="link popover-close">Close me</a></p>' +
-                '</div>' +
-                '</div>' +
-                '</div>',
+            targetEl: obj,
+            content: popoverHTML,
             // Events
             on: {
                 open: function (popover) {
@@ -2589,7 +2605,6 @@ GCT = {
                 },
             }
         });
-
         optionsPopover.open();
         $('#focus-new-popover').focus();
     },
