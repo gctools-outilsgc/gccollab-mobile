@@ -1477,6 +1477,14 @@ GCTUser = {
             }
         });
     },
+    PostEvent: function (group_guid, group_public) {
+        if (group_guid) {
+            mainView.router.loadPage({ url: 'PostEvent.html?action=create&group_guid=' + group_guid + '&group_public=' + group_public + '&type=group'  }); 
+        } else {
+            mainView.router.loadPage({ url: 'PostEvent.html?action=create' }); 
+        }
+        
+    },
     GetGroup: function (guid, successCallback, errorCallback) {
         $$.ajax({
             method: 'POST',
