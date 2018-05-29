@@ -2682,6 +2682,7 @@ GCT = {
             if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
             if (type != "gccollab_opportunity") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>'; }
         }
+        if (inGroup) { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + container + '" data-type="gccollab_group" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-group") + '</a></li>'; }
         popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfile(' + owner + ');">' + GCTLang.Trans("show-user") + '</a></li>';
         popoverHTML += '<li><a href="#"  class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
         popoverHTML += '<li><a href="#" class="list-button item-link popover-close">' + GCTLang.Trans("close") + ' </a></li>';

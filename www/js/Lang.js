@@ -166,6 +166,7 @@
     "deletepost": "Delete this post?",
     "show-user": "Show User's Profile",
     "view-post": "View Post",
+    "view-group": "View Group",
 
     "create-wire": "Create a new Wire post",
     "new-blog-post": "New Blog Post",
@@ -554,6 +555,7 @@ French = {
     "deletepost": "Supprimer ce post?",
     "show-user": "Afficher le profil de l'utilisateur",
     "view-post": "Voir l'article",
+    "view-group": "View le Groupe",
 
     "create-wire": "Créer un nouveau fil",
     "new-blog-post": "Ajouter un blogue",
