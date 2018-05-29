@@ -164,6 +164,7 @@
     "delete": "Delete",
     "deleted": "Your post has been deleted.",
     "deletepost": "Delete this post?",
+    "show-user": "Show User's Profile",
 
     "create-wire": "Create a new Wire post",
     "new-blog-post": "New Blog Post",
@@ -550,6 +551,7 @@ French = {
     "delete": "Supprimer",
     "deleted": "Votre post a été supprimé.",
     "deletepost": "Supprimer ce post?",
+    "show-user": "Afficher le profil de l'utilisateur",
 
     "create-wire": "Créer un nouveau fil",
     "new-blog-post": "Ajouter un blogue",

@@ -2680,7 +2680,8 @@ GCT = {
             if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
             if (type != "gccollab_opportunity") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>'; }
         }
-        popoverHTML += '<li><a href="#"  class="item-link close-popover list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
+        popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfile(' + owner + ');">' + GCTLang.Trans("show-user") + '</a></li>';
+        popoverHTML += '<li><a href="#"  class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
         popoverHTML += '<li><a href="#" class="list-button item-link popover-close">' + GCTLang.Trans("close") + ' </a></li>';
         popoverHTML += '</ul>'
             + '</div>'
