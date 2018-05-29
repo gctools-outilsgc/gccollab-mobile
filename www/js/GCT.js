@@ -2598,11 +2598,14 @@ GCT = {
         }
     },
     MoreOptions: function (obj) {
-        var owner = $(obj).data("owner");
-        var guid = $(obj).data("guid");
-        var type = $(obj).data("type");
+        var owner = $(obj).data("owner") || '';
+        var guid = $(obj).data("guid") || '';
+        var type = $(obj).data("type") || '';
+        var container = $(obj).data("container") || '';
+        var location = $(obj).data("location") || '';
 
-        var mine = (owner == GCTUser.Guid());
+        var isOwner = (owner == GCTUser.Guid());
+        var inGroup = ((container && owner) && (container != owner));
 
         var popoverHTML = '<div class="popover">'
             +'<div class="popover-inner">' 
@@ -2612,16 +2615,15 @@ GCT = {
         if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post' || type == "gccollab_event") {
             popoverHTML += '<li><a href="#" class="item-link popover-close list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
         }
-        if (type == "gccollab_event") {
-            popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("add-calendar") + '</a></li>';
-        }
-        popoverHTML += '<li ><a href="#"  class="item-link close-popover list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
-        if (mine) {
+        if (type == "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("add-calendar") + '</a></li>'; }
+        if (type == 'gccollab_wire_post') { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.ReplyWirePost(this);">' + GCTLang.Trans("reply") + '</a></li>'; }
+        if (isOwner) {
             if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
             if (type == "gccollab_discussion_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.EditDiscussionPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
             if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
             if (type != "gccollab_opportunity") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>'; }
         }
+        popoverHTML += '<li ><a href="#"  class="item-link close-popover list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
         popoverHTML += '<li><a href="#" class="list-button item-link popover-close">' + GCTLang.Trans("close") + ' </a></li>';
         popoverHTML += '</ul>'
             + '</div>'
