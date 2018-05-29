@@ -2455,6 +2455,28 @@ GCTrequests = {
             });
         }, '');
     },
+    Report: function (obj) {
+        var guid = $(obj).data("guid");
+        $(".popover").remove();
+
+        app.dialog.confirm(GCTLang.Trans("reportpost"), GCTLang.Trans("reportpost"), function (value) {
+            app.request({
+                api_key: api_key_gccollab,
+                method: 'POST',
+                dataType: 'json',
+                url: GCT.GCcollabURL,
+                data: { method: "report.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+                timeout: 12000,
+                success: function (data) {
+                    myApp.alert(GCTLang.Trans("reported"));
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR, textStatus, errorThrown);
+                }
+            });
+        }, function (value) { }
+        );
+    },
 }
 
 GCT = {
@@ -2658,7 +2680,7 @@ GCT = {
             if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
             if (type != "gccollab_opportunity") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>'; }
         }
-        popoverHTML += '<li ><a href="#"  class="item-link close-popover list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
+        popoverHTML += '<li><a href="#"  class="item-link close-popover list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
         popoverHTML += '<li><a href="#" class="list-button item-link popover-close">' + GCTLang.Trans("close") + ' </a></li>';
         popoverHTML += '</ul>'
             + '</div>'
