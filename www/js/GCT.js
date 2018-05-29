@@ -652,18 +652,22 @@
     },
     txtComment: function (object) {
         var content = '<li>'
-            + '<div class="item-link item-content">'
+            + "<div class='hold-all-card'>"
+            + "<div id='label-" + object.guid + "' class='col-85 reader-text'>" + object.label + "</div>"
+            + "<div class='row'>"
+            + "<div class='col-85'>"
+            + '<div class="item-content" aria-hidden="true">'
             + '<div class="item-media"> <img src="' + object.icon + '" onclick="ShowProfile(' + object.owner + ');" style="border-radius:100%" width="40" height="40" alt="Profile Picture"> </div>'
             + '<div class="item-inner">'
             + '<div class="item-title-row">'
             + '<div class="item-title author-comment">' + object.name + '</div>'
             + '</div>'
-            + '<div class="time">' + object.date + '<a href="#" class="link pull-right more-options" data-owner="' + object.owner + '" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="GCT.MoreOptions(this);" aria-label="More Options"><i class="fa fa-caret-down"></i></a></div>'
+            + '<div class="time">' + object.date + '</div>'
             + object.description
-            + "<br><div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
-
-            + '</div>'
-            + '</div>'
+            + "<br><div class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+            + '</div></div></div>'
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='comment' onclick='GCT.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + '</div></div>'
             + '</li>';
         content = GCT.SetLinks(content);
         return content;
@@ -1337,20 +1341,22 @@ GCTEach = {
         return content;
     },
     Comment: function (value) {
-        console.log(value);
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-
+        var date = prettyDate(value.time_created);
+        var label = value.userDetails.displayName + ' ' + date + '. ' + value.description;
         var content = GCTtxt.txtComment({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
             owner: value.owner_guid,
-            date: prettyDate(value.time_created),
+            container: value.container_guid,
+            date: date,
             description: value.description,
             type: value.subtype,
             guid: value.guid,
             liked: liked,
-            likes: likes
+            likes: likes,
+            label: label
         });
         return content;
     },
