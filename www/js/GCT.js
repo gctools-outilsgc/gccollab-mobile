@@ -682,32 +682,33 @@ GCTEach = {
         var label = date + ': ' + value.userDetails.displayName;
         var description = "";
         var container = '';
+        var type = "gccollab_newfeed_post";
         if (value.action == "update") { //UPDATE
             switch (value.object.type) {
-                case "user": description = GCTLang.Trans("new-avatar"); break;
-                case "event_calendar": description = GCTLang.Trans("event-update"); break;
+                case "user": description = GCTLang.Trans("new-avatar"); type = "gccollab_profile"; break;
+                case "event_calendar": description = GCTLang.Trans("event-update"); type = "gccollab_event"; break;
                 default: description = "NEED TO HANDLE UPDATE";
             }
         } else if (value.action == "create") { // CREATE
             switch (value.object.type) {
-                case "wire": description = GCTLang.Trans("wire-create"); break;
-                case "blog": description = GCTLang.Trans("blog-create"); break;
-                case "group": description = GCTLang.Trans("group-created"); break;
-                case "file": description = GCTLang.Trans("file-created"); break;
-                case "groupforumtopic": description = GCTLang.Trans("discussion-add"); break;
-                case "etherpad": description = GCTLang.Trans("doc-create"); break;
-                case "event_calendar": description = GCTLang.Trans("event-create"); break;
-                case "bookmarks": description = GCTLang.Trans("bookmark-create"); break;
-                case "page_top": description = GCTLang.Trans("page-create"); break;
+                case "wire": description = GCTLang.Trans("wire-create"); type = "gccollab_wire_post"; break;
+                case "blog": description = GCTLang.Trans("blog-create"); type = "gccollab_blog_post"; break;
+                case "group": description = GCTLang.Trans("group-created"); type = "gccollab_group"; break;
+                case "file": description = GCTLang.Trans("file-created"); type = "gccollab_file"; break;
+                case "groupforumtopic": description = GCTLang.Trans("discussion-add"); type = "gccollab_discussion_post"; break;
+                case "etherpad": description = GCTLang.Trans("doc-create"); type = "gccollab_doc"; break;
+                case "event_calendar": description = GCTLang.Trans("event-create"); type = "gccollab_event"; break;
+                case "bookmarks": description = GCTLang.Trans("bookmark-create"); type = "gccollab_bookmark"; break;
+                case "page_top": description = GCTLang.Trans("page-create"); type = "gccollab_page"; break;
                 default: description = "NEED TO HANDLE CREATE";
             }
         } else { //OTHER
             switch (value.action) {
-                case 'friend': description = GCTLang.Trans("friend-added"); break;
-                case 'comment': description = GCTLang.Trans("commented"); break;
-                case 'reply': description = GCTLang.Trans("discussion-replied"); break;
-                case 'join': description = GCTLang.Trans("joined-group"); break;
-                case 'vote': description = GCTLang.Trans("voted"); break;
+                case 'friend': description = GCTLang.Trans("friend-added"); type = "gccollab_profile"; break;
+                case 'comment': description = GCTLang.Trans("commented"); type = "gccollab_comment"; break;
+                case 'reply': description = GCTLang.Trans("discussion-replied"); type = "gccollab_discussion_post"; break;
+                case 'join': description = GCTLang.Trans("joined-group"); type = "gccollab_group"; break;
+                case 'vote': description = GCTLang.Trans("voted"); type = "gccollab_poll"; break;
                 default: description = "NEED TO HANDLE ELSE";
             }
         }
@@ -773,7 +774,7 @@ GCTEach = {
             owner: value.subject_guid,
             container: container,
             guid: value.object_guid,
-            type: "gccollab_newfeed_post",
+            type: type,
             subtype: value.object.type,
             liked: liked,
             likes: likes
@@ -2669,6 +2670,7 @@ GCT = {
             +'<div class="list">' 
             +'<ul>' 
             + '<span id="focus-new-popover" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans("more-options-opened") + '</span>';
+            popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + type + '" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-post") + '</a></li>';
         if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post' || type == "gccollab_event") {
             popoverHTML += '<li><a href="#" class="item-link popover-close list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
         }
