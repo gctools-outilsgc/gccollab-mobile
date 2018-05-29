@@ -1942,6 +1942,41 @@ GCTrequests = {
             }
         });
     },
+    ReplyWirePost(obj) {
+        var guid = $(obj).data("guid");
+        var wireReplyPopup = app.popup.create({
+            content: '<div class="popup">' +
+                '<div class="block">' +
+                '<p>TODO: Wire Reply</p>' +
+                '<p><a href="#" class="link popup-close">Close me</a></p>' +
+                '</div>' +
+                '</div>',
+            on: {
+                open: function (popup) {
+                    console.log('Popup open');
+                },
+                opened: function (popup) {
+                    console.log('Popup opened');
+                },
+            }
+        });
+        wireReplyPopup.open();
+    },
+    ReplyWire: function (guid, message, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "reply.wire", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetGroups: function (tabObject, filters) {
         limit = tabObject.limit || 15;
         offset = tabObject.offset || 0;
