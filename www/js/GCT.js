@@ -1886,6 +1886,26 @@ GCTrequests = {
             }
         });
     },
+    EditBlogPost: function (obj) {
+        var guid = $(obj).data("guid");
+        //mainView.router.loadPage({ url: 'PostBlog.html?action=edit&post_guid=' + guid });
+    },
+    GetBlogEdit: function (post_guid, successCallback, errorCallback) {
+        if (!post_guid) { return "cannot edit nothing"; } //force back? with message 
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.blogedit", user: GCTUser.Email(), guid: post_guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetNewsfeed: function (tabObject) {
         limit = tabObject.limit || 12;
         offset = tabObject.offset || 0;
@@ -2004,6 +2024,30 @@ GCTrequests = {
             dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "reply.wire", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    EditWirePost: function (obj) {
+        var guid = $(obj).data("guid");
+       
+        
+           // title: GCTLang.Trans("new-wire-post"),
+            //text: GCTLang.Trans("new-post-info"),
+            //afterText: '<textarea id="wire-post-textarea">' + $("#wire-" + guid).text() + '</textarea>',
+            
+    },
+    EditWire: function (guid, message, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "edit.wire", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 successCallback(data);
@@ -2148,6 +2192,26 @@ GCTrequests = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    EditDiscussionPost: function (obj) {
+        var guid = $(obj).data("guid");
+        //mainView.router.loadPage({ url: 'PostDiscussion.html?action=edit&post_guid=' + guid });
+    },
+    GetDiscussionEdit: function (post_guid, successCallback, errorCallback) {
+        if (!post_guid) { return "cannot edit nothing"; } //force back? with message 
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.discussionedit", user: GCTUser.Email(), guid: post_guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
             }
         });
     },
@@ -2848,9 +2912,9 @@ GCT = {
         if (type == "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("add-calendar") + '</a></li>'; }
         if (type == 'gccollab_wire_post') { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.ReplyWirePost(this);">' + GCTLang.Trans("reply") + '</a></li>'; }
         if (isOwner) {
-            if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
-            if (type == "gccollab_discussion_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.EditDiscussionPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
-            if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+            if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+            if (type == "gccollab_discussion_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.EditDiscussionPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+            if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
             if (type != "gccollab_opportunity") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>'; }
         }
         if (type === "gccollab_wire_post" || type === "gccollab_blog_post" || type === "gccollab_discussion_post" || type === "gccollab_comment" || type === "gccollab_bookmark" || type === "gccollab_event" || type === "gccollab_group") {
