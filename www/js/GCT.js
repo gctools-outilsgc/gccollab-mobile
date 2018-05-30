@@ -2879,6 +2879,7 @@ GCT = {
             case "gccollab_blog_post":
                 mainView.router.navigate('/entity-template/blog/' + guid + '/');
                 break;
+            case "gccollab_discussion_reply":
             case "gccollab_discussion_post":
                 mainView.router.navigate('/entity-template/discussion/' + guid + '/');
                 break;
