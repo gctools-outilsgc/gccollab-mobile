@@ -346,7 +346,7 @@
             + "</div>"
             + "<div class='card-footer' aria-hidden='true'>"
             + "<a href='#' aria-label='like aimer' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-            + '<a href="#" class="item-link list-button" data-guid="' + object.guid + '" onclick="GCTrequests.SeeCalendar(this);" data-type="' + object.type + '">TOTRANSLATE' + GCTLang.Trans('in-calendar') + '</a>'
+            + '<a href="#" class="item-link list-button" data-guid="' + object.guid + '" onclick="GCTrequests.SeeCalendar(this);" data-type="' + object.type + '">' + GCTLang.Trans('in-calendar') + '</a>'
             + object.action
             + "</div></div></div>";
         content = GCT.SetLinks(content);
@@ -389,7 +389,7 @@
             + "</div>"
             + "<div class='card-footer'>"
             + "<a href='#' aria-label='like aimer' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-            + '<a href="#" class="item-link list-button" data-guid="' + object.guid + '" onclick="GCTrequests.SeeCalendar(this);" data-type="' + object.type + '">TOTRANSLATE' + GCTLang.Trans('in-calendar') + '</a>'
+            + '<a href="#" class="item-link list-button" data-guid="' + object.guid + '" onclick="GCTrequests.SeeCalendar(this);" data-type="' + object.type + '">' + GCTLang.Trans('in-calendar') + '</a>'
             + object.action
             + "</div></div></div>";
         content = GCT.SetLinks(content);
