@@ -346,6 +346,7 @@
             + "</div>"
             + "<div class='card-footer' aria-hidden='true'>"
             + "<a href='#' aria-label='like aimer' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + '<a href="#" class="item-link list-button" data-guid="' + object.guid + '" onclick="GCTrequests.SeeCalendar(this);" data-type="' + object.type + '">TOTRANSLATE' + GCTLang.Trans('in-calendar') + '</a>'
             + object.action
             + "</div></div></div>";
         content = GCT.SetLinks(content);
@@ -388,8 +389,25 @@
             + "</div>"
             + "<div class='card-footer'>"
             + "<a href='#' aria-label='like aimer' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + '<a href="#" class="item-link list-button" data-guid="' + object.guid + '" onclick="GCTrequests.SeeCalendar(this);" data-type="' + object.type + '">TOTRANSLATE' + GCTLang.Trans('in-calendar') + '</a>'
             + object.action
             + "</div></div></div>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
+    txtSeeCalendar: function (object) {
+        var content = "<div class='list cards-list'>"
+            + "<div class='card'>"
+            + "<div class='card-header plain' onclick='ShowProfile(" + object.owner + ");'>"
+            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row'>"
+            + "<div class='author'>" + object.name + "</div>"
+            + "</div>"
+            + "</div>"
+            + "</div>"
+            + "</div>"
+            + "</div>";
         content = GCT.SetLinks(content);
         return content;
     },
@@ -2264,6 +2282,50 @@ GCTrequests = {
             }
         });
     },
+    SeeCalendar: function (obj) {
+        var guid = $(obj).data("guid");
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.seecalendar", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                var seeCalendar = data.result;
+                var content = "";
+                $.each(seeCalendar, function (key, value) {
+                    content += GCTtxt.txtSeeCalendar({
+                        icon: value.iconURL,
+                        name: value.displayName,
+                        date: prettyDate(value.time_created),
+                        owner: value.user_id
+                    });
+                });
+
+                var postCalendar = app.popup.create({
+                    content: '<div class="popup">' +
+                        '<div class="block">' +
+                        content +
+                        '<p><a href="#" class="link popup-close">Close me</a></p>' +
+                        '</div>' +
+                        '</div>',
+                    on: {
+                        open: function (popup) {
+                            console.log('Popup open');
+                        },
+                        opened: function (popup) {
+                            console.log('Popup opened');
+                        },
+                    }
+                });
+                postCalendar.open();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetBookmark: function (guid, successCallback) {
         app.request({
             method: 'POST',
@@ -2792,6 +2854,8 @@ GCT = {
             }
         }
         if (inGroup) { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + container + '" data-type="gccollab_group" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-group") + '</a></li>'; }
+        if (type === "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTrequests.SeeCalendar(this);">TOTRANSLATE' + GCTLang.Trans('in-calendar') + '</a></li>'
+}
         popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfile(' + owner + ');">' + GCTLang.Trans("show-user") + '</a></li>';
         popoverHTML += '<li><a href="#"  class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
         popoverHTML += '<li><a href="#" class="list-button item-link popover-close">' + GCTLang.Trans("close") + ' </a></li>';
