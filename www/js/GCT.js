@@ -1236,7 +1236,7 @@ GCTEach = {
         console.log(value);
         var profileData = value.result;
         if (typeof profileData == "string") {
-            app.alert(GCTLang.Trans("couldnotfindprofile"));
+            alert(GCTLang.Trans("couldnotfindprofile"));
             return;
         }
         var isOwnProfile = false;
@@ -2326,6 +2326,24 @@ GCTrequests = {
             }
         });
     },
+    AddCalendar: function (obj) {
+        var guid = $(obj).data("guid");
+        app.request({
+            api_key: api_key_gccollab,
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "event.add.calendar", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                alert(data.result);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetBookmark: function (guid, successCallback) {
         app.request({
             method: 'POST',
@@ -2527,7 +2545,7 @@ GCTrequests = {
                 data: { method: "delete.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
                 timeout: 12000,
                 success: function (data) {
-                    app.alert(GCTLang.Trans("deleted"));
+                    alert(GCTLang.Trans("deleted"));
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR, textStatus, errorThrown);
@@ -2548,7 +2566,7 @@ GCTrequests = {
                 data: { method: "report.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
                 timeout: 12000,
                 success: function (data) {
-                    myApp.alert(GCTLang.Trans("reported"));
+                    alert(GCTLang.Trans("reported"));
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR, textStatus, errorThrown);
@@ -2619,24 +2637,12 @@ GCTrequests = {
                 } else {
                     content += endOfContent;
                 }
+                
 
-                var likesPost = app.popup.create({
-                    content: '<div class="popup">' +
-                        '<div class="block">' +
-                        content +
-                        '<p><a href="#" class="link popup-close">Close me</a></p>' +
-                        '</div>' +
-                        '</div>',
-                    on: {
-                        open: function (popup) {
-                            console.log('Popup open');
-                        },
-                        opened: function (popup) {
-                            console.log('Popup opened');
-                        },
-                    }
-                });
-                likesPost.open();
+               
+                $('#content-likes').html(content);
+                app.popup.open('.likes-popup')
+
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -2839,7 +2845,7 @@ GCT = {
         if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post' || type == "gccollab_event") {
             popoverHTML += '<li><a href="#" class="item-link popover-close list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
         }
-        if (type == "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("add-calendar") + '</a></li>'; }
+        if (type == "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + type + '">TOTRANSLATE' + GCTLang.Trans("add-calendar") + '</a></li>'; }
         if (type == 'gccollab_wire_post') { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.ReplyWirePost(this);">' + GCTLang.Trans("reply") + '</a></li>'; }
         if (isOwner) {
             if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTUser.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
