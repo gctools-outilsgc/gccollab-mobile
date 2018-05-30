@@ -741,7 +741,7 @@ GCTEach = {
             switch (value.action) {
                 case 'friend': description = GCTLang.Trans("friend-added"); type = "gccollab_profile"; break;
                 case 'comment': description = GCTLang.Trans("commented"); type = "gccollab_comment"; break;
-                case 'reply': description = GCTLang.Trans("discussion-replied"); type = "gccollab_discussion_post"; break;
+                case 'reply': description = GCTLang.Trans("discussion-replied"); type = "gccollab_discussion_reply"; break;
                 case 'join': description = GCTLang.Trans("joined-group"); type = "gccollab_group"; break;
                 case 'vote': description = GCTLang.Trans("voted"); type = "gccollab_poll"; break;
                 default: description = "NEED TO HANDLE ELSE";
@@ -764,7 +764,12 @@ GCTEach = {
         var context = ""; //Currently only content to groups should need context
         if (value.object.group_guid) {
             context = " " + GCTLang.Trans("group-context") + "<a class='link' data-guid='" + value.object.group_guid + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + value.object.group_title + "</a>";
-            container = value.object.group_guid;
+            if (type === "gccollab_discussion_reply") {
+                var lnk = value.object.url.substr((value.object.url.indexOf("/view/") + 6));
+                container = lnk.substring(0, lnk.indexOf("/"));
+            } else {
+                container = value.object.group_guid;
+            }
             label += ' ' + GCTLang.Trans("group-context") + ' ' + value.object.group_title + '.';
         } else {
             container = value.subject_guid;
@@ -2785,6 +2790,7 @@ GCT = {
         } else if (obj.href.indexOf("/discussion/view/") > -1) {
             console.log('loading discussion...');
             lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            lnk = lnk.substring(0, lnk.indexOf("/"));
             console.log(lnk);
             GCT.ViewPost(lnk, "gccollab_discussion_post");
 
@@ -2905,7 +2911,11 @@ GCT = {
             +'<div class="list">' 
             +'<ul>' 
             + '<span id="focus-new-popover" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans("more-options-opened") + '</span>';
+        if (type === "gccollab_discussion_reply") { //comments view post will probably use this too
+            popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + container + '" data-type="' + type + '" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-post") + '</a></li>';
+        } else {
             popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + type + '" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-post") + '</a></li>';
+        }
         if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post' || type == "gccollab_event") {
             popoverHTML += '<li><a href="#" class="item-link popover-close list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
         }
