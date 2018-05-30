@@ -25,6 +25,7 @@
     "event-create": " added the event: ",
     "bookmark-create": " bookmarked ",
     "joined-group": " joined the group: ",
+    "page-create": " created a page ",
     "commented": " commented on: ",
     "voted": " voted on the poll: ",
     "posted-group": "Posted in the group: ",
@@ -385,6 +386,9 @@
     "validation_deadline": "Please enter an application deadline",
     "validation_hours": "Please enter a time commitment for this opportunity",
     "validation_location": "Please enter a location for this opportunity",
+    "add-calendar": 'Add to my calendar',
+    "in-calendar": "In calendar",
+    "subgroup-header": "Subgroups"
 }
 
 French = {
@@ -414,6 +418,7 @@ French = {
     "event-create": " a ajouté l'événement' ",
     "bookmark-create": " mis en signet ",
     "joined-group": " s’est joint(e) au groupe: ",
+    "page-create": " a créé une page ",
     "commented": " a commenté le: ",
     "voted": " a participé au sondage: ",
     "posted-group": "Affichée dans le groupe: ",
@@ -776,4 +781,7 @@ French = {
     "validation_deadline": "Veuillez entrer une date limite d'inscription",
     "validation_hours": "Veuillez entrer une période d'engagement pour cette possibilité",
     "validation_location": "Veuillez entrer un emplacement pour cette possibilité",
+    "add-calendar": 'Ajouter à mon calendrier',
+    "in-calendar": "Dans le calendrier",
+    "subgroup-header": "Sous-groupes"
 }
