@@ -1,17 +1,13 @@
 ﻿//Opens the application, checks cookies, sends to home or login.
 function AppOpen() {
-    alert('app open');
     if (GCTLang.IsLangSet()) {
         if (GCTUser.IsLoggedIn()) {
-            alert('logged in');
             GCTUser.SetUserProfile();
             mainView.router.navigate('/list-template/home/');
         } else {
             if (openid_enabled) {
-                alert('open id');
                 mainView.router.navigate('/sign-in/');
             } else {
-                alert('open old');
                 mainView.router.navigate('/sign-in-old/');
             }
         }
