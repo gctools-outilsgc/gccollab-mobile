@@ -19,7 +19,6 @@ function AppOpen() {
 }
 
 $$(document).on('page:init', '.page[data-name="sign-in-old"]', function (e) {
-    alert('inside old page');
     $("#email, #password").keyup(function (event) {
         var email = $('#email').val();
         var password = $('#password').val();

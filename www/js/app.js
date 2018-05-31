@@ -195,7 +195,6 @@ $$(document).on('page:init', function (e) {
                 });
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
-                alert(jqXHR, textStatus, errorThrown);
             });
         } else {
             alert('Sorry, social sharing cannot be completed.');

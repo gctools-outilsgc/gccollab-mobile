@@ -2626,7 +2626,7 @@ GCTrequests = {
         var guid = $(obj).data("guid");
         $(".popover").remove();
 
-        app.dialog.confirm(GCTLang.Trans("reportpost"), GCTLang.Trans("reportpost"), function (value) {
+        app.dialog.confirm('', GCTLang.Trans("reportpost"), function (value) {
             app.request({
                 api_key: api_key_gccollab,
                 method: 'POST',
