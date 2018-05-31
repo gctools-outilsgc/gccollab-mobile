@@ -144,14 +144,18 @@ var mainView = app.views.create('.view-main', {
 
 //Opens the application, checks cookies, sends to home or login.
 function AppOpen() {
+    alert('app open');
     if (GCTLang.IsLangSet()) {
         if (GCTUser.IsLoggedIn()) {
+            alert('logged in');
             GCTUser.SetUserProfile();
             mainView.router.navigate('/list-template/home/');
         } else {
             if (openid_enabled) {
+                alert('open id');
                 mainView.router.navigate('/sign-in/');
             } else {
+                alert('open old');
                 mainView.router.navigate('/sign-in-old/');
             }
         }
@@ -176,6 +180,7 @@ $$(document).on('page:init', function (e) {
     });
 
     $$(document).on('click', 'a.social-share', function (e) {
+        alert('in');
         var guid = $(this).data("guid");
         var type = $(this).data("type");
 
@@ -197,7 +202,7 @@ $$(document).on('page:init', function (e) {
         }
 
         if (typeof window.plugins.socialsharing !== 'undefined' && message != "") {
-            GCTUser.GetEntityURL(guid, function (data) {
+            GCTrequests.GetEntityURL(guid, function (data) {
                 url = data.result;
 
                 window.plugins.socialsharing.shareWithOptions({
@@ -207,13 +212,14 @@ $$(document).on('page:init', function (e) {
                     url: url,
                     chooserTitle: chooserTitle
                 }, function (success) {
-                    console.log("Share completed? " + success.completed);
-                    console.log("Shared to app: " + success.app);
+                    alert("Share completed? " + success.completed);
+                    alert("Shared to app: " + success.app);
                 }, function (failure) {
-                    console.log("Sharing failed with message: " + failure);
+                    alert("Sharing failed with message: " + failure);
                 });
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                alert(jqXHR, textStatus, errorThrown);
             });
         } else {
             alert('Sorry, social sharing cannot be completed.');
