@@ -142,29 +142,6 @@ var mainView = app.views.create('.view-main', {
   url: '/'
 });
 
-//Opens the application, checks cookies, sends to home or login.
-function AppOpen() {
-    alert('app open');
-    if (GCTLang.IsLangSet()) {
-        if (GCTUser.IsLoggedIn()) {
-            alert('logged in');
-            GCTUser.SetUserProfile();
-            mainView.router.navigate('/list-template/home/');
-        } else {
-            if (openid_enabled) {
-                alert('open id');
-                mainView.router.navigate('/sign-in/');
-            } else {
-                alert('open old');
-                mainView.router.navigate('/sign-in-old/');
-            }
-        }
-    } else {
-        //### Show lang buttons. This is first call and only happens until they click a lang link
-        $('#aEN').toggle();
-        $('#aFR').toggle();
-    }
-}
 
 //Things that are needed for all pages.
 $$(document).on('page:init', function (e) {
@@ -180,7 +157,6 @@ $$(document).on('page:init', function (e) {
     });
 
     $$(document).on('click', 'a.social-share', function (e) {
-        alert('in');
         var guid = $(this).data("guid");
         var type = $(this).data("type");
 

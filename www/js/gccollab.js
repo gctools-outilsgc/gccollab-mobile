@@ -1,4 +1,28 @@
-﻿$$(document).on('page:init', '.page[data-name="sign-in-old"]', function (e) {
+﻿//Opens the application, checks cookies, sends to home or login.
+function AppOpen() {
+    alert('app open');
+    if (GCTLang.IsLangSet()) {
+        if (GCTUser.IsLoggedIn()) {
+            alert('logged in');
+            GCTUser.SetUserProfile();
+            mainView.router.navigate('/list-template/home/');
+        } else {
+            if (openid_enabled) {
+                alert('open id');
+                mainView.router.navigate('/sign-in/');
+            } else {
+                alert('open old');
+                mainView.router.navigate('/sign-in-old/');
+            }
+        }
+    } else {
+        //### Show lang buttons. This is first call and only happens until they click a lang link
+        $('#aEN').toggle();
+        $('#aFR').toggle();
+    }
+}
+
+$$(document).on('page:init', '.page[data-name="sign-in-old"]', function (e) {
     alert('inside old page');
     $("#email, #password").keyup(function (event) {
         var email = $('#email').val();
@@ -41,7 +65,7 @@
         }
     });
 })
-
+//AppOpen();
 function ShowProfile(email) {
     if (typeof email == 'undefined')
         email = GCTUser.Email(); //### Get current users profile
