@@ -98,7 +98,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding' aria-hidden='true'>"
             + "<div role='article' id='text-" + object.guid + " 'class='text'><a onclick='ShowProfile(" + object.owner + ");'>" + object.name + "</a> " + object.description + " " + object.more + object.context 
@@ -106,7 +106,7 @@
             + object.source
             + "</div></div>"
             + "<div class='card-footer' aria-hidden='true'>"
-            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             + object.reply
             + object.action
             + "</div>"
@@ -143,7 +143,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content  card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div id='wire-" + object.guid + "'>" + object.description + "</div>"
@@ -151,8 +151,8 @@
             + object.source
             + "</div>"
             + "<div class='card-footer' aria-hidden='true'>"
-            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-            + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyWirePost(this);'><i class='fas fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
+            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.ReplyWirePost(this);'><i class='fas fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
             + "</div>"
             + "</div><div>";
@@ -173,7 +173,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='post' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content  card-content-padding'>"
             + "<div id='wire-" + object.guid + "'>" + object.description + "</div>"
@@ -181,7 +181,7 @@
             + object.source
             + "</div>"
             + "<div class='card-footer'>"
-            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyWirePost(this);'><i class='fas fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
             + "</div>"
@@ -204,7 +204,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div id='blog-" + object.guid + "' class='card-content-inner'>"
@@ -214,7 +214,7 @@
             + "</div>"
             + "</div>"
             + "<div class='card-footer' aria-hidden='true'>"
-            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
             + "</div>"
@@ -236,7 +236,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='post' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding'>"
             + "<div id='blog-" + object.guid + "' class='card-content-inner'>"
@@ -246,7 +246,7 @@
             + "</div>"
             + "</div>"
             + "<div class='card-footer'>"
-            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
             + "</div>"
@@ -304,7 +304,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='card-content-inner'>"
@@ -312,7 +312,7 @@
             + "</div>"
             + "</div>"
             + "<div class='card-footer' aria-hidden='true'>"
-            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
             + "</div></div></div>";
@@ -334,7 +334,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='card-content-inner'>"
@@ -345,7 +345,8 @@
             + "</div>"
             + "</div>"
             + "<div class='card-footer' aria-hidden='true'>"
-            + "<a href='#' aria-label='like aimer' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + "<a href='#' aria-label='like aimer' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + '<a href="#" class="item-link list-button" data-guid="' + object.guid + '" onclick="GCTrequests.SeeCalendar(this);" data-type="' + object.type + '">' + GCTLang.Trans('in-calendar') + '</a>'
             + object.action
             + "</div></div></div>";
         content = GCT.SetLinks(content);
@@ -365,7 +366,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='post' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding'>"
             + "<div class='card-content-inner'>"
@@ -387,9 +388,26 @@
                 + "</div>"
             + "</div>"
             + "<div class='card-footer'>"
-            + "<a href='#' aria-label='like aimer' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + "<a href='#' aria-label='like aimer' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + '<a href="#" class="item-link list-button" data-guid="' + object.guid + '" onclick="GCTrequests.SeeCalendar(this);" data-type="' + object.type + '">' + GCTLang.Trans('in-calendar') + '</a>'
             + object.action
             + "</div></div></div>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
+    txtSeeCalendar: function (object) {
+        var content = "<div class='list cards-list'>"
+            + "<div class='card'>"
+            + "<div class='card-header plain' onclick='ShowProfile(" + object.owner + ");'>"
+            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row'>"
+            + "<div class='author'>" + object.name + "</div>"
+            + "</div>"
+            + "</div>"
+            + "</div>"
+            + "</div>"
+            + "</div>";
         content = GCT.SetLinks(content);
         return content;
     },
@@ -408,7 +426,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content  card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='card-content-inner'>"
@@ -419,7 +437,7 @@
             + "</div>"
             + "</div>"
             + "<div class='card-footer' aria-hidden='true'>"
-            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTrequests.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
             + object.action
             + "</div></div></div>";
         content = GCT.SetLinks(content);
@@ -439,7 +457,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='post' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content  card-content-padding'>"
             + "<div class='card-content-inner'>"
@@ -450,7 +468,7 @@
             + "</div>"
             + "</div>"
             + "<div class='card-footer'>"
-            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTrequests.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
             + object.action
             + "</div></div></div>";
         content = GCT.SetLinks(content);
@@ -472,7 +490,7 @@
                 + "</div>"
                 + "<div class='row'>"
                 + "<div class='col-85'></div>"
-                + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+                + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "'  data-container='" + object.owner + "' data-location='list' onclick='GCT.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
                 + "</div>"
                 + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
                 + "<div class='card-content-inner'" + object.all_text + ">"
@@ -513,7 +531,7 @@
                 + "</div>"
                 + "<div class='row'>"
                 + "<div class='col-85'></div>"
-                + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+                + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='post' onclick='GCT.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
                 + "</div>"
                 + "<div class='card-content card-content-padding'>"
                 + "<div class='card-content-inner'" + object.all_text + ">"
@@ -579,7 +597,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='blog-title'>" + object.title + "</div>"
@@ -587,7 +605,7 @@
             + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
             + "</div>"
             + "<div class='card-footer' aria-hidden='true'>"
-            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTrequests.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
             // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
             + "</div></div></div></div>";
@@ -609,7 +627,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='post' onclick='GCT.MoreOptions(this);'  aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding'>"
             + "<div class='blog-title'>" + object.title + "</div>"
@@ -617,7 +635,7 @@
             + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
             + "</div>"
             + "<div class='card-footer'>"
-            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='far fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTrequests.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
             // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
             + "</div></div></div></div>";
@@ -652,19 +670,40 @@
     },
     txtComment: function (object) {
         var content = '<li>'
-            + '<div class="item-link item-content">'
+            + "<div class='hold-all-card'>"
+            + "<div id='label-" + object.guid + "' class='col-85 reader-text'>" + object.label + "</div>"
+            + "<div class='row'>"
+            + "<div class='col-85'>"
+            + '<div class="item-content" aria-hidden="true">'
             + '<div class="item-media"> <img src="' + object.icon + '" onclick="ShowProfile(' + object.owner + ');" style="border-radius:100%" width="40" height="40" alt="Profile Picture"> </div>'
             + '<div class="item-inner">'
             + '<div class="item-title-row">'
             + '<div class="item-title author-comment">' + object.name + '</div>'
             + '</div>'
-            + '<div class="time">' + object.date + '<a href="#" class="link pull-right more-options" data-owner="' + object.owner + '" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="GCTUser.MoreOptions(this);" aria-label="More Options"><i class="fa fa-caret-down"></i></a></div>'
+            + '<div class="time">' + object.date + '</div>'
             + object.description
-            + "<br><div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTUser.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
-
-            + '</div>'
-            + '</div>'
+            + "<br><div class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTrequests.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+            + '</div></div></div>'
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='comment' onclick='GCT.MoreOptions(this);' aria-label='More Options'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + '</div></div>'
             + '</li>';
+        content = GCT.SetLinks(content);
+        return content;
+    },
+    txtLikes: function (object) {
+        var content = "<div class='list cards-list'>"
+            + "<div class='card'>"
+            + "<div class='card-header plain' onclick='ShowProfile(" + object.owner + ");'>"
+            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row'>"
+            + "<div class='author'>" + object.name + "</div>"
+            + "</div>"
+            + "<div class='time'>" + object.date + "</div>"
+            + "</div>"
+            + "</div>"
+            + "</div>"
+            + "</div>";
         content = GCT.SetLinks(content);
         return content;
     },
@@ -677,32 +716,34 @@ GCTEach = {
         var date = prettyDate(value.time_posted);
         var label = date + ': ' + value.userDetails.displayName;
         var description = "";
+        var container = '';
+        var type = "gccollab_newfeed_post";
         if (value.action == "update") { //UPDATE
             switch (value.object.type) {
-                case "user": description = GCTLang.Trans("new-avatar"); break;
-                case "event_calendar": description = GCTLang.Trans("event-update"); break;
+                case "user": description = GCTLang.Trans("new-avatar"); type = "gccollab_profile"; break;
+                case "event_calendar": description = GCTLang.Trans("event-update"); type = "gccollab_event"; break;
                 default: description = "NEED TO HANDLE UPDATE";
             }
         } else if (value.action == "create") { // CREATE
             switch (value.object.type) {
-                case "wire": description = GCTLang.Trans("wire-create"); break;
-                case "blog": description = GCTLang.Trans("blog-create"); break;
-                case "group": description = GCTLang.Trans("group-created"); break;
-                case "file": description = GCTLang.Trans("file-created"); break;
-                case "groupforumtopic": description = GCTLang.Trans("discussion-add"); break;
-                case "etherpad": description = GCTLang.Trans("doc-create"); break;
-                case "event_calendar": description = GCTLang.Trans("event-create"); break;
-                case "bookmarks": description = GCTLang.Trans("bookmark-create"); break;
-                case "page_top": description = GCTLang.Trans("page-create"); break;
+                case "wire": description = GCTLang.Trans("wire-create"); type = "gccollab_wire_post"; break;
+                case "blog": description = GCTLang.Trans("blog-create"); type = "gccollab_blog_post"; break;
+                case "group": description = GCTLang.Trans("group-created"); type = "gccollab_group"; break;
+                case "file": description = GCTLang.Trans("file-created"); type = "gccollab_file"; break;
+                case "groupforumtopic": description = GCTLang.Trans("discussion-add"); type = "gccollab_discussion_post"; break;
+                case "etherpad": description = GCTLang.Trans("doc-create"); type = "gccollab_doc"; break;
+                case "event_calendar": description = GCTLang.Trans("event-create"); type = "gccollab_event"; break;
+                case "bookmarks": description = GCTLang.Trans("bookmark-create"); type = "gccollab_bookmark"; break;
+                case "page_top": description = GCTLang.Trans("page-create"); type = "gccollab_page"; break;
                 default: description = "NEED TO HANDLE CREATE";
             }
         } else { //OTHER
             switch (value.action) {
-                case 'friend': description = GCTLang.Trans("friend-added"); break;
-                case 'comment': description = GCTLang.Trans("commented"); break;
-                case 'reply': description = GCTLang.Trans("discussion-replied"); break;
-                case 'join': description = GCTLang.Trans("joined-group"); break;
-                case 'vote': description = GCTLang.Trans("voted"); break;
+                case 'friend': description = GCTLang.Trans("friend-added"); type = "gccollab_profile"; break;
+                case 'comment': description = GCTLang.Trans("commented"); type = "gccollab_comment"; break;
+                case 'reply': description = GCTLang.Trans("discussion-replied"); type = "gccollab_discussion_reply"; break;
+                case 'join': description = GCTLang.Trans("joined-group"); type = "gccollab_group"; break;
+                case 'vote': description = GCTLang.Trans("voted"); type = "gccollab_poll"; break;
                 default: description = "NEED TO HANDLE ELSE";
             }
         }
@@ -723,7 +764,15 @@ GCTEach = {
         var context = ""; //Currently only content to groups should need context
         if (value.object.group_guid) {
             context = " " + GCTLang.Trans("group-context") + "<a class='link' data-guid='" + value.object.group_guid + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + value.object.group_title + "</a>";
-            label += ' ' + GCTLang.Trans("group-context") +' '+ value.object.group_title + '.';
+            if (type === "gccollab_discussion_reply") {
+                var lnk = value.object.url.substr((value.object.url.indexOf("/view/") + 6));
+                container = lnk.substring(0, lnk.indexOf("/"));
+            } else {
+                container = value.object.group_guid;
+            }
+            label += ' ' + GCTLang.Trans("group-context") + ' ' + value.object.group_title + '.';
+        } else {
+            container = value.subject_guid;
         }
 
         var text = "";
@@ -763,8 +812,9 @@ GCTEach = {
             action: action,
             reply: reply,
             owner: value.subject_guid,
+            container: container,
             guid: value.object_guid,
-            type: "gccollab_newfeed_post",
+            type: type,
             subtype: value.object.type,
             liked: liked,
             likes: likes
@@ -894,6 +944,7 @@ GCTEach = {
             name: value.userDetails.displayName,
             date: date,
             group: group,
+            container: value.container_guid,
             description: text,
             label: label,
             title: value.title,
@@ -991,6 +1042,7 @@ GCTEach = {
             id: id,
             action: action,
             owner: value.owner_guid,
+            container: value.container_guid,
             guid: value.guid,
             type: "gccollab_event",
             liked: liked,
@@ -1009,6 +1061,7 @@ GCTEach = {
         var content = GCTtxt.txtDoc({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
+            container: value.container_guid,
             label: label,
             date: date,
             title: value.title,
@@ -1040,6 +1093,7 @@ GCTEach = {
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
             owner: value.owner_guid,
+            container: value.container_guid,
             date: date,
             title: value.title,
             label: label,
@@ -1187,7 +1241,7 @@ GCTEach = {
         console.log(value);
         var profileData = value.result;
         if (typeof profileData == "string") {
-            app.alert(GCTLang.Trans("couldnotfindprofile"));
+            alert(GCTLang.Trans("couldnotfindprofile"));
             return;
         }
         var isOwnProfile = false;
@@ -1328,20 +1382,22 @@ GCTEach = {
         return content;
     },
     Comment: function (value) {
-        console.log(value);
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-
+        var date = prettyDate(value.time_created);
+        var label = value.userDetails.displayName + ' ' + date + '. ' + value.description;
         var content = GCTtxt.txtComment({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
             owner: value.owner_guid,
-            date: prettyDate(value.time_created),
+            container: value.container_guid,
+            date: date,
             description: value.description,
             type: value.subtype,
             guid: value.guid,
             liked: liked,
-            likes: likes
+            likes: likes,
+            label: label
         });
         return content;
     },
@@ -1686,6 +1742,9 @@ GCTUser = {
             }
         });
     },
+    Guid: function () {
+        return (Cookies.get('guid')) ? Cookies.get('guid') : "";
+    },
 }
 
 GCTrequests = {
@@ -1832,6 +1891,26 @@ GCTrequests = {
             }
         });
     },
+    EditBlogPost: function (obj) {
+        var guid = $(obj).data("guid");
+        //mainView.router.loadPage({ url: 'PostBlog.html?action=edit&post_guid=' + guid });
+    },
+    GetBlogEdit: function (post_guid, successCallback, errorCallback) {
+        if (!post_guid) { return "cannot edit nothing"; } //force back? with message 
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.blogedit", user: GCTUser.Email(), guid: post_guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetNewsfeed: function (tabObject) {
         limit = tabObject.limit || 12;
         offset = tabObject.offset || 0;
@@ -1921,6 +2000,65 @@ GCTrequests = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    ReplyWirePost: function (obj) {
+        var guid = $(obj).data("guid");
+        var wireReplyPopup = app.popup.create({
+            content: '<div class="popup">' +
+                '<div class="block">' +
+                '<p>TODO: Wire Reply</p>' +
+                '<p><a href="#" class="link popup-close">Close me</a></p>' +
+                '</div>' +
+                '</div>',
+            on: {
+                open: function (popup) {
+                    console.log('Popup open');
+                },
+                opened: function (popup) {
+                    console.log('Popup opened');
+                },
+            }
+        });
+        wireReplyPopup.open();
+    },
+    ReplyWire: function (guid, message, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "reply.wire", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    EditWirePost: function (obj) {
+        var guid = $(obj).data("guid");
+       
+        
+           // title: GCTLang.Trans("new-wire-post"),
+            //text: GCTLang.Trans("new-post-info"),
+            //afterText: '<textarea id="wire-post-textarea">' + $("#wire-" + guid).text() + '</textarea>',
+            
+    },
+    EditWire: function (guid, message, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "edit.wire", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
             }
         });
     },
@@ -2062,6 +2200,26 @@ GCTrequests = {
             }
         });
     },
+    EditDiscussionPost: function (obj) {
+        var guid = $(obj).data("guid");
+        //mainView.router.loadPage({ url: 'PostDiscussion.html?action=edit&post_guid=' + guid });
+    },
+    GetDiscussionEdit: function (post_guid, successCallback, errorCallback) {
+        if (!post_guid) { return "cannot edit nothing"; } //force back? with message 
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.discussionedit", user: GCTUser.Email(), guid: post_guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetMembers: function (tabObject, filters) {
         limit = tabObject.limit || 15;
         offset = tabObject.offset || 0;
@@ -2190,6 +2348,68 @@ GCTrequests = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    SeeCalendar: function (obj) {
+        var guid = $(obj).data("guid");
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.seecalendar", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                var seeCalendar = data.result;
+                var content = "";
+                $.each(seeCalendar, function (key, value) {
+                    content += GCTtxt.txtSeeCalendar({
+                        icon: value.iconURL,
+                        name: value.displayName,
+                        date: prettyDate(value.time_created),
+                        owner: value.user_id
+                    });
+                });
+
+                var postCalendar = app.popup.create({
+                    content: '<div class="popup">' +
+                        '<div class="block">' +
+                        content +
+                        '<p><a href="#" class="link popup-close">Close me</a></p>' +
+                        '</div>' +
+                        '</div>',
+                    on: {
+                        open: function (popup) {
+                            console.log('Popup open');
+                        },
+                        opened: function (popup) {
+                            console.log('Popup opened');
+                        },
+                    }
+                });
+                postCalendar.open();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    AddCalendar: function (obj) {
+        var guid = $(obj).data("guid");
+        app.request({
+            api_key: api_key_gccollab,
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "event.add.calendar", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                data = JSON.parse(data);
+                alert(data.result);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
             }
         });
     },
@@ -2381,6 +2601,138 @@ GCTrequests = {
             }
         });
     },
+    Delete: function (obj) {
+        var guid = $(obj).data("guid");
+        $(".popover").remove();
+
+        app.dialog.confirm(GCTLang.Trans("deletepost"), GCTLang.Trans("deletepost"), function () {
+            app.request({
+                api_key: api_key_gccollab,
+                method: 'POST',
+                dataType: 'json',
+                url: GCT.GCcollabURL,
+                data: { method: "delete.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+                timeout: 12000,
+                success: function (data) {
+                    alert(GCTLang.Trans("deleted"));
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR, textStatus, errorThrown);
+                }
+            });
+        }, '');
+    },
+    Report: function (obj) {
+        var guid = $(obj).data("guid");
+        $(".popover").remove();
+
+        app.dialog.confirm('', GCTLang.Trans("reportpost"), function (value) {
+            app.request({
+                api_key: api_key_gccollab,
+                method: 'POST',
+                dataType: 'json',
+                url: GCT.GCcollabURL,
+                data: { method: "report.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+                timeout: 12000,
+                success: function (data) {
+                    alert(GCTLang.Trans("reported"));
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR, textStatus, errorThrown);
+                }
+            });
+        }, function (value) { }
+        );
+    },
+    LikePost: function (obj) {
+        var guid = $(obj).data("guid");
+        var type = $(obj).data("type");
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "like.item", user: encodeURI(GCTUser.Email()), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                if (typeof data.result == "undefined") {
+                    if ($(obj).hasClass('liked')) {
+                        $(obj).removeClass('liked');
+                    } else {
+                        $(obj).addClass('liked');
+                    }
+
+                    return;
+                }
+                var count = data.result.count;
+                var liked = data.result.liked;
+
+                if (!liked && $(obj).hasClass('liked')) {
+                    $(obj).removeClass('liked');
+                } else if (liked) {
+                    $(obj).addClass('liked');
+                }
+
+                var likes = (count > 0) ? count + (count == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                $(obj).find('.like-count').text(likes);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetLikeUsers: function (obj) {
+        var guid = $(obj).data("guid");
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "like.users", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                var likeData = data.result;
+
+                var content = "";
+                if (likeData.count > 0) {
+                    $.each(likeData.users, function (key, value) {
+                        content += GCTtxt.txtLikes({
+                            icon: value.iconURL,
+                            name: value.displayName,
+                            date: prettyDate(value.time_created),
+                            owner: value.user_id
+                        });
+                    });
+                } else {
+                    content += endOfContent;
+                }
+                
+
+               
+                $('#content-likes').html(content);
+                app.popup.open('.likes-popup')
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    GetEntityURL: function (guid, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "entity.url", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
 }
 
 GCT = {
@@ -2453,6 +2805,7 @@ GCT = {
         } else if (obj.href.indexOf("/discussion/view/") > -1) {
             console.log('loading discussion...');
             lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            lnk = lnk.substring(0, lnk.indexOf("/"));
             console.log(lnk);
             GCT.ViewPost(lnk, "gccollab_discussion_post");
 
@@ -2541,6 +2894,7 @@ GCT = {
             case "gccollab_blog_post":
                 mainView.router.navigate('/entity-template/blog/' + guid + '/');
                 break;
+            case "gccollab_discussion_reply":
             case "gccollab_discussion_post":
                 mainView.router.navigate('/entity-template/discussion/' + guid + '/');
                 break;
@@ -2557,7 +2911,71 @@ GCT = {
                 console.log('Worked, but type not handled yet.');
                 break;
         }
-    }
+    },
+    MoreOptions: function (obj) {
+        var owner = $(obj).data("owner") || '';
+        var guid = $(obj).data("guid") || '';
+        var type = $(obj).data("type") || '';
+        var container = $(obj).data("container") || '';
+        var location = $(obj).data("location") || '';
+
+        var isOwner = (owner == GCTUser.Guid());
+        var inGroup = ((container && owner) && (container != owner));
+
+        var popoverHTML = '<div class="popover">'
+            +'<div class="popover-inner">' 
+            +'<div class="list">' 
+            +'<ul>' 
+            + '<span id="focus-new-popover" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans("more-options-opened") + '</span>';
+        if (type === "gccollab_discussion_reply") { //comments view post will probably use this too
+            popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + container + '" data-type="' + type + '" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-post") + '</a></li>';
+        } else {
+            popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + type + '" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-post") + '</a></li>';
+        }
+        if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post' || type == "gccollab_event") {
+            popoverHTML += '<li><a href="#" class="item-link popover-close list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
+        }
+        if (type == "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("add-calendar") + '</a></li>'; }
+        if (type == 'gccollab_wire_post') { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.ReplyWirePost(this);">' + GCTLang.Trans("reply") + '</a></li>'; }
+        if (isOwner) {
+            if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+            if (type == "gccollab_discussion_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.EditDiscussionPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+            if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+            if (type != "gccollab_opportunity") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>'; }
+        }
+        if (type === "gccollab_wire_post" || type === "gccollab_blog_post" || type === "gccollab_discussion_post" || type === "gccollab_comment" || type === "gccollab_bookmark" || type === "gccollab_event" || type === "gccollab_group") {
+            popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + type + '" onclick="GCTrequests.LikePost(this);">' + GCTLang.Trans("like") + '</a></li>';
+            if (location === 'post') {
+                popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.GetLikeUsers(this);">' + GCTLang.Trans("likes") + '</a></li>';
+            }
+        }
+        if (inGroup) { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + container + '" data-type="gccollab_group" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-group") + '</a></li>'; }
+        if (type === "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTrequests.SeeCalendar(this);">' + GCTLang.Trans('in-calendar') + '</a></li>'
+}
+        popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfile(' + owner + ');">' + GCTLang.Trans("show-user") + '</a></li>';
+        popoverHTML += '<li><a href="#"  class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
+        popoverHTML += '<li><a href="#" class="list-button item-link popover-close">' + GCTLang.Trans("close") + ' </a></li>';
+        popoverHTML += '</ul>'
+            + '</div>'
+            +'</div>'
+            +'</div>';
+
+        optionsPopover = app.popover.create({
+            targetEl: obj,
+            content: popoverHTML,
+            // Events
+            on: {
+                open: function (popover) {
+                    console.log('Popover open');
+                },
+                opened: function (popover) {
+                    console.log('Popover opened');
+                },
+            }
+        });
+        optionsPopover.open();
+        $('#focus-new-popover').focus();
+    },
 }
 
 function tabObject(page, tab, limit, type, header, eachFunc, request) {

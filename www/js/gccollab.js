@@ -1,5 +1,24 @@
-﻿$$(document).on('page:init', '.page[data-name="sign-in-old"]', function (e) {
+﻿//Opens the application, checks cookies, sends to home or login.
+function AppOpen() {
+    if (GCTLang.IsLangSet()) {
+        if (GCTUser.IsLoggedIn()) {
+            GCTUser.SetUserProfile();
+            mainView.router.navigate('/list-template/home/');
+        } else {
+            if (openid_enabled) {
+                mainView.router.navigate('/sign-in/');
+            } else {
+                mainView.router.navigate('/sign-in-old/');
+            }
+        }
+    } else {
+        //### Show lang buttons. This is first call and only happens until they click a lang link
+        $('#aEN').toggle();
+        $('#aFR').toggle();
+    }
+}
 
+$$(document).on('page:init', '.page[data-name="sign-in-old"]', function (e) {
     $("#email, #password").keyup(function (event) {
         var email = $('#email').val();
         var password = $('#password').val();
@@ -41,7 +60,7 @@
         }
     });
 })
-
+//AppOpen();
 function ShowProfile(email) {
     if (typeof email == 'undefined')
         email = GCTUser.Email(); //### Get current users profile

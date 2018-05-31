@@ -25,6 +25,7 @@
     "event-create": " added the event: ",
     "bookmark-create": " bookmarked ",
     "joined-group": " joined the group: ",
+    "page-create": " created a page ",
     "commented": " commented on: ",
     "voted": " voted on the poll: ",
     "posted-group": "Posted in the group: ",
@@ -164,6 +165,9 @@
     "delete": "Delete",
     "deleted": "Your post has been deleted.",
     "deletepost": "Delete this post?",
+    "show-user": "Show User's Profile",
+    "view-post": "View Post",
+    "view-group": "View Group",
 
     "create-wire": "Create a new Wire post",
     "new-blog-post": "New Blog Post",
@@ -382,6 +386,9 @@
     "validation_deadline": "Please enter an application deadline",
     "validation_hours": "Please enter a time commitment for this opportunity",
     "validation_location": "Please enter a location for this opportunity",
+    "add-calendar": 'Add to my calendar',
+    "in-calendar": "In calendar",
+    "subgroup-header": "Subgroups"
 }
 
 French = {
@@ -411,6 +418,7 @@ French = {
     "event-create": " a ajouté l'événement' ",
     "bookmark-create": " mis en signet ",
     "joined-group": " s’est joint(e) au groupe: ",
+    "page-create": " a créé une page ",
     "commented": " a commenté le: ",
     "voted": " a participé au sondage: ",
     "posted-group": "Affichée dans le groupe: ",
@@ -550,6 +558,9 @@ French = {
     "delete": "Supprimer",
     "deleted": "Votre post a été supprimé.",
     "deletepost": "Supprimer ce post?",
+    "show-user": "Afficher le profil de l'utilisateur",
+    "view-post": "Voir l'article",
+    "view-group": "View le Groupe",
 
     "create-wire": "Créer un nouveau fil",
     "new-blog-post": "Ajouter un blogue",
@@ -770,4 +781,7 @@ French = {
     "validation_deadline": "Veuillez entrer une date limite d'inscription",
     "validation_hours": "Veuillez entrer une période d'engagement pour cette possibilité",
     "validation_location": "Veuillez entrer un emplacement pour cette possibilité",
+    "add-calendar": 'Ajouter à mon calendrier',
+    "in-calendar": "Dans le calendrier",
+    "subgroup-header": "Sous-groupes"
 }

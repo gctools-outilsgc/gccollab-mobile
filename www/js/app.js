@@ -142,25 +142,6 @@ var mainView = app.views.create('.view-main', {
   url: '/'
 });
 
-//Opens the application, checks cookies, sends to home or login.
-function AppOpen() {
-    if (GCTLang.IsLangSet()) {
-        if (GCTUser.IsLoggedIn()) {
-            GCTUser.SetUserProfile();
-            mainView.router.navigate('/list-template/home/');
-        } else {
-            if (openid_enabled) {
-                mainView.router.navigate('/sign-in/');
-            } else {
-                mainView.router.navigate('/sign-in-old/');
-            }
-        }
-    } else {
-        //### Show lang buttons. This is first call and only happens until they click a lang link
-        $('#aEN').toggle();
-        $('#aFR').toggle();
-    }
-}
 
 //Things that are needed for all pages.
 $$(document).on('page:init', function (e) {
@@ -172,6 +153,51 @@ $$(document).on('page:init', function (e) {
             mainView.router.navigate('/sign-in/');
         } else {
             mainView.router.navigate('/sign-in-old/');
+        }
+    });
+
+    $$(document).on('click', 'a.social-share', function (e) {
+        var guid = $(this).data("guid");
+        var type = $(this).data("type");
+
+        var message = '';
+        var subject = '';
+        var files = [];
+        var url = '';
+        var chooserTitle = 'Pick an app';
+
+        if (type == 'gccollab_wire_post') {
+            message = $("#wire-" + guid).text();
+            subject = 'GCcollab Wire Post';
+        } else if (type == 'gccollab_blog_post') {
+            message = $("#blog-" + guid + ' .blog-title').text();
+            subject = 'GCcollab Blog';
+        } else if (type == 'gccollab_event') {
+            message = $("#event-" + guid + ' .blog-event').text();
+            subject = 'GCcollab event';
+        }
+
+        if (typeof window.plugins.socialsharing !== 'undefined' && message != "") {
+            GCTrequests.GetEntityURL(guid, function (data) {
+                url = data.result;
+
+                window.plugins.socialsharing.shareWithOptions({
+                    message: message,
+                    subject: subject,
+                    files: files,
+                    url: url,
+                    chooserTitle: chooserTitle
+                }, function (success) {
+                    alert("Share completed? " + success.completed);
+                    alert("Shared to app: " + success.app);
+                }, function (failure) {
+                    alert("Sharing failed with message: " + failure);
+                });
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        } else {
+            alert('Sorry, social sharing cannot be completed.');
         }
     });
 })
