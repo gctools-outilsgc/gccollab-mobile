@@ -4,7 +4,7 @@
             '<div class="left sliding"><a href="#" data-panel="left" class="panel-open link icon-only" aria-label="Open Navigation Menu"><i class="fas fa-bars"></i></a></div>' +
             '<div class="title" id="' + title + '" tabindex="0">' + GCTLang.Trans(title) + '</div>' +
             '<div class="right sliding">' +
-            '<a href="#" id="refresh-'+ title +'" class="link icon-only" aria-label="refresh-content"><i class="fas fa-sync"></i></a></div > ';
+            '<a href="#" id="refresh-' + title + '" class="link icon-only" aria-label="refresh-content"><i class="fas fa-sync"></i></a></div > ';
         return content;
     },
     txtGlobalNavGUID: function (title, guid) {
@@ -25,12 +25,14 @@
                 action = '<a id="home-actions" href="#" class="link open-popover" data-popover=".popover-actions" aria-label="Create a new Post Menu Options"><i class="fa fa-plus fa-2x"></i></a>';
                 break;
             case "post-wire":
-                action = '<a href="#" class="link icon-only" onclick="GCTUser.PostWirePost();"><i class="fas fa-rss fa-2x"></i></a>';
+                action = '<a href="#" class="link icon-only" onclick="GCTrequests.PostWirePost();"><i class="fas fa-rss fa-2x"></i></a>';
                 break;
             case "post-blog":
-                action = '<a href="#" onclick="GCTUser.PostBlogPost();" class="right link icon-only "><i class="fas fa-edit fa-2x"></i></a>'
+                action = '<a href="#" onclick="GCTrequests.PostBlogPost();" class="right link icon-only "><i class="fas fa-edit fa-2x"></i></a>';
+                break;
             case "post-opp":
-                action = '<a href="#" aria-label="create mission Créer une mission" class="link icon-only" onclick="GCTUser.CreateNewOpportunity();"><i class="fa fa-briefcase fa-2x"></i></a>'
+                action = '<a href="#" aria-label="create mission Créer une mission" class="link icon-only" onclick="GCTrequests.CreateNewOpportunity();"><i class="fa fa-briefcase fa-2x"></i></a>';
+                break;
             default: ;
         }
         console.log(action);
@@ -1890,6 +1892,14 @@ GCTrequests = {
                 errorConsole(jqXHR, textStatus, errorThrown);
             }
         });
+    },
+    PostBlogPost: function (group_guid, group_public) {
+        if (group_guid) {
+            mainView.router.navigate('/post-entity-group/blog/' + group_guid + '/' + group_public + '/');
+        } else {
+            mainView.router.navigate('/post-entity/blog/');
+        }
+
     },
     EditBlogPost: function (obj) {
         var guid = $(obj).data("guid");

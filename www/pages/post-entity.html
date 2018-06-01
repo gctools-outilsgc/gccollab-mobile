@@ -1,0 +1,33 @@
+﻿<template>
+    <div class="page navbar-fixed with-subnavbar">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div id="{{id}}-navbar-inner" class="navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar">
+                    {{navbar}}
+                </div>
+                <div class="subnavbar" role="navigation" data-translate-target="aria-label">
+                    <div class="subnavbar-inner">
+                        <div class="segmented">
+                            {{#each tabs}}
+                            <a href="#{{id}}-{{this.id}}" class="button tab-link {{#if @first}}tab-link-active{{/if}} tab-link" data-translate="{{this.id}}"></a>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="toolbar toolbar-bottom-md">
+            <div class="toolbar-inner">
+                <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="far fa-arrow-alt-circle-left fa-2x"></i></a></div>
+            </div>
+        </div>
+
+        <div class="page with-subnavbar">
+            <div class="tabs">
+                <div id="PostBlog-English" class="page-content tab tab-active">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
