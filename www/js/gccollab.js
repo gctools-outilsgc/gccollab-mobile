@@ -15,6 +15,7 @@ function AppOpen() {
         //### Show lang buttons. This is first call and only happens until they click a lang link
         $('#aEN').toggle();
         $('#aFR').toggle();
+        $('#welcome').toggle();
     }
 }
 
