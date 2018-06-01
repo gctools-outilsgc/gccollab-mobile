@@ -9,7 +9,7 @@
                     <div class="subnavbar-inner">
                         <div class="segmented">
                             {{#each tabs}}
-                            <a href="#{{id}}-{{this.id}}" class="button tab-link {{#if @first}}tab-link-active{{/if}} tab-link" data-translate="{{this.id}}"></a>
+                            <a href="#{{../id}}-{{this.id}}" class="button tab-link {{#if @first}}tab-link-active{{/if}} tab-link" data-translate="{{this.id}}"></a>
                             {{/each}}
                         </div>
                     </div>
@@ -22,11 +22,93 @@
             </div>
         </div>
 
-        <div class="page with-subnavbar">
+        <div class="page-content with-subnavbar">
+            <div id="{{id}}-Feedback"></div>
             <div class="tabs">
-                <div id="PostBlog-English" class="page-content tab tab-active">
-
+                {{#each tabs}}
+                <div id="{{../id}}-{{this.id}}" class="tab {{#if @first}}tab-active{{/if}}">
+                    <form id="{{this.id}}-form" class="list">
+                        <ul>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div id="{{this.id}}-title-label" class="item-title item-label" data-translate="{{this.id}}-title"></div>
+                                        <div class="item-input-wrap">
+                                            <input id="{{this.id}}-title" name="{{this.id}}-title" type="text" placeholder="" aria-labelledby="{{this.id}}-title-label" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div id="{{this.id}}-excerpt-label" class="item-title item-label" data-translate="{{this.id}}-excerpt"></div>
+                                        <div class="item-input-wrap">
+                                            <input id="{{this.id}}-excerpt" name="{{this.id}}-excerpt" type="text" placeholder="" aria-labelledby="{{this.id}}-excerpt-label" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div id="{{this.id}}-body-label" class="item-title item-label" data-translate="{{this.id}}-body"></div>
+                                        <div class="item-input-wrap">
+                                            <textarea id="{{this.id}}-body-textarea" class="resizable" aria-labelledby="{{this.id}}-body-label"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
                 </div>
+                {{/each}}
+                <form id="{{id}}-options-form" class="list">
+                    <ul>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div id="comment-label" class="item-title item-label" data-translate="comments"></div>
+                                    <div class="item-input">
+                                        <select id="{{id}}-comments" name="comments" aria-labelledby="comment-label">
+                                            <option value="1" data-translate="on"></option>
+                                            <option value="0" data-translate="off"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div id="access-label" class="item-title item-label" data-translate="access">Access</div>
+                                    <div class="item-input">
+                                        <select id="{{id}}-access" name="access" aria-labelledby="access-label">
+                                            <option value="0" data-translate="only-me">Only Me</option>
+                                            <option value="-2" id="{{id}}-Colleague" data-translate="only-colleagues">My Colleagues on GCcollab Only</option>
+                                            <option value="2" id="{{id}}-Group" data-translate="only-group">Group Members Only</option>
+                                            <option value="1" id="{{id}}-public" data-translate="only-logged">Logged in users on GCcollab Only</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div id="status-label" class="item-title item-label" data-translate="status">Status</div>
+                                    <div class="item-input">
+                                        <select id="{{id}}-status" name="status" aria-labelledby="status-label">
+                                            <option value="1" data-translate="published">Published</option>
+                                            <option value="0" data-translate="draft">Draft</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </form>
+                <a id="submit-{{type}}" href="#{{id}}-Submit" class="button button-big button-fill" data-translate="{{id}}">Submit</a>
             </div>
         </div>
     </div>
