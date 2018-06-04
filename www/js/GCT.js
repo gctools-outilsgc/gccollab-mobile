@@ -1227,6 +1227,16 @@ GCTEach = {
         popoverHTML += '<li><a class="list-button item-link popover-close" href="#" data-translate="close">close</a></li>';
         $(popoverHTML).hide().appendTo('#popover-' + group.guid).fadeIn(1000);
 
+        
+        var actionHTML = '';
+        if (access) {
+            actionHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#" onclick="GCTrequests.PostBlogPost(' + group.guid + ', ' + access + ');" class="list-button item-link close-popover"><i class="fas fa-edit"></i>  <span>' + GCTLang.Trans("post-blog") + '</span> </a></li>' : "";
+            actionHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#" onclick="GCTrequests.PostDiscussionPost(' + group.guid + ', ' + access + ');" class="list-button item-link close-popover"><i class="fas fa-edit"></i>  <span>' + GCTLang.Trans("post-discussion") + '</span> </a></li>' : "";
+        } else {
+            actionHTML += '<li><a href="#" class="item-link list-button">' + GCTLang.Trans("Private-Group") + '</a></li>';
+        }
+        $(actionHTML).hide().prependTo('#popover-actions-' + group.guid).fadeIn(1000);
+
         $("#group-icon-" + obj.id).attr('src', group.iconURL);
         $("#group-icon-" + obj.id).attr('alt', "Group Icon of" + group.userDetails.displayName);
         $("#group-title-" + obj.id).html(group.name).text();
