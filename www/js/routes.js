@@ -139,6 +139,7 @@ routes = [
                         tabs: tabs,
                         id: id,
                         public: public,
+                        action: 'post',
                     }
                 }
             )
@@ -163,6 +164,7 @@ routes = [
                         type: type,
                         tabs: tabs,
                         id: id,
+                        action: "post",
                     }
                 }
             )
@@ -189,6 +191,7 @@ routes = [
                         tabs: tabs,
                         id: id,
                         guid: guid,
+                        action: 'edit',
                     }
                 }
             )

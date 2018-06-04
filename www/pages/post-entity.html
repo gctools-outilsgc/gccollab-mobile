@@ -85,9 +85,9 @@
                                     <div class="item-input">
                                         <select id="{{id}}-access" name="access" aria-labelledby="access-label">
                                             <option value="0" data-translate="only-me">Only Me</option>
-                                            <option value="-2" id="{{id}}-Colleague" data-translate="only-colleagues">My Colleagues on GCcollab Only</option>
-                                            <option value="2" id="{{id}}-Group" data-translate="only-group">Group Members Only</option>
-                                            <option value="1" id="{{id}}-public" data-translate="only-logged">Logged in users on GCcollab Only</option>
+                                            {{#js_if "!this.group"}} <option value="-2" id="{{id}}-Colleague" data-translate="only-colleagues">My Colleagues on GCcollab Only</option> {{/js_if}}
+                                            {{#js_if "this.group"}} <option value="2" id="{{id}}-Group" data-translate="only-group">Group Members Only</option> {{/js_if}}
+                                            {{#js_if "this.public != 'true'"}}<option value="1" id="{{id}}-public" data-translate="only-logged">Logged in users on GCcollab Only</option>{{/js_if}}
                                         </select>
                                     </div>
                                 </div>
@@ -96,7 +96,7 @@
                         <li>
                             <div class="item-content item-input">
                                 <div class="item-inner">
-                                    <div id="status-label" class="item-title item-label" data-translate="status">Status</div>
+                                    <div id="status-label" class="item-title item-label" data-translate="status"></div>
                                     <div class="item-input">
                                         <select id="{{id}}-status" name="status" aria-labelledby="status-label">
                                             <option value="1" data-translate="published">Published</option>
@@ -108,8 +108,66 @@
                         </li>
                     </ul>
                 </form>
-                <a id="submit-{{type}}" href="#{{id}}-Submit" class="button button-big button-fill" data-translate="{{id}}">Submit</a>
+                <a id="submit-{{id}}" class="button button-big button-fill" data-translate="{{id}}"></a>
             </div>
         </div>
     </div>
 </template>
+<script>
+    return {
+        on: {
+            pageInit: function (e, page) {
+                var action = this.action || '';
+                var group = this.group || '';
+                var id = this.id || '';
+                var guid = this.guid || '';
+                var type = this.type || '';
+
+                if (action === 'edit') {
+                    //get post from guid/type
+                    //fill info
+                    //check type, set submit action
+                } else if (action === 'post') {
+                    if (group) {
+                        //check type, set submit
+                    } else {
+                        if (type === 'blog') {
+                            console.log('correct');
+                            $$('#submit-' + id).on('click', function (e) {
+                                $$('#' + id + '-Feedback').html(''); //clears feedback message on new submit
+                                var title = {}, excerpt = {}, body = {};
+                                title.en = $('#english-title').val();
+                                title.fr = $('#french-title').val();
+                                excerpt.en = $('#english-excerpt').val();
+                                excerpt.fr = $('#french-excerpt').val();
+                                body.en = $('#english-body-textarea').val();
+                                body.fr = $('#french-body-textarea').val();
+                                var comment = $('#' + id + '-comments').val();
+                                var access = $('#' + id + '-access').val();
+                                var status = $('#' + id + '-status').val();
+                                //(container, title, excerpt, body, comments, access, successCallback, errorCallback)
+                                GCTrequests.PostBlog(group, guid, title, excerpt, body, comment, access, status, function (data) {
+                                    if (data.result.indexOf("gccollab.ca/blog/view/") > -1) {
+                                        var obj = [];
+                                        obj.href = data.result;
+                                        GCT.FireLink(obj);
+                                    } else {
+                                        alert(data.result);
+                                    }
+                                }, function (jqXHR, textStatus, errorThrown) {
+                                    console.log(jqXHR, textStatus, errorThrown);
+                                }, function (feedback) {
+                                    var feedbackmsg = '<p class="item-content" style="padding-top: 0;padding-bottom: 0;" id="' + id + '-FeedbackMsg">' + GCTLang.Trans('issue') + feedback + '</p>';
+                                    $(feedbackmsg).hide().appendTo('#' + id + '-Feedback').fadeIn(500);
+                                    $('#' + id + '-FeedbackMsg').focus();
+                                });
+                            });
+                        }
+                    }
+                } else {
+                    console.log('not edit, not post??');
+                }
+            }
+        }
+    }
+</script>

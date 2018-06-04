@@ -1901,6 +1901,35 @@ GCTrequests = {
         }
 
     },
+    PostBlog: function (container, blog_guid, title, excerpt, body, comments, access, status, successCallback, errorCallback, issueCallback) {
+        if (!title.en && !title.fr) { issueCallback(GCTLang.Trans("require-title")); return; }
+        if (!body.en && !body.fr) { issueCallback(GCTLang.Trans("require-body")); return; }
+        if (!(title.en && body.en) && !(title.fr && body.fr)) { issueCallback(GCTLang.Trans("require-same-lang")); return; }
+
+        container = container || '';
+        blog_guid = blog_guid || '';
+        title = title || '';
+        excerpt = excerpt || '';
+        body = body || '';
+        comments = comments || 1;
+        access = access || 1;
+        status = status || 0;
+
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "save.blog", user: GCTUser.Email(), title: JSON.stringify(title), excerpt: JSON.stringify(excerpt), body: JSON.stringify(body), container_guid: container, blog_guid: blog_guid, comments: comments, access: access, status: status, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     EditBlogPost: function (obj) {
         var guid = $(obj).data("guid");
         //mainView.router.loadPage({ url: 'PostBlog.html?action=edit&post_guid=' + guid });
