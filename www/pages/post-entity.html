@@ -123,49 +123,42 @@
                 var guid = this.guid || '';
                 var type = this.type || '';
 
+                if (type === 'blog') {
+                    console.log('correct');
+                    $$('#submit-' + id).on('click', function (e) {
+                        $$('#' + id + '-Feedback').html(''); //clears feedback message on new submit
+                        var title = {}, excerpt = {}, body = {};
+                        title.en = $('#english-title').val();
+                        title.fr = $('#french-title').val();
+                        excerpt.en = $('#english-excerpt').val();
+                        excerpt.fr = $('#french-excerpt').val();
+                        body.en = $('#english-body-textarea').val();
+                        body.fr = $('#french-body-textarea').val();
+                        var comment = $('#' + id + '-comments').val();
+                        var access = $('#' + id + '-access').val();
+                        var status = $('#' + id + '-status').val();
+                        //(container, title, excerpt, body, comments, access, successCallback, errorCallback)
+                        GCTrequests.PostBlog(group, guid, title, excerpt, body, comment, access, status, function (data) {
+                            if (data.result.indexOf("gccollab.ca/blog/view/") > -1) {
+                                var obj = [];
+                                obj.href = data.result;
+                                GCT.FireLink(obj);
+                            } else {
+                                alert(data.result);
+                            }
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        }, function (feedback) {
+                            var feedbackmsg = '<p class="item-content" style="padding-top: 0;padding-bottom: 0;" id="' + id + '-FeedbackMsg">' + GCTLang.Trans('issue') + feedback + '</p>';
+                            $(feedbackmsg).hide().appendTo('#' + id + '-Feedback').fadeIn(500);
+                            $('#' + id + '-FeedbackMsg').focus();
+                        });
+                    });
+                }
+
                 if (action === 'edit') {
                     //get post from guid/type
                     //fill info
-                    //check type, set submit action
-                } else if (action === 'post') {
-                    if (group) {
-                        //check type, set submit
-                    } else {
-                        if (type === 'blog') {
-                            console.log('correct');
-                            $$('#submit-' + id).on('click', function (e) {
-                                $$('#' + id + '-Feedback').html(''); //clears feedback message on new submit
-                                var title = {}, excerpt = {}, body = {};
-                                title.en = $('#english-title').val();
-                                title.fr = $('#french-title').val();
-                                excerpt.en = $('#english-excerpt').val();
-                                excerpt.fr = $('#french-excerpt').val();
-                                body.en = $('#english-body-textarea').val();
-                                body.fr = $('#french-body-textarea').val();
-                                var comment = $('#' + id + '-comments').val();
-                                var access = $('#' + id + '-access').val();
-                                var status = $('#' + id + '-status').val();
-                                //(container, title, excerpt, body, comments, access, successCallback, errorCallback)
-                                GCTrequests.PostBlog(group, guid, title, excerpt, body, comment, access, status, function (data) {
-                                    if (data.result.indexOf("gccollab.ca/blog/view/") > -1) {
-                                        var obj = [];
-                                        obj.href = data.result;
-                                        GCT.FireLink(obj);
-                                    } else {
-                                        alert(data.result);
-                                    }
-                                }, function (jqXHR, textStatus, errorThrown) {
-                                    console.log(jqXHR, textStatus, errorThrown);
-                                }, function (feedback) {
-                                    var feedbackmsg = '<p class="item-content" style="padding-top: 0;padding-bottom: 0;" id="' + id + '-FeedbackMsg">' + GCTLang.Trans('issue') + feedback + '</p>';
-                                    $(feedbackmsg).hide().appendTo('#' + id + '-Feedback').fadeIn(500);
-                                    $('#' + id + '-FeedbackMsg').focus();
-                                });
-                            });
-                        }
-                    }
-                } else {
-                    console.log('not edit, not post??');
                 }
             }
         }
