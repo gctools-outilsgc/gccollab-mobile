@@ -1,0 +1,36 @@
+﻿<template>
+    <div class="page navbar-fixed">
+        <div class="navbar">
+            <div id="{{id}}-navbar-inner" class="navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar">
+                {{navbar}}
+            </div>
+        </div>
+        <div class="toolbar toolbar-bottom-md">
+            <div class="toolbar-inner">
+                <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="far fa-arrow-alt-circle-left fa-2x"></i></a></div>
+            </div>
+        </div>
+
+        <div class="page-content">
+            <div class="list card-list">
+                <div class="card-content">
+                <div id="{{id}}-inner" class="card-content-inner">
+                    <div class="item-text large" data-translate="new-post-info"></div>
+                    <textarea id="{{id}}-textarea" maxlength="250"></textarea>
+                    <div id="image-display" class='item-media'>
+                        <img id="picture-taken" src="" />
+                    </div>
+                    <div class="item-text large" data-translate="attach-image">Attach Image</div>
+                    <!-- <div class="item-text large" data-translate="wire-image-warning"></div> -->
+                    <div class="buttons-row">
+                        <a href="#" id="camera-gallery" class="button button-big button-fill" data-translate="photo-gallery">Photo Gallery</a>
+                        <a href="#" id="camera-camera" class="button button-big button-fill" data-translate="new-picture">Take a Picture</a>
+                    </div>
+                    <br />
+                    <a href="#" id="submit-{{id}}" class="button button-big button-fill" data-translate="submit-post">Submit Wire</a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</template>
