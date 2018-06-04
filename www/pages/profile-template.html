@@ -25,7 +25,7 @@
         <div class="toolbar toolbar-bottom-md">
             <div class="toolbar-inner">
                 <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="far fa-arrow-alt-circle-left fa-2x"></i></a></div>
-                <div class="right sliding">{{this.action}}{{this.filter}}</div>
+                <div class="right sliding">{{#js_if "this.tabs[0].type == 'group'"}} <a id="actions-{{guid}}" class="button popover-open" href="#" data-popover=".popover-actions-{{guid}}"><i class="fa fa-plus fa-2x"></i></a> {{/js_if}}</div>
             </div>
         </div>
 
@@ -103,7 +103,7 @@
                     {{/js_if}}
                     {{#js_if "this.type == 'card'"}}<div id="content-{{this.id}}" class='list cards-list'></div>{{/js_if}}
                     {{#js_if "this.type == 'item'"}}<div class="list media-list"><ul id="content-{{this.id}}"></ul></div>{{/js_if}}
-                    {{#js_if "this.type != 'user' && this.type != 'group'"}}<a id="more-{{this.id}}" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>{{/js_if}}
+                    {{#js_if "this.type != 'user' && this.type != 'group'"}}<div class="block"><div class="row"><a id="more-{{this.id}}" class="col button button-big button-fill" data-translate="view-more">VIEW MORE</a></div></div>{{/js_if}}
                 </div>
                 {{/each}}
             </div>
@@ -118,6 +118,15 @@
                         {{/each}}
                         <li><a class="list-button item-link popover-close" href="#" data-translate="close">close</a></li>
                         {{/js_if}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="popover popover-actions-{{guid}}">
+            <div class="popover-inner">
+                <div class="list">
+                    <ul id="popover-actions-{{guid}}">
+                        <li><a class="list-button item-link popover-close" href="#" data-translate="close">close</a></li>
                     </ul>
                 </div>
             </div>

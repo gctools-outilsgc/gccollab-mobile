@@ -1,0 +1,256 @@
+﻿<template>
+    <div class="page navbar-fixed with-subnavbar">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div id="{{id}}-navbar-inner" class="navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar">
+                    {{navbar}}
+                </div>
+                <div class="subnavbar" role="navigation" data-translate-target="aria-label">
+                    <div class="subnavbar-inner">
+                        <div class="segmented">
+                            {{#each tabs}}
+                            <a href="#{{../id}}-{{this.id}}" class="button tab-link {{#if @first}}tab-link-active{{/if}} tab-link" data-translate="{{this.id}}"></a>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="toolbar toolbar-bottom-md">
+            <div class="toolbar-inner">
+                <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="far fa-arrow-alt-circle-left fa-2x"></i></a></div>
+            </div>
+        </div>
+
+        <div class="page-content with-subnavbar">
+            <div id="{{id}}-Feedback"></div>
+            <div class="tabs">
+                {{#each tabs}}
+                <div id="{{../id}}-{{this.id}}" class="tab {{#if @first}}tab-active{{/if}}">
+                    <form id="{{this.id}}-form" class="list">
+                        <ul>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div id="{{this.id}}-title-label" class="item-title item-label" data-translate="{{this.id}}-title"></div>
+                                        <div class="item-input-wrap">
+                                            <input id="{{this.id}}-title" name="{{this.id}}-title" type="text" placeholder="" aria-labelledby="{{this.id}}-title-label" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {{#js_if "../type === 'blog'"}}
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div id="{{this.id}}-excerpt-label" class="item-title item-label" data-translate="{{this.id}}-excerpt"></div>
+                                        <div class="item-input-wrap">
+                                            <input id="{{this.id}}-excerpt" name="{{this.id}}-excerpt" type="text" placeholder="" aria-labelledby="{{this.id}}-excerpt-label" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {{/js_if}}
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        {{#js_if "../type === 'blog'"}}
+                                        <div id="{{this.id}}-body-label" class="item-title item-label" data-translate="{{this.id}}-body"></div>
+                                        <div class="item-input-wrap">
+                                            <textarea id="{{this.id}}-body-textarea" class="resizable" aria-labelledby="{{this.id}}-body-label"></textarea>
+                                        </div>
+                                        {{/js_if}}
+                                        {{#js_if "../type === 'discussion'"}}
+                                        <div id="{{this.id}}-body-label" class="item-title item-label" data-translate="{{this.id}}-topic"></div>
+                                        <div class="item-input-wrap">
+                                            <textarea id="{{this.id}}-body-textarea" class="resizable" aria-labelledby="{{this.id}}-body-label"></textarea>
+                                        </div>
+                                        {{/js_if}}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                {{/each}}
+                <form id="{{id}}-options-form" class="list">
+                    <ul>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    {{#js_if "../type === 'blog'"}}
+                                    <div id="comment-label" class="item-title item-label" data-translate="comments"></div>
+                                    <div class="item-input">
+                                        <select id="{{id}}-comments" name="comments" aria-labelledby="comment-label">
+                                            <option value="1" data-translate="on"></option>
+                                            <option value="0" data-translate="off"></option>
+                                        </select>
+                                    </div>
+                                    {{/js_if}}
+                                    {{#js_if "../type === 'discussion'"}}
+                                    <div id="status-label" class="item-title label" data-translate="status">Status</div>
+                                    <div class="item-input">
+                                        <select id="{{id}}-status" name="comments" aria-labelledby="status-label">
+                                            <option value="1" data-translate="open">Open</option>
+                                            <option value="0" data-translate="closed">Closed</option>
+                                        </select>
+                                    </div>
+                                    {{/js_if}}
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div id="access-label" class="item-title item-label" data-translate="access">Access</div>
+                                    <div class="item-input">
+                                        <select id="{{id}}-access" name="access" aria-labelledby="access-label">
+                                            <option value="0" data-translate="only-me">Only Me</option>
+                                            {{#js_if "!this.group"}}
+                                            <option value="-2" id="{{id}}-Colleague" data-translate="only-colleagues">My Colleagues on GCcollab Only</option> {{/js_if}}
+                                            {{#js_if "this.group"}}
+                                            <option value="2" id="{{id}}-Group" data-translate="only-group">Group Members Only</option> {{/js_if}}
+                                            {{#js_if "../public != 'false'"}}
+                                            <option value="1" id="{{id}}-public" data-translate="only-logged">Logged in users on GCcollab Only</option>{{/js_if}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{#js_if "../type === 'blog'"}}
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div id="status-label" class="item-title item-label" data-translate="status"></div>
+                                    <div class="item-input">
+                                        <select id="{{id}}-status" name="status" aria-labelledby="status-label">
+                                            <option value="1" data-translate="published">Published</option>
+                                            <option value="0" data-translate="draft">Draft</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{/js_if}}
+                    </ul>
+                    <div class="block">
+                        <div class="row">
+                            <a id="submit-{{id}}" class="col button button-big button-fill" data-translate="{{id}}"></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    return {
+        on: {
+            pageInit: function (e, page) {
+                var action = this.action || '';
+                var group = this.group || '';
+                var id = this.id || '';
+                var guid = this.guid || '';
+                var type = this.type || '';
+
+                if (type === 'blog') {
+                    $$('#submit-' + id).on('click', function (e) {
+                        $$('#' + id + '-Feedback').html(''); //clears feedback message on new submit
+                        var title = {}, excerpt = {}, body = {};
+                        title.en = $('#english-title').val();
+                        title.fr = $('#french-title').val();
+                        excerpt.en = $('#english-excerpt').val();
+                        excerpt.fr = $('#french-excerpt').val();
+                        body.en = $('#english-body-textarea').val();
+                        body.fr = $('#french-body-textarea').val();
+                        var comment = $('#' + id + '-comments').val();
+                        var access = $('#' + id + '-access').val();
+                        var status = $('#' + id + '-status').val();
+                        //(container, title, excerpt, body, comments, access, successCallback, errorCallback)
+                        GCTrequests.PostBlog(group, guid, title, excerpt, body, comment, access, status, function (data) {
+                            if (data.result.indexOf("gccollab.ca/blog/view/") > -1) {
+                                var obj = [];
+                                obj.href = data.result;
+                                GCT.FireLink(obj);
+                            } else {
+                                alert(data.result);
+                            }
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        }, function (feedback) {
+                            var feedbackmsg = '<p class="item-content" style="padding-top: 0;padding-bottom: 0;" id="' + id + '-FeedbackMsg">' + GCTLang.Trans('issue') + feedback + '</p>';
+                            $(feedbackmsg).hide().appendTo('#' + id + '-Feedback').fadeIn(500);
+                            $('#' + id + '-FeedbackMsg').focus();
+                        });
+                    });
+                    if (action === 'edit') {
+                        GCTrequests.GetBlogEdit(guid, function (data) {
+                            var blog = data.result;
+                            if (blog.group) {
+                                group = blog.container_guid; // Set group guid
+                                $$('#' + id + '-Colleague').remove(); // If group container, remove colleague access option
+                                if (blog.group.public == false) { $$('#' + id + '-public').remove(); } // if not a public group, no all logged access
+                            } else {
+                                $$('#' + id + '-Group').remove(); //If not container, remove group access option
+                            }
+                            $$('input#english-title').val(blog.title.en);
+                            $$('input#french-title').val(blog.title.fr);
+                            if (blog.excerpt) {
+                                $$('#french-excerpt').val(blog.excerpt.fr);
+                                $$('#english-excerpt').val(blog.excerpt.en);
+                            }
+                            $$('#english-body-textarea').val(blog.description.en);
+                            $$('#french-body-textarea').val(blog.description.fr);
+
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        });
+                    }
+                }
+
+                if (type === 'discussion') {
+                    $$('#submit-' + id).on('click', function (e) {
+                        $$('#' + id + '-Feedback').html(''); //clears feedback message on new submit
+                        var title = {}, message = {};
+                        title.en = $('#english-title').val();
+                        title.fr = $('#french-title').val();
+                        message.en = $('#english-body-textarea').val();
+                        message.fr = $('#french-body-textarea').val();
+                        var status = $('#PostDiscussion-status').val();
+                        var access = $('#PostDiscussion-access').val();
+
+                        GCTrequests.PostDiscussion(group, guid, title, message, status, access, function (data) {
+                            if (data.result.indexOf("gccollab.ca/discussion/view/") > -1) {
+                                var obj = [];
+                                obj.href = data.result;
+                                GCT.FireLink(obj);
+                            } else {
+                                alert(data.result);
+                            }
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        }, function (feedback) {
+                            var feedbackmsg = '<p class="card-content-inner" style="padding-top: 0;padding-bottom: 0;" id="' + id + '-FeedbackMsg">' + GCTLang.Trans('issue') + feedback + '</p>';
+                            $(feedbackmsg).hide().appendTo('#' + id + '-Feedback').fadeIn(500);
+                            $('#' + id + '-FeedbackMsg').focus();
+                        });
+
+                    });
+                    if (action === 'edit') {
+                        GCTrequests.GetDiscussionEdit(guid, function (data) {
+                            var discussion = data.result;
+                            group = discussion.container_guid;
+                            $$('input#english-title').val(discussion.title.en);
+                            $$('input#french-title').val(discussion.title.fr);
+                            $$('#english-body-textarea').val(discussion.description.en);
+                            $$('#french-body-textarea').val(discussion.description.fr);
+                            if (!discussion.group.public) { $$('#' + id + '-public').remove(); }
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        });
+                    }
+                }
+            }
+        }
+    }
+</script>

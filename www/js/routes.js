@@ -117,6 +117,87 @@ routes = [
         }
     },
     {
+        path: '/post-entity-group/:type/:group/:public/',
+        async: function (routeTo, routeFrom, resolve, reject) {
+            var type = routeTo.params.type;
+            var group = routeTo.params.group;
+            var public = routeTo.params.public;
+            var id = 'post-'+type;
+            var tabs = [{ id:"english" }, { id:"french" }];
+
+            var navbar = GCTtxt.txtGlobalNav(id);
+
+            resolve(
+                {
+                    componentUrl: './pages/post-entity.html',
+                },
+                {
+                    context: {
+                        navbar: navbar,
+                        type: type,
+                        group: group,
+                        tabs: tabs,
+                        id: id,
+                        public: public,
+                        action: 'post',
+                    }
+                }
+            )
+        }
+    },
+    {
+        path: '/post-entity/:type/',
+        async: function (routeTo, routeFrom, resolve, reject) {
+            var type = routeTo.params.type;
+            var id = 'post-' + type;
+            var tabs = [{ id: "english" }, { id: "french" }];
+
+            var navbar = GCTtxt.txtGlobalNav(id);
+
+            resolve(
+                {
+                    componentUrl: './pages/post-entity.html',
+                },
+                {
+                    context: {
+                        navbar: navbar,
+                        type: type,
+                        tabs: tabs,
+                        id: id,
+                        action: "post",
+                    }
+                }
+            )
+        }
+    },
+    {
+        path: '/edit-entity/:type/:guid/',
+        async: function (routeTo, routeFrom, resolve, reject) {
+            var type = routeTo.params.type;
+            var guid = routeTo.params.guid;
+            var id = 'edit-' + type;
+            var tabs = [{ id: "english" }, { id: "french" }];
+
+            var navbar = GCTtxt.txtGlobalNav(id);
+
+            resolve(
+                {
+                    componentUrl: './pages/post-entity.html',
+                },
+                {
+                    context: {
+                        navbar: navbar,
+                        type: type,
+                        tabs: tabs,
+                        id: id,
+                        guid: guid,
+                        action: 'edit',
+                    }
+                }
+            )
+        }
+    },
+    {
         path: '/form/',
         url: './pages/form.html',
     },
