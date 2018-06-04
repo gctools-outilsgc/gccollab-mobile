@@ -39,13 +39,24 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="content-block"> <a id="comments-submit-{{guid}}" class="button button-big button-fill" data-translate="comment">Comment</a> </li>
-                        <li class="content-block"><a id="comments-view-{{guid}}" class="button button-big button-fill" data-translate="view-comments">VIEW COMMENTS</a></li>
                     </ul>
+                    <div class="block">
+                        <div class="row">
+                            <a id="comments-submit-{{guid}}" class="col button button-big button-fill" data-translate="comment">Comment</a>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <a id="comments-view-{{guid}}" class="col button button-big button-fill" data-translate="view-comments">VIEW COMMENTS</a>
+                        </div>
+                    </div>
                 </div>
                 <div id="comment-head" class="list media-list comment">
                     <ul id="entity-comments-{{guid}}" class="comment"></ul>
-                    <a id="comments-more-{{guid}}" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+                    <div class="block">
+                        <div class="row">
+                            <a id="comments-more-{{guid}}" class="col button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+                        </div>
+                    </div>
                 </div>
                 {{/js_if}}
             </div>

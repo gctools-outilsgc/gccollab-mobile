@@ -106,9 +106,12 @@
                                     <div class="item-input">
                                         <select id="{{id}}-access" name="access" aria-labelledby="access-label">
                                             <option value="0" data-translate="only-me">Only Me</option>
-                                            {{#js_if "!this.group"}} <option value="-2" id="{{id}}-Colleague" data-translate="only-colleagues">My Colleagues on GCcollab Only</option> {{/js_if}}
-                                            {{#js_if "this.group"}} <option value="2" id="{{id}}-Group" data-translate="only-group">Group Members Only</option> {{/js_if}}
-                                            {{#js_if "../public != 'false'"}}<option value="1" id="{{id}}-public" data-translate="only-logged">Logged in users on GCcollab Only</option>{{/js_if}}
+                                            {{#js_if "!this.group"}}
+                                            <option value="-2" id="{{id}}-Colleague" data-translate="only-colleagues">My Colleagues on GCcollab Only</option> {{/js_if}}
+                                            {{#js_if "this.group"}}
+                                            <option value="2" id="{{id}}-Group" data-translate="only-group">Group Members Only</option> {{/js_if}}
+                                            {{#js_if "../public != 'false'"}}
+                                            <option value="1" id="{{id}}-public" data-translate="only-logged">Logged in users on GCcollab Only</option>{{/js_if}}
                                         </select>
                                     </div>
                                 </div>
@@ -130,8 +133,12 @@
                         </li>
                         {{/js_if}}
                     </ul>
+                    <div class="block">
+                        <div class="row">
+                            <a id="submit-{{id}}" class="col button button-big button-fill" data-translate="{{id}}"></a>
+                        </div>
+                    </div>
                 </form>
-                <a id="submit-{{id}}" class="button button-big button-fill" data-translate="{{id}}"></a>
             </div>
         </div>
     </div>

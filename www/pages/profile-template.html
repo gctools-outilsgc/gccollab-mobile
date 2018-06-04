@@ -103,7 +103,7 @@
                     {{/js_if}}
                     {{#js_if "this.type == 'card'"}}<div id="content-{{this.id}}" class='list cards-list'></div>{{/js_if}}
                     {{#js_if "this.type == 'item'"}}<div class="list media-list"><ul id="content-{{this.id}}"></ul></div>{{/js_if}}
-                    {{#js_if "this.type != 'user' && this.type != 'group'"}}<a id="more-{{this.id}}" class="button button-big button-fill" data-translate="view-more">VIEW MORE</a>{{/js_if}}
+                    {{#js_if "this.type != 'user' && this.type != 'group'"}}<div class="block"><div class="row"><a id="more-{{this.id}}" class="col button button-big button-fill" data-translate="view-more">VIEW MORE</a></div></div>{{/js_if}}
                 </div>
                 {{/each}}
             </div>
