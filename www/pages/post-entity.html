@@ -202,9 +202,47 @@
                     }
                 }
 
-                if (action === 'edit') {
-                    //get post from guid/type
-                    //fill info
+                if (type === 'discussion') {
+                    $$('#submit-' + id).on('click', function (e) {
+                        $$('#' + id + '-Feedback').html(''); //clears feedback message on new submit
+                        var title = {}, message = {};
+                        title.en = $('#english-title').val();
+                        title.fr = $('#french-title').val();
+                        message.en = $('#english-body-textarea').val();
+                        message.fr = $('#french-body-textarea').val();
+                        var status = $('#PostDiscussion-status').val();
+                        var access = $('#PostDiscussion-access').val();
+
+                        GCTrequests.PostDiscussion(group, guid, title, message, status, access, function (data) {
+                            if (data.result.indexOf("gccollab.ca/discussion/view/") > -1) {
+                                var obj = [];
+                                obj.href = data.result;
+                                GCT.FireLink(obj);
+                            } else {
+                                alert(data.result);
+                            }
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        }, function (feedback) {
+                            var feedbackmsg = '<p class="card-content-inner" style="padding-top: 0;padding-bottom: 0;" id="' + id + '-FeedbackMsg">' + GCTLang.Trans('issue') + feedback + '</p>';
+                            $(feedbackmsg).hide().appendTo('#' + id + '-Feedback').fadeIn(500);
+                            $('#' + id + '-FeedbackMsg').focus();
+                        });
+
+                    });
+                    if (action === 'edit') {
+                        GCTrequests.GetDiscussionEdit(guid, function (data) {
+                            var discussion = data.result;
+                            group = discussion.container_guid;
+                            $$('input#english-title').val(discussion.title.en);
+                            $$('input#french-title').val(discussion.title.fr);
+                            $$('#english-body-textarea').val(discussion.description.en);
+                            $$('#french-body-textarea').val(discussion.description.fr);
+                            if (!discussion.group.public) { $$('#' + id + '-public').remove(); }
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        });
+                    }
                 }
             }
         }
