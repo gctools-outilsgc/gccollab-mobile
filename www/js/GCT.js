@@ -1230,8 +1230,8 @@ GCTEach = {
         
         var actionHTML = '';
         if (access) {
-            actionHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#" onclick="GCTrequests.PostBlogPost(' + group.guid + ', ' + access + ');" class="list-button item-link close-popover"><i class="fas fa-edit"></i>  <span>' + GCTLang.Trans("post-blog") + '</span> </a></li>' : "";
-            actionHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#" onclick="GCTrequests.PostDiscussionPost(' + group.guid + ', ' + access + ');" class="list-button item-link close-popover"><i class="fas fa-edit"></i>  <span>' + GCTLang.Trans("post-discussion") + '</span> </a></li>' : "";
+            actionHTML += (enabled.blog && enabled.blog == "yes") ? '<li><a href="#" onclick="GCTrequests.PostBlogPost(' + group.guid + ', ' + access + ');" class="list-button item-link popover-close"><i class="fas fa-edit"></i>  <span>' + GCTLang.Trans("post-blog") + '</span> </a></li>' : "";
+            actionHTML += (enabled.forum && enabled.forum == "yes") ? '<li><a href="#" onclick="GCTrequests.PostDiscussionPost(' + group.guid + ', ' + group.public + ');" class="list-button item-link popover-close"><i class="fas fa-edit"></i>  <span>' + GCTLang.Trans("post-discussion") + '</span> </a></li>' : "";
         } else {
             actionHTML += '<li><a href="#" class="item-link list-button">' + GCTLang.Trans("Private-Group") + '</a></li>';
         }
@@ -2246,6 +2246,30 @@ GCTrequests = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    PostDiscussionPost: function (group_guid, group_public) {
+        mainView.router.navigate('/post-entity-group/discussion/' + group_guid + '/' + group_public + '/');
+    },
+    PostDiscussion: function (container, topic, title, message, status, access, successCallback, errorCallback, issueCallback) {
+        if (!title.en && !title.fr) { issueCallback(GCTLang.Trans("require-title")); return; }
+        if (!message.en && !message.fr) { issueCallback(GCTLang.Trans("require-topic")); return; }
+        if (!(title.en && message.en) && !(title.fr && message.fr)) { issueCallback(GCTLang.Trans("require-same-lang")); return; }
+        if (!container) { container = ''; }
+        if (!topic) { topic = ''; }
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: 'post.discussion', user: GCTUser.Email(), title: JSON.stringify(title), message: JSON.stringify(message), container_guid: container, topic_guid: topic, access: access, open: status, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
             }
         });
     },

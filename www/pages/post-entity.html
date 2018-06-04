@@ -39,6 +39,7 @@
                                     </div>
                                 </div>
                             </li>
+                            {{#js_if "../type === 'blog'"}}
                             <li>
                                 <div class="item-content item-input">
                                     <div class="item-inner">
@@ -49,13 +50,22 @@
                                     </div>
                                 </div>
                             </li>
+                            {{/js_if}}
                             <li>
                                 <div class="item-content item-input">
                                     <div class="item-inner">
+                                        {{#js_if "../type === 'blog'"}}
                                         <div id="{{this.id}}-body-label" class="item-title item-label" data-translate="{{this.id}}-body"></div>
                                         <div class="item-input-wrap">
                                             <textarea id="{{this.id}}-body-textarea" class="resizable" aria-labelledby="{{this.id}}-body-label"></textarea>
                                         </div>
+                                        {{/js_if}}
+                                        {{#js_if "../type === 'discussion'"}}
+                                        <div id="{{this.id}}-body-label" class="item-title item-label" data-translate="{{this.id}}-topic"></div>
+                                        <div class="item-input-wrap">
+                                            <textarea id="{{this.id}}-body-textarea" class="resizable" aria-labelledby="{{this.id}}-body-label"></textarea>
+                                        </div>
+                                        {{/js_if}}
                                     </div>
                                 </div>
                             </li>
@@ -68,6 +78,7 @@
                         <li>
                             <div class="item-content item-input">
                                 <div class="item-inner">
+                                    {{#js_if "../type === 'blog'"}}
                                     <div id="comment-label" class="item-title item-label" data-translate="comments"></div>
                                     <div class="item-input">
                                         <select id="{{id}}-comments" name="comments" aria-labelledby="comment-label">
@@ -75,6 +86,16 @@
                                             <option value="0" data-translate="off"></option>
                                         </select>
                                     </div>
+                                    {{/js_if}}
+                                    {{#js_if "../type === 'discussion'"}}
+                                    <div id="status-label" class="item-title label" data-translate="status">Status</div>
+                                    <div class="item-input">
+                                        <select id="{{id}}-status" name="comments" aria-labelledby="status-label">
+                                            <option value="1" data-translate="open">Open</option>
+                                            <option value="0" data-translate="closed">Closed</option>
+                                        </select>
+                                    </div>
+                                    {{/js_if}}
                                 </div>
                             </div>
                         </li>
@@ -87,12 +108,13 @@
                                             <option value="0" data-translate="only-me">Only Me</option>
                                             {{#js_if "!this.group"}} <option value="-2" id="{{id}}-Colleague" data-translate="only-colleagues">My Colleagues on GCcollab Only</option> {{/js_if}}
                                             {{#js_if "this.group"}} <option value="2" id="{{id}}-Group" data-translate="only-group">Group Members Only</option> {{/js_if}}
-                                            {{#js_if "this.public != 'true'"}}<option value="1" id="{{id}}-public" data-translate="only-logged">Logged in users on GCcollab Only</option>{{/js_if}}
+                                            {{#js_if "../public != 'false'"}}<option value="1" id="{{id}}-public" data-translate="only-logged">Logged in users on GCcollab Only</option>{{/js_if}}
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </li>
+                        {{#js_if "../type === 'blog'"}}
                         <li>
                             <div class="item-content item-input">
                                 <div class="item-inner">
@@ -106,6 +128,7 @@
                                 </div>
                             </div>
                         </li>
+                        {{/js_if}}
                     </ul>
                 </form>
                 <a id="submit-{{id}}" class="button button-big button-fill" data-translate="{{id}}"></a>
