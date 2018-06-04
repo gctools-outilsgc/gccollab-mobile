@@ -147,7 +147,6 @@
                 var type = this.type || '';
 
                 if (type === 'blog') {
-                    console.log('correct');
                     $$('#submit-' + id).on('click', function (e) {
                         $$('#' + id + '-Feedback').html(''); //clears feedback message on new submit
                         var title = {}, excerpt = {}, body = {};

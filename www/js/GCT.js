@@ -35,7 +35,6 @@
                 break;
             default: ;
         }
-        console.log(action);
         return action;
     },
     txtFilterButton: function (ref) {
@@ -1250,7 +1249,6 @@ GCTEach = {
         $("[data-type-" + obj.id +"]").data('type', group.type);
     },
     User: function (value, obj) {
-        console.log(value);
         var profileData = value.result;
         if (typeof profileData == "string") {
             alert(GCTLang.Trans("couldnotfindprofile"));
