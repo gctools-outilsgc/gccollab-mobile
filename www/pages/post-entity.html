@@ -154,6 +154,29 @@
                             $('#' + id + '-FeedbackMsg').focus();
                         });
                     });
+                    if (action === 'edit') {
+                        GCTrequests.GetBlogEdit(guid, function (data) {
+                            var blog = data.result;
+                            if (blog.group) {
+                                group = blog.container_guid; // Set group guid
+                                $$('#' + id + '-Colleague').remove(); // If group container, remove colleague access option
+                                if (blog.group.public == false) { $$('#' + id + '-public').remove(); } // if not a public group, no all logged access
+                            } else {
+                                $$('#' + id + '-Group').remove(); //If not container, remove group access option
+                            }
+                            $$('input#english-title').val(blog.title.en);
+                            $$('input#french-title').val(blog.title.fr);
+                            if (blog.excerpt) {
+                                $$('#french-excerpt').val(blog.excerpt.fr);
+                                $$('#english-excerpt').val(blog.excerpt.en);
+                            }
+                            $$('#english-body-textarea').val(blog.description.en);
+                            $$('#french-body-textarea').val(blog.description.fr);
+
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        });
+                    }
                 }
 
                 if (action === 'edit') {

@@ -1932,7 +1932,7 @@ GCTrequests = {
     },
     EditBlogPost: function (obj) {
         var guid = $(obj).data("guid");
-        //mainView.router.loadPage({ url: 'PostBlog.html?action=edit&post_guid=' + guid });
+        mainView.router.navigate('/edit-entity/blog/' + guid + '/');
     },
     GetBlogEdit: function (post_guid, successCallback, errorCallback) {
         if (!post_guid) { return "cannot edit nothing"; } //force back? with message 
