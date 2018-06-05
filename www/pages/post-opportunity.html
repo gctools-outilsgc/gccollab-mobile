@@ -28,7 +28,7 @@
                             <li>
                                 <div class="item-content item-input">
                                     <div class="item-inner">
-                                        <div class="item-title label" data-translate="name"></div>
+                                        <div class="item-title item-label" data-translate="name"></div>
                                         <div class="item-input-wrap">
                                             <input name="name" type="text" placeholder="" />
                                         </div>
@@ -38,7 +38,7 @@
                             <li>
                                 <div class="item-content item-input">
                                     <div class="item-inner">
-                                        <div class="item-title label" data-translate="email"></div>
+                                        <div class="item-title item-label" data-translate="email"></div>
                                         <div class="item-input-wrap">
                                             <input type="email" name="email" placeholder="" />
                                         </div>
@@ -48,7 +48,7 @@
                             <li>
                                 <div class="item-content item-input">
                                     <div class="item-inner">
-                                        <div class="label" data-translate="phone"></div>
+                                        <div class="item-label" data-translate="phone"></div>
                                         <div class="item-input-wrap">
                                             <input type="text" name="phone" placeholder="" />
                                         </div>
@@ -306,7 +306,7 @@
                                     </select>
                                     <div class="item-content item-input">
                                         <div class="item-inner">
-                                            <div class="item-title" data-translate="organization-agency">Your organization, agency or department</div>
+                                            <div class="item-title item-label" data-translate="organization-agency">Your organization, agency or department</div>
                                         </div>
                                     </div>
                                 </a>
@@ -314,7 +314,7 @@
                             <li>
                                 <div class="item-content item-input">
                                     <div class="item-inner">
-                                        <div class="label" data-translate="disclaimer-mission"></div>
+                                        <div class="item-label" data-translate="disclaimer-mission"></div>
                                         <div class="item-input-wrap">
                                             <label class="checkbox">
                                                 <input type="checkbox" name="agree">
@@ -334,11 +334,210 @@
                 </div>
             </div>
 
-            <div id="tab2" class="page-content tab "></div>
+            <div id="tab2" class="page-content tab ">
+                <div class="block" style="height:100%; overflow-y:scroll;">
+                    <form id="opt-form1" class="list">
+                        <div class="content-block-title" data-translate="mission-detail"></div>
+                        <ul>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="mission-title"></div>
+                                        <div class="item-input-wrap">
+                                            <input type="text" name="title" placeholder="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="mission-role"></div>
+                                        <div class="item-input-wrap">
+                                            <select name="offert" id="offert">
+                                                <option></option>
+                                                <option>Créer une possibilité pour les autres (offre)</option>
+                                                <option>Offrire mes services pour une possibilité (recherche)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="mission-type"></div>
+                                        <div class="item-input-wrap">
+                                            <select name="type" id="type">
+                                                <option value="missions:mentoring" data-translate="mission-mentoring">Mentoring</option>
+                                                <option value="missions:casual" data-translate="mission-casual">Casual Work</option>
+                                                <option value="missions:student" data-translate="mission-student">Student Integration</option>
+                                                <option value="missions:collaboration" data-translate="mission-collaboration">Collaboration</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content item-input" id="group">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="group"></div>
+                                        <div class="item-input-wrap">
+                                            <select name="group">
+                                                <option></option>
+                                                <option>AC</option>
+                                                <option>AG</option>
+                                                <option>AI</option>
+                                                <option>AO</option>
+                                                <option>AR</option>
+                                                <option>AS</option>
+                                                <option>AU</option>
+                                                <option>BI</option>
+                                                <option>CH</option>
+                                                <option>CM</option>
+                                                <option>CO</option>
+                                                <option>CR</option>
+                                                <option>CS</option>
+                                                <option>CX</option>
+                                                <option>DA</option>
+                                                <option>DD</option>
+                                                <option>DE</option>
+                                                <option>DS</option>
+                                                <option>EC</option>
+                                                <option>ED</option>
+                                                <option>EG</option>
+                                                <option>EL</option>
+                                                <option>EN</option>
+                                                <option>EU</option>
+                                                <option>EX</option>
+                                                <option>FB</option>
+                                                <option>FI</option>
+                                                <option>FO</option>
+                                                <option>FR</option>
+                                                <option>FS</option>
+                                                <option>GL</option>
+                                                <option>GS</option>
+                                                <option>GT</option>
+                                                <option>HP</option>
+                                                <option>HR</option>
+                                                <option>HS</option>
+                                                <option>IS</option>
+                                                <option>LC</option>
+                                                <option>LI</option>
+                                                <option>LP</option>
+                                                <option>LS</option>
+                                                <option>MA</option>
+                                                <option>MD</option>
+                                                <option>MT</option>
+                                                <option>ND</option>
+                                                <option>NU</option>
+                                                <option>OE</option>
+                                                <option>OM</option>
+                                                <option>OP</option>
+                                                <option>PC</option>
+                                                <option>PE</option>
+                                                <option>PG</option>
+                                                <option>PH</option>
+                                                <option>PI</option>
+                                                <option>PM</option>
+                                                <option>PO</option>
+                                                <option>PR(NON-S)</option>
+                                                <option>PR(S)</option>
+                                                <option>PS</option>
+                                                <option>PY</option>
+                                                <option>RO</option>
+                                                <option>SC</option>
+                                                <option>SE</option>
+                                                <option>SG</option>
+                                                <option>SO</option>
+                                                <option>SR(C)</option>
+                                                <option>SR(E)</option>
+                                                <option>SR(W)</option>
+                                                <option>ST</option>
+                                                <option>SW</option>
+                                                <option>TI</option>
+                                                <option>TR</option>
+                                                <option>UT</option>
+                                                <option>VM</option>
+                                                <option>WP</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content item-input" id="level" name="level">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="level"></div>
+                                        <div class="item-input-wrap">
+                                            <input type="number" name="level" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="program-area"></div>
+                                        <div class="item-input-wrap">
+                                            <select name="program">
+                                                <option data-translate="program-admin">Administration</option>
+                                                <option data-translate="program-client">Client service</option>
+                                                <option data-translate="program-comm">Communication</option>
+                                                <option data-translate="program-fin">Finance</option>
+                                                <option data-translate="program-human">Human Resources</option>
+                                                <option data-translate="program-info">Information Technology</option>
+                                                <option data-translate="program-legal">Legal/Regulatory</option>
+                                                <option data-translate="program-policy">Policy</option>
+                                                <option data-translate="program-science">Science</option>
+                                                <option data-translate="program-security">Security/Enforrcement</option>
+                                                <option data-translate="program-other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="mission-title"></div>
+                                        <div class="item-input-wrap">
+                                            <input type="text" name="title" placeholder="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="number-opt"></div>
+                                        <div class="item-input-wrap">
+                                            <select name="num_opt">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                                <option data-translate="unlimited">Unlimited</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
 
-            <div id="tab3" class="page-content tab "></div>
+            </div>
 
-        </div>
+                <div id="tab3" class="page-content tab "></div>
+
+            </div>
         <div class="block">
             <div class="item-text large" data-translate="new-post-info"></div>
         </div>
