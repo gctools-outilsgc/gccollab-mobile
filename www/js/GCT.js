@@ -2604,6 +2604,9 @@ GCTrequests = {
             }
         });
     },
+    CreateNewOpportunity: function () {
+        mainView.router.navigate('/post-opp/'); 
+    },
     GetNotifications: function (tabObject) {
         limit = tabObject.limit || 10;
         offset = tabObject.offset || 0;

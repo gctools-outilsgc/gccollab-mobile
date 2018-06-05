@@ -203,6 +203,11 @@ routes = [
         url: './pages/post-wire.html',
     },
     {
+        name: 'post-opp',
+        path: '/post-opp/',
+        url: './pages/post-opportunity.html',
+    },
+    {
         path: '/form/',
         url: './pages/form.html',
     },
