@@ -80,3 +80,7 @@ function ShowProfile(email) {
     }
     
 }
+
+$$(document).on('page:init', '.page[data-name="post-wire"]', function (e) {
+    $('#post-wire-navbar-inner').html(GCTtxt.txtGlobalNav('new-wire-post'));
+})

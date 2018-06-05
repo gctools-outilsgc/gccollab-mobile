@@ -2050,6 +2050,9 @@ GCTrequests = {
             }
         });
     },
+    PostWirePost: function () {
+        mainView.router.navigate('/post-wire/');
+    },
     ReplyWirePost: function (obj) {
         var guid = $(obj).data("guid");
         var wireReplyPopup = app.popup.create({
