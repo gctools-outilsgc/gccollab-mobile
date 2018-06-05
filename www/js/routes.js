@@ -198,6 +198,11 @@ routes = [
         }
     },
     {
+        name: 'post-wire',
+        path: '/post-wire/',
+        url: './pages/post-wire.html',
+    },
+    {
         path: '/form/',
         url: './pages/form.html',
     },
