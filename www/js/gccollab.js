@@ -143,3 +143,8 @@ $$(document).on('page:init', '.page[data-name="post-wire"]', function (e) {
         }
     });
 })
+
+$$(document).on('page:init', '.page[data-name="post-wire"]', function (e) {
+    $('#post-opportunity-navbar-inner').html(GCTtxt.txtGlobalNav('new-opportunities-platform'));
+    
+})
