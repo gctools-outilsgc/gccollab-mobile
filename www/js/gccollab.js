@@ -99,4 +99,47 @@ $$(document).on('page:init', '.page[data-name="post-wire"]', function (e) {
             app.dialog.alert("Cannot post wire with no text.");
         }
     });
+    $$('#camera-camera').on('click', function (e) {
+        if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
+            navigator.camera.getPicture(function onSuccess(imageData) {
+                $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
+                imageURI = imageData;
+            }, function onFail(message) {
+                // myApp.alert('Failed because: ' + message);
+            }, {
+                    quality: 95,
+                    sourceType: Camera.PictureSourceType.CAMERA,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 1920,
+                    targetHeight: 1920,
+                    allowEdit: false,
+                    correctOrientation: true //Corrects Android orientation quirks
+                });
+        } else {
+            app.dialog.alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
+        }
+    });
+
+    $$('#camera-gallery').on('click', function (e) {
+        if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
+            navigator.camera.getPicture(function onSuccess(imageData) {
+                $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
+                imageURI = imageData;
+            }, function onFail(message) {
+                // myApp.alert("Failed because: " + message);
+            }, {
+                    quality: 95,
+                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    encodingType: Camera.EncodingType.JPEG,
+                    targetWidth: 1920,
+                    targetHeight: 1920,
+                    allowEdit: false,
+                    correctOrientation: true //Corrects Android orientation quirks
+                });
+        } else {
+            app.dialog.alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
+        }
+    });
 })
