@@ -83,4 +83,20 @@ function ShowProfile(email) {
 
 $$(document).on('page:init', '.page[data-name="post-wire"]', function (e) {
     $('#post-wire-navbar-inner').html(GCTtxt.txtGlobalNav('new-wire-post'));
+    var imageURI = "";
+    $$('#submit-post-wire').on('click', function (e) {
+        var message = $("#post-wire-textarea").val();
+        if (message) {
+            GCTrequests.PostWire(message, imageURI, function (data) {
+                console.log(data);
+                app.dialog.alert(data.result, '', function () {
+                    mainView.router.navigate('/list-template/wires/');
+                });
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+        } else {
+            app.dialog.alert("Cannot post wire with no text.");
+        }
+    });
 })

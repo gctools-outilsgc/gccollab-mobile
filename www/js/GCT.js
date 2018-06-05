@@ -1251,7 +1251,7 @@ GCTEach = {
     User: function (value, obj) {
         var profileData = value.result;
         if (typeof profileData == "string") {
-            alert(GCTLang.Trans("couldnotfindprofile"));
+            app.dialog.alert(GCTLang.Trans("couldnotfindprofile"));
             return;
         }
         var isOwnProfile = false;
@@ -2053,6 +2053,21 @@ GCTrequests = {
     PostWirePost: function () {
         mainView.router.navigate('/post-wire/');
     },
+    PostWire: function (message, imageURI, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "post.wire", user: GCTUser.Email(), message: message, image: imageURI, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     ReplyWirePost: function (obj) {
         var guid = $(obj).data("guid");
         var wireReplyPopup = app.popup.create({
@@ -2480,7 +2495,7 @@ GCTrequests = {
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
-                alert(data.result);
+                app.dialog.alert(data.result);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -2688,7 +2703,7 @@ GCTrequests = {
                 data: { method: "delete.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
                 timeout: 12000,
                 success: function (data) {
-                    alert(GCTLang.Trans("deleted"));
+                    app.dialog.alert(GCTLang.Trans("deleted"));
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR, textStatus, errorThrown);
@@ -2709,7 +2724,7 @@ GCTrequests = {
                 data: { method: "report.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
                 timeout: 12000,
                 success: function (data) {
-                    alert(GCTLang.Trans("reported"));
+                    app.dialog.alert(GCTLang.Trans("reported"));
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR, textStatus, errorThrown);
