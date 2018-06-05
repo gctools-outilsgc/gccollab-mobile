@@ -578,32 +578,310 @@
 
             </div>
 
-                <div id="tab3" class="page-content tab "></div>
-
+            <div id="tab3" class="page-content tab ">
+                <div class="block" style="height:100%; overflow-y:scroll;">
+                    <form id="opt-form1" class="list">
+                        <div class="content-block-title" data-translate="requirements-step3"></div>
+                        <ul>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="skills"></div>
+                                        <div class="item-input-wrap">
+                                            <input type="text" name="skills" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="time-hours"></div>
+                                        <div class="item-input-wrap">
+                                            <input type="text" name="hours" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="repete"></div>
+                                        <div class="item-input-wrap">
+                                            <select name="repetition">
+                                                <option data-translate="repetition-total">Total</option>
+                                                <option data-translate="repetition-day">per day</option>
+                                                <option data-translate="repetition-week">per week</option>
+                                                <option data-translate="repetition-month">per month</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="time-zone"></div>
+                                        <div class="item-input-wrap">
+                                            <select name="timezone">
+                                                <option data-translate="zone-newfoudlang">Canada/Newfoundlang(-3.5)</option>
+                                                <option data-translate="zone-atlantic">Canada/Atlantic (-4)</option>
+                                                <option data-translate="zone-eastern">Canada/Eastern (-5)</option>
+                                                <option data-translate="zone-central">Canada/Central (-6)</option>
+                                                <option data-translate="zone-mountain">Canada/Mountain (-7)</option>
+                                                <option data-translate="zone-pacific">Canada/Pacific (-8)</option>
+                                                <option data-translate="zone-yukon">Canada/Yukon (-9)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="specific-time"></div>
+                                        <div class="item-input-wrap">
+                                            <div class="data-table">
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="label-cell" data-translate="mission-day">Day</th>
+                                                            <th class="numeric-cell" data-translate="mission-start-time">Start time</th>
+                                                            <th class="numeric-cell" data-translate="mission-duration">Duration</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="label-cell" data-translate="monday">Monday</td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <input type="text" name="mon_start" placeholder="HH:mm">
+                                                                </div>
+                                                            </td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <input type="text" name="mon_duration" placeholder="HH:mm">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="label-cell" data-translate="tuesday">Tuesday</td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <input type="text" name="tue_start" placeholder="HH:mm">
+                                                                </div>
+                                                            </td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <input type="text" name="tue_duration" placeholder="HH:mm">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="label-cell" data-translate="wednasday">Wednasday</td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <input type="text" name="wed_start" placeholder="HH:mm">
+                                                                </div>
+                                                            </td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <input type="text" name="wed_duration" placeholder="HH:mm">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="label-cell" data-translate="thursday">Thursday</td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <input type="text" name="thu_start" placeholder="HH:mm">
+                                                                </div>
+                                                            </td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <input type="text" name="thu_duration" placeholder="HH:mm">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="label-cell" data-translate="friday">Friday</td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <input type="text" name="fri_start" placeholder="HH:mm">
+                                                                </div>
+                                                            </td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <input type="text" name="fri_duration" placeholder="HH:mm">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="label-cell" data-translate="saturday">Saturday</td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <input type="text" name="sat_start" placeholder="HH:mm">
+                                                                </div>
+                                                            </td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <input type="text" name="sat_duration" placeholder="HH:mm">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="label-cell" data-translate="sunday">Sunday</td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <input type="text" name="sun_start" placeholder="HH:mm">
+                                                                </div>
+                                                            </td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <input type="text" name="sun_duration" placeholder="HH:mm">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="remotly"></div>
+                                        <div class="item-input-wrap">
+                                            <label class="checkbox">
+                                                <input type="checkbox" name="remotly">
+                                                <i class="icon-checkbox"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="location-mission"></div>
+                                        <div class="item-input-wrap">
+                                            <select name="location">
+                                                <option data-translate="mission-alberta">Alberta</option>
+                                                <option data-translate="mission-colombia">British Colombia</option>
+                                                <option data-translate="mission-manitoba">Manitoba</option>
+                                                <option data-translate="mission-brunswick">New Brunswick</option>
+                                                <option data-translate="mission-labrador">Newfoundland and Labrador</option>
+                                                <option data-translate="mission-northwest">Northwest Territories</option>
+                                                <option data-translate="mission-scotia">Nova Scotia</option>
+                                                <option data-translate="mission-nunavut">Nunavut</option>
+                                                <option data-translate="mission-ontario">Ontario</option>
+                                                <option data-translate="mission-prince">Prince Edward Island</option>
+                                                <option data-translate="mission-quebec">Quebec</option>
+                                                <option data-translate="mission-saskatchewan">Saskatchewan</option>
+                                                <option data-translate="mission-yukon">Yukon</option>
+                                                <option data-translate="mission-national">National Capital region</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content item-input">
+                                    <div class="item-inner">
+                                        <div class="item-title item-label" data-translate="language-requirements"></div>
+                                        <div class="item-input-wrap">
+                                            <div class="data-table">
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="label-cell" data-translate="type-language">Type</th>
+                                                            <th class="numeric-cell" data-translate="english">English</th>
+                                                            <th class="numeric-cell" data-translate="french">French</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="label-cell" data-translate="language-comprehension">Written comprehension</td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <select name="lwc_english">
+                                                                        <option></option>
+                                                                        <option>A</option>
+                                                                        <option>B</option>
+                                                                        <option>C</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <select name="lwc_french">
+                                                                        <option></option>
+                                                                        <option>A</option>
+                                                                        <option>B</option>
+                                                                        <option>C</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="label-cell" data-translate="language-written">Written expression</td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <select name="lwe_english">
+                                                                        <option></option>
+                                                                        <option>A</option>
+                                                                        <option>B</option>
+                                                                        <option>C</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <select name="lwe_french">
+                                                                        <option></option>
+                                                                        <option>A</option>
+                                                                        <option>B</option>
+                                                                        <option>C</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="label-cell" data-translate="language-oral">Oral proficiency</td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <select name="lop_english">
+                                                                        <option></option>
+                                                                        <option>A</option>
+                                                                        <option>B</option>
+                                                                        <option>C</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                            <td class="numeric-cell">
+                                                                <div class="item-input">
+                                                                    <select name="lop_french">
+                                                                        <option></option>
+                                                                        <option>A</option>
+                                                                        <option>B</option>
+                                                                        <option>C</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
+                    <div class="content-block" style="padding-bottom:30px">
+                        <a href="" class="button next-form3" data-translate="create-mission">Done</a>
+                    </div>
+                </div>
             </div>
-        <div class="block">
-            <div class="item-text large" data-translate="new-post-info"></div>
+
         </div>
-        <form class="list">
-            <ul>
-                <li>
-                    <div class="item-content item-input">
-                        <div class="item-inner">
-                            <div id="wire-body-label" class="item-title item-label">Wire Text</div>
-                            <div class="item-input-wrap">
-                                <textarea id="post-wire-textarea" class="resizable" style='border: 1px solid #888;' maxlength="250"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content item-input">
-                        <div class="item-inner">
-                            <a href="#" id="submit-post-wire" class="col button button-big button-fill" data-translate="submit-post">Submit Wire</a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </form>
     </div>
     </div>
