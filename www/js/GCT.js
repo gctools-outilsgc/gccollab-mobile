@@ -1477,13 +1477,41 @@ GCTUser = {
             }
         });
     },
-    PostEvent: function (group_guid, group_public) {
+    PostEventPost: function (group_guid, group_public) {
         if (group_guid) {
             mainView.router.loadPage({ url: 'PostEvent.html?action=create&group_guid=' + group_guid + '&group_public=' + group_public + '&type=group'  }); 
         } else {
             mainView.router.loadPage({ url: 'PostEvent.html?action=create' }); 
         }
         
+    },
+    PostEvent: function (container, event_guid, title, excerpt, body,startdate, starttime, enddate, endtime, comments, access, status, successCallback, errorCallback, issueCallback) {
+        if (!title.en && !title.fr) { issueCallback(GCTLang.Trans("require-title")); return; }
+        if (!body.en && !body.fr) { issueCallback(GCTLang.Trans("require-body")); return; }
+        if (!(title.en && body.en) && !(title.fr && body.fr)) { issueCallback(GCTLang.Trans("require-same-lang")); return; }
+        
+        container = container || '';
+        event_guid = event_guid || '';
+        title = title || '';
+        excerpt = excerpt || '';
+        body = body || '';
+        comments = comments || 1;
+        access = access || 1;
+        status = status || 0;
+
+        $$.ajax({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "save.event", user: GCTUser.Email(), title: JSON.stringify(title), excerpt: JSON.stringify(excerpt), body: JSON.stringify(body),startdate, starttime, enddate, endtime, container_guid: container, event_guid: event_guid, comments: comments, access: access, status:status, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
     },
     GetGroup: function (guid, successCallback, errorCallback) {
         $$.ajax({

@@ -3656,6 +3656,186 @@ myApp.onPageInit('PostBlog', function (page) {
         });
     });
 });
+
+myApp.onPageInit('PostEvent', function (page) {
+    var action = (page.query.action) ? page.query.action : ''; //Create or Edit
+    var container_guid = ''; // guid of group, for posts on groups
+    var event_guid = ''; // guid of blog post, for edit
+
+    if (action == "create") {
+        $$('#PostEvent-navbar-inner').html(GCTLang.txtGlobalNav('PostEvent'));
+        $$('#submit-event').html(GCTLang.Trans('PostEvent'));
+        if (page.query.type == 'group') { $$('#PostEvent-Colleague').remove(); } // If group container, remove colleague access option
+        if (page.query.group_public == 'false') { $$('#PostEvent-public').remove(); } // if not a public group, no all logged access
+        container_guid = (page.query.group_guid) ? page.query.group_guid : ''; // Set container_guid
+        if (!container_guid) { $$('#PostEvent-Group').remove(); } //If not container, remove group access option
+    } else if (action == "edit") {
+        $$('#PostEvent-navbar-inner').html(GCTLang.txtGlobalNav('EditEvent'));
+        $$('#submit-event').html(GCTLang.Trans('EditEvent'));
+        event_guid = (page.query.post_guid) ? page.query.post_guid : '';
+        GCTUser.GetEventEdit(event_guid, function (data) {
+            var event = data.result;
+            if (event.group) {
+                container_guid = event.container_guid; // Set container_guid
+                $$('#EventBlog-Colleague').remove(); // If group container, remove colleague access option
+                if (event.group.public == false) { $$('#PostEvent-public').remove(); } // if not a public group, no all logged access
+            } else {
+                $$('#PostEvent-Group').remove(); //If not container, remove group access option
+            }
+            $$('input#english-title').val(event.title.en);
+            $$('input#french-title').val(event.title.fr);
+            if (event.excerpt) {
+                $$('#french-excerpt').val(event.excerpt.fr);
+                $$('#english-excerpt').val(event.excerpt.en);
+            }
+            $$('#english-body-textarea').val(event.description.en);
+            $$('#french-body-textarea').val(event.description.fr);
+
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+            });
+    }
+
+    $$('#submit-event').on('click', function (e) {
+        $$('#PostEvent-Feedback').html(''); //clears feedback message on new submit
+        var title = {}, excerpt = {}, body = {};
+        title.en = $('#english-title').val();
+        title.fr = $('#french-title').val(); 
+        excerpt.en = $('#english-excerpt').val();
+        excerpt.fr = $('#french-excerpt').val();
+        body.en = $('#english-body-textarea').val();
+        body.fr = $('#french-body-textarea').val(); 
+        var comment = $('#PostEvent-comments').val();
+        var access = $('#PostEvent-access').val();
+        var status = $('#PostEvent-status').val();
+        var starttime = $('#picker-starttime').val();
+        var startdate = $('#events-startdate').val();
+        var endtime = $('#picker-endtime').val();
+        var enddate = $('#events-enddate').val();
+        console.log(startdate);
+        //(container, title, excerpt, body, comments, access, successCallback, errorCallback)
+        GCTUser.PostEvent(container_guid, event_guid, title, excerpt, body, startdate, starttime, enddate, endtime, comment, access, status, function (data) {
+            if (data.result.indexOf("localhost/gcconnex/event/view/") > -1) {
+                var obj = [];
+                obj.href = data.result;
+                GCT.FireLink(obj);
+            } else {
+                myApp.alert(data.result);
+            }
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        }, function (feedback){
+            var feedbackmsg = '<p class="card-content-inner" style="padding-top: 0;padding-bottom: 0;" id="PostBlog-Feedback">' +GCTLang.Trans('issue') + feedback + '</p>';
+            $(feedbackmsg).hide().appendTo('#PostEvent-Feedback').fadeIn(500);
+        });
+    });
+
+    var startdate = myApp.calendar({
+        input: '#events-startdate',
+    });
+    var enddate = myApp.calendar({
+        input: '#events-enddate',
+    });
+    var pickerCustomToolbar = myApp.picker({
+        input: '#picker-starttime',
+        rotateEffect: true,
+        toolbarTemplate: 
+            '<div class="toolbar">' +
+                '<div class="toolbar-inner">' +
+                    '<div class="right">' +
+                        '<a href="#" class="link close-picker">Done</a>' +
+                    '</div>' +
+                '</div>' +
+            '</div>',
+            formatValue: function (p, values, displayValues) {
+                return displayValues[0] + ' : ' + values[1];
+            },
+        cols: [
+            {
+                values: (function () {
+                    var arr = [];
+                    for (var i = 0; i <= 23; i++) { arr.push(i); }
+                    return arr;
+                })(),
+            },
+            {
+                divider: true,
+            content: ':'
+         },
+            {
+                values: (function () {
+                    var arr = [];
+                    for (var i = 0; i <= 59; i++) { arr.push(i < 10 ? '0' + i : i); }
+                    return arr;
+                })(),
+            },
+        ],
+        onOpen: function (picker) {
+            picker.container.find('.toolbar-randomize-link').on('click', function () {
+                var col0Values = picker.cols[0].values;
+                var col0Random = col0Values[Math.floor(Math.random() * col0Values.length)];
+     
+                var col1Values = picker.cols[1].values;
+                var col1Random = col1Values[Math.floor(Math.random() * col1Values.length)];
+     
+                var col2Values = picker.cols[2].values;
+                var col2Random = col2Values[Math.floor(Math.random() * col2Values.length)];
+     
+                picker.setValue([col0Random, col1Random, col2Random]);
+            });
+        }
+    });          
+
+ var pickerCustomToolbar = myApp.picker({
+        input: '#picker-endtime',
+        rotateEffect: true,
+        toolbarTemplate: 
+            '<div class="toolbar">' +
+                '<div class="toolbar-inner">' +
+                    '<div class="right">' +
+                        '<a href="#" class="link close-picker">Done</a>' +
+                    '</div>' +
+                '</div>' +
+            '</div>',
+            formatValue: function (p, values, displayValues) {
+                return displayValues[0] + ' : ' + values[1];
+            },
+        cols: [
+            {
+                values: (function () {
+                    var arr = [];
+                    for (var i = 0; i <= 23; i++) { arr.push(i); }
+                    return arr;
+                })(),
+            },
+            {
+                divider: true,
+            content: ':'
+         },
+            {
+                values: (function () {
+                    var arr = [];
+                    for (var i = 0; i <= 59; i++) { arr.push(i < 10 ? '0' + i : i); }
+                    return arr;
+                })(),
+            },
+        ],
+        onOpen: function (picker) {
+            picker.container.find('.toolbar-randomize-link').on('click', function () {
+                var col0Values = picker.cols[0].values;
+                var col0Random = col0Values[Math.floor(Math.random() * col0Values.length)];
+     
+                var col1Values = picker.cols[1].values;
+                var col1Random = col1Values[Math.floor(Math.random() * col1Values.length)];
+     
+                var col2Values = picker.cols[2].values;
+                var col2Random = col2Values[Math.floor(Math.random() * col2Values.length)];
+     
+                picker.setValue([col0Random, col1Random, col2Random]);
+            });
+        }
+    });          
+});
 $$(document).on('page:afteranimation', '.page[data-page="PostBlog"]', function (e) {
     var focusNav = document.getElementById('page-PostBlog');
     if (focusNav) {
