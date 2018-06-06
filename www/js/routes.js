@@ -219,6 +219,25 @@ routes = [
         ]
     },
     {
+        path: '/static/:page/',
+        async: function (routeTo, routeFrom, resolve, reject) {
+            var page = routeTo.params.page;
+            var navbar = GCTtxt.txtGlobalNav(page);
+
+            resolve(
+                {
+                    componentUrl: './pages/plain-template.html',
+                },
+                {
+                    context: {
+                        navbar: navbar,
+                        page: page,
+                    }
+                }
+            )
+        }
+    },
+    {
         path: '/form/',
         url: './pages/form.html',
     },
