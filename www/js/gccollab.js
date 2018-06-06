@@ -194,8 +194,8 @@ $$(document).on('page:init', '.page[data-name="post-opp"]', function (e) {
             var selected = $$(this).attr('data-my-tab-id');
             app.tab.show(selected);
             GCTrequests.CreateOpportinities2(formData, function (data) {
-                //var selected = $$(this).attr('tab2');
-                //mainView.router.load({ url: 'NewOpportunity.html', context: { myTab: '#tab2' } });
+                var selected = $$(this).attr('tab2');
+                mainView.router.navigate('tab2/');
                 var result = data.result;
                 console.log(result);
             }, function (jqXHR, textStatus, errorThrown) {
@@ -221,8 +221,8 @@ $$(document).on('page:init', '.page[data-name="post-opp"]', function (e) {
                 formData['remotly'] = 'on';
             } else { formData['remotly'] == ''; }
             GCTrequests.CreateOpportinities3(formData, function (data) {
-                //var selected = $$(this).attr('tab2');
-                //mainView.router.load({ url: 'NewOpportunity.html', context: { myTab: '#tab2' } });
+                var selected = $$(this).attr('tab2');
+                mainView.router.navigate('tab2/');
                 var result = data.result;
                 console.log(result);
                 app.dialog.alert(result, 'Congrat');
@@ -234,6 +234,19 @@ $$(document).on('page:init', '.page[data-name="post-opp"]', function (e) {
 
         } else {
             app.dialog.alert(message_validation);
+        }
+    });
+
+    $('#group').hide();
+    $('#level').hide();
+    $$("#type").change(function () {
+        var type = $('#type').val();
+        if (type == 'missions:casual' || type == 'missions:student') {
+            $('#group').show();
+            $('#level').show();
+        } else {
+            $('#group').hide();
+            $('#level').hide();
         }
     });
 })
