@@ -146,5 +146,94 @@ $$(document).on('page:init', '.page[data-name="post-wire"]', function (e) {
 
 $$(document).on('page:init', '.page[data-name="post-opp"]', function (e) {
     $('#post-opportunity-navbar-inner').html(GCTtxt.txtGlobalNav('new-opportunities-platform'));
-    
+
+    $$('.next-form1').on('click', function (e) {
+        var formData = app.form.convertToData('#opt-form1');
+        console.log(formData);
+        var agree = formData['agree'];
+        var message_validation = '';
+        let arr = ['name', 'email'];
+        arr.forEach((num, index) => {
+            console.log(num);
+            if (formData[num] === '') {
+                message_validation += GCTLang.Trans("validation_" + num) + '<br>';
+            }
+        });
+
+        if (agree.length === 0) {
+            message_validation += GCTLang.Trans("validation_agree") + '<br>';
+        }
+        if (message_validation === '') {
+            var selected = $$(this).attr('data-my-tab-id');
+            app.tab.show(selected);
+            formData['agree'] = 'YES';
+            GCTrequests.CreateOpportinities1(formData, function (data) {
+                var result = data.result;
+                console.log(result);
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+
+        } else {
+            app.dialog.alert(message_validation);
+        }
+    });
+
+    $$('.next-form2').on('click', function (e) {
+
+        var formData = app.form.convertToData('#opt-form2');
+        var message_validation = '';
+        let arr = ['title', 'offert', 'type', 'start_date', 'deadline'];
+        arr.forEach((num, index) => {
+            console.log(num);
+            if (formData[num] === '') {
+                message_validation += GCTLang.Trans("validation_" + num) + '<br>';
+            }
+        });
+        if (message_validation === '') {
+            var selected = $$(this).attr('data-my-tab-id');
+            app.tab.show(selected);
+            GCTrequests.CreateOpportinities2(formData, function (data) {
+                //var selected = $$(this).attr('tab2');
+                //mainView.router.load({ url: 'NewOpportunity.html', context: { myTab: '#tab2' } });
+                var result = data.result;
+                console.log(result);
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            });
+
+        } else {
+            app.dialog.alert(message_validation);
+        }
+    });
+
+    $$('.next-form3').on('click', function (e) {
+        var formData = app.form.convertToData('#opt-form3');
+        var message_validation = '';
+        let arr = ['hours', 'location'];
+        arr.forEach((num, index) => {
+            if (formData[num] === '') {
+                message_validation += GCTLang.Trans("validation_" + num) + '<br>';
+            }
+        });
+        if (message_validation === '') {
+            if (formData['remotly'].lenght != 0) {
+                formData['remotly'] = 'on';
+            } else { formData['remotly'] == ''; }
+            GCTrequests.CreateOpportinities3(formData, function (data) {
+                //var selected = $$(this).attr('tab2');
+                //mainView.router.load({ url: 'NewOpportunity.html', context: { myTab: '#tab2' } });
+                var result = data.result;
+                console.log(result);
+                app.dialog.alert(result, 'Congrat');
+
+            }, function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+                app.dialog.alert(textStatus, 'Error');
+            });
+
+        } else {
+            app.dialog.alert(message_validation);
+        }
+    });
 })

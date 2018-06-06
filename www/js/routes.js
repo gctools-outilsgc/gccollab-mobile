@@ -206,6 +206,17 @@ routes = [
         name: 'post-opp',
         path: '/post-opp/',
         url: './pages/post-opportunity.html',
+        tabs: [{
+                path: '/',
+                id: 'tab1',
+            }, {
+                path: '/tab2/',
+                id: 'tab2',
+            }, {
+                path: '/tab3/',
+                id: 'tab3',
+            }
+        ]
     },
     {
         path: '/form/',

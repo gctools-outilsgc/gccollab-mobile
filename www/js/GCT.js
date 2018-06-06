@@ -2607,6 +2607,55 @@ GCTrequests = {
     CreateNewOpportunity: function () {
         mainView.router.navigate('/post-opp/'); 
     },
+    CreateOpportinities1: function (formData, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "create.opportinities1", user: GCTUser.Email(), formData: formData, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    CreateOpportinities2: function (formData, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "create.opportinities2", user: GCTUser.Email(), formData: formData, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log('data' + data);
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    CreateOpportinities3: function (formData, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'text',
+            url: GCT.GCcollabURL,
+            data: { method: "create.opportinities3", user: GCTUser.Email(), formData: formData, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log('data is ' + data);
+                data = JSON.parse(data);
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetNotifications: function (tabObject) {
         limit = tabObject.limit || 10;
         offset = tabObject.offset || 0;
