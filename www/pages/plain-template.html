@@ -5,26 +5,27 @@
                 {{navbar}}
             </div>
         </div>
-    </div>
-    <div class="toolbar toolbar-bottom-md">
-        <div class="toolbar-inner">
-            <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="far fa-arrow-alt-circle-left fa-2x"></i></a></div>
+        <div class="toolbar toolbar-bottom-md">
+            <div class="toolbar-inner">
+                <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="far fa-arrow-alt-circle-left fa-2x"></i></a></div>
+            </div>
+        </div>
+
+        <div class="page-content horizontal-padding">
+            <h2 data-translate="{{page}}"></h2>
+            <div id="content-{{page}}"></div>
         </div>
     </div>
 
-    <div class="page-content horizontal-padding">
-        <h2>{{page}}</h2>
-        <div id="content-{{page}}"></div>
-    </div>
 </template>
 <script>
     return {
         on: {
             pageInit: function (e, page) {
                 var ref = this.page;
-                $.get(ref + '.html', function (data) {
-                    $("#content" + ref).html(data);
-                })
+                $.get('./pages/static/' + ref + '-' + GCTLang.Lang() + '.html', function (data) {
+                    $("#content-" + ref).html(data);
+                });
             },
         }
     }
