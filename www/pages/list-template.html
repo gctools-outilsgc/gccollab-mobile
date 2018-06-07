@@ -1,47 +1,60 @@
 <template>
     <div class="page navbar-fixed with-subnavbar">
-    <div class="navbar">
-        <div class="navbar-inner">
-            <div id="{{page}}-navbar-inner" class="navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar">
-                {{navbar}}
-            </div>
-            {{#js_if "this.tabs.length != 1" }}
-            <div class="subnavbar" role="navigation" data-translate-target="aria-label">
-                <div class="subnavbar-inner">
-                    <div class="segmented">
-                        {{#each tabs}}
-                        <a href="#tab-{{this.id}}" class="button {{#if @first}}tab-link-active{{/if}} tab-link" data-translate="{{this.name}}"></a>
-                        {{/each}}
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div id="{{page}}-navbar-inner" class="navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar">
+                    {{navbar}}
+                </div>
+                {{#js_if "this.tabs.length != 1" }}
+                <div class="subnavbar" role="navigation" data-translate-target="aria-label">
+                    <div class="subnavbar-inner">
+                        <div class="segmented">
+                            {{#each tabs}}
+                            <a href="#tab-{{this.id}}" class="button {{#if @first}}tab-link-active{{/if}} tab-link" data-translate="{{this.name}}"></a>
+                            {{/each}}
+                        </div>
                     </div>
                 </div>
+                {{/js_if}}
             </div>
-            {{/js_if}}
         </div>
-    </div>
-    <div class="toolbar toolbar-bottom-md">
-        <div class="toolbar-inner">
-            <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="far fa-arrow-alt-circle-left fa-2x"></i></a></div>
-            <div class="right sliding">{{this.action}}{{this.filter}}</div>
+        <div class="toolbar toolbar-bottom-md">
+            <div class="toolbar-inner">
+                <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="far fa-arrow-alt-circle-left fa-2x"></i></a></div>
+                <div class="right sliding">{{this.action}}{{this.filter}}</div>
+            </div>
         </div>
-    </div>
 
-    <div class="page with-subnavbar" style="overflow-x: hidden;">
-        <div class="tabs">
-            {{#each tabs}}
-            <div id="tab-{{this.id}}" class="page-content tab {{#if @first}}tab-active{{/if}}">
-                {{this.header}}
-                {{#js_if "this.type == 'card'"}}<div id="content-{{this.id}}" class='list cards-list'></div>{{/js_if}}
-                {{#js_if "this.type == 'item'"}}<div class="list media-list"><ul id="content-{{this.id}}"></ul></div>{{/js_if}}
-                <div class="block">
-                    <div class="row">
-                        <a id="more-{{this.id}}" class="col button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+        <div class="page with-subnavbar" style="overflow-x: hidden;">
+            <div class="tabs">
+                {{#each tabs}}
+                <div id="tab-{{this.id}}" class="page-content tab {{#if @first}}tab-active{{/if}}">
+                    {{this.header}}
+                    {{#js_if "this.type == 'card'"}}<div id="content-{{this.id}}" class='list cards-list'></div>{{/js_if}}
+                    {{#js_if "this.type == 'item'"}}<div class="list media-list"><ul id="content-{{this.id}}"></ul></div>{{/js_if}}
+                    <div class="block">
+                        <div class="row">
+                            <a id="more-{{this.id}}" class="col button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+                        </div>
                     </div>
                 </div>
+                {{/each}}
             </div>
-            {{/each}}
         </div>
+        {{#js_if "this.page === 'home'"}}
+        <div class="popover popover-actions-{{page}}">
+            <div class="popover-inner">
+                <div class="list">
+                    <ul id="popover-actions-{{page}}">
+                        <li><a href="#" onclick="GCTrequests.PostWirePost();" class="list-button item-link popover-close"><i class="fas fa-rss"> <span data-translate="create-wire"></span></i></a></li>
+                        <li><a href="#" onclick="GCTrequests.PostBlogPost();" class="list-button item-link popover-close"><i class="fas fa-edit"> <span data-translate="post-blog"></span></i></a></li>
+                        <li><a class="list-button item-link popover-close" href="#" data-translate="close"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {{/js_if}}
     </div>
-        </div>
 </template>
 <style>
     p {

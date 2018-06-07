@@ -22,7 +22,7 @@
         var action = '';
         switch (ref) {
             case "post-home":
-                action = '<a id="home-actions" href="#" class="link open-popover" data-popover=".popover-actions" aria-label="Create a new Post Menu Options"><i class="fa fa-plus fa-2x"></i></a>';
+                action = '<a id="home-actions" href="#" class="button popover-open" data-popover=".popover-actions-home" aria-label="Create a new Post Menu Options"><i class="fa fa-plus fa-2x"></i></a>';
                 break;
             case "post-wire":
                 action = '<a href="#" class="link icon-only" onclick="GCTrequests.PostWirePost();"><i class="fas fa-rss fa-2x"></i></a>';
