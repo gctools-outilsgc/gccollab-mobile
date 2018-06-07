@@ -42,13 +42,14 @@
         <!-- Status bar overlay for fullscreen mode-->
         <div class="statusbar"></div>
         <!-- Left panel with cover effect-->
-        <div class="panel panel-left">
+        <div class="panel panel-left panel-cover">
             <div class="view">
                 <div class="page">
                     <div class="page-content">
-                        <div class="item-content userprofile">
-                            <div class="item-media"><a href="#" class="item-link panel-close" onclick="ShowProfile();"><img src="" width="44" alt="" id="imgUserProfilePic" /></a></div>
-                            <div class="item-inner">
+                        <div class="reader-text" id="menu-panel" tabindex="0" data-translate="main-menu">Main Menu</div>
+                        <div class="item-content userprofile item-link panel-close" onclick="ShowProfile();" data-translate-target="aria-label" data-translate="show-user" aria-label="">
+                            <div class="item-media" aria-hidden="true"><img src="" width="44" alt="" id="imgUserProfilePic" /></div>
+                            <div class="item-inner" aria-hidden="true">
                                 <div class="item-title-row">
                                     <div class="item-title" id="divUserProfileName"></div>
                                 </div>
@@ -249,6 +250,7 @@
         <div class="popup likes-popup">
             <div class="view">
                 <div class="page">
+                    <div class="reader-text" id="likes-menu" tabindex="0" data-translate="likes"></div>
                     <div class="navbar">
                         <div class="navbar-inner">
                             <div class="left">

@@ -16,13 +16,13 @@
         return content;
     },
     txtFocusMessage: function (id) {
-        return '<span id="focus-' + id + '" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans('content-loaded') + '</span>';
+        return '<span id="focus-' + id + '" class="reader-text" tabindex="0">' + GCTLang.Trans('content-loaded') + '</span>';
     },
     txtAction: function (ref) {
         var action = '';
         switch (ref) {
             case "post-home":
-                action = '<a id="home-actions" href="#" class="link open-popover" data-popover=".popover-actions" aria-label="Create a new Post Menu Options"><i class="fa fa-plus fa-2x"></i></a>';
+                action = '<a id="home-actions" href="#" class="button popover-open" data-popover=".popover-actions-home" aria-label="Create a new Post Menu Options"><i class="fa fa-plus fa-2x"></i></a>';
                 break;
             case "post-wire":
                 action = '<a href="#" class="link icon-only" onclick="GCTrequests.PostWirePost();"><i class="fas fa-rss fa-2x"></i></a>';
@@ -2851,7 +2851,8 @@ GCTrequests = {
 
                
                 $('#content-likes').html(content);
-                app.popup.open('.likes-popup')
+                app.popup.open('.likes-popup');
+                $('#likes-menu').focus();
 
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -3111,6 +3112,9 @@ GCT = {
                 },
                 opened: function (popover) {
                     console.log('Popover opened');
+                },
+                closed: function (popover) {
+                    $(obj).focus();
                 },
             }
         });
