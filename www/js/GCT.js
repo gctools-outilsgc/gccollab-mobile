@@ -2851,7 +2851,8 @@ GCTrequests = {
 
                
                 $('#content-likes').html(content);
-                app.popup.open('.likes-popup')
+                app.popup.open('.likes-popup');
+                $('#likes-menu').focus();
 
             },
             error: function (jqXHR, textStatus, errorThrown) {
