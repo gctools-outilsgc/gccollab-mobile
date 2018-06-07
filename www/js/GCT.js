@@ -16,7 +16,7 @@
         return content;
     },
     txtFocusMessage: function (id) {
-        return '<span id="focus-' + id + '" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans('content-loaded') + '</span>';
+        return '<span id="focus-' + id + '" class="reader-text" tabindex="0">' + GCTLang.Trans('content-loaded') + '</span>';
     },
     txtAction: function (ref) {
         var action = '';

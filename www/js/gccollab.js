@@ -250,3 +250,8 @@ $$(document).on('page:init', '.page[data-name="post-opp"]', function (e) {
         }
     });
 })
+
+$$('.panel-left').on('panel:open', function () {
+    var focusTitle = document.getElementById('menu-panel');
+    if (focusTitle) { focusTitle.focus(); }
+});
