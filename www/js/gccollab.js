@@ -61,6 +61,87 @@ $$(document).on('page:init', '.page[data-name="sign-in-old"]', function (e) {
         }
     });
 })
+
+$$(document).on('page:init', '.page[data-name="sign-in"]', function (e) {
+    var clientInfo = {
+        client_id: openid_client_id,
+        redirect_uri: 'gccollab-mobile'
+    };
+    var providerInfo = OIDC.discover(openid_issuer);
+
+    OIDC.setClientInfo(clientInfo);
+    OIDC.setProviderInfo(providerInfo);
+    OIDC.storeInfo(providerInfo, clientInfo);
+    $$('#regBtn').on('click', function (e) {
+        var registerWindow = window.open(openid_register_url, '_blank', 'location=yes');
+
+        registerWindow.addEventListener('loadstop', function (event) {
+            var url = event.url;
+            if (url.includes('/register/complete/')) {
+                setTimeout(function () {
+                    registerWindow.close();
+                }, 3000);
+            }
+        });
+    });
+
+    $$('#loginBtn').on('click', function (e) {
+        var id_token = "";
+        var access_token = "";
+        var loginURL = OIDC.login({ scope: 'openid email', response_type: 'id_token token' });
+        var loginWindow = window.open(loginURL, '_blank', 'location=yes');
+
+        loginWindow.addEventListener('loadstop', function (event) {
+            var url = event.url;
+
+            if (url.includes('id_token=')) {
+                id_token = url.substring(url.lastIndexOf('id_token=') + 9, url.lastIndexOf('&token_type'));
+            }
+
+            if (url.includes('access_token=')) {
+                access_token = url.substring(url.lastIndexOf('access_token=') + 13, url.lastIndexOf('&id_token'));
+            }
+
+            if (url.includes('/profile/') || (id_token && access_token)) {
+                loginWindow.close();
+            }
+        });
+
+        loginWindow.addEventListener('exit', function (event) {
+            if (id_token && access_token) {
+                app.request({
+                    url: openid_issuer + "/userinfo",
+                    type: "GET",
+                    dataType: "JSON",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Authorization", "Bearer " + access_token);
+                    },
+                    success: function (result) {
+                        app.dialog.alert(JSON.stringify(result));
+                        var email = result.email;
+                        var sub = result.sub;
+
+                        GCTUser.LoginOpenID(email, sub, function (success) {
+                            if (success.result == true) {
+                                GCTUser.SaveLoginEmail(email);
+                                GCTUser.SetLoginCookie();
+                                GCTUser.SetUserProfile();
+                                mainView.router.navigate('/list-template/home/');
+                            } else {
+                                app.dialog.alert(JSON.stringify(success));
+                                app.dialog.alert(success.result);
+                                app.dialog.alert(GCTLang.Trans("invalid"), 'Error');
+                            }
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        });
+                    }
+                });
+            }
+        });
+    });
+})
+
 //AppOpen();
 function ShowProfile(email) {
     if (typeof email == 'undefined')
