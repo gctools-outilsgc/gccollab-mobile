@@ -3661,7 +3661,22 @@ myApp.onPageInit('PostEvent', function (page) {
     var action = (page.query.action) ? page.query.action : ''; //Create or Edit
     var container_guid = ''; // guid of group, for posts on groups
     var event_guid = ''; // guid of blog post, for edit
+    $$('#all-day').on('click', function (e) {
+        $(".starttime").toggleClass('hidden');
+        $(".endtime").toggleClass('hidden');
+    }); 
+    
+    $$('#web_conference').on('click', function (e) {
+        $(".url").toggleClass('hidden');
+        $(".additionnal").toggleClass('hidden');
+    }); 
 
+    $$('#contact_checkbox').on('click', function (e) {
+        $(".contact").toggleClass('hidden');
+        $(".contact_email").toggleClass('hidden');
+        $(".contact_phone").toggleClass('hidden');        
+    }); 
+    
     if (action == "create") {
         $$('#PostEvent-navbar-inner').html(GCTLang.txtGlobalNav('PostEvent'));
         $$('#submit-event').html(GCTLang.Trans('PostEvent'));
@@ -3684,10 +3699,6 @@ myApp.onPageInit('PostEvent', function (page) {
             }
             $$('input#english-title').val(event.title.en);
             $$('input#french-title').val(event.title.fr);
-            if (event.excerpt) {
-                $$('#french-excerpt').val(event.excerpt.fr);
-                $$('#english-excerpt').val(event.excerpt.en);
-            }
             $$('#english-body-textarea').val(event.description.en);
             $$('#french-body-textarea').val(event.description.fr);
 
@@ -3695,26 +3706,48 @@ myApp.onPageInit('PostEvent', function (page) {
             console.log(jqXHR, textStatus, errorThrown);
             });
     }
-
+ 
     $$('#submit-event').on('click', function (e) {
         $$('#PostEvent-Feedback').html(''); //clears feedback message on new submit
-        var title = {}, excerpt = {}, body = {};
+        var title = {}, body = {};
         title.en = $('#english-title').val();
         title.fr = $('#french-title').val(); 
-        excerpt.en = $('#english-excerpt').val();
-        excerpt.fr = $('#french-excerpt').val();
         body.en = $('#english-body-textarea').val();
         body.fr = $('#french-body-textarea').val(); 
         var comment = $('#PostEvent-comments').val();
         var access = $('#PostEvent-access').val();
         var status = $('#PostEvent-status').val();
+        var allday = $('#all-day').val()
         var starttime = $('#picker-starttime').val();
-        var startdate = $('#events-startdate').val();
         var endtime = $('#picker-endtime').val();
+        if(allday == 'all_day'){
+            starttime = '';
+            endtime = '';
+        } 
+        var startdate = $('#events-startdate').val();       
         var enddate = $('#events-enddate').val();
-        console.log(startdate);
-        //(container, title, excerpt, body, comments, access, successCallback, errorCallback)
-        GCTUser.PostEvent(container_guid, event_guid, title, excerpt, body, startdate, starttime, enddate, endtime, comment, access, status, function (data) {
+        var venue = $('#venue').val();
+        var room = $('#room').val();
+        var web_conference = $('#web_conference');
+        var url = $('#teleconference_text').val();
+        var additionnal = $('#additionnal-body-textarea').val();
+        if(web_conference != '1'){
+            url = '';
+            additionnal = '';
+        } 
+        var fees = $('#fees_text').val();
+        var contact_checkbox = $('#contact_checkbox');
+        var contact_text = $('#contact_text').val();
+        var contact_email_text = $('#contact_email_text').val();
+        var contact_phone_text = $('#contact_phone_text').val();        
+        if(contact_checkbox != '1'){
+            contact_text = '';
+            contact_email_text = '';
+            contact_phone_text = '';
+        } 
+        var picker_language = $('#picker-language').val();
+
+        GCTUser.PostEvent(container_guid, event_guid, title, body, startdate, starttime, enddate, endtime,venue,room,allday,web_conference,url,additionnal,fees,contact_checkbox,contact_text,contact_email_text,contact_phone_text,picker_language, comment, access, status, function (data) {
             if (data.result.indexOf("localhost/gcconnex/event/view/") > -1) {
                 var obj = [];
                 obj.href = data.result;
@@ -3729,6 +3762,7 @@ myApp.onPageInit('PostEvent', function (page) {
             $(feedbackmsg).hide().appendTo('#PostEvent-Feedback').fadeIn(500);
         });
     });
+ 
 
     var startdate = myApp.calendar({
         input: '#events-startdate',
@@ -3834,7 +3868,17 @@ myApp.onPageInit('PostEvent', function (page) {
                 picker.setValue([col0Random, col1Random, col2Random]);
             });
         }
-    });          
+    }); 
+    
+    var pickerLanguage = myApp.picker({
+        input: '#picker-language',
+        cols: [
+            {
+                textAlign: 'center',
+                values: ['Bilingual', 'English', 'French']
+            }
+        ]
+    });
 });
 $$(document).on('page:afteranimation', '.page[data-page="PostBlog"]', function (e) {
     var focusNav = document.getElementById('page-PostBlog');

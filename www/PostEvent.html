@@ -38,16 +38,6 @@
                                     <li>
                                         <div class="item-content">
                                             <div class="item-inner">
-                                                <div id="eng-excerpt-label" class="item-title label" data-translate="english-excerpt">English Excerpt</div>
-                                                <div class="item-input">
-                                                    <input id="english-excerpt" name="english-excerpt" type="text" placeholder="" aria-labelledby="eng-excerpt-label" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="item-content">
-                                            <div class="item-inner">
                                                 <div id="eng-body-label" class="item-title label" data-translate="english-body">English Body</div>
                                                 <div class="item-input">
                                                     <textarea id="english-body-textarea" class="resizable" aria-labelledby="eng-body-label"></textarea>
@@ -80,16 +70,6 @@
                                           <li>
                                               <div class="item-content">
                                                   <div class="item-inner">
-                                                      <div id="fr-excerpt-label" class="item-title label" data-translate="french-excerpt">French Excerpt</div>
-                                                      <div class="item-input">
-                                                          <input id="french-excerpt" name="french-excerpt" type="text" placeholder="" aria-labelledby="fr-excerpt-label" />
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </li>
-                                          <li>
-                                              <div class="item-content">
-                                                  <div class="item-inner">
                                                       <div id="fr-body-label" class="item-title label" data-translate="french-body">French Body</div>
                                                       <div class="item-input">
                                                           <textarea id="french-body-textarea" class="resizable" aria-labelledby="fr-body-label"></textarea>
@@ -109,47 +89,169 @@
               <div class="list-block" style="margin-top: 0;">
                   <ul>
                     <li>
+                        <label class="label-checkbox item-content">
+                            <input type="checkbox" id="all-day" name="all-day" value="all_day">
+                            <div class="item-media">
+                                <i class="icon icon-form-checkbox"></i>
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title">All day</div>
+                            </div>
+                        </label>
+                    </li>
+                    <li>
                         <div class="item-content">
                             <div class="item-inner">
-                                    <div class="item-title label" data-translate="startdate">Start date</div>
-                                    <div class="item-input">
-                                      <input type="text" id="events-startdate" />
-                                    </div>
+                                <div class="item-title label" data-translate="startdate">Start date</div>
+                                <div class="item-input">
+                                    <input type="text" id="events-startdate" />
+                                </div>
                             </div>
                         </div>
                     </li>
                     <li>
-                            <div class="item-content">
-                              <div class="item-inner">
-                                    <div class="item-title label" data-translate="starttime">Start time</div>
+                        <div class="item-content starttime">
+                            <div class="item-inner">
+                                <div class="item-title label" data-translate="starttime">Start time</div>
                                 <div class="item-input">
-                                  <input type="text" placeholder="HH:mm" id="picker-starttime">
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                        <div class="item-title label" data-translate="enddate">End date</div>
-                                        <div class="item-input">
-                                          <input type="text" id="events-enddate" />
-                                        </div>
+                                    <input type="text" placeholder="HH:mm" id="picker-starttime">
                                 </div>
                             </div>
-                        </li>
-                        <li>
-                                <div class="item-content">
-                                  <div class="item-inner">
-                                        <div class="item-title label" data-translate="endtime">End time</div>
-                                    <div class="item-input">
-                                      <input type="text" placeholder="HH:mm" id="picker-endtime">
-                                    </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label" data-translate="enddate">End date</div>
+                                <div class="item-input">
+                                    <input type="text" id="events-enddate" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content endtime">
+                            <div class="item-inner">
+                                <div class="item-title label" data-translate="endtime">End time</div>
+                                <div class="item-input">
+                                    <input type="text" placeholder="HH:mm" id="picker-endtime">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                              <div class="item-inner">
+                                  <div id="venue-label" class="item-venue label" data-translate="event-venue">Location</div>
+                                  <div class="item-input">
+                                      <input id="venue" name="venue" type="text" placeholder="" aria-labelledby="venue-label" />
                                   </div>
+                              </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div id="room-label" class="item-room label" data-translate="event-room">Room</div>
+                                <div class="item-input">
+                                    <input id="room" name="room" type="text" placeholder="" aria-labelledby="room-label" />
                                 </div>
-                              </li>
-                      <li>
-                          <div class="item-content">
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="label-checkbox item-content">
+                            <input type="checkbox" id="web_conference" name="web_conference" value="1">
+                            <div class="item-media">
+                                <i class="icon icon-form-checkbox"></i>
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title">web conference</div>
+                            </div>
+                        </label>
+                    </li>
+                    <li>
+                        <div class="item-content url">
+                            <div class="item-inner">
+                                <div id="teleconference-label" class="item-teleconference label" data-translate="teleconference-url">URL</div>
+                                <div class="item-input">
+                                    <input id="teleconference_text" name="teleconference_text" type="text" placeholder="" aria-labelledby="teleconference-label" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content additionnal">
+                            <div class="item-inner">
+                                <div id="additionnal-label" class="item-additionnal label" data-translate="additionnal-body">Additionnal information</div>
+                                <div class="item-input">
+                                    <textarea id="additionnal-body-textarea" class="resizable" aria-labelledby="additionnal-body-label"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div id="fees-label" class="item-fees label" data-translate="teleconference-fees">Fees</div>
+                                <div class="item-input">
+                                    <input id="fees_text" name="fees_text" type="text" placeholder="" aria-labelledby="fees-label" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                          <div class="item-inner">
+                            <div class="item-input">
+                              <input type="text" placeholder="Language" readonly id="picker-language">
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    <li>
+                        <label class="label-checkbox item-content">
+                            <input type="checkbox" id="contact_checkbox" name="contact_checkbox" value="1">
+                            <div class="item-media">
+                                <i class="icon icon-form-checkbox"></i>
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title">You are not the contact person?</div>
+                            </div>
+                        </label>
+                    </li>
+                    <li>
+                        <div class="item-content contact">
+                            <div class="item-inner">
+                                <div id="contact-label" class="item-contact label" data-translate="contact">Contact</div>
+                                <div class="item-input">
+                                    <input id="contact_text" name="contact_text" type="text" placeholder="" aria-labelledby="contact-label" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content contact_email">
+                            <div class="item-inner">
+                                <div id="contact_email-label" class="item-contact_email label" data-translate="contact_email">E-mail address</div>
+                                <div class="item-input">
+                                    <input id="contact_email_text" name="contact_email_text" type="text" placeholder="" aria-labelledby="contact_email-label" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content contact_phone">
+                            <div class="item-inner">
+                                <div id="contact_phone-label" class="item-contact_phone label" data-translate="contact_phone">Phone number</div>
+                                <div class="item-input">
+                                    <input id="contact_phone_text" name="contact_phone_text" type="text" placeholder="" aria-labelledby="contact_phone-label" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
                               <div class="item-inner">
                                   <div id="comment-label" class="item-title label" data-translate="comments">Comments</div>
                                   <div class="item-input">
@@ -159,10 +261,10 @@
                                       </select>
                                   </div>
                               </div>
-                          </div>
-                      </li>
-                      <li>
-                          <div class="item-content">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
                               <div class="item-inner">
                                   <div id="access-label" class="item-title label" data-translate="access">Access</div>
                                   <div class="item-input">
@@ -174,9 +276,9 @@
                                       </select>
                                   </div>
                               </div>
-                          </div>
-                      </li>
-                      <li>
+                        </div>
+                    </li>
+                    <li>
                           <div class="item-content">
                               <div class="item-inner">
                                   <div id="status-label" class="item-title label" data-translate="status" >Status</div>
