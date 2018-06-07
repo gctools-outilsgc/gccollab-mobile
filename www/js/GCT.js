@@ -3112,6 +3112,9 @@ GCT = {
                 opened: function (popover) {
                     console.log('Popover opened');
                 },
+                closed: function (popover) {
+                    $(obj).focus();
+                },
             }
         });
         optionsPopover.open();
