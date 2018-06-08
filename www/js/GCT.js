@@ -1624,6 +1624,21 @@ GCTUser = {
             }
         });
     },
+    LoginOpenID: function (email, sub, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "login.sso", email: email, sub: sub, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     Logout: function () {
         if (openid_enabled) {
             app.request({
