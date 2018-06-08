@@ -22,16 +22,16 @@
         var action = '';
         switch (ref) {
             case "post-home":
-                action = '<a id="home-actions" href="#" class="button popover-open" data-popover=".popover-actions-home" aria-label="Create a new Post Menu Options"><i class="fa fa-plus fa-2x"></i></a>';
+                action = '<a id="home-actions" href="#" class="button popover-open" data-popover=".popover-actions-home" data-translate-target="aria-label" data-translate="create-post"><i class="fa fa-plus fa-2x"></i></a>';
                 break;
             case "post-wire":
-                action = '<a href="#" class="link icon-only" onclick="GCTrequests.PostWirePost();"><i class="fas fa-rss fa-2x"></i></a>';
+                action = '<a href="#" class="link icon-only" onclick="GCTrequests.PostWirePost();" data-translate-target="aria-label" data-translate="create-wire"><i class="fas fa-rss fa-2x"></i></a>';
                 break;
             case "post-blog":
-                action = '<a href="#" onclick="GCTrequests.PostBlogPost();" class="right link icon-only "><i class="fas fa-edit fa-2x"></i></a>';
+                action = '<a href="#" onclick="GCTrequests.PostBlogPost();" class="right link icon-only " data-translate-target="aria-label" data-translate="post-blog"><i class="fas fa-edit fa-2x"></i></a>';
                 break;
             case "post-opp":
-                action = '<a href="#" aria-label="create mission Créer une mission" class="link icon-only" onclick="GCTrequests.CreateNewOpportunity();"><i class="fa fa-briefcase fa-2x"></i></a>';
+                action = '<a href="#" class="link icon-only" onclick="GCTrequests.CreateNewOpportunity();" data-translate-target="aria-label" data-translate="create-mission"><i class="fa fa-briefcase fa-2x"></i></a>';
                 break;
             default: ;
         }

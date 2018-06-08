@@ -295,6 +295,7 @@
     "toolbar": "Toolbar",
     "refresh-content": "Refresh Content",
     "open-nav": "Open Navigation Window",
+    "create-post": "Create Post Menu",
    
     "step1":"Step 1",
     "step2":"Step 2",
@@ -691,6 +692,7 @@ French = {
     "toolbar": "barre d'outils",
     "refresh-content": "Actualiser le contenu",
     "open-nav": "Ouvrir le menu de navigation",
+    "create-post": "Créer un menu de publication",
 
     
     "step1":"Étape 1",
