@@ -117,7 +117,7 @@ $$(document).on('page:init', '.page[data-name="sign-in"]', function (e) {
                         request.setRequestHeader("Authorization", "Bearer " + access_token);
                     },
                     success: function (result) {
-                        app.dialog.alert(JSON.stringify(result));
+                        result = JSON.parse(result);
                         var email = result.email;
                         var sub = result.sub;
 
@@ -128,8 +128,6 @@ $$(document).on('page:init', '.page[data-name="sign-in"]', function (e) {
                                 GCTUser.SetUserProfile();
                                 mainView.router.navigate('/list-template/home/');
                             } else {
-                                app.dialog.alert(JSON.stringify(success));
-                                app.dialog.alert(success.result);
                                 app.dialog.alert(GCTLang.Trans("invalid"), 'Error');
                             }
                         }, function (jqXHR, textStatus, errorThrown) {
