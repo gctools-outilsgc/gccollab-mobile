@@ -111,6 +111,7 @@
         <div class="popover popover-links-{{guid}}">
             <div class="popover-inner">
                 <div class="list">
+                    <span id="focus-links-popover-{{guid}}" class="reader-text" tabindex="0" data-translate="more-options-opened"></span>
                     <ul id="popover-{{guid}}">
                         {{#js_if "this.tabs[0].type == 'user'"}}
                         {{#each tabs}}
@@ -158,6 +159,14 @@
                     tabs.forEach(function (tab) {
                         GCTtabs.TabReset(tab, guid);
                     });
+                });
+                $$('.popover-links-' + guid).on('popover:close', function () {
+                    var focusNow = document.getElementById('profile-menu-' + guid);
+                    if (focusNow) { focusNow.focus(); }
+                });
+                $$('.popover-links-' + guid).on('popover:open', function () {
+                    var focusNow = document.getElementById('focus-links-popover-' + guid);
+                    if (focusNow) { focusNow.focus(); }
                 });
             },
         }

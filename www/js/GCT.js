@@ -1,6 +1,6 @@
 ﻿GCTtxt = {
     txtGlobalNav: function (title) {
-        var content = '<div class="center" id="page-' + title + '" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0" >' + GCTLang.Trans("page") + GCTLang.Trans(title) + '</div>' +
+        var content = '<div class="center reader-text" id="page-' + title + '" tabindex="0" >' + GCTLang.Trans("page") + GCTLang.Trans(title) + '</div>' +
             '<div class="left sliding"><a href="#" data-panel="left" class="panel-open link icon-only" data-translate-target="aria-label" data-translate="open-nav"><i class="fas fa-bars"></i></a></div>' +
             '<div class="title" id="' + title + '" tabindex="0">' + GCTLang.Trans(title) + '</div>' +
             '<div class="right sliding">' +
@@ -8,7 +8,7 @@
         return content;
     },
     txtGlobalNavGUID: function (title, guid) {
-        var content = '<div class="center" id="page-' + title + '-' + guid +'" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0" >' + GCTLang.Trans("page") + GCTLang.Trans(title) + '</div>' +
+        var content = '<div class="center reader-text" id="page-' + title + '-' + guid +'" tabindex="0" >' + GCTLang.Trans("page") + GCTLang.Trans(title) + '</div>' +
             '<div class="left sliding"><a href="#" data-panel="left" class="panel-open link icon-only" data-translate-target="aria-label" data-translate="open-nav"><i class="fas fa-bars"></i></a></div>' +
             '<div class="title" id="' + title + '-' + guid + '" tabindex="0">' + GCTLang.Trans(title) + '</div>' +
             '<div class="right sliding">' +
@@ -3083,7 +3083,7 @@ GCT = {
             +'<div class="popover-inner">' 
             +'<div class="list">' 
             +'<ul>' 
-            + '<span id="focus-new-popover" style="position: absolute !important; clip: rect(1px, 1px, 1px, 1px);" tabindex="0">' + GCTLang.Trans("more-options-opened") + '</span>';
+            + '<span id="focus-new-popover" class="reader-text" tabindex="0">' + GCTLang.Trans("more-options-opened") + '</span>';
         if (type === "gccollab_discussion_reply") { //comments view post will probably use this too
             popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + container + '" data-type="' + type + '" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-post") + '</a></li>';
         } else {
