@@ -293,6 +293,10 @@
     "navigation-bar": "Navigation Bar",
     "tab-bar": "Tab Bar",
     "toolbar": "Toolbar",
+    "refresh-content": "Refresh Content",
+    "open-nav": "Open Navigation Window",
+    "create-post": "Create Post Menu",
+    "more-options": "More Options Menu",
    
     "step1":"Step 1",
     "step2":"Step 2",
@@ -687,6 +691,11 @@ French = {
     "navigation-bar": "barre de navigation",
     "tab-bar": "barre d'onglets",
     "toolbar": "barre d'outils",
+    "refresh-content": "Actualiser le contenu",
+    "open-nav": "Ouvrir le menu de navigation",
+    "create-post": "Créer un menu de publication",
+    "more-options": "Options de publication",
+
     
     "step1":"Étape 1",
     "step2":"Étape 2",
