@@ -2671,6 +2671,21 @@ GCTrequests = {
             }
         });
     },
+    GetNotification: function (guid, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.message", user: GCTUser.Email(), guid: guid, thread: 0, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetNotifications: function (tabObject) {
         limit = tabObject.limit || 10;
         offset = tabObject.offset || 0;
@@ -2704,6 +2719,21 @@ GCTrequests = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    ReadMessage: function (guid, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "read.message", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
             }
         });
     },
@@ -2887,21 +2917,6 @@ GCTrequests = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorCallback(jqXHR, textStatus, errorThrown);
-            }
-        });
-    },
-    ReadMessage: function (guid, successCallback, errorCallback) {
-        app.request({
-            method: 'POST',
-            dataType: 'json',
-            url: GCT.GCcollabURL,
-            data: { method: "read.message", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
-            timeout: 12000,
-            success: function (data) {
-                successCallback(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR, textStatus, errorThrown);
             }
         });
     },
