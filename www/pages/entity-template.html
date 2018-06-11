@@ -433,6 +433,34 @@
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
                         });
                         break;
+                    case 'notification':
+                        GCTrequests.ReadMessage(guid, function (data) {
+                            if ($$("#item-" + guid).hasClass('unread')) {
+                                $$("#item-" + guid).removeClass('unread');
+                            }
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        });
+
+                        GCTrequests.GetNotification(guid, function (data) {
+                            var messages = data.result;
+
+                            var content = '<div class="messages messages-auto-layout">';
+                            $(messages).each(function (key, value) {
+                                var description = "";
+                                var type = (value.fromUserDetails.displayName == GCTUser.DisplayName()) ? "sent" : "received";
+                                var name = (value.fromUserDetails.displayName) ? value.fromUserDetails.displayName : "GCcollab";
+                                content += value.description;
+                            });
+                            content += '</div>';
+                            
+                            content = GCT.SetLinks(content);
+                            $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        });
+                        break;
                     default:
                         break;
                 }

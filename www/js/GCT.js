@@ -645,8 +645,8 @@
     },
     txtNotification: function (object) {
         var content = '<li><div class="row">'
-            + '<div class="col-80 item-content" onclick="ShowMessage(this);" data-guid="' + object.guid + ' data-type="notification">'
-            + '<div class="item-inner ' + object.unread + '">'
+            + '<div class="col-80 item-content" onclick="GCT.ViewPost(this);" data-guid="' + object.guid + '" data-type="gccollab_notification">'
+            + '<div id="item-' + object.guid + '" class="item-inner '  + object.unread + '">'
             + '<div class="item-title-row">'
             + '<div class="item-title">GCcollab</div>'
             + '<div class="item-after">' + object.time + '</div></div>'
@@ -2671,6 +2671,21 @@ GCTrequests = {
             }
         });
     },
+    GetNotification: function (guid, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.message", user: GCTUser.Email(), guid: guid, thread: 0, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetNotifications: function (tabObject) {
         limit = tabObject.limit || 10;
         offset = tabObject.offset || 0;
@@ -2704,6 +2719,21 @@ GCTrequests = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorConsole(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    ReadMessage: function (guid, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "read.message", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
             }
         });
     },
@@ -3063,6 +3093,9 @@ GCT = {
                 break;
             case "gccollab_event":
                 mainView.router.navigate('/entity-template/event/' + guid + '/');
+                break;
+            case "gccollab_notification":
+                mainView.router.navigate('/entity-template/notification/' + guid + '/');
                 break;
             default:
                 console.log('Worked, but type not handled yet.');
