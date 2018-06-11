@@ -645,7 +645,7 @@
     },
     txtNotification: function (object) {
         var content = '<li><div class="row">'
-            + '<div class="col-80 item-content" onclick="ShowMessage(this);" data-guid="' + object.guid + ' data-type="notification">'
+            + '<div class="col-80 item-content" onclick="GCT.ViewPost(this);" data-guid="' + object.guid + '" data-type="gccollab_notification">'
             + '<div class="item-inner ' + object.unread + '">'
             + '<div class="item-title-row">'
             + '<div class="item-title">GCcollab</div>'
@@ -3063,6 +3063,9 @@ GCT = {
                 break;
             case "gccollab_event":
                 mainView.router.navigate('/entity-template/event/' + guid + '/');
+                break;
+            case "gccollab_notification":
+                mainView.router.navigate('/entity-template/notification/' + guid + '/');
                 break;
             default:
                 console.log('Worked, but type not handled yet.');

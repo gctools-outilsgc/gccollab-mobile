@@ -129,6 +129,10 @@ var app  = new Framework7({
             event: {
                 comments: true,
                 id: 'event',
+            },
+            notification: {
+                comments: false,
+                id: 'notifcation',
             }
             
         };
