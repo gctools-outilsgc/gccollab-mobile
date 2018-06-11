@@ -646,7 +646,7 @@
     txtNotification: function (object) {
         var content = '<li><div class="row">'
             + '<div class="col-80 item-content" onclick="GCT.ViewPost(this);" data-guid="' + object.guid + '" data-type="gccollab_notification">'
-            + '<div class="item-inner ' + object.unread + '">'
+            + '<div id="item-' + object.guid + '" class="item-inner '  + object.unread + '">'
             + '<div class="item-title-row">'
             + '<div class="item-title">GCcollab</div>'
             + '<div class="item-after">' + object.time + '</div></div>'
@@ -2887,6 +2887,21 @@ GCTrequests = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    ReadMessage: function (guid, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "read.message", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
             }
         });
     },

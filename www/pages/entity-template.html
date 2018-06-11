@@ -434,9 +434,14 @@
                         });
                         break;
                     case 'notification':
-                        //read
-                        //get
-                        alert('iun');
+                        GCTrequests.ReadMessage(guid, function (data) {
+                            if ($$("#item-" + guid).hasClass('unread')) {
+                                $$("#item-" + guid).removeClass('unread');
+                            }
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        });
+
                         break;
                     default:
                         break;
