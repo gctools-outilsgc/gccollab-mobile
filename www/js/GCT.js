@@ -85,7 +85,7 @@
     },
 
     txtNewsfeed: function (object) {
-        var content = "<div class='hold-all-card'>"
+        var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
@@ -778,7 +778,7 @@ GCTEach = {
 
         var text = "";
         if (value.object.type == "wire") {
-            text = "<blockquote>" + value.object.wire + "</blockquote>";
+            text = "<blockquote class='text-list'>" + value.object.wire + "</blockquote>";
             label += '. ' + value.object.wire;
         } else if (value.object.description) {
             text = "<blockquote class='text'>" + value.object.description.trunc(150) + "</blockquote>";
@@ -794,7 +794,7 @@ GCTEach = {
         var reply = "";
         if (value.object.type == "wire") {
             action = "<a class='link' data-guid='" + value.object_guid + "' data-type='gccollab_wire_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-            reply = "<a href='#' class='link' data-guid='" + value.object_guid + "' data-type='gccollab_wire_post' onclick='GCTrequests.ReplyWirePost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>";
+            reply = "<a href='#' class='link' data-guid='" + value.object_guid + "' data-type='list' onclick='GCTrequests.ReplyWirePost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>";
         } else if (value.object.type == "blog") {
             action = "<a class='link' data-guid='" + value.object_guid + "' data-type='gccollab_blog_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
         }
