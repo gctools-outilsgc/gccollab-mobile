@@ -138,6 +138,7 @@
     "require-title": "Content requires a title.",
     "require-body": "Content requires a body.",
     "require-same-lang": "Content requires a title and body for the same language.",
+    "wire-text": "Wire Text",
 
     "messagecentre": "Message Centre",
     "colleague-requests": "Colleague Requests",
@@ -537,6 +538,7 @@ French = {
     "require-title": "Le contenu nécessite un titre.",
     "require-body": "Le contenu nécessite le texte complet.",
     "require-same-lang": "Le contenu nécessite un titre et le texte complet pour la même langue.",
+    "wire-text": "Texte Filaire",
     
     "message-centre": "Centre de message",
     "colleague-requests": "Demande de collègues",

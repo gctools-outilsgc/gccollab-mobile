@@ -1,0 +1,125 @@
+﻿<template>
+    <div class="page navbar-fixed">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div id="entity-{{guid}}-navbar-inner" class="navbar-inner" role="navigation" data-translate-target="aria-label" data-translate="navigation-bar">
+                    <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="far fa-times-circle"></i></a></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-content" style="overflow-x: hidden;">
+            <div id="original-{{guid}}" class='list cards-list'>
+                <div class="block-title">Replying To:</div>
+                <div class="card">
+                    <div class="card-header plain">{{author}}</div>
+                    <div class="card-content card-content-padding"><blockquote>{{text}}</blockquote></div>
+                </div>
+            </div>
+            <form class="list">
+                <ul>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div id="wire-body-label" class="item-title item-label" data-translate="wire-text">Wire Text</div>
+                                <div class="item-input-wrap">
+                                    <textarea id="post-wire-textarea" rows="20"  style='border: 1px solid #888;' maxlength="250"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                   <!-- <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div id="wire-body-label" class="item-title item-label" data-translate="attach-image"></div>
+                                <div id="image-display" class='item-media' aria-hidden="true">
+                                    <img id="picture-taken" src="" />
+                                </div>
+                                <div class="row">
+                                    <a href="#" id="camera-gallery" class="col button button-big" data-translate="photo-gallery">Photo Gallery</a>
+                                    <a href="#" id="camera-camera" class="col button button-big" data-translate="new-picture">Take a Picture</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li> -->
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <a href="#" id="submit-post-wire" class="col button button-big button-fill" data-translate="reply"></a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        </div>
+    </div>
+</template>
+<script>
+    return {
+        on: {
+            pageInit: function (e, page) {
+                var guid = this.guid;
+                var imageURI = "";
+                $$('#submit-post-wire').on('click', function (e) {
+                    var message = $("#post-wire-textarea").val();
+                    if (message) {
+                        GCTrequests.ReplyWire(guid, message, function (data) {
+                            console.log(data);
+                            app.dialog.alert(data.result, '', function () {
+                                mainView.router.navigate('/list-template/wires/');
+                            });
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        });
+                    } else {
+                        app.dialog.alert("Cannot post wire with no text.");
+                    }
+                });
+                $$('#camera-camera').on('click', function (e) {
+                    if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
+                        navigator.camera.getPicture(function onSuccess(imageData) {
+                            $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
+                            imageURI = imageData;
+                        }, function onFail(message) {
+                            // myApp.alert('Failed because: ' + message);
+                        }, {
+                                quality: 95,
+                                sourceType: Camera.PictureSourceType.CAMERA,
+                                destinationType: Camera.DestinationType.DATA_URL,
+                                encodingType: Camera.EncodingType.JPEG,
+                                targetWidth: 1920,
+                                targetHeight: 1920,
+                                allowEdit: false,
+                                correctOrientation: true //Corrects Android orientation quirks
+                            });
+                    } else {
+                        app.dialog.alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
+                    }
+                });
+
+                $$('#camera-gallery').on('click', function (e) {
+                    if (typeof navigator !== 'undefined' && typeof navigator.camera !== 'undefined') {
+                        navigator.camera.getPicture(function onSuccess(imageData) {
+                            $("#picture-taken").attr('src', "data:image/jpeg;base64," + imageData);
+                            imageURI = imageData;
+                        }, function onFail(message) {
+                            // myApp.alert("Failed because: " + message);
+                        }, {
+                                quality: 95,
+                                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                                destinationType: Camera.DestinationType.DATA_URL,
+                                encodingType: Camera.EncodingType.JPEG,
+                                targetWidth: 1920,
+                                targetHeight: 1920,
+                                allowEdit: false,
+                                correctOrientation: true //Corrects Android orientation quirks
+                            });
+                    } else {
+                        app.dialog.alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
+                    }
+                });
+            },
+        }
+    }
+</script>
