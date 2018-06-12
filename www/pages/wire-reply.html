@@ -16,7 +16,41 @@
                     <div class="card-content card-content-padding">{{text}}</div>
                 </div>
             </div>
-            <div id="content-entity-{{guid}}" class='list cards-list'></div>
+            <form class="list">
+                <ul>
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div id="wire-body-label" class="item-title item-label" data-translate="wire-text">Wire Text</div>
+                                <div class="item-input-wrap">
+                                    <textarea id="post-wire-textarea" class="resizable" style='border: 1px solid #888;' maxlength="250"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                   <!-- <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <div id="wire-body-label" class="item-title item-label" data-translate="attach-image"></div>
+                                <div id="image-display" class='item-media' aria-hidden="true">
+                                    <img id="picture-taken" src="" />
+                                </div>
+                                <div class="row">
+                                    <a href="#" id="camera-gallery" class="col button button-big" data-translate="photo-gallery">Photo Gallery</a>
+                                    <a href="#" id="camera-camera" class="col button button-big" data-translate="new-picture">Take a Picture</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li> -->
+                    <li>
+                        <div class="item-content item-input">
+                            <div class="item-inner">
+                                <a href="#" id="submit-post-wire" class="col button button-big button-fill" data-translate="reply"></a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </form>
 
         </div>
     </div>
