@@ -237,6 +237,32 @@ routes = [
             )
         }
     },
+    {
+        path: '/wire/reply/:guid/:type',
+        async: function (routeTo, routeFrom, resolve, reject) {
+            var guid = routeTo.params.guid;
+            var type = routeTo.params.type;
+            var card = $$('#' + type + '-' + guid).html();
+            var author = $$(card).find(".author");
+            var text = $$(card).find(".text-"+type);
+            author = $$(author).text();
+            text = $$(text).text();
+
+            resolve(
+                {
+                    componentUrl: './pages/wire-reply.html',
+                },
+                {
+                    context: {
+                        guid: guid,
+                        type: type,
+                        author: author,
+                        text: text,
+                    }
+                }
+            )
+        }
+    },
     // Default route (404 page). MUST BE THE LAST
     {
         path: '(.*)',

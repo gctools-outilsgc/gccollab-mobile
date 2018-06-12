@@ -130,7 +130,7 @@
         return content;
     },
     txtWire: function (object) {
-        var content = "<div id='card-" + object.guid + "' class='hold-all-card'>"
+        var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
@@ -147,7 +147,7 @@
             + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content  card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
-            + "<div id='wire-" + object.guid + "' class='text-card' >" + object.description + "</div>"
+            + "<div id='wire-" + object.guid + "' class='text-list' >" + object.description + "</div>"
             + "<div class='item-media'>" + object.image + "</div>"
             + object.source
             + "</div>"
@@ -183,7 +183,7 @@
             + "</div>"
             + "<div class='card-footer'>"
             + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-            + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='post' onclick='GCTUser.ReplyWirePost(this);'><i class='fas fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
+            + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='post' onclick='GCTrequests.ReplyWirePost(this);'><i class='fas fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
             + "</div>"
             + "</div><div>";
@@ -794,7 +794,7 @@ GCTEach = {
         var reply = "";
         if (value.object.type == "wire") {
             action = "<a class='link' data-guid='" + value.object_guid + "' data-type='gccollab_wire_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-            reply = "<a href='#' class='link' data-guid='" + value.object_guid + "' data-type='gccollab_wire_post' onclick='GCTUser.ReplyWirePost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>";
+            reply = "<a href='#' class='link' data-guid='" + value.object_guid + "' data-type='gccollab_wire_post' onclick='GCTrequests.ReplyWirePost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>";
         } else if (value.object.type == "blog") {
             action = "<a class='link' data-guid='" + value.object_guid + "' data-type='gccollab_blog_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
         }
@@ -2085,23 +2085,8 @@ GCTrequests = {
     },
     ReplyWirePost: function (obj) {
         var guid = $(obj).data("guid");
-        var wireReplyPopup = app.popup.create({
-            content: '<div class="popup">' +
-                '<div class="block">' +
-                '<p>TODO: Wire Reply</p>' +
-                '<p><a href="#" class="link popup-close">Close me</a></p>' +
-                '</div>' +
-                '</div>',
-            on: {
-                open: function (popup) {
-                    console.log('Popup open');
-                },
-                opened: function (popup) {
-                    console.log('Popup opened');
-                },
-            }
-        });
-        wireReplyPopup.open();
+        var type = $(obj).data("type");
+        mainView.router.navigate('/wire/reply/' + guid + '/' + type + '/');
     },
     ReplyWire: function (guid, message, successCallback, errorCallback) {
         app.request({
