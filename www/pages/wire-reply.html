@@ -9,8 +9,15 @@
         </div>
 
         <div class="page-content" style="overflow-x: hidden;">
+            <div id="original-{{guid}}" class='list cards-list'>
+                <div class="block-title">Replying To:</div>
+                <div class="card">
+                    <div class="card-header plain">{{author}}</div>
+                    <div class="card-content card-content-padding">{{text}}</div>
+                </div>
+            </div>
             <div id="content-entity-{{guid}}" class='list cards-list'></div>
-            
+
         </div>
     </div>
 </template>
