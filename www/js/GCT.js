@@ -2990,22 +2990,22 @@ GCT = {
 
         } else if (obj.href.indexOf("https://gccollab.ca/") > -1) {
             console.log('loading collab page...');
-            window.open(obj.href, '_blank');
+            cordova.InAppBrowser.open(obj.href, '_blank');
 
         } else {
             // This shouldn't happen
             console.log('loading external page (Error)');
-            window.open(obj.href, '_system');
+            cordova.InAppBrowser.open(obj.href, '_system');
         }
         return false;
     },
     SiteLink: function (obj) {
         if (obj.href.indexOf("https://gccollab.ca/") > -1) {
             console.log('loading collab page...');
-            window.open(obj.href, '_blank');
+            cordova.InAppBrowser.open(obj.href, '_blank');
         } else {
             console.log('non-gccollab link through SiteLink function. (Error)');
-            window.open(obj.href, '_system');
+            cordova.InAppBrowser.open(obj.href, '_system');
         }
     },
     SetLinks: function (html) {
