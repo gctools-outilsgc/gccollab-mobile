@@ -151,6 +151,11 @@ var mainView = app.views.create('.view-main', {
 $$(document).on('page:init', function (e) {
     GCTLang.TransPage();
 
+    $$(document).on('click', 'a.external', function (e) {
+        e.preventDefault();
+        cordova.InAppBrowser.open($(this).attr('href'), '_system');
+    });
+
     $$('#logoutBtn').on('click', function (e) {
         GCTUser.Logout();
         if (openid_enabled) {
