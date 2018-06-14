@@ -37,6 +37,7 @@ routes = [
                         page: page,
                         action: action,
                         filter: filterButton,
+                        filters: pageInfo.filters,
                     }
                 }
             )

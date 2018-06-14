@@ -31,7 +31,7 @@ var app  = new Framework7({
                     { id: "my-colleagues", each: GCTEach.Blog, request: GCTrequests.GetBlogsByColleagues, type: 'card' },
                     { id: "mine", each: GCTEach.Blog, request: GCTrequests.GetBlogsByUser, type: 'card' }],
                 action: 'post-blog',
-                filters: '',
+                filters: ['name'],
             },
             groups: {
                 limit: 15,
