@@ -38,20 +38,20 @@ var app  = new Framework7({
                 tabs: [{ id: "all", each: GCTEach.Group, request: GCTrequests.GetGroups, type: 'item' },
                     { id: "my-groups", each: GCTEach.Group, request: GCTrequests.GetGroupsMine, type: 'item' }],
                 action: '',
-                filters: '',
+                filters: ['name'],
             },
             members: {
                 limit: 15,
                 tabs: [{ id: "all", each: GCTEach.Member, request: GCTrequests.GetMembers, type: 'item' },
                     { id: "my-colleagues", each: GCTEach.Member, request: GCTrequests.GetMembersByUserColleague, type: 'item' }],
                 action: '',
-                filters: '',
+                filters: ['name'],
             },
             docs: {
                 limit: 10,
                 tabs: [{ id: "all", each: GCTEach.Doc, request: GCTrequests.GetDocs, type: 'card' }],
                 action: '',
-                filters: '',
+                filters: ['name'],
             },
             events: {
                 limit: 15,
