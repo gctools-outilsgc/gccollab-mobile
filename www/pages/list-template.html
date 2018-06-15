@@ -222,6 +222,7 @@
                         });
                     });
                     $$('#clear-filters-' + this.page).on('click', function (e) {
+                        document.getElementById('filter-form-' + page).reset();
                         tabs.forEach(function (tab) {
                             tab.filters = '';
                             console.log(tab.filters);
