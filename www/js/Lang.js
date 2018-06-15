@@ -92,8 +92,10 @@
     "loading": "Loading...",
     "credit": "This App Brought To You By the GCTools Team",
     "filter": "Filter",
+    "filter-options": "Open Filter Options", ///TODO
     "filter-members": "Filter Members",
     "filter-groups": "Filter Groups",
+    "filter-events": "Filter Events",
     "clear-filters": "Clear Filters",
     "save-filters": "Save Filters",
     "member-type": "Member Type",
@@ -492,8 +494,10 @@ French = {
     "loading": "Chargement ...",
     "credit": "Cette application vous a été présentée par l'équipe GCTools",
     "filter": "Filtre",
+    "filter-options": "Ouvrir les options de filtrage", ///ToDO
     "filter-members": "Filtrer les membres",
     "filter-groups": "Filtrer les groupes",
+    "filter-events": "Filtrer les événement",
     "clear-filters": "Supprimer les filtres",
     "save-filters": "Enregistrer les filtres",
     "member-type": "Type de membre",

@@ -22,7 +22,8 @@ routes = [
             
             var navbar = GCTtxt.txtGlobalNav(page);
             var action = GCTtxt.txtAction(pageInfo.action);
-            var filterButton = GCTtxt.txtFilterButton(pageInfo.filters);
+            var filterButton = ''
+            if (pageInfo.filters) { filterButton = GCTtxt.txtFilterButton(page); }
             var tabs = [];
             pageInfo.tabs.forEach(function (tab) { tabs.push(tabObject(page, tab.id, pageInfo.limit, tab.type, tab.header, tab.each, tab.request)); });
             
@@ -37,6 +38,7 @@ routes = [
                         page: page,
                         action: action,
                         filter: filterButton,
+                        filters: pageInfo.filters,
                     }
                 }
             )

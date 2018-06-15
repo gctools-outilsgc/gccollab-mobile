@@ -38,11 +38,8 @@
         return action;
     },
     txtFilterButton: function (ref) {
-        var filter = '';
-        switch (ref) {
-            default: ;
-        }
-        return filter;
+        var filterButton = '<p><a href="#" data-popup=".filters-' + ref + '" class="popup-open link icon-only" data-translate-target="aria-label" data-translate="filter-options"><i class="fas fa-search fa-2x"></i></a></p>';
+        return filterButton;
     },
     txtTabHeader: function (ref, id) {
         var header = '';
@@ -1870,7 +1867,7 @@ GCTrequests = {
             method: 'POST',
             dataType: 'json',
             url: GCT.GCcollabURL,
-            data: { method: "get.blogposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "get.blogposts", user: GCTUser.Email(), limit: limit, offset: offset, filters: filters, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);
@@ -2127,7 +2124,7 @@ GCTrequests = {
             }
         });
     },
-    GetGroups: function (tabObject, filters) {
+    GetGroups: function (tabObject) {
         limit = tabObject.limit || 15;
         offset = tabObject.offset || 0;
         filters = tabObject.filters || '';
@@ -2136,7 +2133,7 @@ GCTrequests = {
             method: 'POST',
             dataType: 'json',
             url: GCT.GCcollabURL,
-            data: { method: "get.groups", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "get.groups", user: GCTUser.Email(), limit: limit, offset: offset, filters: filters, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);
@@ -2146,10 +2143,13 @@ GCTrequests = {
             }
         });
     },
-    GetGroupsMine: function (tabObject, filters) {
+    GetGroupsMine: function (tabObject) {
         limit = tabObject.limit || 15;
         offset = tabObject.offset || 0;
         filters = tabObject.filters || '';
+        if (tabObject.filters) {
+            filters = JSON.parse(tabObject.filters);
+        }
         filters = $.extend({ "mine": true }, filters);
 
         app.request({
@@ -2309,15 +2309,16 @@ GCTrequests = {
             }
         });
     },
-    GetMembers: function (tabObject, filters) {
+    GetMembers: function (tabObject) {
         limit = tabObject.limit || 15;
         offset = tabObject.offset || 0;
+        filters = tabObject.filters || '';
 
         app.request({
             method: 'POST',
             dataType: 'json',
             url: GCT.GCcollabURL,
-            data: { method: "get.members", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "get.members", user: GCTUser.Email(), limit: limit, offset: offset, filters: filters, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);
@@ -2327,18 +2328,19 @@ GCTrequests = {
             }
         });
     },
-    GetMembersByUserColleague: function (tabObject, profile, filters) {
+    GetMembersByUserColleague: function (tabObject, profile) {
         if (typeof profile == 'undefined')
             profile = GCTUser.Email(); //### Get current users profile
 
         limit = tabObject.limit || 15;
         offset = tabObject.offset || 0;
+        filters = tabObject.filters || '';
 
         app.request({
             method: 'POST',
             dataType: 'json',
             url: GCT.GCcollabURL,
-            data: { method: "get.memberscolleague", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "get.memberscolleague", user: GCTUser.Email(), profileemail: profile, limit: limit, offset: offset, filters: filters, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);
@@ -2348,15 +2350,16 @@ GCTrequests = {
             }
         });
     },
-    GetDocs: function (tabObject, filters) {
+    GetDocs: function (tabObject) {
         limit = tabObject.limit || 15;
         offset = tabObject.offset || 0;
+        filters = tabObject.filters || '';
 
         app.request({
             method: 'POST',
             dataType: 'json',
             url: GCT.GCcollabURL,
-            data: { method: "get.docs", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "get.docs", user: GCTUser.Email(), limit: limit, offset: offset, filters: filters, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);
@@ -2384,8 +2387,12 @@ GCTrequests = {
     GetEvents: function (tabObject, from, to) {
         limit = tabObject.limit || 15;
         offset = tabObject.offset || 0;
-        from = from || "";
-        to = to || "";
+        var filters = tabObject.filters || '';
+        if (filters) {
+            filters = JSON.parse(filters);
+        }
+        from = filters.from || "";
+        to = filters.to || "";
 
         app.request({
             method: 'POST',
@@ -2404,8 +2411,12 @@ GCTrequests = {
     GetEventsByUser: function (tabObject, from, to) {
         limit = tabObject.limit || 15;
         // offset = offset || 0;
-        from = from || "";
-        to = to || "";
+        var filters = tabObject.filters || '';
+        if (filters) {
+            filters = JSON.parse(filters);
+        }
+        from = filters.from || "";
+        to = filters.to || "";
 
         app.request({
             method: 'POST',
@@ -2423,8 +2434,12 @@ GCTrequests = {
     },
     GetEventsByColleagues: function (tabObject, from, to) {
         limit = tabObject.limit || 15;
-        from = from || "";
-        to = to || "";
+        var filters = tabObject.filters || '';
+        if (filters) {
+            filters = JSON.parse(filters);
+        }
+        from = filters.from || "";
+        to = filters.to || "";
 
         app.request({
             method: 'POST',
@@ -2594,7 +2609,7 @@ GCTrequests = {
             method: 'POST',
             dataType: 'json',
             url: GCT.GCcollabURL,
-            data: { method: "get.opportunities", user: GCTUser.Email(), limit: limit, offset: offset, filters: JSON.stringify(filters), api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "get.opportunities", user: GCTUser.Email(), limit: limit, offset: offset, filters: filters, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);

@@ -21,7 +21,8 @@
         <div class="toolbar toolbar-bottom-md" role="navigation" data-translate-target="aria-label" data-translate="toolbar">
             <div class="toolbar-inner">
                 <div class="left sliding"><a href="#" class="link back" aria-label="Back Button"><i class="far fa-arrow-alt-circle-left fa-2x"></i></a></div>
-                <div class="right sliding">{{this.action}}{{this.filter}}</div>
+                {{this.filter}}
+                <div class="right sliding">{{this.action}}</div>
             </div>
         </div>
 
@@ -52,6 +53,90 @@
                     </ul>
                 </div>
             </div>
+        </div>
+        {{/js_if}}
+        {{#js_if "this.filters"}}
+        <div class="popup filters-{{page}}">
+            <div class="view">
+                <div class="page">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <div class="left"><a href="#" class="link popup-close" data-translate-target="aria-label" data-translate="close"><i class="far fa-times-circle"></i></a></div>
+                            <div class="title" data-translate="filter-{{page}}"></div>
+                        </div>
+                    </div>
+                    <div class="page-content">
+                        <form class="list" id="filter-form-{{page}}">
+                            <ul>
+                                {{#each filters}}
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            {{#js_if "this.id == 'name'" }}
+                                            <div class="item-title item-label" data-translate="name"></div>
+                                            <div class="item-input-wrap">
+                                                <input type="text" name="name" data-translate="name" data-translate-target="placeholder">
+                                            </div>
+                                            {{/js_if}}
+                                            {{#js_if "this.id == 'memberType'" }}
+                                            <div class="item-title item-label" data-translate="member-type"></div>
+                                            <div class="item-input-wrap">
+                                                <select id="member-filters" name="type">
+                                                    <option value="" data-translate="none">None</option>
+                                                    <option value="academic" data-translate="user-type-academic">Academic</option>
+                                                    <option value="student" data-translate="user-type-student">Student</option>
+                                                    <option value="federal" data-translate="user-type-federal">Federal Government</option>
+                                                    <option value="provincial" data-translate="user-type-provincial">Provincial/Territorial Government</option>
+                                                    <option value="municipal" data-translate="user-type-municipal">Municipal Government</option>
+                                                    <option value="international" data-translate="user-type-international">International/Foreign Government</option>
+                                                    <option value="ngo" data-translate="user-type-ngo">Non-Governmental Organization</option>
+                                                    <option value="community" data-translate="user-type-community">Community/Non-profit</option>
+                                                    <option value="business" data-translate="user-type-business">Business</option>
+                                                    <option value="media" data-translate="user-type-media">Media</option>
+                                                    <option value="retired" data-translate="user-type-retired">Retired Public Servant</option>
+                                                    <option value="other" data-translate="user-type-other">Other</option>
+                                                </select>
+                                            </div>
+                                            {{/js_if}}
+                                            {{#js_if "this.id == 'to'" }}
+                                            <div class="item-title item-label" data-translate="to">Name</div>
+                                            <div class="item-input-wrap">
+                                                <input type="date" name="to">
+                                            </div>
+                                            {{/js_if}}
+                                            {{#js_if "this.id == 'from'" }}
+                                            <div class="item-title item-label" data-translate="from"></div>
+                                            <div class="item-input-wrap">
+                                                <input type="date" name="from">
+                                            </div>
+                                            {{/js_if}}
+                                            {{#js_if "this.id == 'oppType'" }}
+                                            <div class="item-title item-label" data-translate="opportunity-type"></div>
+                                            <div class="item-input-wrap">
+                                                <select id="opportunity-filters" name="type">
+                                                    <option value="" data-translate="none">None</option>
+                                                    <option value="missions:mentoring" data-translate="opportunity-type-mentor">Mentoring</option>
+                                                    <option value="missions:casual" data-translate="opportunity-type-casual">Casual Work</option>
+                                                    <option value="missions:student" data-translate="opportunity-type-student">Student Integration</option>
+                                                </select>
+                                            </div>
+                                            {{/js_if}}
+                                        </div>
+                                    </div>
+                                </li>
+                                {{/each}}
+                            </ul>
+                            <div class="block">
+                                <div class="row">
+                                    <a href="#" id="clear-filters-{{page}}" class="col button button-big button-raised popup-close" data-translate="clear-filters">Clear Filters</a>
+                                    <a href="#" id="save-filters-{{page}}" class="col button button-big button-fill popup-close" data-translate="save-filters">Save Filters</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            ...
         </div>
         {{/js_if}}
     </div>
@@ -105,6 +190,8 @@
             pageInit: function (e, page) {
                 console.log('pageInit', page);
                 var tabs = this.tabs;
+                var filters = this.filters;
+                var page = this.page;
                 tabs[0].request(tabs[0]); //load first tab, which is active tab
                 tabs.forEach(function (tab) {
                     //More Button
@@ -125,6 +212,24 @@
                         GCTtabs.TabReset(tab);
                     });
                 });
+                if (filters) {
+                    $$('#save-filters-' + this.page).on('click', function (e) {
+                        var temp = JSON.stringify(app.form.convertToData('#filter-form-' + page));
+                        tabs.forEach(function (tab) {
+                            tab.filters = temp;
+                            console.log(tab.filters);
+                            GCTtabs.TabReset(tab);
+                        });
+                    });
+                    $$('#clear-filters-' + this.page).on('click', function (e) {
+                        document.getElementById('filter-form-' + page).reset();
+                        tabs.forEach(function (tab) {
+                            tab.filters = '';
+                            console.log(tab.filters);
+                            GCTtabs.TabReset(tab);
+                        });
+                    });
+                }
             },
             pageBeforeIn: function (e, page) {
                 //console.log('pageBeforeIn', page);
