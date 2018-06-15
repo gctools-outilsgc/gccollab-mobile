@@ -66,7 +66,67 @@
                         </div>
                     </div>
                     <div class="page-content">
-                        ...
+                        <form class="list" id="filter-form-{{page}}">
+                            <ul>
+                                {{#each filters}}
+                                <li>
+                                    <div class="item-content item-input">
+                                        <div class="item-inner">
+                                            {{#js_if "this.id == 'name'" }}
+                                            <div class="item-title item-label" data-translate="name"></div>
+                                            <div class="item-input-wrap">
+                                                <input type="text" name="name-filter-{{page}}" data-translate="name" data-translate-target="placeholder">
+                                            </div>
+                                            {{/js_if}}
+                                            {{#js_if "this.id == 'memberType'" }}
+                                            <div class="item-title item-label" data-translate="member-type"></div>
+                                            <div class="item-input-wrap">
+                                                <select id="member-filters" name="member-filter-{{page}}">
+                                                    <option value="" data-translate="none">None</option>
+                                                    <option value="academic" data-translate="user-type-academic">Academic</option>
+                                                    <option value="student" data-translate="user-type-student">Student</option>
+                                                    <option value="federal" data-translate="user-type-federal">Federal Government</option>
+                                                    <option value="provincial" data-translate="user-type-provincial">Provincial/Territorial Government</option>
+                                                    <option value="municipal" data-translate="user-type-municipal">Municipal Government</option>
+                                                    <option value="international" data-translate="user-type-international">International/Foreign Government</option>
+                                                    <option value="ngo" data-translate="user-type-ngo">Non-Governmental Organization</option>
+                                                    <option value="community" data-translate="user-type-community">Community/Non-profit</option>
+                                                    <option value="business" data-translate="user-type-business">Business</option>
+                                                    <option value="media" data-translate="user-type-media">Media</option>
+                                                    <option value="retired" data-translate="user-type-retired">Retired Public Servant</option>
+                                                    <option value="other" data-translate="user-type-other">Other</option>
+                                                </select>
+                                            </div>
+                                            {{/js_if}}
+                                            {{#js_if "this.id == 'to'" }}
+                                            <div class="item-title item-label" data-translate="to">Name</div>
+                                            <div class="item-input-wrap">
+                                                <input type="date" name="to-filter-{{page}}">
+                                            </div>
+                                            {{/js_if}}
+                                            {{#js_if "this.id == 'from'" }}
+                                            <div class="item-title item-label" data-translate="from"></div>
+                                            <div class="item-input-wrap">
+                                                <input type="date" name="from-filter-{{page}}">
+                                            </div>
+                                            {{/js_if}}
+                                            {{#js_if "this.id == 'oppType'" }}
+                                            <div class="item-title item-label" data-translate="opportunity-type"></div>
+                                            <div class="item-input-wrap">
+                                                <select id="opportunity-filters" name="oppType-filter-{{page}}">
+                                                    <option value="" data-translate="none">None</option>
+                                                    <option value="missions:mentoring" data-translate="opportunity-type-mentor">Mentoring</option>
+                                                    <option value="missions:casual" data-translate="opportunity-type-casual">Casual Work</option>
+                                                    <option value="missions:student" data-translate="opportunity-type-student">Student Integration</option>
+                                                </select>
+                                            </div>
+                                            {{/js_if}}
+                                        </div>
+                                    </div>
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </form>
                     </div>
                 </div>
             </div>
