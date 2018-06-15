@@ -75,13 +75,13 @@
                                             {{#js_if "this.id == 'name'" }}
                                             <div class="item-title item-label" data-translate="name"></div>
                                             <div class="item-input-wrap">
-                                                <input type="text" name="name-filter-{{page}}" data-translate="name" data-translate-target="placeholder">
+                                                <input type="text" name="name" data-translate="name" data-translate-target="placeholder">
                                             </div>
                                             {{/js_if}}
                                             {{#js_if "this.id == 'memberType'" }}
                                             <div class="item-title item-label" data-translate="member-type"></div>
                                             <div class="item-input-wrap">
-                                                <select id="member-filters" name="member-filter-{{page}}">
+                                                <select id="member-filters" name="type">
                                                     <option value="" data-translate="none">None</option>
                                                     <option value="academic" data-translate="user-type-academic">Academic</option>
                                                     <option value="student" data-translate="user-type-student">Student</option>
@@ -101,19 +101,19 @@
                                             {{#js_if "this.id == 'to'" }}
                                             <div class="item-title item-label" data-translate="to">Name</div>
                                             <div class="item-input-wrap">
-                                                <input type="date" name="to-filter-{{page}}">
+                                                <input type="date" name="to">
                                             </div>
                                             {{/js_if}}
                                             {{#js_if "this.id == 'from'" }}
                                             <div class="item-title item-label" data-translate="from"></div>
                                             <div class="item-input-wrap">
-                                                <input type="date" name="from-filter-{{page}}">
+                                                <input type="date" name="from">
                                             </div>
                                             {{/js_if}}
                                             {{#js_if "this.id == 'oppType'" }}
                                             <div class="item-title item-label" data-translate="opportunity-type"></div>
                                             <div class="item-input-wrap">
-                                                <select id="opportunity-filters" name="oppType-filter-{{page}}">
+                                                <select id="opportunity-filters" name="type">
                                                     <option value="" data-translate="none">None</option>
                                                     <option value="missions:mentoring" data-translate="opportunity-type-mentor">Mentoring</option>
                                                     <option value="missions:casual" data-translate="opportunity-type-casual">Casual Work</option>
@@ -126,6 +126,12 @@
                                 </li>
                                 {{/each}}
                             </ul>
+                            <div class="block">
+                                <div class="row">
+                                    <a href="#" id="clear-filters-{{page}}" class="col button button-big button-raised popup-close" data-translate="clear-filters">Clear Filters</a>
+                                    <a href="#" id="save-filters-{{page}}" class="col button button-big button-fill popup-close" data-translate="save-filters">Save Filters</a>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -184,6 +190,8 @@
             pageInit: function (e, page) {
                 console.log('pageInit', page);
                 var tabs = this.tabs;
+                var filters = this.filters;
+                var page = this.page;
                 tabs[0].request(tabs[0]); //load first tab, which is active tab
                 tabs.forEach(function (tab) {
                     //More Button
@@ -204,6 +212,23 @@
                         GCTtabs.TabReset(tab);
                     });
                 });
+                if (filters) {
+                    $$('#save-filters-' + this.page).on('click', function (e) {
+                        var temp = JSON.stringify(app.form.convertToData('#filter-form-' + page));
+                        tabs.forEach(function (tab) {
+                            tab.filters = temp;
+                            console.log(tab.filters);
+                            GCTtabs.TabReset(tab);
+                        });
+                    });
+                    $$('#clear-filters-' + this.page).on('click', function (e) {
+                        tabs.forEach(function (tab) {
+                            tab.filters = '';
+                            console.log(tab.filters);
+                            GCTtabs.TabReset(tab);
+                        });
+                    });
+                }
             },
             pageBeforeIn: function (e, page) {
                 //console.log('pageBeforeIn', page);
