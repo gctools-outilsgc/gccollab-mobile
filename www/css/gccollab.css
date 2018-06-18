@@ -1,98 +1,6 @@
 
 
-.list-block.cards-list { margin-top: 0; margin-bottom: 0; }
-.smart-select-page .list-block {
-	margin-top: 0;
-	margin-bottom: 0;
-}
-.gccollab.list-block ul li .item-title-row, .gccollab.list-block ul li .time,
-.gccollab .list-block ul li .item-title-row, .gccollab .list-block ul li .time {
-	color: #fff;
-}
-.gccollab.card.list-block.media-list .content-block .button,
-.gccollab .card.list-block.media-list .content-block .button {
-	background-color: #46246A;
-}
 
-.navbar .center {
-	font-size: 20px !important;
-    font-weight: bold !important;
-    text-transform: none !important;
-}
-
-.activity-description {
-	white-space: normal !important;
-	font-size: 15px !important;
-	margin-bottom: 5px;
-}
-
-.popover { max-width: 94%; }
-.panel-right { width: 90%; }
-body.with-panel-right-reveal .card {
-	width: 95%;
-	margin-top: 4px;
-    margin-bottom: 2px;
-}
-body.with-panel-right-reveal .views, body.with-panel-right-reveal .panel-overlay {
-	-webkit-transform: translate3d(-90%,0,0);
-    transform: translate3d(-90%,0,0); 
-}
-
-.blog-title {
-	font-weight: 400;
-    font-size: 16px;
-    color: #000;
-}
-.blog-group {
-    color: #000;
-    margin-bottom: 10px;
-}
-
-iframe {
-    width: 100%;
-    height: 100%;
-    padding: 0px;
-    margin: 0px;
-    border: 0px;
-}
-
-textarea {
-    width: 100%;
-}
-
-.popup-generic #tab-profile .list-block li {
-    padding: 5px 0;
-    border-bottom: 1px dashed #eee;
-}
-
-.popup-generic #tab-profile .list-block li:first-child {
-    padding-top: 0;
-}
-
-.popup-generic #tab-profile .list-block li:last-child {
-    padding-bottom: 0;
-    border: none;
-}
-
-
-#wire-post-textarea {
-    min-height: 100px;
-    max-width: 95%;
-    padding: 5px;
-    margin-top: 10px;
-    resize: none;
-    border: 1px solid #46246A;
-    border-radius: 0;
-}
-
-.comment-textarea {
-    min-height: 100px;
-    text-align: center;
-    max-width: 98%;
-    resize: none;
-    border: 1px solid #46246A;
-    border-radius: 0;
-}
 
 .gedsSearch {
     width: 95%;
@@ -324,9 +232,6 @@ i.icon-bars.theme-gccollab {
     font-weight: bolder;
 }
 .theme-gccollab .card-header {
-    text-shadow: 2px 2px 4px black;
-}
-.theme-gccollab .navbar .center {
     text-shadow: 2px 2px 4px black;
 }
 
