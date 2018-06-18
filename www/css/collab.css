@@ -665,7 +665,7 @@ ul.profiles::after {height: 1px;}
 /*--------------------------------------------*/
 /*------------------- menu landing -----------------*/
 /*--------------------------------------------*/
-.menulanding{ padding: 00; width: 100%; float: left; margin: 0 auto;background: #46246A; }
+.menulanding{ padding: 0; width: 100%; float: left; margin: 0 auto;background: #46246A; }
 .menulanding  li { width: 33.30%; float: left; list-style: none; text-align: center;}
 .menulanding li .item-link { height: 80px; width: 80px; display: block; border: 1px solid rgba(0, 0, 0, 0.10); margin: 10px auto;}
 .menulanding li .item-link i{ width: 100%; display: block; line-height: 48px; font-size: 24px; color: #ffffff;}
