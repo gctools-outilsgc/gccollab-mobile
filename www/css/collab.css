@@ -96,6 +96,16 @@ ul > li{padding-bottom:10px}
     max-height: 120px;
     -webkit-line-clamp: 6;
 }
+.fit {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-word-break: break-all;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
 /* Basic Padding */
 .vertical-padding {
     padding-top: 5%;
@@ -206,3 +216,26 @@ textarea {
     border: 1px solid #46246A;
     border-radius: 0;
 }
+.card .flex { display: flex; align-items: center; justify-content: center; padding: 5px; }
+.card p { margin: 0; }
+.cardtags { font-size: smaller; margin-top:3px; }
+.WireImage {
+    height: 100px;
+    width: auto;
+    float:right;
+    padding:0px 0px 0px 5px;
+}
+
+.card.list.media-list:first-child { margin: 0 0 8px; }
+.card.list.media-list { margin: 8px 0; }
+.card.list.media-list .item-subtitle { font-size: 16px; font-weight: bold; }
+.card.list.media-list .item-text { margin-bottom: 10px; max-height: 60px; -webkit-line-clamp: 3; }
+.card.list.media-list .item-tags { font-size: 14px; position: relative; overflow: hidden; white-space: nowrap; max-width: 100%; text-overflow: ellipsis; margin-bottom: 10px; color: #46246A; }
+.card.list.media-list .item-inner { margin-left: 5px; }
+.card.list.media-list .item-inner time { font-size: 10px; }
+.card.list.media-list .block { margin: 10px 0; }
+.card.list.media-list .block .button { font-size: 12px; height: 32px; line-height: 32px; }
+.card.list.media-list .block .icons i { display: inline-block; padding: 5px; }
+.card.list.media-list .block .icons i:first-child { padding-left: 0; }
+.card.list.media-list .block .icons i:last-child { padding-right: 0; }
+.card.list.media-list .block .icons i.fa-2x { font-size: 1.6em; }

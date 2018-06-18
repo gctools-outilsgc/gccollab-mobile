@@ -1,63 +1,6 @@
 
 
 
-
-.gedsSearch {
-    width: 95%;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 50px;
-    font-size: 16px;
-    color: #46246A;
-    font-weight: bold;
-    background-color: white;
-    background-image: url(../img/searchicon.png);
-    background-position: 10px 12px;
-    background-repeat: no-repeat;
-    padding: 12px 20px 12px 40px;
-    -webkit-transition: width .4s ease-in-out;
-    -webkit-transition: border-radius .4s ease-in-out;
-    transition: width .4s ease-in-out;
-    overflow: visible;
-    margin: 5px 0;
-}
-
-/* When the input field gets focus, change its width to 100% */
-.gedsSearch:focus {
-    width: 98%;
-    border-radius:5px;
-}
-
-.swiper-container:not(.photo-browser-swiper-container) { width: 95%; overflow: initial; }      
-.swiper-pagination { position: relative; margin-top: 15px; }
-.smart-select-popup .list-block { margin: 0; }
-
-.card .flex { display: flex; align-items: center; justify-content: center; padding: 5px; }
-.card p { margin: 0; }
-.cardtags { font-size: smaller; margin-top:3px; }
-.WireImage {
-    height: 100px;
-    width: auto;
-    float:right;
-    padding:0px 0px 0px 5px;
-
-
-}
-
-.card.list-block.media-list:first-child { margin: 0 0 8px; }
-.card.list-block.media-list { margin: 8px 0; }
-.card.list-block.media-list .item-subtitle { font-size: 16px; font-weight: bold; }
-.card.list-block.media-list .item-text { margin-bottom: 10px; max-height: 60px; -webkit-line-clamp: 3; }
-.card.list-block.media-list .item-tags { font-size: 14px; position: relative; overflow: hidden; white-space: nowrap; max-width: 100%; text-overflow: ellipsis; margin-bottom: 10px; color: #46246A; }
-.card.list-block.media-list .item-inner { margin-left: 5px; }
-.card.list-block.media-list .item-inner time { font-size: 10px; }
-.card.list-block.media-list .content-block { margin: 10px 0; }
-.card.list-block.media-list .content-block .button { font-size: 12px; height: 32px; line-height: 32px; }
-.card.list-block.media-list .content-block .icons i { display: inline-block; padding: 5px; }
-.card.list-block.media-list .content-block .icons i:first-child { padding-left: 0; }
-.card.list-block.media-list .content-block .icons i:last-child { padding-right: 0; }
-.card.list-block.media-list .content-block .icons i.fa-2x { font-size: 1.6em; }
-
 /*-------------------------------------------------------------*/
 /*--------------------- GCcollab colours ----------------------*/
 /*-------------------------------------------------------------*/
