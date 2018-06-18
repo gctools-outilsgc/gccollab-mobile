@@ -173,9 +173,6 @@ ul > li{padding-bottom:10px}
     font-size: 20px !important;
     font-weight: bold !important;
     text-transform: none !important;
-}
-
-.navbar {
     text-shadow: 2px 2px 4px black;
 }
 
@@ -239,6 +236,11 @@ textarea {
 .card.list.media-list .block .icons i:first-child { padding-left: 0; }
 .card.list.media-list .block .icons i:last-child { padding-right: 0; }
 .card.list.media-list .block .icons i.fa-2x { font-size: 1.6em; }
+
+
+.md .subnavbar .button:not(.button-fill):not(.button-fill-md){
+    color: #46246A;
+}
 
 /*-------------------------------------------------------------*/
 /*--------------------- GCcollab colours ----------------------*/
