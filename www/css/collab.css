@@ -241,6 +241,9 @@ textarea {
 .md .subnavbar .button:not(.button-fill):not(.button-fill-md){
     color: #46246A;
 }
+.md .card-content-padding-options {
+    padding: 0px 16px 16px 16px;
+}
 
 /*-------------------------------------------------------------*/
 /*--------------------- GCcollab colours ----------------------*/
