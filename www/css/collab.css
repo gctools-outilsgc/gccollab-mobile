@@ -33,7 +33,114 @@ details{display:block}
 summary{display:list-item}
 template{display:none}
 [hidden]{display:none}
-/* Not normalize.css but from old css */
+/* Not normalize.css but migrated from old css */
 blockquote{margin:0;padding-left:5px}
 ul{padding-left:20px}
 ul > li{padding-bottom:10px}
+
+/*-------------------------------------------------------------*/
+/*--------------------- Custom css style ----------------------*/
+/*-------------------------------------------------------------*/
+/*-------------------------------------------------------------*/
+/* badge-wrapper & count is for notification number above icons */
+.badge-wrapper {
+    vertical-align: middle;
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-style: normal;
+    position: relative;
+}
+.badge-wrapper .badge {
+    position: absolute;
+    background-color: #f44336;
+    left: 100%;
+    margin-left: -10px;
+    top: -5px;
+    font-size: 10px;
+    line-height: 16px;
+    height: 16px;
+    border-radius: 16px;
+    padding: 0 5px;
+    min-width: 16px;
+    font-family: -apple-system,SF UI Text,Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+.panel-right .count {
+    display: none;
+}
+.panel-right .count.exists {
+    display: inline;
+    background-color: #f44336;
+    padding: 2px 5px;
+    margin-left: 4px;
+    border-radius: 8px;
+}
+/* Text Containers */
+.more_text {
+    max-height: 60px !important;
+    -webkit-line-clamp: 3 !important;
+}
+.all_text {
+    max-height: none !important;
+    -webkit-line-clamp: inherit !important;
+}
+.reg-text {
+    text-transform: none !important;
+}
+.reader-text {
+    position: absolute !important;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+.list-block .item-text.large {
+    color: #000;
+    max-height: 120px;
+    -webkit-line-clamp: 6;
+}
+/* Basic Padding */
+.vertical-padding {
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+.horizontal-padding {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+/* Likes related */
+.liked i.fa-thumbs-o-up:before {
+    content: "\f164";
+}
+
+.ptm { padding-top: 10px; }
+.more-options { padding: 0 5px; }
+.rounded img { max-width: 40px; max-height: 40px; border-radius: 50%; }
+.theme-gccollab .time { color: #46246A; }
+.card-header { background: #46246A; color: #fff; }
+.card-header.plain { background: #fff; color: #46246A; text-shadow: none !important; }
+.card-header .time { color: #fff; }
+.card-header.plain .time { color: #46246A; text-shadow: none !important; }
+.card-content blockquote { margin-top: 10px; border-left: 2px solid #46246A; }
+.card-content-inner { color: #000; }
+.card-footer a.link, .card-footer { color: #46246A !important; }
+.theme-gccollab .card-header .item-title { color: #fff !important; }
+.theme-gccollab .item-subtitle { color: rgba(255, 255, 255, 0.7) !important; }
+.margin-0 { margin: 0; }
+.vmargin-0 { margin-top: 0; margin-bottom: 0; }
+.hmargin-0 { margin-left: 0; margin-right: 0; }
+.margin-10 { margin: 10px; }
+.vmargin-10 { margin: 10px 0; }
+.hmargin-10 { margin: 0 10px; }
+.font-13 { font-size: 13px; }
+.no-padding-right { padding-right: 0 !important; }
+.fa-big { font-size: 1.6em; }
+.no-margin { margin: 0; }
+.no-padding { padding: 0; }
+.no-padding-bottom { padding-bottom: 0; }
+
+.unread { font-weight: bold; }
+.loading {
+    display: block;
+	width: 100%;
+	padding: 50px 0;
+	text-align: center;
+	font-size: 1.2em;
+}
