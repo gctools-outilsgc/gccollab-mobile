@@ -643,3 +643,139 @@ li.profiles {background-color: white;}
 .share {color: #777777;}
 .share-section {padding: 15px 0;}
 ul.profiles::after {height: 1px;}
+
+/*--------------------------------------------*/
+/*----------- theme1 contacts color  ------------*/
+/*--------------------------------------------*/
+.list.media-list .item-media img {
+    max-width: 40px;
+    max-height: 40px;
+    border-radius: 50%
+}
+
+/*--------------------------------------------*/
+/*------------------- masonary -----------------*/
+/*--------------------------------------------*/
+.grid .grid-item{ width:33.33333%; padding: 1px; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box;}
+.grid.two .grid-item{ width:50%;}
+.grid.one .grid-item{ width:100%;}
+.grid a{width: 100%; display: block; float: left}
+.grid a img{width: 100%; display: block; float: left}
+
+/*--------------------------------------------*/
+/*------------------- menu landing -----------------*/
+/*--------------------------------------------*/
+.menulanding{ padding: 00; width: 100%; float: left; margin: 0 auto;background: #46246A; }
+.menulanding  li { width: 33.30%; float: left; list-style: none; text-align: center;}
+.menulanding li .item-link { height: 80px; width: 80px; display: block; border: 1px solid rgba(0, 0, 0, 0.10); margin: 10px auto;}
+.menulanding li .item-link i{ width: 100%; display: block; line-height: 48px; font-size: 24px; color: #ffffff;}
+.menulanding li .item-link span{ font-size: 13px; line-height: 18px; padding: 0 2%; text-align: center; width: 96%; display: block; text-overflow: ellipsis; overflow: hidden ; white-space: nowrap;  color: #fff;}
+
+/* font for header titles */
+.header .logo, .maintitle, h1, h2 , h3{
+	font-family: 'Oswald', sans-serif;
+	font-weight: 400;
+	color: #000000;
+}
+h2+p { font-size: 17px;  font-weight: 400;}
+
+/* scrollbars */
+::-webkit-scrollbar {
+ width: 2px;
+    height: 2px
+}
+ 
+::-webkit-scrollbar-track {
+ -webkit-border-radius: 10px;
+ border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+ -webkit-border-radius: 10px;
+ border-radius: 10px;
+ background: rgba(0,0,0,0.4);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+ background: rgba(0, 0, 0, 0.2);
+}
+
+.members-icon img {
+    max-height: 50px;
+    max-width: 50px;
+}
+
+.card-header .item-media img {
+    max-height: 40px;
+    max-width: 40px;
+}
+.modal-view {
+    height: 300px;
+}
+.modal-view .list-block {
+    margin: 0;
+}
+
+.my_select .list-block    {
+overflow:scroll;
+  }
+
+.my_select .item-title    {
+    overflow:visible;
+      }
+
+.my_select label.label-checkbox, label.label-radio{
+overflow:visible;
+
+}
+
+.my_select .list-block .autocomplete-opener .item-after, .list-block .smart-select .item-after{
+ max-width: 100%;   
+}
+
+.my_select ul > li {
+     padding-bottom: 0;
+     margin-top:10px;
+}
+.norm-text {
+    color: #030303;
+}
+
+.bolder-title {
+    font-weight: bolder;
+    color: #030303;
+    font-size: 14px;
+}
+
+.bolder-head-title {
+    font-weight: bolder;
+    text-transform: uppercase;
+    color: #030303;
+    font-size: 14px;
+}
+
+.slidding-block {
+    padding-top: 44px;
+}
+.no-border{
+    border:none;
+}
+
+.specific{
+ padding-left:10px !important; 
+}
+
+
+#tab1, #tab2, #tab3{
+    padding-top:60px;
+}
+
+
+.messages-auto-layout a {
+    color: #46246A;
+    text-decoration: underline;
+}
+
+.white {
+    color: #fff;
+}
+
