@@ -497,6 +497,10 @@ html:not(.watch-active-state) .theme-gccollab .speed-dial-buttons a:active {
     color: #fff;
 }
 
+.md .calendar-row .calendar-day-selected span,
+.md .calendar-day.calendar-day-has-events span:after {
+    background: #46246A;
+}
 /*-------------------------------------------------------------*/
 /*-------------------------------------------------------------*/
 /*-------------------------------------------------------------*/
