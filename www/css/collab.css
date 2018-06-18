@@ -491,3 +491,155 @@ html:not(.watch-active-state) .theme-gccollab .speed-dial-buttons a:active {
     background-color: #46246A;
     color: #fff;
 }
+
+/*-------------------------------------------------------------*/
+/*-------------------------------------------------------------*/
+/*-------------------------------------------------------------*/
+/*-------------------------------------------------------------*/
+html, body {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	overflow-x: hidden;
+}
+body {
+	font-family: "Roboto", Helvetica, Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	color: #000;
+	font-size: 15px;
+	line-height: 1.5;
+	width: 100%;
+	-webkit-text-size-adjust: 100%;
+	font-weight: 300
+}
+* {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-touch-callout: none;
+}
+.navbar-inner .center { width: 100%; }
+.navbar-inner .center, .subnavbar .center { font-size: 16px; font-weight: 300; text-transform: uppercase; }
+.navbar.header{ background: transparent; }
+.list-block .item-title { text-transform: uppercase; }
+h5{ font-weight: 200; line-height: 0px; margin: 0; }
+hr{ clear: both; border: 0; border-top: 1px solid #eeeeee; width: 100%; }
+.text-right{ text-align: right; }
+.center { text-align: center; }
+.fullscreenmap{ border:0; height:100%; width:100%; }
+.list .item-subtitle {  color: #46246A; }
+.list .item-title{ color: #000000; }
+.list .item-content:after { content: ''; position: absolute; left: 0; bottom: 0; right: auto; top: auto; height: 1px; width: 100%; background-color: rgba(0,0,0,.12); display: block; z-index: 15; -webkit-transform-origin: 50% 100%; transform-origin: 50% 100%; }
+.list .item-inner:after{ display: none; }
+.list.inputs-list .item-content:after{ display: none; }
+.list.inputs-list:after, .list.inputs-list ul:before{ display: none; }
+
+/*--------------------------------------------*/
+/*-------- theme1 lading screen Intro -------*/
+/*--------------------------------------------*/
+.landingpage { background: white; }
+.buttonbar { position: fixed; bottom: 0; width: 100%; left: 0; z-index: 1; }
+.buttonbar .button { left: 0; line-height: 60px; padding: 0; vertical-align: middle; text-align: center; height: 60px; border-radius: 0; }
+.logo { margin: 0 auto; width: 80%; max-width: 400px; display: block; }
+.logo img { max-width: 100%; }
+.color2 { background: #6b5088 ; color: #ffffff !important; }
+.introtext { color: #ffffff; text-align: center; }
+.introtext h1 { margin: 0; color: #fff; }
+.introtext p { margin: 0; font-size: 14px; }
+
+/*--------------------------------------------*/
+/*-------- theme1 login screen -------*/
+/*--------------------------------------------*/
+.loginsimag{ margin: 0; padding: 0; background: white; text-align: center}
+.loginsimag img{ max-width: 200px; margin: 0 auto}
+.focus-state .input-field:after, .focus-state .item-input-field:after, .input-field.focus-state:after, .input-field.not-empty-state:after, .item-input-field.focus-state:after, .item-input-field.not-empty-state:after, .not-empty-state .input-field:after, .not-empty-state .item-input-field:after { background: #2196f3;-webkit-transform: scaleY(1)!important; -moz-transform: scaleY(1)!important;-ms-transform: scaleY(1)!important; transform: scaleY(1)!important;}
+.button-connect .button.facebook{ background: #0e449a;}
+.button-connect .button.twitter{ background: #00aceb;}
+.button-connect .button.googpleplus{ background: #eb2727;}
+.button-connect .button.pinterest{ background: #b40000;}
+.button-connect .button i{ width: 20px; margin-right: 10px;}
+
+input:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+} 
+
+
+/*--------------------------------------------*/
+/*-------- theme1 sidebar left -------*/
+/*--------------------------------------------*/
+.sidebar { padding-bottom: 60px;}
+.sidebar .accordion-list {margin: 0}
+.userprofile{ background: url(../img/proflebg.png) no-repeat #5c6693; background-size: 100%;  padding: 20px 0; height: 50px; display: flex; direction: ltr; flex-flow: row}
+.userprofile .item-inner{  width: 80%; float: left; color: #ffffff}
+.userprofile .item-inner .item-subtitle{ color: rgba(255, 255, 255, 0.5); line-height: 18px; }
+.userprofile .item-media{width:20%; max-width: 56px; float: left; padding:0 15px;}
+.userprofile .item-media img{ max-width: 100%; max-height: 100%; border-radius:50%;}
+.sidebar .view{ overflow-y: auto}
+.menu li a.item-content{ font-size: 13px; text-transform: uppercase; text-align: left; -webkit-justify-content: flex-start; justify-content: flex-start;}
+.itemmeniinner{padding-right: 16px;  position: relative;  width: 100%;  padding-top: 8px;  padding-bottom: 8px;  min-height: 48px;  box-sizing: border-box;  -webkit-box-flex: 1;  -ms-flex: 1;    min-width: 0;
+    display: -webkit-box; display: -ms-flexbox;  display: -webkit-flex;  display: flex; line-height: 32px;  align-self: stretch; vertical-align: middle}
+.itemmeniinner:after{  content: '';  position: absolute;  left: 0;  bottom: 0; right: auto; top: auto; height: 1px; width: 100%; background-color: rgba(0,0,0,.12);display: block;  z-index: 15; -webkit-transform-origin: 50% 100%; transform-origin: 50% 100%;     -webkit-transform: scaleY(.5);  transform: scaleY(.5);}
+.menu li a i{height: 30px;width: 30px;margin-right: 10px;display: inline-block;font-size: 16px;vertical-align: middle;line-height: 30px; color: #666666}
+.menu li a span{ vertical-align: middle; line-height: 32px;}
+.menu li .accordion-item-content .content-block{padding-right: 0}
+.menu li .accordion-item-content .content-block ul{border-top: 1px solid #eeeeee}
+.menu li .accordion-item-content .content-block ul li{border-bottom: 1px solid #eeeeee}
+.menu li .accordion-item-content li a{line-height: 40px; vertical-align: middle; padding-left: 40px }
+
+/*--------------------------------------------*/
+/*----------- theme1 profile screen ------------*/
+/*--------------------------------------------*/
+.loginsimag.profi{ height: 100px; padding:20px 0}
+.loginsimag.profi img{width: 100px; border-radius: 50%}
+.page-content.tab { padding-top: 0}
+.tabbar a.tab-link{  width:90%;  display: inline-block;  height: 33px; border-radius: 40px;  margin: 0 2.5%;  background: rgba(0, 0, 0, 0.1); font-size: 12px;}
+.userprofile.large { padding: 100px 0 20px 0;  height: 70px;}
+.userprofile.large .item-title { margin-top: 15px;}
+.tabbar a.tab-link.active{ background:none}
+
+/*--------------------------------------------*/
+/*----------- theme1 Blog list screen ------------*/
+/*--------------------------------------------*/
+.list.media-list{margin: 0;}
+.author { font-size: 14px; }
+.time {font-size: 12px; color: #60BB87;}
+img {max-width: 100%;height: auto;margin-top: 0;}
+.article-title { font-weight: 200; font-size: 24px; color: #222222; margin: 15px 0; padding: 0 15px;}
+.article-content { color: #666666; margin: 20px 0; padding: 0 15px; line-height: 25px;}
+.readmore { margin: 15px 0; padding: 0 15px;}
+a.readmore { color: #60BB87; font-size: 12px; text-transform: uppercase;}
+a.link.nextstory { color: #171717; font-size: 12px; font-weight: 700; text-transform: uppercase;}
+.separator {border-bottom: #E4E4E4 1px solid; margin-top: 20px;}
+.separator-intro {border-bottom: #E4E4E4 1px solid; margin-top: 20px;margin: 0 15px;}
+ul.comment {margin: 15px 0;}
+.block-inner.comment { background: #f7f7f7; padding: 15px 15px;}
+.left.number-comment { font-size: 12px;font-weight: 700; text-transform: uppercase;}
+.right.post-comment { font-size: 12px; text-transform: uppercase; color: #777777;}
+.list.media-list.comment { margin: -10px 0;}
+ul.comment:before { display: none;}
+.item-title.author-comment { font-size: 12px; font-weight: 700 !important; text-transform: uppercase; margin-top: 10px;}
+.item-text.comment {font-size: 14px; margin-top: 10px; color: #777777; height: 100%; display: block;}
+.list ul.comment:after {display: none;}
+a.button.button-big.button-round.post { width: 85%; margin: 50px auto; border: 1px solid #60BB87; font-size: 14px; color: #60BB87;}
+a.button.button-big.button-round.post.active-state {width: 85%; margin: 50px auto; border: 1px solid #60BB87; background-color: #60BB87; font-size: 14px; color: white;}
+.list.comment {margin: 0;}
+.block.small {margin: 16px 0;}
+.block.comment-write {margin: 30px 0;}
+ul.message-comment {margin: -15px 0;}
+ul.message-comment:before {display: none;}
+.list.media-list .item-link .item-title-row { background-image: none;}
+.text-center { text-align: center}
+.item-title.author.profiles {font-weight: 300;font-size: 20px; color: #171717; margin: 5px 0; padding: 0px; text-align: center;}
+.item-subtitle.location.profiles {text-transform: uppercase; font-size: 12px; color: #777777;}
+hr {border-top: 0; border-bottom: 1px solid #dddddd} 
+a.button.button-big.button-round.follow.profiles.active-state{border: 1px solid #60BB87;background-color: #60BB87;width: 80%;margin-left: 15px;font-size: 14px;color: white;line-height: 32px; height: 35px;}
+.col-33.profiles { background: #fff;text-align: center; color: #171717;font-weight: 300;font-size: 20px;}
+.profilepic img {width: 80px;height: 80px;display: block;max-width: none}
+li.profiles {background-color: white;}
+.button.follow {width: 100px;margin-top: 20px;}
+.content-profiles { font-size: 14px;line-height: 18px;color: #777777;height: 100%; margin-top: 10px; padding: 15px 15px 0;}
+.share {color: #777777;}
+.share-section {padding: 15px 0;}
+ul.profiles::after {height: 1px;}
