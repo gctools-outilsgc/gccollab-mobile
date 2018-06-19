@@ -1248,7 +1248,7 @@ GCTEach = {
         $("#group-tags-" + obj.id).text(tags);
         $("[data-owner-" + obj.id +"]").data('owner', group.owner);
         $("[data-guid-" + obj.id +"]").data('guid', group.guid);
-        $("[data-type-" + obj.id +"]").data('type', group.type);
+        $("[data-type-" + obj.id + "]").data('type', group.type);
     },
     User: function (value, obj) {
         var profileData = value.result;
@@ -1446,6 +1446,7 @@ GCTEach = {
             $('#more-' + obj.id).hide();
         }
         obj.offset += obj.limit;
+        app.preloader.hide();
         var focusNow = document.getElementById('focus-' + obj.id);
         if (focusNow) { focusNow.focus(); }
     },
@@ -1522,6 +1523,7 @@ GCTEach = {
             $('#more-' + obj.id).hide();
         }
         obj.offset += obj.limit;
+        app.preloader.hide();
         var focusNow = document.getElementById('focus-' + obj.id);
         if (focusNow) { focusNow.focus(); }
     },
@@ -3245,6 +3247,7 @@ function prettyDate(date) {
 
 function errorConsole(jqXHR, textStatus, errorThrown) {
     console.log(jqXHR, textStatus, errorThrown);
+    app.preloader.hide();
 }
 
 var endOfContent = '<div class="card"><div class="card-content card-content-padding"><div class="card-content-inner"><div class="item-text">' + GCTLang.Trans("end-of-content") + '</div></div></div></div>';

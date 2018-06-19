@@ -71,7 +71,7 @@
                 var offset = 0;
                 console.log(guid + ' ' + type);
                 $("#comments-more-"+ guid).hide();
-                
+                app.preloader.show();
                 switch (type) {
                     case 'wire':
                         GCTrequests.GetWire(guid, 1, function (data) {
@@ -115,7 +115,8 @@
                                     image: img
                                 });
                             });
-                            $(content).hide().appendTo('#content-entity-'+guid).fadeIn(500);
+                            $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+                            app.preloader.hide();
                         });
                         break;
                     case 'blog':
@@ -153,8 +154,8 @@
                                     likes: likes
                                 });
                             });
-
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+                            app.preloader.hide();
                         });
                         break;
                     case 'discussion':
@@ -194,6 +195,7 @@
 
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+                            app.preloader.hide();
                         });
                         break;
                     case 'opportunity':
@@ -313,6 +315,7 @@
                             });
 
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+                            app.preloader.hide();
                         });
                         break;
                     case 'bookmark':
@@ -349,6 +352,7 @@
                                 });
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+                            app.preloader.hide();
                         });
                         break;
                     case 'event':
@@ -429,6 +433,7 @@
                                 });
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+                            app.preloader.hide();
                         });
                         break;
                     case 'notification':
@@ -438,6 +443,7 @@
                             }
                         }, function (jqXHR, textStatus, errorThrown) {
                             console.log(jqXHR, textStatus, errorThrown);
+                            app.preloader.hide();
                         });
 
                         GCTrequests.GetNotification(guid, function (data) {
@@ -454,16 +460,19 @@
                             
                             content = GCT.SetLinks(content);
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
+                            app.preloader.hide();
 
                         }, function (jqXHR, textStatus, errorThrown) {
                             console.log(jqXHR, textStatus, errorThrown);
+                            app.preloader.hide();
                         });
                         break;
                     default:
                         break;
                 }
 
-                $$('#comments-view-'+guid).on('click', function (e) {
+                $$('#comments-view-' + guid).on('click', function (e) {
+                    app.preloader.show();
                     GCTrequests.GetComments(guid, limit, offset, function (data) {
                         $("#comments-view-" + guid).hide();
                         $("#comments-more-" + guid).show();
@@ -481,10 +490,12 @@
                             content += endOfContent;
                             $("#comments-more-" + guid).hide();
                         }
-                        $(content).hide().appendTo("#entity-comments-"+ guid).fadeIn(500);
+                        $(content).hide().appendTo("#entity-comments-" + guid).fadeIn(500);
+                        app.preloader.hide();
                     });
                 });
-                $$('#comments-more-'+guid).on('click', function (e) {
+                $$('#comments-more-' + guid).on('click', function (e) {
+                    app.preloader.show();
                     GCTrequests.GetComments(guid, limit, offset + limit, function (data) {
                         offset += limit;
                         var comments = data.result;
@@ -502,23 +513,28 @@
                             $("#comments-more-" + guid).hide();
                         }
                         $(content).hide().appendTo("#entity-comments-" + guid).fadeIn(500);
+                        app.preloader.hide();
                     });
                 });
                 $$('#comments-submit-' + guid).on('click', function (e) {
                     var comment = $$('#message-' + guid).val();
                     if (!(comment === '')) {
+                        app.preloader.show();
                         GCTrequests.SubmitComment(guid, comment, function (data) {
                             console.log("submited");
                             var result = data.result;
                             console.log(result);
+                            app.preloader.hide();
                         }, function (jqXHR, textStatus, errorThrown) {
                             console.log(jqXHR, textStatus, errorThrown);
+                            app.preloader.hide();
                         });
                     } else {
                         //empty message, dont use, give feedback
                     }
                 });
                 $$('#refresh-' + type + '-' + guid).on('click', function (e) {
+                    app.preloader.show();
                     mainView.router.refreshPage();
                 });
             },
