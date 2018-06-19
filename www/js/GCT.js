@@ -38,7 +38,7 @@
         return action;
     },
     txtFilterButton: function (ref) {
-        var filterButton = '<p><a href="#" data-popup=".filters-' + ref + '" class="popup-open link icon-only" data-translate-target="aria-label" data-translate="filter-options"><i class="fas fa-search fa-2x"></i></a></p>';
+        var filterButton = '<a href="#" data-popup=".filters-' + ref + '" class="popup-open link icon-only" data-translate-target="aria-label" data-translate="filter-options"><i class="fas fa-search fa-2x"></i></a>';
         return filterButton;
     },
     txtTabHeader: function (ref, id) {
@@ -74,13 +74,12 @@
         return contentNew;
     },
     txtProfileExp: function (object) {
-        var content = '<div class="item-text large" onclick="ToggleAllText(this);">'
-            + "<div class='bolder-title'>" + object.title + "</div> "
+        var content = '<div class="item-text large" onclick="ToggleAllText(this);"><hr>'
+            + "<div class='bolder-title'>" + object.title + "</div><hr> "
             + "<div class='norm-text'><i>" + object.subtitle + "<br>" + object.startDate + " to " + object.endDate + "</i></div>"
-            + "<div class='norm-text all_text'>" + object.text + "</div>" + '</div>' + "<br>";
+            + "<div class='norm-text all_text'>" + object.text + "</div>" + '</div><br>';
         return content;
     },
-
     txtNewsfeed: function (object) {
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
@@ -98,7 +97,7 @@
             + "<div class='col-85'></div>"
             + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);' aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
-            + "<div class='card-content card-content-padding' aria-hidden='true'>"
+            + "<div class='card-content card-content-padding-options' aria-hidden='true'>"
             + "<div role='article' id='text-" + object.guid + " 'class='text'><a onclick='ShowProfile(" + object.owner + ");'>" + object.name + "</a> " + object.description + " " + object.more + object.context 
             + object.text
             + object.source
@@ -143,7 +142,7 @@
             + "<div class='col-85'></div>"
             + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
-            + "<div class='card-content  card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
+            + "<div class='card-content  card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div id='wire-" + object.guid + "' class='text-list' >" + object.description + "</div>"
             + "<div class='item-media'>" + object.image + "</div>"
             + object.source
@@ -204,7 +203,7 @@
             + "<div class='col-85'></div>"
             + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
-            + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
+            + "<div class='card-content card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div id='blog-" + object.guid + "' class='card-content-inner'>"
             + "<div class='blog-title'>" + object.title + "</div>"
             + "<div class='blog-group'>" + object.group + "</div>"
@@ -304,7 +303,7 @@
             + "<div class='col-85'></div>"
             + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
-            + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
+            + "<div class='card-content card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='card-content-inner'>"
             + "<div class='blog-title'>" + object.title + "</div>"
             + "</div>"
@@ -334,7 +333,7 @@
             + "<div class='col-85'></div>"
             + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
-            + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
+            + "<div class='card-content card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='card-content-inner'>"
             + "<div class='blog-title'>" + object.title + "</div>"
             + "<div class='item-text large'>" + object.startDate + "<br>" + object.endDate + "</div>"
@@ -426,7 +425,7 @@
             + "<div class='col-85'></div>"
             + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
-            + "<div class='card-content  card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
+            + "<div class='card-content  card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='card-content-inner'>"
             + "<div class='blog-title'>" + object.title + "</div>"
             + "<div class='blog-group'>" + object.posted + "</div>"
@@ -490,7 +489,7 @@
                 + "<div class='col-85'></div>"
                 + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "'  data-container='" + object.owner + "' data-location='list' onclick='GCT.MoreOptions(this);' aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
                 + "</div>"
-                + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
+                + "<div class='card-content card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
                 + "<div class='card-content-inner'" + object.all_text + ">"
                 + "<div class='blog-title'>" + object.title + "</div>"
                 + "<div class='title'> <b>" + object.jobtype + "(" + object.roletype + ")" + "</b></div>"
@@ -597,7 +596,7 @@
             + "<div class='col-85'></div>"
             + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
-            + "<div class='card-content card-content-padding item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
+            + "<div class='card-content card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='blog-title'>" + object.title + "</div>"
             + "<div class='blog-group'>" + object.group + "</div>"
             + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
@@ -1274,19 +1273,19 @@ GCTEach = {
         }
 
         profile = '';
-        profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('name') + '</div>' + profileData.displayName + '</div>';
+        profile += '<div class="block tight-block"><div class="block-header tight-block-header">' + GCTLang.Trans('name') + '</div>' + profileData.displayName + '</div>';
         if (profileData.hasOwnProperty("jobTitle") && profileData.jobTitle !== null && profileData.jobTitle !== "") {
-            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('job-title') + '</div>' + profileData.jobTitle + '</div>';
+            profile += '<div class="block tight-block"><div class="block-header tight-block-header">' + GCTLang.Trans('job-title') + '</div>' + profileData.jobTitle + '</div>';
         }
-        profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('email') + '</div><a class="external" href = "mailto:' + profileData.email + '" > ' + profileData.email + '</a ></div>';
+        profile += '<div class="block tight-block"><div class="block-header tight-block-header">' + GCTLang.Trans('email') + '</div><a class="external" href = "mailto:' + profileData.email + '" > ' + profileData.email + '</a ></div>';
         if (profileData.hasOwnProperty("telephone") && profileData.telephone !== null && profileData.telephone !== "") {
-            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('phone') + '</div><a class="external" href="tel:' + profileData.telephone + '">' + profileData.telephone + '</a></div>';
+            profile += '<div class="block tight-block"><div class="block-header tight-block-header">' + GCTLang.Trans('phone') + '</div><a class="external" href="tel:' + profileData.telephone + '">' + profileData.telephone + '</a></div>';
         }
         if (profileData.hasOwnProperty("about_me") && profileData.about_me !== null && profileData.about_me !== "") {
-            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('about-me') + '</div>' + profileData.about_me + '</div>';
+            profile += '<hr><div class="tight-block block"><div class=" tight-block-header block-header">' + GCTLang.Trans('about-me') + '</div><hr>' + profileData.about_me + '</div>';
         }
         if (profileData.hasOwnProperty("education") && profileData.education !== null && profileData.education !== "") {
-            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('education') + '</div>';
+            profile += '<hr><div class=" tight-block block"><div class="tight-block-header block-header">' + GCTLang.Trans('education') + '</div>';
             $(profileData.education).each(function (key, value) {
                 var looper = 0; //dynamic variable counter
                 while (value["item_" + looper]) {
@@ -1308,7 +1307,7 @@ GCTEach = {
             profile += '</div>';
         }
         if (profileData.hasOwnProperty("experience") && profileData.experience !== null && profileData.experience !== "") {
-            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('experience') + '</div>';
+            profile += '<hr><div class="tight-block block"><div class="tight-block-header block-header">' + GCTLang.Trans('experience') + '</div>';
             $(profileData.experience).each(function (key, value) {
                 var looper = 0; //dynamic variable counter, sigh
                 while (value["item_" + looper]) {
@@ -1330,7 +1329,7 @@ GCTEach = {
             profile += '</div>';
         }
         if (profileData.hasOwnProperty("skills") && profileData.skills !== null && profileData.skills !== "") {
-            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('skills') + '</div>';
+            profile += '<hr><div class="tight-block block"><div class="block-header">' + GCTLang.Trans('skills') + '</div>';
             $(profileData.skills).each(function (key, value) {
                 var looper = 0; //dynamic variable counter
                 while (value["item_" + looper]) {
