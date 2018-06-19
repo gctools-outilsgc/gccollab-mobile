@@ -618,6 +618,13 @@ input:focus {
 .gp{ background: #eb2727;}
 .pin{ background: #b40000;}
 .env{ background: #ff7a27;}
+.tight-block {
+    margin: 12px 0 !important;
+    padding: 0 16px !important;
+}
+.tight-block-header {
+    margin-bottom: 0 !important;
+}
 
 /*--------------------------------------------*/
 /*----------- theme1 Blog list screen ------------*/

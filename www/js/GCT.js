@@ -74,13 +74,12 @@
         return contentNew;
     },
     txtProfileExp: function (object) {
-        var content = '<div class="item-text large" onclick="ToggleAllText(this);">'
-            + "<div class='bolder-title'>" + object.title + "</div> "
+        var content = '<div class="item-text large" onclick="ToggleAllText(this);"><hr>'
+            + "<div class='bolder-title'>" + object.title + "</div><hr> "
             + "<div class='norm-text'><i>" + object.subtitle + "<br>" + object.startDate + " to " + object.endDate + "</i></div>"
-            + "<div class='norm-text all_text'>" + object.text + "</div>" + '</div>' + "<br>";
+            + "<div class='norm-text all_text'>" + object.text + "</div>" + '</div><br>';
         return content;
     },
-
     txtNewsfeed: function (object) {
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
@@ -1274,19 +1273,19 @@ GCTEach = {
         }
 
         profile = '';
-        profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('name') + '</div>' + profileData.displayName + '</div>';
+        profile += '<div class="block tight-block"><div class="block-header tight-block-header">' + GCTLang.Trans('name') + '</div>' + profileData.displayName + '</div>';
         if (profileData.hasOwnProperty("jobTitle") && profileData.jobTitle !== null && profileData.jobTitle !== "") {
-            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('job-title') + '</div>' + profileData.jobTitle + '</div>';
+            profile += '<div class="block tight-block"><div class="block-header tight-block-header">' + GCTLang.Trans('job-title') + '</div>' + profileData.jobTitle + '</div>';
         }
-        profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('email') + '</div><a class="external" href = "mailto:' + profileData.email + '" > ' + profileData.email + '</a ></div>';
+        profile += '<div class="block tight-block"><div class="block-header tight-block-header">' + GCTLang.Trans('email') + '</div><a class="external" href = "mailto:' + profileData.email + '" > ' + profileData.email + '</a ></div>';
         if (profileData.hasOwnProperty("telephone") && profileData.telephone !== null && profileData.telephone !== "") {
-            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('phone') + '</div><a class="external" href="tel:' + profileData.telephone + '">' + profileData.telephone + '</a></div>';
+            profile += '<div class="block tight-block"><div class="block-header tight-block-header">' + GCTLang.Trans('phone') + '</div><a class="external" href="tel:' + profileData.telephone + '">' + profileData.telephone + '</a></div>';
         }
         if (profileData.hasOwnProperty("about_me") && profileData.about_me !== null && profileData.about_me !== "") {
-            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('about-me') + '</div>' + profileData.about_me + '</div>';
+            profile += '<hr><div class="tight-block block"><div class=" tight-block-header block-header">' + GCTLang.Trans('about-me') + '</div><hr>' + profileData.about_me + '</div>';
         }
         if (profileData.hasOwnProperty("education") && profileData.education !== null && profileData.education !== "") {
-            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('education') + '</div>';
+            profile += '<hr><div class=" tight-block block"><div class="tight-block-header block-header">' + GCTLang.Trans('education') + '</div>';
             $(profileData.education).each(function (key, value) {
                 var looper = 0; //dynamic variable counter
                 while (value["item_" + looper]) {
@@ -1308,7 +1307,7 @@ GCTEach = {
             profile += '</div>';
         }
         if (profileData.hasOwnProperty("experience") && profileData.experience !== null && profileData.experience !== "") {
-            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('experience') + '</div>';
+            profile += '<hr><div class="tight-block block"><div class="tight-block-header block-header">' + GCTLang.Trans('experience') + '</div>';
             $(profileData.experience).each(function (key, value) {
                 var looper = 0; //dynamic variable counter, sigh
                 while (value["item_" + looper]) {
@@ -1330,7 +1329,7 @@ GCTEach = {
             profile += '</div>';
         }
         if (profileData.hasOwnProperty("skills") && profileData.skills !== null && profileData.skills !== "") {
-            profile += '<div class="block"><div class="block-header">' + GCTLang.Trans('skills') + '</div>';
+            profile += '<hr><div class="tight-block block"><div class="block-header">' + GCTLang.Trans('skills') + '</div>';
             $(profileData.skills).each(function (key, value) {
                 var looper = 0; //dynamic variable counter
                 while (value["item_" + looper]) {
