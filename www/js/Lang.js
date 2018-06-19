@@ -544,7 +544,7 @@ French = {
     "require-same-lang": "Le contenu nécessite un titre et le texte complet pour la même langue.",
     "wire-text": "Texte Filaire",
     
-    "message-centre": "Centre de message",
+    "messagecentre": "Centre de Message",
     "colleague-requests": "Demande de collègues",
     "notifications": "Notifications",
     "notification": "Notification",

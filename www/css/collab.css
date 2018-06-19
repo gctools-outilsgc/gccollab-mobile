@@ -607,6 +607,17 @@ input:focus {
 .userprofile.large { padding: 100px 0 20px 0;  height: 70px;}
 .userprofile.large .item-title { margin-top: 15px;}
 .tabbar a.tab-link.active{ background:none}
+.socials{ margin: 0 auto; padding: 0; width: auto; text-align: center}
+.socials li{ margin: 0 auto; padding: 0; width: auto; display: inline-block; list-style: none}
+.socials li a{width: 40px;height: 40px;float: left;line-height: 40px !important;text-align: center;color: #ffffff;font-size: 16px;border-radius: 40px;margin: 5px;}
+.socials li a i{line-height: 40px !important; list-style: none; position:relative}
+.fb{ background: #3b5998;}
+.tw{ background: #1da1f2;}
+.li{ background: #007bb6;}
+.gh{ background: #24292e;}
+.gp{ background: #eb2727;}
+.pin{ background: #b40000;}
+.env{ background: #ff7a27;}
 
 /*--------------------------------------------*/
 /*----------- theme1 Blog list screen ------------*/
