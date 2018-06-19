@@ -224,7 +224,7 @@ routes = [
         path: '/static/:page/',
         async: function (routeTo, routeFrom, resolve, reject) {
             var page = routeTo.params.page;
-            var navbar = GCTtxt.txtGlobalNav(page);
+            var navbar = GCTtxt.txtGlobalNavPlain(page);
 
             resolve(
                 {

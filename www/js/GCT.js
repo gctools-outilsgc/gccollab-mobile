@@ -7,6 +7,12 @@
             '<a href="#" id="refresh-' + title + '" class="link icon-only" data-translate-target="aria-label" data-translate="refresh-content"><i class="fas fa-sync"></i></a></div > ';
         return content;
     },
+    txtGlobalNavPlain: function (title) {
+        var content = '<div class="center reader-text" id="page-' + title + '" tabindex="0" >' + GCTLang.Trans("page") + GCTLang.Trans(title) + '</div>' +
+            '<div class="left sliding"><a href="#" data-panel="left" class="panel-open link icon-only" data-translate-target="aria-label" data-translate="open-nav"><i class="fas fa-bars"></i></a></div>' +
+            '<div class="title" id="' + title + '" tabindex="0">' + GCTLang.Trans(title) + '</div>';
+        return content;
+    },
     txtGlobalNavGUID: function (title, guid) {
         var content = '<div class="center reader-text" id="page-' + title + '-' + guid +'" tabindex="0" >' + GCTLang.Trans("page") + GCTLang.Trans(title) + '</div>' +
             '<div class="left sliding"><a href="#" data-panel="left" class="panel-open link icon-only" data-translate-target="aria-label" data-translate="open-nav"><i class="fas fa-bars"></i></a></div>' +
