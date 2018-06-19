@@ -1942,7 +1942,7 @@ GCTrequests = {
         access = access || 1;
         status = status || 0;
 
-
+        app.preloader.show();
         app.request({
             method: 'POST',
             dataType: 'json',
@@ -1951,9 +1951,11 @@ GCTrequests = {
             timeout: 12000,
             success: function (data) {
                 successCallback(data);
+                app.preloader.hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorCallback(jqXHR, textStatus, errorThrown);
+                app.preloader.hide();
             }
         });
     },
@@ -1963,6 +1965,7 @@ GCTrequests = {
     },
     GetBlogEdit: function (post_guid, successCallback, errorCallback) {
         if (!post_guid) { return "cannot edit nothing"; } //force back? with message 
+        app.preloader.show();
         app.request({
             method: 'POST',
             dataType: 'json',
@@ -1971,9 +1974,11 @@ GCTrequests = {
             timeout: 12000,
             success: function (data) {
                 successCallback(data);
+                app.preloader.hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorCallback(jqXHR, textStatus, errorThrown);
+                app.preloader.hide();
             }
         });
     },
@@ -2281,7 +2286,7 @@ GCTrequests = {
         if (!(title.en && message.en) && !(title.fr && message.fr)) { issueCallback(GCTLang.Trans("require-same-lang")); return; }
         if (!container) { container = ''; }
         if (!topic) { topic = ''; }
-
+        app.preloader.show();
         app.request({
             method: 'POST',
             dataType: 'json',
@@ -2290,9 +2295,11 @@ GCTrequests = {
             timeout: 12000,
             success: function (data) {
                 successCallback(data);
+                app.preloader.hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorCallback(jqXHR, textStatus, errorThrown);
+                app.preloader.hide();
             }
         });
     },
@@ -2302,6 +2309,7 @@ GCTrequests = {
     },
     GetDiscussionEdit: function (post_guid, successCallback, errorCallback) {
         if (!post_guid) { return "cannot edit nothing"; } //force back? with message 
+        app.preloader.show();
         app.request({
             method: 'POST',
             dataType: 'json',
@@ -2310,9 +2318,11 @@ GCTrequests = {
             timeout: 12000,
             success: function (data) {
                 successCallback(data);
+                app.preloader.hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorCallback(jqXHR, textStatus, errorThrown);
+                app.preloader.hide();
             }
         });
     },
