@@ -328,6 +328,12 @@ $$(document).on('page:init', '.page[data-name="post-opp"]', function (e) {
             $('#level').hide();
         }
     });
+
+    $$('#refresh-new-opportunities-platform').on('click', function (e) {
+        document.getElementById('opt-form1').reset();
+        document.getElementById('opt-form2').reset();
+        document.getElementById('opt-form3').reset();
+    });
 })
 
 $$('.panel-left').on('panel:open', function () {
