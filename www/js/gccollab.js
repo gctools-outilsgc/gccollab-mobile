@@ -221,6 +221,11 @@ $$(document).on('page:init', '.page[data-name="post-wire"]', function (e) {
             app.dialog.alert('Missing navigator.camera plugin error. Sorry, restart app, if still doesnt work, probably my fault');
         }
     });
+
+    $$('#refresh-new-wire-post').on('click', function (e) {
+        document.getElementById('post-wire-form').reset();
+        $("#picture-taken").attr('src', "");
+    });
 })
 
 $$(document).on('page:init', '.page[data-name="post-opp"]', function (e) {
