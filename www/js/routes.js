@@ -104,7 +104,7 @@ routes = [
         path: '/doc/:guid/',
         async: function (routeTo, routeFrom, resolve, reject) {
             var guid = routeTo.params.guid;
-            var navbar = GCTtxt.txtGlobalNav('docs');
+            var navbar = GCTtxt.txtGlobalNavPlain('docs');
             resolve(
                 {
                     componentUrl: './pages/doc.html',

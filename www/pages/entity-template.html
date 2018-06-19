@@ -518,6 +518,9 @@
                         //empty message, dont use, give feedback
                     }
                 });
+                $$('#refresh-' + type + '-' + guid).on('click', function (e) {
+                    mainView.router.refreshPage();
+                });
             },
 
            
