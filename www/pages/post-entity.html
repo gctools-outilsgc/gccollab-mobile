@@ -250,6 +250,13 @@
                         });
                     }
                 }
+
+                $$('#refresh-' + id).on('click', function (e) {
+                    document.getElementById(id + '-options-form').reset();
+                    document.getElementById('english-form').reset();
+                    document.getElementById('french-form').reset();
+                    $("#" + id + "-Feedback").html('');
+                });
             }
         }
     }
