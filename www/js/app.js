@@ -140,6 +140,10 @@ var app  = new Framework7({
             notification: {
                 comments: false,
                 id: 'notifcation',
+            },
+            message: {
+                comments: false,
+                id: 'message',
             }
             
         };

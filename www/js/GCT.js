@@ -660,7 +660,7 @@
     },
     txtMessage: function (object) {
         var content = '<li><div class="row">'
-            + '<div class="col-80 item-content" onclick="ShowMessage(this);" data-guid="' + object.guid + ' data-type="notification">'
+            + '<div class="col-80 item-content" onclick="GCT.ViewPost(this);" data-guid="' + object.guid + '" data-type="gccollab_message">'
             + '<div class="item-inner ' + object.unread + '">'
             + '<div class="item-title-row">'
             + '<div class="item-title">GCcollab</div>'
@@ -2724,8 +2724,20 @@ GCTrequests = {
             }
         });
     },
-    GetMessage: function (tabObject) {
-        //TODO:
+    GetMessage: function (guid, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.message", user: GCTUser.Email(), guid: guid, thread: 1, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 55000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
     },
     GetMessages: function (tabObject) {
         limit = tabObject.limit || 10;
@@ -2774,7 +2786,7 @@ GCTrequests = {
                 timeout: 12000,
                 success: function (data) {
                     console.log(data);
-                    myApp.alert(data.result);
+                    alert(data.result);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR, textStatus, errorThrown);
@@ -3165,6 +3177,9 @@ GCT = {
                 break;
             case "gccollab_notification":
                 mainView.router.navigate('/entity-template/notification/' + guid + '/');
+                break;
+            case "gccollab_message":
+                mainView.router.navigate('/entity-template/message/' + guid + '/');
                 break;
             default:
                 console.log('Worked, but type not handled yet.');
