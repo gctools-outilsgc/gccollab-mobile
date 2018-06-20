@@ -2889,7 +2889,7 @@ GCTrequests = {
     },
     GetLikeUsers: function (obj) {
         var guid = $(obj).data("guid");
-
+        app.preloader.show();
         app.request({
             method: 'POST',
             dataType: 'json',
@@ -2918,10 +2918,11 @@ GCTrequests = {
                 $('#content-likes').html(content);
                 app.popup.open('.likes-popup');
                 $('#likes-menu').focus();
-
+                app.preloader.hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                app.preloader.hide();
             }
         });
     },
