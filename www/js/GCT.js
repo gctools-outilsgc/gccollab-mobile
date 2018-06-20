@@ -660,7 +660,7 @@
     },
     txtMessage: function (object) {
         var content = '<li><div class="row">'
-            + '<div class="col-80 item-content" onclick="ShowMessage(this);" data-guid="' + object.guid + ' data-type="notification">'
+            + '<div class="col-80 item-content" onclick="GCT.ViewPost(this);" data-guid="' + object.guid + '" data-type="gccollab_message">'
             + '<div class="item-inner ' + object.unread + '">'
             + '<div class="item-title-row">'
             + '<div class="item-title">GCcollab</div>'
@@ -1272,7 +1272,7 @@ GCTEach = {
         $("#department-" + obj.id).html(profileData.department).text();
 
         if (!isOwnProfile) {
-            var content = '<div class="col-50"><a href="#" class="button button-fill button-raised" data-name="' + profileData.displayName + '" data-guid="' + profileData.id + '" onclick="GCTUser.NewMessage(this);">' + GCTLang.Trans("message") + '</a></div>'
+            var content = '<div class="col-50"><a href="#" class="button button-fill button-raised" data-name="' + profileData.displayName + '" data-guid="' + profileData.id + '" onclick="GCTrequests.NewMessage(this);">' + GCTLang.Trans("message") + '</a></div>'
                 + '<div class="col-50">' + colleagueButton + '</div>'
                 // + '<div class="col-33"><a href="#" class="button button-fill button-raised" data-guid="' + profileData.displayName + '" onclick="GCTUser.BlockUser(this);">' + GCTLang.Trans("blockuser") + '</a></div>'
                 + '</div>';
@@ -2724,6 +2724,21 @@ GCTrequests = {
             }
         });
     },
+    GetMessage: function (guid, successCallback, errorCallback) {
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "get.message", user: GCTUser.Email(), guid: guid, thread: 1, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 55000,
+            success: function (data) {
+                successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
     GetMessages: function (tabObject) {
         limit = tabObject.limit || 10;
         offset = tabObject.offset || 0;
@@ -2751,6 +2766,51 @@ GCTrequests = {
             timeout: 12000,
             success: function (data) {
                 successCallback(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    NewMessage: function (obj) {
+        var guid = $(obj).data("guid");
+        var name = $(obj).data("name");
+        var subject = "Message to " + name;
+        app.dialog.prompt(GCTLang.Trans("new-message-info"), GCTLang.Trans("message"), function (value) {
+            app.request({
+                api_key: api_key_gccollab,
+                method: 'POST',
+                dataType: 'json',
+                url: GCT.GCcollabURL,
+                data: { method: "send.message", user: GCTUser.Email(), touser: guid, subject: subject, message: value, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+                timeout: 12000,
+                success: function (data) {
+                    console.log(data);
+                    alert(data.result);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR, textStatus, errorThrown);
+                }
+            })
+        }, function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+        });
+    },
+    ReplyMessage: function (obj) {
+        var guid = $(obj).data("guid");
+        var message = $("#reply-message").val();
+
+        if (message == "") return;
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "reply.message", user: GCTUser.Email(), message: message, guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                console.log(data);
+                myApp.alert(data.result);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -3117,6 +3177,9 @@ GCT = {
                 break;
             case "gccollab_notification":
                 mainView.router.navigate('/entity-template/notification/' + guid + '/');
+                break;
+            case "gccollab_message":
+                mainView.router.navigate('/entity-template/message/' + guid + '/');
                 break;
             default:
                 console.log('Worked, but type not handled yet.');
