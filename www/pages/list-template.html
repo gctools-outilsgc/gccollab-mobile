@@ -192,16 +192,19 @@
                 var tabs = this.tabs;
                 var filters = this.filters;
                 var page = this.page;
+                app.preloader.show();
                 tabs[0].request(tabs[0]); //load first tab, which is active tab
                 tabs.forEach(function (tab) {
                     //More Button
                     $$('#more-' + tab.id).on('click', function (e) {
+                        app.preloader.show();
                         $('#focus-' + tab.id).remove();
                         tab.request(tab);
                     });
                     //Tab Show
                     $$('#tab-' + tab.id).on('tab:show', function (e) {
                         if (!tab.loaded) {
+                            app.preloader.show();
                             tab.request(tab);
                         }
                     });
@@ -209,6 +212,7 @@
                 //Refresh Button - All
                 $$('#refresh-' + this.page).on('click', function (e) {
                     tabs.forEach(function (tab) {
+                        app.preloader.show();
                         GCTtabs.TabReset(tab);
                     });
                 });
@@ -216,6 +220,7 @@
                     $$('#save-filters-' + this.page).on('click', function (e) {
                         var temp = JSON.stringify(app.form.convertToData('#filter-form-' + page));
                         tabs.forEach(function (tab) {
+                            app.preloader.show();
                             tab.filters = temp;
                             console.log(tab.filters);
                             GCTtabs.TabReset(tab);
@@ -224,6 +229,7 @@
                     $$('#clear-filters-' + this.page).on('click', function (e) {
                         document.getElementById('filter-form-' + page).reset();
                         tabs.forEach(function (tab) {
+                            app.preloader.show();
                             tab.filters = '';
                             console.log(tab.filters);
                             GCTtabs.TabReset(tab);

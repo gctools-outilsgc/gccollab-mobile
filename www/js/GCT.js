@@ -1195,7 +1195,7 @@ GCTEach = {
     },
     GroupP: function (value, obj) {
         var group = value.result;
-
+        if (obj.loaded == true) { $(obj.appendMessage).appendTo('#content-' + obj.id); } else { obj.loaded = true; }
         var tags = (group.tags) ? ($.isArray(group.tags) ? (group.tags).join(", ") : group.tags) : GCTLang.Trans('no-tags');
         if (group.liked) {
             $(".like").addClass('liked');
@@ -1248,9 +1248,10 @@ GCTEach = {
         $("#group-tags-" + obj.id).text(tags);
         $("[data-owner-" + obj.id +"]").data('owner', group.owner);
         $("[data-guid-" + obj.id +"]").data('guid', group.guid);
-        $("[data-type-" + obj.id +"]").data('type', group.type);
+        $("[data-type-" + obj.id + "]").data('type', group.type);
     },
     User: function (value, obj) {
+        if (obj.loaded == true) { $(obj.appendMessage).appendTo('#content-' + obj.id); } else { obj.loaded = true; }
         var profileData = value.result;
         if (typeof profileData == "string") {
             app.dialog.alert(GCTLang.Trans("couldnotfindprofile"));
@@ -1446,6 +1447,7 @@ GCTEach = {
             $('#more-' + obj.id).hide();
         }
         obj.offset += obj.limit;
+        app.preloader.hide();
         var focusNow = document.getElementById('focus-' + obj.id);
         if (focusNow) { focusNow.focus(); }
     },
@@ -1522,6 +1524,7 @@ GCTEach = {
             $('#more-' + obj.id).hide();
         }
         obj.offset += obj.limit;
+        app.preloader.hide();
         var focusNow = document.getElementById('focus-' + obj.id);
         if (focusNow) { focusNow.focus(); }
     },
@@ -1805,6 +1808,7 @@ GCTrequests = {
             timeout: 12000,
             success: function (data) {
                 GCTEach.User(data, tabObject);
+                app.preloader.hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorConsole(jqXHR, textStatus, errorThrown);
@@ -1940,7 +1944,7 @@ GCTrequests = {
         access = access || 1;
         status = status || 0;
 
-
+        app.preloader.show();
         app.request({
             method: 'POST',
             dataType: 'json',
@@ -1949,9 +1953,11 @@ GCTrequests = {
             timeout: 12000,
             success: function (data) {
                 successCallback(data);
+                app.preloader.hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorCallback(jqXHR, textStatus, errorThrown);
+                app.preloader.hide();
             }
         });
     },
@@ -1961,6 +1967,7 @@ GCTrequests = {
     },
     GetBlogEdit: function (post_guid, successCallback, errorCallback) {
         if (!post_guid) { return "cannot edit nothing"; } //force back? with message 
+        app.preloader.show();
         app.request({
             method: 'POST',
             dataType: 'json',
@@ -1969,9 +1976,11 @@ GCTrequests = {
             timeout: 12000,
             success: function (data) {
                 successCallback(data);
+                app.preloader.hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorCallback(jqXHR, textStatus, errorThrown);
+                app.preloader.hide();
             }
         });
     },
@@ -2181,6 +2190,7 @@ GCTrequests = {
             timeout: 12000,
             success: function (data) {
                 GCTEach.GroupP(data, tabObject);
+                app.preloader.hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorConsole(jqXHR, textStatus, errorThrown);
@@ -2279,7 +2289,7 @@ GCTrequests = {
         if (!(title.en && message.en) && !(title.fr && message.fr)) { issueCallback(GCTLang.Trans("require-same-lang")); return; }
         if (!container) { container = ''; }
         if (!topic) { topic = ''; }
-
+        app.preloader.show();
         app.request({
             method: 'POST',
             dataType: 'json',
@@ -2288,9 +2298,11 @@ GCTrequests = {
             timeout: 12000,
             success: function (data) {
                 successCallback(data);
+                app.preloader.hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorCallback(jqXHR, textStatus, errorThrown);
+                app.preloader.hide();
             }
         });
     },
@@ -2300,6 +2312,7 @@ GCTrequests = {
     },
     GetDiscussionEdit: function (post_guid, successCallback, errorCallback) {
         if (!post_guid) { return "cannot edit nothing"; } //force back? with message 
+        app.preloader.show();
         app.request({
             method: 'POST',
             dataType: 'json',
@@ -2308,9 +2321,11 @@ GCTrequests = {
             timeout: 12000,
             success: function (data) {
                 successCallback(data);
+                app.preloader.hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorCallback(jqXHR, textStatus, errorThrown);
+                app.preloader.hide();
             }
         });
     },
@@ -2874,7 +2889,7 @@ GCTrequests = {
     },
     GetLikeUsers: function (obj) {
         var guid = $(obj).data("guid");
-
+        app.preloader.show();
         app.request({
             method: 'POST',
             dataType: 'json',
@@ -2903,10 +2918,11 @@ GCTrequests = {
                 $('#content-likes').html(content);
                 app.popup.open('.likes-popup');
                 $('#likes-menu').focus();
-
+                app.preloader.hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                app.preloader.hide();
             }
         });
     },
@@ -3245,6 +3261,7 @@ function prettyDate(date) {
 
 function errorConsole(jqXHR, textStatus, errorThrown) {
     console.log(jqXHR, textStatus, errorThrown);
+    app.preloader.hide();
 }
 
 var endOfContent = '<div class="card"><div class="card-content card-content-padding"><div class="card-content-inner"><div class="item-text">' + GCTLang.Trans("end-of-content") + '</div></div></div></div>';
