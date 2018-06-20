@@ -140,16 +140,19 @@
             pageInit: function (e, page) {
                 var guid = this.guid;
                 var tabs = this.tabs;
+                app.preloader.show();
                 tabs[0].request(tabs[0], guid); //load first tab, which is active tab
                 tabs.forEach(function (tab) {
                     //More Button
                     $$('#more-' + tab.id).on('click', function (e) {
+                        app.preloader.show();
                         $('#focus-' + tab.id).remove();
                         tab.request(tab, guid);
                     });
                     //Tab Show
                     $$('#tab-' + tab.id).on('tab:show', function (e) {
                         if (!tab.loaded) {
+                            app.preloader.show();
                             tab.request(tab, guid);
                         }
                     });
@@ -157,6 +160,7 @@
                 //Refresh Button - All
                 $$('#refresh-profile-' + guid).on('click', function (e) {
                     tabs.forEach(function (tab) {
+                        app.preloader.show();
                         GCTtabs.TabReset(tab, guid);
                     });
                 });

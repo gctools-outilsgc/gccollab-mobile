@@ -1195,7 +1195,7 @@ GCTEach = {
     },
     GroupP: function (value, obj) {
         var group = value.result;
-
+        if (obj.loaded == true) { $(obj.appendMessage).appendTo('#content-' + obj.id); } else { obj.loaded = true; }
         var tags = (group.tags) ? ($.isArray(group.tags) ? (group.tags).join(", ") : group.tags) : GCTLang.Trans('no-tags');
         if (group.liked) {
             $(".like").addClass('liked');
@@ -1251,6 +1251,7 @@ GCTEach = {
         $("[data-type-" + obj.id + "]").data('type', group.type);
     },
     User: function (value, obj) {
+        if (obj.loaded == true) { $(obj.appendMessage).appendTo('#content-' + obj.id); } else { obj.loaded = true; }
         var profileData = value.result;
         if (typeof profileData == "string") {
             app.dialog.alert(GCTLang.Trans("couldnotfindprofile"));
@@ -1807,6 +1808,7 @@ GCTrequests = {
             timeout: 12000,
             success: function (data) {
                 GCTEach.User(data, tabObject);
+                app.preloader.hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorConsole(jqXHR, textStatus, errorThrown);
@@ -2188,6 +2190,7 @@ GCTrequests = {
             timeout: 12000,
             success: function (data) {
                 GCTEach.GroupP(data, tabObject);
+                app.preloader.hide();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorConsole(jqXHR, textStatus, errorThrown);
