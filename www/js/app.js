@@ -6,7 +6,14 @@ var app  = new Framework7({
   root: '#app', // App root element
   id: 'ca.tbs-sct.gccollab', // App bundle ID
   name: 'GCcollab', // App name
-  theme: 'md', // Automatic theme detection
+    theme: 'md', // Automatic theme detection
+    statusbar: {
+        iosOverlaysWebView: true,
+        enabled: true,
+        overlay: true,
+        materialBackgroundColor: '#e8e8e8',
+        iosBackgroundColor: '#e8e8e8',
+    },
     data: function () {
         return {
             home: {
@@ -150,7 +157,7 @@ var mainView = app.views.create('.view-main', {
 //Things that are needed for all pages.
 $$(document).on('page:init', function (e) {
     GCTLang.TransPage();
-
+    
     $$(document).on('click', 'a.external', function (e) {
         e.preventDefault();
         cordova.InAppBrowser.open($(this).attr('href'), '_system');
