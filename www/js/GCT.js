@@ -737,7 +737,7 @@ GCTEach = {
                 case "etherpad": description = GCTLang.Trans("doc-create"); type = "gccollab_doc"; break;
                 case "event_calendar": description = GCTLang.Trans("event-create"); type = "gccollab_event"; break;
                 case "bookmarks": description = GCTLang.Trans("bookmark-create"); type = "gccollab_bookmark"; break;
-                case "page_top": description = GCTLang.Trans("page-create"); type = "gccollab_page"; break;
+                case "page": case "page_top": description = GCTLang.Trans("page-create"); type = "gccollab_page"; break;
                 default: description = "NEED TO HANDLE CREATE";
             }
         } else { //OTHER
