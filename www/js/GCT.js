@@ -401,7 +401,7 @@
     txtSeeCalendar: function (object) {
         var content = "<div class='list cards-list'>"
             + "<div class='card'>"
-            + "<div class='card-header plain' onclick='ShowProfile(" + object.owner + ");'>"
+            + "<div class='card-header plain popup-close' onclick='ShowProfile(" + object.owner + ");'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
@@ -696,7 +696,7 @@
     txtLikes: function (object) {
         var content = "<div class='list cards-list'>"
             + "<div class='card'>"
-            + "<div class='card-header plain' onclick='ShowProfile(" + object.owner + ");'>"
+            + "<div class='card-header plain popup-close' onclick='ShowProfile(" + object.owner + ");'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
