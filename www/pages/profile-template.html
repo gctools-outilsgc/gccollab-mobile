@@ -72,7 +72,6 @@
                         <div class="item-inner">
                             <div class="row">
                                 <div class="col-85 item-title" id="group-title-{{this.id}}"></div>
-                                <a href="#" class="col-15 link pull-right more-options" data-owner-{{this.id}}="" data-guid-{{this.id}}="" data-type-{{this.id}}="gccollab_group" onclick="GCTUser.MoreOptions(this);"><i class="fa fa-caret-down"></i></a>
                             </div>
                             <div class="item-subtitle" id="group-owner-click-{{this.id}}"><span data-translate="owner">Owner</span>: <span id="group-owner-{{this.id}}"></span></div>
                         </div>
@@ -126,6 +125,7 @@
         <div class="popover popover-actions-{{guid}}">
             <div class="popover-inner">
                 <div class="list">
+                    <div id="{{guid}}-actions-title" class="block-title" tabindex="0" data-translate="create-group-content"></div>
                     <ul id="popover-actions-{{guid}}">
                         <li><a class="list-button item-link popover-close" href="#" data-translate="close">close</a></li>
                     </ul>
@@ -170,6 +170,14 @@
                 });
                 $$('.popover-links-' + guid).on('popover:open', function () {
                     var focusNow = document.getElementById('focus-links-popover-' + guid);
+                    if (focusNow) { focusNow.focus(); }
+                });
+                $$('.popover-actions-' + guid).on('popover:open', function () {
+                    var focusNow = document.getElementById(guid + '-actions-title');
+                    if (focusNow) { focusNow.focus(); }
+                });
+                $$('.popover-actions-' + guid).on('popover:close', function () {
+                    var focusNow = document.getElementById('actions-' + guid);
                     if (focusNow) { focusNow.focus(); }
                 });
             },

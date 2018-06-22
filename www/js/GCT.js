@@ -44,7 +44,7 @@
         return action;
     },
     txtFilterButton: function (ref) {
-        var filterButton = '<a href="#" data-popup=".filters-' + ref + '" class="popup-open link icon-only" data-translate-target="aria-label" data-translate="filter-options"><i class="fas fa-search fa-2x"></i></a>';
+        var filterButton = '<a id="filters-button-'+ref+'" href="#" data-popup=".filters-' + ref + '" class="popup-open link icon-only" data-translate-target="aria-label" data-translate="filter-options"><i class="fas fa-search fa-2x"></i></a>';
         return filterButton;
     },
     txtTabHeader: function (ref, id) {
@@ -737,7 +737,7 @@ GCTEach = {
                 case "etherpad": description = GCTLang.Trans("doc-create"); type = "gccollab_doc"; break;
                 case "event_calendar": description = GCTLang.Trans("event-create"); type = "gccollab_event"; break;
                 case "bookmarks": description = GCTLang.Trans("bookmark-create"); type = "gccollab_bookmark"; break;
-                case "page_top": description = GCTLang.Trans("page-create"); type = "gccollab_page"; break;
+                case "page": case "page_top": description = GCTLang.Trans("page-create"); type = "gccollab_page"; break;
                 default: description = "NEED TO HANDLE CREATE";
             }
         } else { //OTHER
