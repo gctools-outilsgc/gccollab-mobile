@@ -2498,18 +2498,23 @@ GCTrequests = {
 
                 var postCalendar = app.popup.create({
                     content: '<div class="popup">' +
+                        '<div class="navbar"><div class="navbar-inner">' +
+                        '<div class="left"><a href="#" class="link popup-close" data-translate-target="aria-label" data-translate="close"><i class="far fa-times-circle"></i></a></div>' +
+                        '<div id="in-cal-title" class="title" tabindex="0">' + GCTLang.Trans('in-calendar') + '</div>'+
+                        '</div></div>' +
                         '<div class="block">' +
                         content +
-                        '<p><a href="#" class="link popup-close">Close me</a></p>' +
+                        '<p><a href="#" class="link popup-close">' + GCTLang.Trans('close') +'</a></p>' +
                         '</div>' +
                         '</div>',
                     on: {
-                        open: function (popup) {
-                            console.log('Popup open');
-                        },
                         opened: function (popup) {
-                            console.log('Popup opened');
+                            var focusTitle = document.getElementById('in-cal-title');
+                            if (focusTitle) { focusTitle.focus(); }
                         },
+                        closed: function (popup) {
+                            obj.focus();
+                        }
                     }
                 });
                 postCalendar.open();
