@@ -45,6 +45,7 @@
         {{#js_if "this.page === 'home'"}}
         <div class="popover popover-actions-{{page}}">
             <div class="popover-inner">
+                <div id="{{page}}-actions-title" class="block-title" tabindex="0" data-translate="create-links"></div>
                 <div class="list">
                     <ul id="popover-actions-{{page}}">
                         <li><a href="#" onclick="GCTrequests.PostWirePost();" class="list-button item-link popover-close"><i class="fas fa-rss"> <span data-translate="create-wire"></span></i></a></li>
@@ -234,6 +235,16 @@
                             console.log(tab.filters);
                             GCTtabs.TabReset(tab);
                         });
+                    });
+                }
+                if (page === 'home') {
+                    $$('.popover-actions-home').on('popover:opened', function (e, popover) {
+                        var focusTitle = document.getElementById('home-actions-title');
+                        if (focusTitle) { focusTitle.focus(); }
+                    });
+                    $$('.popover-actions-home').on('popover:close', function () {
+                        var focusNow = document.getElementById(page + '-actions');
+                        if (focusNow) { focusNow.focus(); }
                     });
                 }
             },

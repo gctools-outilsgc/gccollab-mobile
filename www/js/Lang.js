@@ -175,6 +175,8 @@
     "view-post": "View Post",
     "view-group": "View Group",
 
+    "create-links": "Create Content Links",
+    "create-group-content": "Create Group Content",
     "create-wire": "Create a new Wire post",
     "new-blog-post": "New Blog Post",
     "new-wire-post": "New Wire Post",
@@ -579,6 +581,8 @@ French = {
     "view-post": "Voir l'article",
     "view-group": "View le Groupe",
 
+    "create-links": "Créer des Liens de Contenu",
+    "create-group-content": "Créer un Contenu de Groupe",
     "create-wire": "Créer un nouveau fil",
     "new-blog-post": "Ajouter un blogue",
     "new-wire-post": "Ajouter un fil",
