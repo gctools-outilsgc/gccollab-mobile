@@ -44,7 +44,7 @@
         return action;
     },
     txtFilterButton: function (ref) {
-        var filterButton = '<a href="#" data-popup=".filters-' + ref + '" class="popup-open link icon-only" data-translate-target="aria-label" data-translate="filter-options"><i class="fas fa-search fa-2x"></i></a>';
+        var filterButton = '<a id="filters-button-'+ref+'" href="#" data-popup=".filters-' + ref + '" class="popup-open link icon-only" data-translate-target="aria-label" data-translate="filter-options"><i class="fas fa-search fa-2x"></i></a>';
         return filterButton;
     },
     txtTabHeader: function (ref, id) {

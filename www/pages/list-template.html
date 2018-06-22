@@ -63,7 +63,7 @@
                     <div class="navbar">
                         <div class="navbar-inner">
                             <div class="left"><a href="#" class="link popup-close" data-translate-target="aria-label" data-translate="close"><i class="far fa-times-circle"></i></a></div>
-                            <div class="title" data-translate="filter-{{page}}"></div>
+                            <div id="{{page}}-filters-title" class="title" data-translate="filter-{{page}}" tabindex="0"></div>
                         </div>
                     </div>
                     <div class="page-content">
@@ -235,6 +235,14 @@
                             console.log(tab.filters);
                             GCTtabs.TabReset(tab);
                         });
+                    });
+                    $$('.filters-' + page).on('popup:open', function () {
+                        var focusNow = document.getElementById(page + '-filters-title');
+                        if (focusNow) { focusNow.focus(); }
+                    });
+                    $$('.filters-' + page).on('popup:close', function () {
+                        var focusNow = document.getElementById('filters-button-' + page);
+                        if (focusNow) { focusNow.focus(); }
                     });
                 }
                 if (page === 'home') {
