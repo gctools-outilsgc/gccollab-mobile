@@ -9,12 +9,12 @@
                     <div class="subnavbar-inner">
                         <div class="segmented">
                             {{#js_if "this.tabs[0].type == 'group'"}}
-                            <a href="#tab-profile-{{guid}}-profile" class="button tab-link tab-link-active" data-translate="profile">Profile</a>
-                            <a href="#tab-profile-{{guid}}-members" class="button tab-link" data-translate="members">members</a>
+                            <a href="#tab-profile-{{guid}}-profile" id="tab-link-{{this.tabs[0].id}}" class="button tab-link tab-link-active" data-translate="profile">Profile</a>
+                            <a href="#tab-profile-{{guid}}-members" id="tab-link-{{this.tabs[1].id}}" class="button tab-link" data-translate="members">members</a>
                             {{/js_if}}
                             {{#js_if "this.tabs[0].type == 'user'"}}
-                            <a href="#tab-profile-{{guid}}-profile" class="button tab-link tab-link-active" data-translate="profile">Profile</a>
-                            <a href="#tab-profile-{{guid}}-groups" class="button tab-link" data-translate="groups">Groups</a>
+                            <a href="#tab-profile-{{guid}}-profile" id="tab-link-{{this.tabs[0].id}}" class="button tab-link tab-link-active" data-translate="profile">Profile</a>
+                            <a href="#tab-profile-{{guid}}-groups" id="tab-link-{{this.tabs[1].id}}" class="button tab-link" data-translate="groups">Groups</a>
                             {{/js_if}}
                             <a id="profile-menu-{{guid}}" class="button popover-open" href="#" data-popover=".popover-links-{{guid}}" data-translate="more">More</a>
                         </div>
@@ -142,6 +142,8 @@
                 var tabs = this.tabs;
                 app.preloader.show();
                 tabs[0].request(tabs[0], guid); //load first tab, which is active tab
+                $$('#tab-link-' + tabs[0].id).attr('aria-label', GCTLang.Trans(tabs[0].name) + ' ' + GCTLang.Trans("tab"));
+                $$('#tab-link-' + tabs[1].id).attr('aria-label', GCTLang.Trans(tabs[1].name) + ' ' + GCTLang.Trans("tab"));
                 tabs.forEach(function (tab) {
                     //More Button
                     $$('#more-' + tab.id).on('click', function (e) {

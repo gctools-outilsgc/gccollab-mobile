@@ -293,6 +293,7 @@
     "reason-decline-opportunity":"Reason to decline the offer to participate in this opportunity",
     "message-creator-opportunity": "Message to opportunity creator",
 
+    "tab": "tab",
     "content-loaded": "New content appended to page.",
     "more-options-opened": "More Options Menu Opened.",
     "more-tab-menu-opened": "More Tabs List",
@@ -699,6 +700,7 @@ French = {
     "reason-decline-opportunity":"Raison pour le retrait de votre participation à cette possibilité",
     "message-creator-opportunity": "Message au gestionnaire",
 
+    "tab": "onglet",
     "content-loaded": "Nouveau contenu ajouté à la page.",
     "more-options-opened": "Plus d'options menu ouvert.",
     "more-tab-menu-opened": "Plus de liste d'onglets",

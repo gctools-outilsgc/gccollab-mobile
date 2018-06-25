@@ -10,7 +10,7 @@
                     <div class="subnavbar-inner">
                         <div class="segmented">
                             {{#each tabs}}
-                            <a href="#tab-{{this.id}}" class="button {{#if @first}}tab-link-active{{/if}} tab-link" data-translate="{{this.name}}"></a>
+                            <a href="#tab-{{this.id}}" id="tab-link-{{this.id}}" class="button {{#if @first}}tab-link-active{{/if}} tab-link" data-translate="{{this.name}}"></a>
                             {{/each}}
                         </div>
                     </div>
@@ -209,6 +209,7 @@
                             tab.request(tab);
                         }
                     });
+                    $$('#tab-link-' + tab.id).attr('aria-label', GCTLang.Trans(tab.name) + ' ' + GCTLang.Trans("tab"));
                 });
                 //Refresh Button - All
                 $$('#refresh-' + this.page).on('click', function (e) {
