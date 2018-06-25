@@ -1785,8 +1785,8 @@ GCTUser = {
             data: { method: "group.join", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                $("#join-group").hide();
-                $("#leave-group").show();
+                $("#join-group-profile-"+guid+"-profile").hide();
+                $("#leave-group-profile-" + guid + "-profile").show();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -1803,8 +1803,8 @@ GCTUser = {
             data: { method: "group.leave", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                $("#leave-group").hide();
-                $("#join-group").show();
+                $("#leave-group-profile-" + guid + "-profile").hide();
+                $("#join-group-profile-" + guid + "-profile").show();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
