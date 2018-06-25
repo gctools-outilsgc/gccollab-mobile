@@ -3248,7 +3248,7 @@ GCT = {
             popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + type + '" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-post") + '</a></li>';
         }
         if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post' || type == "gccollab_event") {
-            popoverHTML += '<li><a href="#" class="item-link popover-close list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
+            popoverHTML += '<li><a href="#" class="item-link popover-close list-button social-share" data-guid="' + guid + '" data-type="' + type + '" onclick="SocialShare(this);">' + GCTLang.Trans("share") + '</a></li>';
         }
         if (type == "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("add-calendar") + '</a></li>'; }
         if (type == 'gccollab_wire_post') { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + location + '" onclick="GCTrequests.ReplyWirePost(this);">' + GCTLang.Trans("reply") + '</a></li>'; }
