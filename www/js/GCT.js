@@ -1775,6 +1775,42 @@ GCTUser = {
     Guid: function () {
         return (Cookies.get('guid')) ? Cookies.get('guid') : "";
     },
+    JoinGroup: function (obj) {
+        var guid = $(obj).data("guid");
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "group.join", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                $("#join-group").hide();
+                $("#leave-group").show();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    LeaveGroup: function (obj) {
+        var guid = $(obj).data("guid");
+
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "group.leave", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                $("#leave-group").hide();
+                $("#join-group").show();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
 }
 
 GCTrequests = {
