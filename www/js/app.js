@@ -190,8 +190,8 @@ function ShowImage(img) {
 }
 
 function SocialShare(obj) {
-    var guid = $(this).data("guid");
-    var type = $(this).data("type");
+    var guid = $(obj).data("guid");
+    var type = $(obj).data("type");
 
     var message = '';
     var subject = '';
