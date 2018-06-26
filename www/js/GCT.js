@@ -340,7 +340,7 @@
             + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
-            + "<div class='card-content-inner'>"
+            + "<div id='event-" + object.guid + "' class='card-content-inner'>"
             + "<div class='blog-title'>" + object.title + "</div>"
             + "<div class='item-text large'>" + object.startDate + "<br>" + object.endDate + "</div>"
             + "<div class='item-text large'>" + object.location + "</div>"
@@ -372,7 +372,7 @@
             + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='post' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding'>"
-            + "<div class='card-content-inner'>"
+            + "<div id='blog-" + object.guid + "' class='card-content-inner'>"
             + "<div class='blog-title'>" + object.title + "</div>"
             + "<div class='item-text large'>" + object.startDate + "<br>" + object.endDate + "</div>"
             + "<div class='item-text large'>" + object.location + "</div>"
@@ -3248,7 +3248,7 @@ GCT = {
             popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + type + '" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-post") + '</a></li>';
         }
         if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post' || type == "gccollab_event") {
-            popoverHTML += '<li><a href="#" class="item-link popover-close list-button social-share" data-guid="' + guid + '" data-type="' + type + '">' + GCTLang.Trans("share") + '</a></li>';
+            popoverHTML += '<li><a href="#" class="item-link popover-close list-button social-share" data-guid="' + guid + '" data-type="' + type + '" onclick="SocialShare(this);">' + GCTLang.Trans("share") + '</a></li>';
         }
         if (type == "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("add-calendar") + '</a></li>'; }
         if (type == 'gccollab_wire_post') { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + location + '" onclick="GCTrequests.ReplyWirePost(this);">' + GCTLang.Trans("reply") + '</a></li>'; }
