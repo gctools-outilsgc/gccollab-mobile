@@ -53,14 +53,27 @@
                     <hr>
                     <div class="tight-block text-center vmargin-10">
                         <div class="row profiles">
-                            <div class="col-33 profiles" id="wire-num-{{this.id}}"></div>
-                            <div class="col-33 profiles" id="blog-num-{{this.id}}"></div>
-                            <div class="col-33 profiles" id="colleague-num-{{this.id}}"></div>
-                        </div>
-                        <div class="row profile stats">
-                            <div class="col-33 profile stats font-13" data-translate="wires">Wires</div>
-                            <div class="col-33 profile stats font-13" data-translate="blogs">Blogs</div>
-                            <div class="col-33 profile stats font-13" data-translate="colleagues">Colleagues</div>
+                            <div class="col-33">
+                                <div class="reader-text" tabindex="0" id="wire-label-{{this.id}}"></div>
+                                <div class="item-inner" aria-hidden="true">
+                                    <p class="profiles" id="wire-num-{{this.id}}"></p>
+                                    <div class="stats font-13" data-translate="wires">Wires</div>
+                                </div>
+                            </div>
+                            <div class="col-33">
+                                <div class="reader-text" tabindex="0" id="blog-label-{{this.id}}"></div>
+                                <div class="item-inner" aria-hidden="true">
+                                    <p class="profiles" id="blog-num-{{this.id}}"></p>
+                                    <div class="stats font-13" data-translate="blogs">Blogs</div>
+                                </div>
+                            </div>
+                            <div class="col-33">
+                                <div class="reader-text" tabindex="0" id="colleague-label-{{this.id}}"></div>
+                                <div class="item-inner" aria-hidden="true">
+                                    <p class="profiles" id="colleague-num-{{this.id}}"></p>
+                                    <div class="stats font-13" data-translate="colleagues">Colleagues</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <hr>
@@ -114,7 +127,9 @@
                     <ul id="popover-{{guid}}">
                         {{#js_if "this.tabs[0].type == 'user'"}}
                         {{#each tabs}}
+                        {{#js_if "this.name != 'profile' && this.name != 'groups'"}}
                         <li><a class="list-button tab-link popover-close" href="#tab-{{this.id}}" data-translate="{{this.name}}">Link 1</a></li>
+                        {{/js_if}}
                         {{/each}}
                         <li><a class="list-button item-link popover-close" href="#" data-translate="close">close</a></li>
                         {{/js_if}}

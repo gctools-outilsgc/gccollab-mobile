@@ -738,6 +738,7 @@ GCTEach = {
                 case "event_calendar": description = GCTLang.Trans("event-create"); type = "gccollab_event"; break;
                 case "bookmarks": description = GCTLang.Trans("bookmark-create"); type = "gccollab_bookmark"; break;
                 case "page": case "page_top": description = GCTLang.Trans("page-create"); type = "gccollab_page"; break;
+                case "album": description = GCTLang.Trans("album-create"); type = "gccollab_album"; break;
                 default: description = "NEED TO HANDLE CREATE";
             }
         } else { //OTHER
@@ -1350,8 +1351,11 @@ GCTEach = {
         $("#info-list-" + obj.id).html(profile).text();
 
         $("#wire-num-" + obj.id).html(profileData.wires).text();
+        $("#wire-label-" + obj.id).html(profileData.wires + ' ' + GCTLang.Trans('wires')).text();
         $("#blog-num-" + obj.id).html(profileData.blogs).text();
+        $("#blog-label-" + obj.id).html(profileData.blogs + ' ' + GCTLang.Trans('blogs')).text();
         $("#colleague-num-" + obj.id).html(profileData.colleagues).text();
+        $("#colleague-label-" + obj.id).html(profileData.colleagues + ' ' + GCTLang.Trans('colleagues')).text();
 
         if (profileData.hasOwnProperty("links")) {
             var links = '<div class="center">' + GCTLang.Trans('social-media') + '</div>'
@@ -1608,7 +1612,6 @@ GCTLang = {
 
         if (typeof reload != "undefined" && reload) {
             mainView.router.refreshPage();
-            mainView.router.reloadPage("index.html");
         }
     }
 };
