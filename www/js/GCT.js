@@ -1350,8 +1350,11 @@ GCTEach = {
         $("#info-list-" + obj.id).html(profile).text();
 
         $("#wire-num-" + obj.id).html(profileData.wires).text();
+        $("#wire-label-" + obj.id).html(profileData.wires + ' ' + GCTLang.Trans('wires')).text();
         $("#blog-num-" + obj.id).html(profileData.blogs).text();
+        $("#blog-label-" + obj.id).html(profileData.blogs + ' ' + GCTLang.Trans('blogs')).text();
         $("#colleague-num-" + obj.id).html(profileData.colleagues).text();
+        $("#colleague-label-" + obj.id).html(profileData.colleagues + ' ' + GCTLang.Trans('colleagues')).text();
 
         if (profileData.hasOwnProperty("links")) {
             var links = '<div class="center">' + GCTLang.Trans('social-media') + '</div>'

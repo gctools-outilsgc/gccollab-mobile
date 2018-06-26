@@ -53,17 +53,26 @@
                     <hr>
                     <div class="tight-block text-center vmargin-10">
                         <div class="row profiles">
-                            <div class="col-33" >
-                                <p class="profiles" id="wire-num-{{this.id}}"></p>
-                                <div class="stats font-13" data-translate="wires">Wires</div>
+                            <div class="col-33">
+                                <div class="reader-text" tabindex="0" id="wire-label-{{this.id}}"></div>
+                                <div class="item-inner" aria-hidden="true">
+                                    <p class="profiles" id="wire-num-{{this.id}}"></p>
+                                    <div class="stats font-13" data-translate="wires">Wires</div>
+                                </div>
                             </div>
                             <div class="col-33">
-                                <p class="profiles" id="blog-num-{{this.id}}"></p>
-                                <div class="stats font-13" data-translate="blogs">Blogs</div>
+                                <div class="reader-text" tabindex="0" id="blog-label-{{this.id}}"></div>
+                                <div class="item-inner" aria-hidden="true">
+                                    <p class="profiles" id="blog-num-{{this.id}}"></p>
+                                    <div class="stats font-13" data-translate="blogs">Blogs</div>
+                                </div>
                             </div>
                             <div class="col-33">
-                                <p class="profiles" id="colleague-num-{{this.id}}"></p>
-                                <div class="stats font-13" data-translate="colleagues">Colleagues</div>
+                                <div class="reader-text" tabindex="0" id="colleague-label-{{this.id}}"></div>
+                                <div class="item-inner" aria-hidden="true">
+                                    <p class="profiles" id="colleague-num-{{this.id}}"></p>
+                                    <div class="stats font-13" data-translate="colleagues">Colleagues</div>
+                                </div>
                             </div>
                         </div>
                     </div>
