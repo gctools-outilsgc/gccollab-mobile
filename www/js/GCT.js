@@ -738,6 +738,7 @@ GCTEach = {
                 case "event_calendar": description = GCTLang.Trans("event-create"); type = "gccollab_event"; break;
                 case "bookmarks": description = GCTLang.Trans("bookmark-create"); type = "gccollab_bookmark"; break;
                 case "page": case "page_top": description = GCTLang.Trans("page-create"); type = "gccollab_page"; break;
+                case "album": description = GCTLang.Trans("album-create"); type = "gccollab_album"; break;
                 default: description = "NEED TO HANDLE CREATE";
             }
         } else { //OTHER
@@ -1611,7 +1612,6 @@ GCTLang = {
 
         if (typeof reload != "undefined" && reload) {
             mainView.router.refreshPage();
-            mainView.router.reloadPage("index.html");
         }
     }
 };
