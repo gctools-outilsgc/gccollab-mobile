@@ -206,8 +206,8 @@ function SocialShare(obj) {
         message = $("#blog-" + guid + ' .blog-title').text();
         subject = 'GCcollab Blog';
     } else if (type == 'gccollab_event') {
-        message = $("#event-" + guid + ' .blog-event').text();
-        subject = 'GCcollab event';
+        message = $("#event-" + guid + ' .blog-title').text();
+        subject = 'GCcollab Event';
     }
 
     if (typeof window.plugins.socialsharing !== 'undefined' && message != "") {
@@ -221,8 +221,8 @@ function SocialShare(obj) {
                 url: url,
                 chooserTitle: chooserTitle
             }, function (success) {
-                alert("Share completed? " + success.completed);
-                alert("Shared to app: " + success.app);
+                console.log("Share completed? " + success.completed);
+                console.log("Shared to app: " + success.app);
             }, function (failure) {
                 alert("Sharing failed with message: " + failure);
             });
