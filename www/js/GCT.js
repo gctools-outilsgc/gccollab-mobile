@@ -3114,6 +3114,7 @@ GCT = {
         } else if (obj.href.indexOf("/event_calendar/view/") > -1) {
             console.log('loading event...');
             lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            lnk = lnk.substring(0, lnk.indexOf("/"));
             console.log(lnk);
             GCT.ViewPost(lnk, "gccollab_event");
 
