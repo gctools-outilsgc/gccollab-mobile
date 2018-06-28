@@ -760,6 +760,9 @@ GCTEach = {
             label += value.object.displayName;
         } else if (value.object.type == "wire") {
             more = "";
+        } else if (value.object.type == "comment") {
+            more = "<a onclick='GCT.ViewPost(this);' id='info-" + value.object.type + "' data-guid='" + value.object.container_guid + "' data-type='gccollab_" + value.object.container_type + "'>" + value.object.name + "</a>";
+            label += value.object.name;
         } else {
             more = "<a onclick='GCT.FireLink(this)' id='info-" + value.object.type + "' href='" + value.object.url + "'>" + value.object.name + "</a>";
             label += value.object.name;
@@ -1439,13 +1442,13 @@ GCTEach = {
         var content = '';
         if (obj.loaded == true) { $(obj.appendMessage).appendTo('#content-' + obj.id); } else { obj.loaded = true; }
 
-        if (info.length > 0) {
+        if (info && info.length > 0) {
             $.each(info, function (key, value) {
                 content = obj.eachFunc(value);
                 $(content).hide().appendTo('#content-' + obj.id).fadeIn(1000);
             });
         }
-        if (info.length < obj.limit) {
+        if (info && info.length < obj.limit) {
             content = endOfContent;
             $(content).hide().appendTo('#content-' + obj.id).fadeIn(1000);
             $('#more-' + obj.id).hide();
@@ -3111,6 +3114,7 @@ GCT = {
         } else if (obj.href.indexOf("/event_calendar/view/") > -1) {
             console.log('loading event...');
             lnk = obj.href.substr((obj.href.indexOf("/view/") + 6));
+            lnk = lnk.substring(0, lnk.indexOf("/"));
             console.log(lnk);
             GCT.ViewPost(lnk, "gccollab_event");
 
@@ -3203,6 +3207,7 @@ GCT = {
             case "gccollab_wire_post":
                 mainView.router.navigate('/entity-template/wire/' + guid + '/');
                 break;
+            case "gccollab_blog":
             case "gccollab_blog_post":
                 mainView.router.navigate('/entity-template/blog/' + guid + '/');
                 break;
@@ -3213,9 +3218,11 @@ GCT = {
             case "gccollab_opportunity":
                 mainView.router.navigate('/entity-template/opportunity/' + guid + '/');
                 break;
+            case "gccollab_bookmarks":
             case "gccollab_bookmark":
                 mainView.router.navigate('/entity-template/bookmark/' + guid + '/');
                 break;
+            case "gccollab_event_calendar":
             case "gccollab_event":
                 mainView.router.navigate('/entity-template/event/' + guid + '/');
                 break;
