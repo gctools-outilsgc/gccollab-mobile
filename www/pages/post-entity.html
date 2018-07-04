@@ -414,6 +414,57 @@
                     }
                 }
 
+                if (type === 'event') {
+                    $$('#submit-' + id).on('click', function (e) {
+                        $$('#' + id + '-Feedback').html(''); //clears feedback message on new submit
+                        var title = {}, body = {};
+                        title.en = $('#english-title').val();
+                        title.fr = $('#french-title').val();
+                        body.en = $('#english-body-textarea').val();
+                        body.fr = $('#french-body-textarea').val();
+                        var comment = $('#' + id + '-comments').val();
+                        var access = $('#' + id + '-access').val();
+                        var status = $('#' + id + '-status').val();
+                        var allday = $('#all-day').val()
+                        var starttime = $('#picker-starttime').val();
+                        var endtime = $('#picker-endtime').val();
+                        if (allday == 'all_day') {
+                            starttime = '';
+                            endtime = '';
+                        }
+                        var startdate = $('#events-startdate').val();
+                        var enddate = $('#events-enddate').val();
+                        var venue = $('#venue').val();
+                        var room = $('#room').val();
+                        var web_conference = $('#web_conference');
+                        var url = $('#teleconference_text').val();
+                        var additionnal = $('#additionnal-body-textarea').val();
+                        if (web_conference != '1') {
+                            url = '';
+                            additionnal = '';
+                        }
+                        var fees = $('#fees_text').val();
+                        var contact_checkbox = $('#contact_checkbox');
+                        var contact_text = $('#contact_text').val();
+                        var contact_email_text = $('#contact_email_text').val();
+                        var contact_phone_text = $('#contact_phone_text').val();
+                        if (contact_checkbox != '1') {
+                            contact_text = '';
+                            contact_email_text = '';
+                            contact_phone_text = '';
+                        }
+                        var picker_language = $('#picker-language').val();
+                        GCTrequests.PostEvent('', '', title, body, startdate, starttime, enddate, endtime, venue, room, allday, web_conference, url, additionnal, fees, contact_checkbox, contact_text, contact_email_text, contact_phone_text, picker_language, comment, access, status, function (data) {
+                            alert(data.result);
+                        }, function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        }, function (feedback) {
+                            var feedbackmsg = '<p class="item-content" style="padding-top: 0;padding-bottom: 0;" id="' + id + '-FeedbackMsg">' + GCTLang.Trans('issue') + feedback + '</p>';
+                            $(feedbackmsg).hide().appendTo('#' + id + '-Feedback').fadeIn(500);
+                            $('#' + id + '-FeedbackMsg').focus();
+                        });
+                    });
+                }
                 $$('#refresh-' + id).on('click', function (e) {
                     document.getElementById(id + '-options-form').reset();
                     document.getElementById('english-form').reset();
