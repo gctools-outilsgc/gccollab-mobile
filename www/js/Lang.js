@@ -404,7 +404,21 @@
     "validation_location": "Please enter a location for this opportunity",
     "add-calendar": 'Add to my calendar',
     "in-calendar": "In calendar",
-    "subgroup-header": "Subgroups"
+    "subgroup-header": "Subgroups",
+    "all-day-event": "All day",
+    'startdate': "Start date",
+    "starttime": 'Start time',
+    'enddate': "End date",
+    "endtime": 'End time',
+    "event-venue": "Location",
+    "event-room": "Room",
+    "event-web-conference": "Include a web conference for this event",
+    "additionnal-body": "Additional information",
+    "teleconference-fees": "Fees",
+    "not-contact": "You are not the contact person?",
+    "event-contact": "Contact",
+    "contact_email": "E-mail address",
+    "contact_phone": "Phone number"
 }
 
 French = {
@@ -816,5 +830,19 @@ French = {
     "validation_location": "Veuillez entrer un emplacement pour cette possibilité",
     "add-calendar": 'Ajouter à mon calendrier',
     "in-calendar": "Dans le calendrier",
-    "subgroup-header": "Sous-groupes"
+    "subgroup-header": "Sous-groupes",
+    "all-day-event": "Toute la journée",
+    'startdate': "Date de début",
+    "starttime": 'Heure de début',
+    'enddate': "Date de fin",
+    "endtime": 'Heure de fin',
+    "event-venue": "Lieu",
+    "event-room": "Salle",
+    "event-web-conference": "Inclure une conférence Web a l'événement",
+    "additionnal-body": "Information supplémentaire",
+    "teleconference-fees": "Frais",
+    "not-contact": "Vous n'êtes pas la personne contact?",
+    "event-contact": "Personne ressource",
+    "contact_email": "Adresse courriel",
+    "contact_phone": "Numéro de téléphone"
 }
