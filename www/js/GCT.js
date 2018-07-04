@@ -2470,21 +2470,22 @@ GCTrequests = {
             }
         });
     },
-    GetEventsByUser: function (tabObject, from, to) {
+    GetEventsByUser: function (tabObject, from, to, targetGUID) {
         limit = tabObject.limit || 15;
-        // offset = offset || 0;
+        offset = tabObject.offset || 0;
         var filters = tabObject.filters || '';
         if (filters) {
             filters = JSON.parse(filters);
         }
         from = filters.from || "";
         to = filters.to || "";
+        target = targetGUID || "";
 
         app.request({
             method: 'POST',
             dataType: 'json',
             url: GCT.GCcollabURL,
-            data: { method: "get.eventsbyowner", user: GCTUser.Email(), from: from, to: to, limit: limit, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "get.eventsbyowner", user: GCTUser.Email(), target: target, from: from, to: to, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccessEvent(data, tabObject);
@@ -2496,6 +2497,7 @@ GCTrequests = {
     },
     GetEventsByColleagues: function (tabObject, from, to) {
         limit = tabObject.limit || 15;
+        offset = tabObject.offset || 0;
         var filters = tabObject.filters || '';
         if (filters) {
             filters = JSON.parse(filters);
@@ -2507,7 +2509,7 @@ GCTrequests = {
             method: 'POST',
             dataType: 'json',
             url: GCT.GCcollabURL,
-            data: { method: "get.eventsbycolleagues", user: GCTUser.Email(), from: from, to: to, limit: limit, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "get.eventsbycolleagues", user: GCTUser.Email(), from: from, to: to, limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccessEvent(data, tabObject);
@@ -3275,7 +3277,7 @@ GCT = {
             }
         }
         if (inGroup) { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + container + '" data-type="gccollab_group" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-group") + '</a></li>'; }
-        if (type === "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button" data-guid="' + guid + '" onclick="GCTrequests.SeeCalendar(this);">' + GCTLang.Trans('in-calendar') + '</a></li>'
+        if (type === "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.SeeCalendar(this);">' + GCTLang.Trans('in-calendar') + '</a></li>'
 }
         popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfile(' + owner + ');">' + GCTLang.Trans("show-user") + '</a></li>';
         popoverHTML += '<li><a href="#"  class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
