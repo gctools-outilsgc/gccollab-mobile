@@ -109,6 +109,7 @@
 
     "french": "French",
     "english": "English",
+    "bilingual": "Bilingual",
     "on": "On",
     "off": "Off",
 
@@ -418,7 +419,8 @@
     "not-contact": "You are not the contact person?",
     "event-contact": "Contact",
     "contact_email": "E-mail address",
-    "contact_phone": "Phone number"
+    "contact_phone": "Phone number",
+    "event-language": "Event Language"
 }
 
 French = {
@@ -532,6 +534,7 @@ French = {
 
     "french": "Français",
     "english": "Anglais",
+    "bilingual": "Bilingue",
     "on": "Activé",
     "off": "Désactivé",
 
@@ -844,5 +847,6 @@ French = {
     "not-contact": "Vous n'êtes pas la personne contact?",
     "event-contact": "Personne ressource",
     "contact_email": "Adresse courriel",
-    "contact_phone": "Numéro de téléphone"
+    "contact_phone": "Numéro de téléphone",
+    "event-language": "Langue de l'événement"
 }

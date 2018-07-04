@@ -125,6 +125,118 @@
                                 </div>
                             </div>
                         </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div id="venue-label" class="item-venue item-input" data-translate="event-venue">Location</div>
+                                    <div class="item-input-wrap">
+                                        <input id="venue" name="venue" type="text" placeholder="" aria-labelledby="venue-label" />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div id="room-label" class="item-room item-input" data-translate="event-room">Room</div>
+                                    <div class="item-input-wrap">
+                                        <input id="room" name="room" type="text" placeholder="" aria-labelledby="room-label" />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="item-checkbox item-content">
+                                <input type="checkbox" id="web_conference" name="web_conference" value="1" />
+                                <i class="icon icon-checkbox"></i>
+                                <div class="item-inner">
+                                    <div class="item-title" data-translate="event-web-conference"></div>
+                                </div>
+                            </label>
+                        </li>
+                        <li>
+                            <div class="item-content url item-input">
+                                <div class="item-inner">
+                                    <div id="teleconference-label" class="item-teleconference item-label" data-translate="teleconference-url">URL</div>
+                                    <div class="item-input-wrap">
+                                        <input id="teleconference_text" name="teleconference_text" type="text" placeholder="" aria-labelledby="teleconference-label" />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input additionnal">
+                                <div class="item-inner">
+                                    <div id="additionnal-label" class="item-additionnal item-label" data-translate="additionnal-body">Additionnal information</div>
+                                    <div class="item-input-wrap">
+                                        <textarea id="additionnal-body-textarea" class="resizable" aria-labelledby="additionnal-body-label"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div id="fees-label" class="item-fees item-label" data-translate="teleconference-fees">Fees</div>
+                                    <div class="item-input-wrap">
+                                        <input id="fees_text" name="fees_text" type="text" placeholder="" aria-labelledby="fees-label" />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div class="item-title item-label" data-translate="event-language"></div>
+                                    <div class="item-input-wrap">
+                                        <select id="picker-language" name="picker-language">
+                                            <option data-translate="bilingual"></option>
+                                            <option data-translate="english"></option>
+                                            <option data-translate="french"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="item-checkbox item-content">
+                                <input type="checkbox" id="contact_checkbox" name="contact_checkbox" value="1" />
+                                <i class="icon icon-checkbox"></i>
+                                <div class="item-inner">
+                                    <div class="item-title" data-translate="not-contact"></div>
+                                </div>
+                            </label>
+                        </li>
+                        <li>
+                            <div class="item-content contact item-input">
+                                <div class="item-inner">
+                                    <div id="contact-label" class="item-contact item-label" data-translate="event-contact">Contact</div>
+                                    <div class="item-input-wrap">
+                                        <input id="contact_text" name="contact_text" type="text" placeholder="" aria-labelledby="contact-label" />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content contact_email item-input">
+                                <div class="item-inner">
+                                    <div id="contact_email-label" class="item-contact_email item-label" data-translate="contact_email">E-mail address</div>
+                                    <div class="item-input-wrap">
+                                        <input id="contact_email_text" name="contact_email_text" type="text" placeholder="" aria-labelledby="contact_email-label" />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content contact_phone item-input">
+                                <div class="item-inner">
+                                    <div id="contact_phone-label" class="item-contact_phone item-label" data-translate="contact_phone">Phone number</div>
+                                    <div class="item-input-wrap">
+                                        <input id="contact_phone_text" name="contact_phone_text" type="text" placeholder="" aria-labelledby="contact_phone-label" />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
                         {{/js_if}}
                         <li>
                             <div class="item-content item-input">
