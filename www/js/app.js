@@ -65,7 +65,7 @@ var app  = new Framework7({
                 tabs: [{ id: "all", each: GCTEach.Event, request: GCTrequests.GetEvents, type: 'card', header: 'event' },
                     { id: "my-colleagues", each: GCTEach.Event, request: GCTrequests.GetEventsByColleagues, type: 'card', header: 'event' },
                     { id: "mine", each: GCTEach.Event, request: GCTrequests.GetEventsByUser, type: 'card', header: 'event' }],
-                action: '',
+                action: 'post-event',
                 filters: [{ id: 'from' }, { id: 'to' }],
             },
             bookmarks: {

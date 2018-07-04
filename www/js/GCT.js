@@ -39,6 +39,9 @@
             case "post-opp":
                 action = '<a href="#" class="link icon-only" onclick="GCTrequests.CreateNewOpportunity();" data-translate-target="aria-label" data-translate="create-mission"><i class="fa fa-briefcase fa-2x"></i></a>';
                 break;
+            case "post-event":
+                action = '<a href="#" onclick="GCTrequests.PostEventPost();" class="right link icon-only " data-translate-target="aria-label" data-translate="post-event"><i class="fa fa-calendar fa-2x"></i></a>';
+                break;
             default: ;
         }
         return action;
@@ -2583,6 +2586,41 @@ GCTrequests = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    },
+    PostEventPost: function () {
+        mainView.router.navigate('/post-entity/event/');
+    },
+    PostEvent: function (container, event_guid, title, body, startdate, starttime, enddate, endtime, venue, room, allday, web_conference, url, additionnal, fees, contact_checkbox, contact_text, contact_email_text, contact_phone_text, picker_language, comments, access, status, successCallback, errorCallback, issueCallback) {
+        if (!title.en && !title.fr) { issueCallback(GCTLang.Trans("require-title")); return; }
+        if (!body.en && !body.fr) { issueCallback(GCTLang.Trans("require-body")); return; }
+        if (!venue) { issueCallback(GCTLang.Trans("require-venue")); return; }
+        if (!startdate) { issueCallback(GCTLang.Trans("require-startdate")); return; }
+        if (!enddate) { issueCallback(GCTLang.Trans("require-enddate")); return; }
+        if (!(title.en && body.en) && !(title.fr && body.fr)) { issueCallback(GCTLang.Trans("require-same-lang")); return; }
+
+        container = container || '';
+        event_guid = event_guid || '';
+        title = title || '';
+        body = body || '';
+        comments = comments || 1;
+        access = access || 1;
+        status = status || 0;
+        app.preloader.show();
+        app.request({
+            method: 'POST',
+            dataType: 'json',
+            url: GCT.GCcollabURL,
+            data: { method: "save.event", user: GCTUser.Email(), title: JSON.stringify(title), body: JSON.stringify(body), startdate: startdate, starttime: starttime, enddate: enddate, endtime: endtime, venue: venue, room: room, allday: allday, web_conference: web_conference, url: url, additionnal: additionnal, fees: fees, contact_checkbox: contact_checkbox, contact_text: contact_text, contact_email_text: contact_email_text, contact_phone_text: contact_phone_text, picker_language: picker_language, container_guid: container, event_guid: event_guid, comments: comments, access: access, status: status, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 12000,
+            success: function (data) {
+                successCallback(data);
+                app.preloader.hide();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                errorCallback(jqXHR, textStatus, errorThrown);
+                app.preloader.hide();
             }
         });
     },
