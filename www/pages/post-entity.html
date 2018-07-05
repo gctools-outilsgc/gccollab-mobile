@@ -97,7 +97,7 @@
                             </div>
                         </li>
                         <li>
-                            <label class="item-checkbox item-content">
+                            <label class="item-checkbox item-content" id="toggle_day">
                                 <input type="checkbox" id="all-day" name="all-day" value="all_day" />
                                 <i class="icon icon-checkbox"></i>
                                 <div class="item-inner">
@@ -146,7 +146,7 @@
                             </div>
                         </li>
                         <li>
-                            <label class="item-checkbox item-content">
+                            <label class="item-checkbox item-content" id="toggle_conference">
                                 <input type="checkbox" id="web_conference" name="web_conference" value="1" />
                                 <i class="icon icon-checkbox"></i>
                                 <div class="item-inner">
@@ -155,7 +155,7 @@
                             </label>
                         </li>
                         <li>
-                            <div class="item-content url item-input">
+                            <div class="item-content url item-input" style="display: none;">
                                 <div class="item-inner">
                                     <div id="teleconference-label" class="item-teleconference item-label" data-translate="teleconference-url">URL</div>
                                     <div class="item-input-wrap">
@@ -165,7 +165,7 @@
                             </div>
                         </li>
                         <li>
-                            <div class="item-content item-input additionnal">
+                            <div class="item-content item-input additionnal" style="display: none;">
                                 <div class="item-inner">
                                     <div id="additionnal-label" class="item-additionnal item-label" data-translate="additionnal-body">Additionnal information</div>
                                     <div class="item-input-wrap">
@@ -199,7 +199,7 @@
                             </div>
                         </li>
                         <li>
-                            <label class="item-checkbox item-content">
+                            <label class="item-checkbox item-content" id="toggle_contact">
                                 <input type="checkbox" id="contact_checkbox" name="contact_checkbox" value="1" />
                                 <i class="icon icon-checkbox"></i>
                                 <div class="item-inner">
@@ -208,7 +208,7 @@
                             </label>
                         </li>
                         <li>
-                            <div class="item-content contact item-input">
+                            <div class="item-content contact item-input" style="display: none;">
                                 <div class="item-inner">
                                     <div id="contact-label" class="item-contact item-label" data-translate="event-contact">Contact</div>
                                     <div class="item-input-wrap">
@@ -218,7 +218,7 @@
                             </div>
                         </li>
                         <li>
-                            <div class="item-content contact_email item-input">
+                            <div class="item-content contact_email item-input" style="display: none;">
                                 <div class="item-inner">
                                     <div id="contact_email-label" class="item-contact_email item-label" data-translate="contact_email">E-mail address</div>
                                     <div class="item-input-wrap">
@@ -228,7 +228,7 @@
                             </div>
                         </li>
                         <li>
-                            <div class="item-content contact_phone item-input">
+                            <div class="item-content contact_phone item-input" style="display: none;">
                                 <div class="item-inner">
                                     <div id="contact_phone-label" class="item-contact_phone item-label" data-translate="contact_phone">Phone number</div>
                                     <div class="item-input-wrap">
@@ -463,6 +463,19 @@
                             $(feedbackmsg).hide().appendTo('#' + id + '-Feedback').fadeIn(500);
                             $('#' + id + '-FeedbackMsg').focus();
                         });
+                    });
+                    $$('#toggle_day').on('click', function (e) {
+                        $('.starttime').toggle();
+                        $('.endtime').toggle();
+                    });
+                    $$('#toggle_conference').on('click', function (e) {
+                        $('.additionnal').toggle();
+                        $('.url').toggle();
+                    });
+                    $$('#toggle_contact').on('click', function (e) {
+                        $('.contact_email').toggle();
+                        $('.contact').toggle();
+                        $('.contact_phone').toggle();
                     });
                 }
                 $$('#refresh-' + id).on('click', function (e) {
