@@ -77,6 +77,26 @@
                     <ul>
                         {{#js_if "../type === 'event'"}}
                         <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div id="venue-label" class="item-venue item-input" data-translate="event-venue">Location</div>
+                                    <div class="item-input-wrap">
+                                        <input id="venue" name="venue" type="text" placeholder="" aria-labelledby="venue-label" />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content item-input">
+                                <div class="item-inner">
+                                    <div id="room-label" class="item-room item-input" data-translate="event-room">Room</div>
+                                    <div class="item-input-wrap">
+                                        <input id="room" name="room" type="text" placeholder="" aria-labelledby="room-label" />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
                             <label class="item-checkbox item-content">
                                 <input type="checkbox" id="all-day" name="all-day" value="all_day" />
                                 <i class="icon icon-checkbox"></i>
@@ -100,7 +120,7 @@
                                 <div class="item-inner">
                                     <div class="item-title item-label" data-translate="starttime">Start time</div>
                                     <div class="item-input-wrap">
-                                        <input type="text" placeholder="HH:mm" id="picker-starttime">
+                                        <input type="time" id="starttime">
                                     </div>
                                 </div>
                             </div>
@@ -120,27 +140,7 @@
                                 <div class="item-inner">
                                     <div class="item-title item-label" data-translate="endtime">End time</div>
                                     <div class="item-input-wrap">
-                                        <input type="text" placeholder="HH:mm" id="picker-endtime">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item-content item-input">
-                                <div class="item-inner">
-                                    <div id="venue-label" class="item-venue item-input" data-translate="event-venue">Location</div>
-                                    <div class="item-input-wrap">
-                                        <input id="venue" name="venue" type="text" placeholder="" aria-labelledby="venue-label" />
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item-content item-input">
-                                <div class="item-inner">
-                                    <div id="room-label" class="item-room item-input" data-translate="event-room">Room</div>
-                                    <div class="item-input-wrap">
-                                        <input id="room" name="room" type="text" placeholder="" aria-labelledby="room-label" />
+                                        <input type="time" placeholder="00:00:00" id="endtime">
                                     </div>
                                 </div>
                             </div>
@@ -426,8 +426,8 @@
                         var access = $('#' + id + '-access').val();
                         var status = $('#' + id + '-status').val();
                         var allday = $('#all-day').val()
-                        var starttime = $('#picker-starttime').val();
-                        var endtime = $('#picker-endtime').val();
+                        var starttime = $('#starttime').val();
+                        var endtime = $('#endtime').val();
                         if (allday == 'all_day') {
                             starttime = '';
                             endtime = '';
