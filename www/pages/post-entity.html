@@ -425,10 +425,11 @@
                         var comment = $('#' + id + '-comments').val();
                         var access = $('#' + id + '-access').val();
                         var status = $('#' + id + '-status').val();
-                        var allday = $('#all-day').val()
+                        var allday = $('#all-day').prop('checked');
                         var starttime = $('#starttime').val();
                         var endtime = $('#endtime').val();
-                        if (allday == 'all_day') {
+                        if (allday) {
+                            allday = 'all_day';
                             starttime = '';
                             endtime = '';
                         }
@@ -436,19 +437,19 @@
                         var enddate = $('#events-enddate').val();
                         var venue = $('#venue').val();
                         var room = $('#room').val();
-                        var web_conference = $('#web_conference');
+                        var web_conference = $('#web_conference').prop('checked');
                         var url = $('#teleconference_text').val();
                         var additionnal = $('#additionnal-body-textarea').val();
-                        if (web_conference != '1') {
+                        if (!web_conference) {
                             url = '';
                             additionnal = '';
                         }
                         var fees = $('#fees_text').val();
-                        var contact_checkbox = $('#contact_checkbox');
+                        var contact_checkbox = $('#contact_checkbox').prop('checked');
                         var contact_text = $('#contact_text').val();
                         var contact_email_text = $('#contact_email_text').val();
                         var contact_phone_text = $('#contact_phone_text').val();
-                        if (contact_checkbox != '1') {
+                        if (!contact_checkbox) {
                             contact_text = '';
                             contact_email_text = '';
                             contact_phone_text = '';
