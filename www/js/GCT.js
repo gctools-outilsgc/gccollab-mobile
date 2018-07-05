@@ -2596,8 +2596,7 @@ GCTrequests = {
         if (!title.en && !title.fr) { issueCallback(GCTLang.Trans("require-title")); return; }
         if (!body.en && !body.fr) { issueCallback(GCTLang.Trans("require-body")); return; }
         if (!venue) { issueCallback(GCTLang.Trans("require-venue")); return; }
-        if (!startdate) { issueCallback(GCTLang.Trans("require-startdate")); return; }
-        if (!enddate) { issueCallback(GCTLang.Trans("require-enddate")); return; }
+        if (!startdate || !enddate) { issueCallback(GCTLang.Trans("require-dates")); return; }
         if (!(title.en && body.en) && !(title.fr && body.fr)) { issueCallback(GCTLang.Trans("require-same-lang")); return; }
 
         container = container || '';
