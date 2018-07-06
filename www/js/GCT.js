@@ -2819,9 +2819,11 @@ GCTrequests = {
             timeout: 55000,
             success: function (data) {
                 successCallback(data);
+                $(".popover").remove();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorCallback(jqXHR, textStatus, errorThrown);
+                $(".popover").remove();
             }
         });
     },
