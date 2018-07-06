@@ -202,6 +202,8 @@
     "organizer": "Organizer: ",
     "fee": "Fee: ",
     "lang": "Language: ",
+    "schedule": "Schedule ",
+    "meeting-conf-title": "Online meeting and teleconference",
 
     "no-group": "Group has not set their description.",
     "private-group": "This group's membership is closed and its content is accessible only by members.To ask to be added, click the 'Request membership' menu link.",
@@ -629,6 +631,8 @@ French = {
     "organizer": "Organisateur: ",
     "fee": "Frais: ",
     "lang": "La Langue: ",
+    "schedule": "Horaire ",
+    "meeting-conf-title": "Réunion en ligne et téléconférence",
 
     "no-group": "Le groupe n'a pas défini sa description.",
     "private-group": "Ceci est un groupe fermé. Le contenu de se groupe est accessible uniquement à ses membres. Pour y devenir membre, cliquez sur le lien 'Demande d'adhésion'",
