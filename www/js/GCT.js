@@ -1137,8 +1137,8 @@ GCTEach = {
         var roletype = '';
         if (value.roletype) { roletype += value.roletype; label += value.roletype + '. '; }
 
-        var deadline = "<b>" + GCTLang.Trans("deadline") + "</b>";
-        if (value.deadline) { deadline += value.deadline; label += GCTLang.Trans("deadline") + ': ' + value.deadline; }
+        var deadline = "<b>" + GCTLang.Trans("app-deadline") + "</b>";
+        if (value.deadline) { deadline += value.deadline; label += GCTLang.Trans("app-deadline") + ': ' + value.deadline; }
 
         var state = '';
         if (value.state) { state += value.state; }
