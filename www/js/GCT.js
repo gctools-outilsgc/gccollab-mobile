@@ -1002,7 +1002,7 @@ GCTEach = {
             label: label,
             date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
             description: description,
-            organization: value.organization
+            organization: (value.organization) ? value.organization : '',
         });
         return content;
     },
