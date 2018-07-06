@@ -1002,7 +1002,7 @@ GCTEach = {
             label: label,
             date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
             description: description,
-            organization: value.organization
+            organization: (value.organization) ? value.organization : '',
         });
         return content;
     },
@@ -1137,8 +1137,8 @@ GCTEach = {
         var roletype = '';
         if (value.roletype) { roletype += value.roletype; label += value.roletype + '. '; }
 
-        var deadline = "<b>" + GCTLang.Trans("deadline") + "</b>";
-        if (value.deadline) { deadline += value.deadline; label += GCTLang.Trans("deadline") + ': ' + value.deadline; }
+        var deadline = "<b>" + GCTLang.Trans("app-deadline") + "</b>";
+        if (value.deadline) { deadline += value.deadline; label += GCTLang.Trans("app-deadline") + ': ' + value.deadline; }
 
         var state = '';
         if (value.state) { state += value.state; }
@@ -2819,9 +2819,11 @@ GCTrequests = {
             timeout: 55000,
             success: function (data) {
                 successCallback(data);
+                $(".popover").remove();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 errorCallback(jqXHR, textStatus, errorThrown);
+                $(".popover").remove();
             }
         });
     },

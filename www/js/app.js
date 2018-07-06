@@ -73,7 +73,7 @@ var app  = new Framework7({
                 tabs: [{ id: "all", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarks, type: 'card' },
                     { id: "my-colleagues", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarksByUserColleague, type: 'card' },
                     { id: "mine", each: GCTEach.Bookmark, request: GCTrequests.GetBookmarksByUser, type: 'card' }],
-                action: 'post-blog',
+                action: '',
                 filters: '',
             },
             opportunities: {
