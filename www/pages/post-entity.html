@@ -461,7 +461,7 @@
                             contact_text = '';
                             contact_email_text = '';
                             contact_phone_text = '';
-                        }
+                        } else { contact_checkbox = 1; }
                         var picker_language = $('#picker-language').val();
                         GCTrequests.PostEvent('', '', title, body, startdate, starttime, enddate, endtime, venue, room, allday, web_conference, url, additionnal, fees, contact_checkbox, contact_text, contact_email_text, contact_phone_text, picker_language, comment, access, status, function (data) {
                             alert(data.result);
