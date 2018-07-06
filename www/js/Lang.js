@@ -109,6 +109,7 @@
 
     "french": "French",
     "english": "English",
+    "bilingual": "Bilingual",
     "on": "On",
     "off": "Off",
 
@@ -131,6 +132,7 @@
     "edit-discussion": "Edit Discussion Topic",
     "post-blog": "Create Blog Post",
     "edit-blog": "Edit Blog Post",
+    "post-event": "Create Event",
     "english-title": "English Title",
     "french-title": "French Title",
     "english-excerpt": "English Excerpt",
@@ -143,6 +145,8 @@
     "require-title": "Content requires a title.",
     "require-body": "Content requires a body.",
     "require-same-lang": "Content requires a title and body for the same language.",
+    "require-venue": "Content requires a location.",
+    "require-dates": "Content requires dates.",
     "wire-text": "Wire Text",
 
     "messagecentre": "Message Centre",
@@ -198,6 +202,8 @@
     "organizer": "Organizer: ",
     "fee": "Fee: ",
     "lang": "Language: ",
+    "schedule": "Schedule ",
+    "meeting-conf-title": "Online meeting and teleconference",
 
     "no-group": "Group has not set their description.",
     "private-group": "This group's membership is closed and its content is accessible only by members.To ask to be added, click the 'Request membership' menu link.",
@@ -403,7 +409,22 @@
     "validation_location": "Please enter a location for this opportunity",
     "add-calendar": 'Add to my calendar',
     "in-calendar": "In calendar",
-    "subgroup-header": "Subgroups"
+    "subgroup-header": "Subgroups",
+    "all-day-event": "All day",
+    'startdate': "Start date",
+    "starttime": 'Start time',
+    'enddate': "End date",
+    "endtime": 'End time',
+    "event-venue": "Location",
+    "event-room": "Room",
+    "event-web-conference": "Include a web conference for this event",
+    "additionnal-body": "Additional information",
+    "teleconference-fees": "Fees",
+    "not-contact": "You are not the contact person?",
+    "event-contact": "Contact",
+    "contact_email": "E-mail address",
+    "contact_phone": "Phone number",
+    "event-language": "Event Language"
 }
 
 French = {
@@ -517,6 +538,7 @@ French = {
 
     "french": "Français",
     "english": "Anglais",
+    "bilingual": "Bilingue",
     "on": "Activé",
     "off": "Désactivé",
 
@@ -539,6 +561,7 @@ French = {
     "edit-discussion": "Modifier la Discussion",
     "post-blog": "Ajouter un Blogue",
     "edit-blog": "Modifier un Billet",
+    "post-event": "Créer un Évènement",
     "english-title": "Titre en Anglais",
     "french-title": "Titre en Français",
     "english-excerpt": "Extrait en Anglais",
@@ -551,6 +574,8 @@ French = {
     "require-title": "Le contenu nécessite un titre.",
     "require-body": "Le contenu nécessite le texte complet.",
     "require-same-lang": "Le contenu nécessite un titre et le texte complet pour la même langue.",
+    "require-venue": "Le contenu nécessite un emplacement",
+    "require-dates": "Le contenu nécessite une date.",
     "wire-text": "Texte Filaire",
     
     "messagecentre": "Centre de Message",
@@ -606,6 +631,8 @@ French = {
     "organizer": "Organisateur: ",
     "fee": "Frais: ",
     "lang": "La Langue: ",
+    "schedule": "Horaire ",
+    "meeting-conf-title": "Réunion en ligne et téléconférence",
 
     "no-group": "Le groupe n'a pas défini sa description.",
     "private-group": "Ceci est un groupe fermé. Le contenu de se groupe est accessible uniquement à ses membres. Pour y devenir membre, cliquez sur le lien 'Demande d'adhésion'",
@@ -814,5 +841,20 @@ French = {
     "validation_location": "Veuillez entrer un emplacement pour cette possibilité",
     "add-calendar": 'Ajouter à mon calendrier',
     "in-calendar": "Dans le calendrier",
-    "subgroup-header": "Sous-groupes"
+    "subgroup-header": "Sous-groupes",
+    "all-day-event": "Toute la journée",
+    'startdate': "Date de début",
+    "starttime": 'Heure de début',
+    'enddate': "Date de fin",
+    "endtime": 'Heure de fin',
+    "event-venue": "Lieu",
+    "event-room": "Salle",
+    "event-web-conference": "Inclure une conférence Web a l'événement",
+    "additionnal-body": "Information supplémentaire",
+    "teleconference-fees": "Frais",
+    "not-contact": "Vous n'êtes pas la personne contact?",
+    "event-contact": "Personne ressource",
+    "contact_email": "Adresse courriel",
+    "contact_phone": "Numéro de téléphone",
+    "event-language": "Langue de l'événement"
 }
