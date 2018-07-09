@@ -196,7 +196,7 @@
         return content;
     },
     txtBlog: function (object) {
-        var content = "<div class='hold-all-card'>"
+        var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
@@ -296,7 +296,7 @@
         return content;
     },
     txtDoc: function (object) {
-        var content = "<div class='hold-all-card'>"
+        var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
@@ -326,7 +326,7 @@
         return content;
     },
     txtEvent: function (object) {
-        var content = "<div class='hold-all-card'>"
+        var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.id + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div id='" + object.id + "' class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
@@ -418,7 +418,7 @@
         return content;
     },
     txtBookmark: function (object) {
-        var content = "<div class='hold-all-card'>"
+        var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
@@ -588,7 +588,7 @@
 
     },
     txtDiscussion: function (object) {
-        var content = "<div class='hold-all-card'>"
+        var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='list cards-list'>"
             + "<div class='card'>"
@@ -649,7 +649,7 @@
         return content;
     },
     txtNotification: function (object) {
-        var content = '<li><div class="row">'
+        var content = '<li><div id="list-' + object.guid + '" class="row">'
             + '<div class="col-80 item-content" onclick="GCT.ViewPost(this);" data-guid="' + object.guid + '" data-type="gccollab_notification">'
             + '<div id="item-' + object.guid + '" class="item-inner '  + object.unread + '">'
             + '<div class="item-title-row">'
@@ -657,12 +657,12 @@
             + '<div class="item-after">' + object.time + '</div></div>'
             + '<div class="item-text">' + object.title + '</div>'
             + '</div></div>'
-            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" onclick="GCTUser.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
+            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" onclick="GCTrequests.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
             + '</div></li>';
         return content;
     },
     txtMessage: function (object) {
-        var content = '<li><div class="row">'
+        var content = '<li><div id="list-' + object.guid + '" class="row">'
             + '<div class="col-80 item-content" onclick="GCT.ViewPost(this);" data-guid="' + object.guid + '" data-type="gccollab_message">'
             + '<div class="item-inner ' + object.unread + '">'
             + '<div class="item-title-row">'
@@ -670,7 +670,7 @@
             + '<div class="item-after">' + object.time + '</div></div>'
             + '<div class="item-text">' + object.title + '</div>'
             + '</div></div>'
-            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" onclick="GCTUser.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
+            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" onclick="GCTrequests.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
             + '</div></li>';
         return content;
     },
