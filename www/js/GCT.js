@@ -675,7 +675,7 @@
         return content;
     },
     txtComment: function (object) {
-        var content = '<li>'
+        var content = '<li id="list-' + object.guid + '">'
             + "<div class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='col-85 reader-text'>" + object.label + "</div>"
             + "<div class='row'>"
@@ -2976,7 +2976,7 @@ GCTrequests = {
                 success: function (data) {
                     app.preloader.hide();
                     app.dialog.alert(GCTLang.Trans("deleted"));
-                    if (location === "list") {
+                    if (location === "list" || location === "comment") {
                         $$("#list-" + guid).remove();
                     } else {
                         mainView.router.back();
