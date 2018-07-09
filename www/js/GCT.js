@@ -196,7 +196,7 @@
         return content;
     },
     txtBlog: function (object) {
-        var content = "<div class='hold-all-card'>"
+        var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
@@ -296,7 +296,7 @@
         return content;
     },
     txtDoc: function (object) {
-        var content = "<div class='hold-all-card'>"
+        var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
@@ -326,7 +326,7 @@
         return content;
     },
     txtEvent: function (object) {
-        var content = "<div class='hold-all-card'>"
+        var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.id + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div id='" + object.id + "' class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
@@ -418,7 +418,7 @@
         return content;
     },
     txtBookmark: function (object) {
-        var content = "<div class='hold-all-card'>"
+        var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
@@ -588,7 +588,7 @@
 
     },
     txtDiscussion: function (object) {
-        var content = "<div class='hold-all-card'>"
+        var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='list cards-list'>"
             + "<div class='card'>"
@@ -649,7 +649,7 @@
         return content;
     },
     txtNotification: function (object) {
-        var content = '<li><div class="row">'
+        var content = '<li><div id="list-' + object.guid + '" class="row">'
             + '<div class="col-80 item-content" onclick="GCT.ViewPost(this);" data-guid="' + object.guid + '" data-type="gccollab_notification">'
             + '<div id="item-' + object.guid + '" class="item-inner '  + object.unread + '">'
             + '<div class="item-title-row">'
@@ -657,12 +657,12 @@
             + '<div class="item-after">' + object.time + '</div></div>'
             + '<div class="item-text">' + object.title + '</div>'
             + '</div></div>'
-            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" onclick="GCTUser.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
+            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" data-location="list" onclick="GCTrequests.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
             + '</div></li>';
         return content;
     },
     txtMessage: function (object) {
-        var content = '<li><div class="row">'
+        var content = '<li><div id="list-' + object.guid + '" class="row">'
             + '<div class="col-80 item-content" onclick="GCT.ViewPost(this);" data-guid="' + object.guid + '" data-type="gccollab_message">'
             + '<div class="item-inner ' + object.unread + '">'
             + '<div class="item-title-row">'
@@ -670,12 +670,12 @@
             + '<div class="item-after">' + object.time + '</div></div>'
             + '<div class="item-text">' + object.title + '</div>'
             + '</div></div>'
-            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" onclick="GCTUser.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
+            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" data-location="list" onclick="GCTrequests.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
             + '</div></li>';
         return content;
     },
     txtComment: function (object) {
-        var content = '<li>'
+        var content = '<li id="list-' + object.guid + '">'
             + "<div class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='col-85 reader-text'>" + object.label + "</div>"
             + "<div class='row'>"
@@ -2959,10 +2959,13 @@ GCTrequests = {
         });
     },
     Delete: function (obj) {
-        var guid = $(obj).data("guid");
+        var guid, type, location;
+        guid = $(obj).data("guid");
+        type = $(obj).data("type");
+        location = $(obj).data("location");
         $(".popover").remove();
-
         app.dialog.confirm(GCTLang.Trans("deletepost"), GCTLang.Trans("deletepost"), function () {
+            app.preloader.show();
             app.request({
                 api_key: api_key_gccollab,
                 method: 'POST',
@@ -2971,9 +2974,17 @@ GCTrequests = {
                 data: { method: "delete.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
                 timeout: 12000,
                 success: function (data) {
+                    app.preloader.hide();
                     app.dialog.alert(GCTLang.Trans("deleted"));
+                    if (location === "list" || location === "comment") {
+                        $$("#list-" + guid).remove();
+                    } else {
+                        mainView.router.back();
+                        $$("#list-" + guid).remove();
+                    }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
+                    app.preloader.hide();
                     console.log(jqXHR, textStatus, errorThrown);
                 }
             });
@@ -3310,7 +3321,9 @@ GCT = {
             if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
             if (type == "gccollab_discussion_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.EditDiscussionPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
             if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
-            if (type != "gccollab_opportunity") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>'; }
+            if (type != "gccollab_opportunity") {
+                popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + type + '" data-location="' + location + '" onclick="GCTrequests.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>';
+            }
         }
         if (type === "gccollab_wire_post" || type === "gccollab_blog_post" || type === "gccollab_discussion_post" || type === "gccollab_comment" || type === "gccollab_bookmark" || type === "gccollab_event" || type === "gccollab_group") {
             popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + type + '" onclick="GCTrequests.LikePost(this);">' + GCTLang.Trans("like") + '</a></li>';
