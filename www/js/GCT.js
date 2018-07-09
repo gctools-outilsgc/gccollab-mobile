@@ -657,7 +657,7 @@
             + '<div class="item-after">' + object.time + '</div></div>'
             + '<div class="item-text">' + object.title + '</div>'
             + '</div></div>'
-            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" onclick="GCTrequests.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
+            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" data-location="list" onclick="GCTrequests.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
             + '</div></li>';
         return content;
     },
@@ -670,7 +670,7 @@
             + '<div class="item-after">' + object.time + '</div></div>'
             + '<div class="item-text">' + object.title + '</div>'
             + '</div></div>'
-            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" onclick="GCTrequests.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
+            + '<a href="#" class="col-20 link trash-notif" data-guid="' + object.guid + '" data-location="list" onclick="GCTrequests.Delete(this);"><i class="fa fa-trash fa-2x"></i></a>'
             + '</div></li>';
         return content;
     },
@@ -2964,8 +2964,8 @@ GCTrequests = {
         type = $(obj).data("type");
         location = $(obj).data("location");
         $(".popover").remove();
-        app.preloader.show();
         app.dialog.confirm(GCTLang.Trans("deletepost"), GCTLang.Trans("deletepost"), function () {
+            app.preloader.show();
             app.request({
                 api_key: api_key_gccollab,
                 method: 'POST',
