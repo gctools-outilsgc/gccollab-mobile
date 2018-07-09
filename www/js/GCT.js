@@ -2964,7 +2964,7 @@ GCTrequests = {
         type = $(obj).data("type");
         location = $(obj).data("location");
         $(".popover").remove();
-
+        app.preloader.show();
         app.dialog.confirm(GCTLang.Trans("deletepost"), GCTLang.Trans("deletepost"), function () {
             app.request({
                 api_key: api_key_gccollab,
@@ -2974,14 +2974,17 @@ GCTrequests = {
                 data: { method: "delete.post", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
                 timeout: 12000,
                 success: function (data) {
+                    app.preloader.hide();
                     app.dialog.alert(GCTLang.Trans("deleted"));
                     if (location === "list") {
                         $$("#list-" + guid).remove();
                     } else {
-                        mainView.router.navigate('/');
+                        mainView.router.back();
+                        $$("#list-" + guid).remove();
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
+                    app.preloader.hide();
                     console.log(jqXHR, textStatus, errorThrown);
                 }
             });
