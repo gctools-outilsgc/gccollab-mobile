@@ -2125,6 +2125,7 @@ GCTrequests = {
         mainView.router.navigate('/post-wire/');
     },
     PostWire: function (message, imageURI, successCallback, errorCallback) {
+        app.preloader.show();
         app.request({
             method: 'POST',
             dataType: 'json',
@@ -2132,9 +2133,11 @@ GCTrequests = {
             data: { method: "post.wire", user: GCTUser.Email(), message: message, image: imageURI, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
+                app.preloader.hide();
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
+                app.preloader.hide();
                 errorCallback(jqXHR, textStatus, errorThrown);
             }
         });
