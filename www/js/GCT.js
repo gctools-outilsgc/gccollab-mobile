@@ -728,6 +728,7 @@ GCTEach = {
             switch (value.object.type) {
                 case "user": description = GCTLang.Trans("new-avatar"); type = "gccollab_profile"; break;
                 case "event_calendar": description = GCTLang.Trans("event-update"); type = "gccollab_event"; break;
+                case "idea": description = GCTLang.Trans("idea-update"); type = "gccollab_idea"; break;
                 default: description = "NEED TO HANDLE UPDATE";
             }
         } else if (value.action == "create") { // CREATE
@@ -742,6 +743,8 @@ GCTEach = {
                 case "bookmarks": description = GCTLang.Trans("bookmark-create"); type = "gccollab_bookmark"; break;
                 case "page": case "page_top": description = GCTLang.Trans("page-create"); type = "gccollab_page"; break;
                 case "album": description = GCTLang.Trans("album-create"); type = "gccollab_album"; break;
+                case "tidypics_batch": description = GCTLang.Trans("file-created"); type = "gccollab_file"; break;
+                case "idea": description = GCTLang.Trans("idea-created"); type = "gccollab_idea"; break;
                 default: description = "NEED TO HANDLE CREATE";
             }
         } else { //OTHER
