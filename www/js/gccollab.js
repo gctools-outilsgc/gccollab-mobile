@@ -187,6 +187,7 @@ function ShowProfileSheet(obj) {
                     '</div>'+
                   '</div>'+
                   '<div class="sheet-modal-inner">'+
+                    '<span id="sheet-focus-' + guid + '" class="reader-text" tabindex="0">' + GCTLang.Trans('sheet-opened') + '</span>' +
                     '<div class="block">'+
                         '<div class="list media-list"><ul>' +
                             card +
@@ -196,14 +197,17 @@ function ShowProfileSheet(obj) {
                   '</div>'+
                 '</div>',
       // Events
-      on: {
-        open: function (sheet) {
-          console.log('Sheet open');
-        },
-        opened: function (sheet) {
-          console.log('Sheet opened');
-        },
-      }
+        on: {
+            open: function (sheet) {
+                console.log('Sheet open');
+            },
+            opened: function (sheet) {
+                $('#sheet-focus-' + guid).focus();
+            },
+            closed: function (sheet) {
+                $(obj).focus();
+            },
+        }
     });
     dynamicSheet.open();
 }

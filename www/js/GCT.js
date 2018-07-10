@@ -715,7 +715,7 @@
     },
     userSheet: function (object) {
         var content = "<div class='hold-all-card'>"
-            + "<div class='item-link item-content close-popup close-panel sheet-close' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");' aria-hidden='true'>"
+            + "<div class='item-link item-content close-popup close-panel sheet-close' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row no-padding-right'>"
             + "</div>"
