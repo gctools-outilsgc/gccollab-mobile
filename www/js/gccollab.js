@@ -156,6 +156,43 @@ function ShowProfile(email) {
     mainView.router.navigate('/profile-template/user/' + email + '/');
 }
 
+function ShowProfileSheet(obj) {
+    var guid = $(obj).data("guid");
+    var job = $(obj).data("job");
+    var org = $(obj).data("org");
+    var name = $(obj).data("name");
+    var email = $(obj).data("email");
+
+    var dynamicSheet = app.sheet.create({
+      content: '<div class="sheet-modal">'+
+                  '<div class="toolbar">'+
+                    '<div class="toolbar-inner">'+
+                      '<div class="left"></div>'+
+                      '<div class="right">'+
+                        '<a class="link sheet-close">Done</a>'+
+                      '</div>'+
+                    '</div>'+
+                  '</div>'+
+                  '<div class="sheet-modal-inner">'+
+                    '<div class="block">'+
+                      '<p>Sheet created dynamically.</p>'+
+                      '<p><a href="#" class="link sheet-close">Close me</a></p>'+
+                    '</div>'+
+                  '</div>'+
+                '</div>',
+      // Events
+      on: {
+        open: function (sheet) {
+          console.log('Sheet open');
+        },
+        opened: function (sheet) {
+          console.log('Sheet opened');
+        },
+      }
+    });
+    dynamicSheet.open();
+}
+
 $$(document).on('page:init', '.page[data-name="post-wire"]', function (e) {
     $('#post-wire-navbar-inner').html(GCTtxt.txtGlobalNav('new-wire-post'));
     var imageURI = "";

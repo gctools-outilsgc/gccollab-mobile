@@ -138,7 +138,7 @@
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
+            + "<div class='card-header' onclick='ShowProfileSheet(this);' aria-hidden='true'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
