@@ -166,9 +166,10 @@ function ShowProfileSheet(obj) {
     org = $(obj).data("org");
     name = $(obj).data("name");
     email = $(obj).data("email");
+    icon = $(obj).find('.icon').attr('src');
     var card = GCTtxt.userSheet({
         guid: guid,
-        icon: '',
+        icon: icon,
         name: name,
         job: (job) ? job : '',
         org: (org) ? org : '',
