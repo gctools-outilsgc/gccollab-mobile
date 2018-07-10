@@ -149,20 +149,32 @@ function ShowProfile(email) {
         GCTrequests.GetUserProfile(email, function (data) {
             var profileData = data.result;
             email = profileData.id;
+            mainView.router.navigate('/profile-template/user/' + email + '/');
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
         });
+    } else {
+        mainView.router.navigate('/profile-template/user/' + email + '/');
     }
-    mainView.router.navigate('/profile-template/user/' + email + '/');
+    
 }
 
 function ShowProfileSheet(obj) {
-    var guid = $(obj).data("guid");
-    var job = $(obj).data("job");
-    var org = $(obj).data("org");
-    var name = $(obj).data("name");
-    var email = $(obj).data("email");
-
+    var guid, job, org, name, email, card;
+    guid = $(obj).data("guid");
+    job = $(obj).data("job");
+    org = $(obj).data("org");
+    name = $(obj).data("name");
+    email = $(obj).data("email");
+    var card = GCTtxt.userSheet({
+        guid: guid,
+        icon: '',
+        name: name,
+        job: (job) ? job : '',
+        org: (org) ? org : '',
+        email: (email) ? email : '',
+    });
+    // <div class="list media-list"><ul id="content-{{this.id}}"></ul></div>
     var dynamicSheet = app.sheet.create({
       content: '<div class="sheet-modal">'+
                   '<div class="toolbar">'+
@@ -175,7 +187,9 @@ function ShowProfileSheet(obj) {
                   '</div>'+
                   '<div class="sheet-modal-inner">'+
                     '<div class="block">'+
-                      '<p>Sheet created dynamically.</p>'+
+                        '<div class="list media-list"><ul>' +
+                            card +
+                        '</ul></div>' +
                       '<p><a href="#" class="link sheet-close">Close me</a></p>'+
                     '</div>'+
                   '</div>'+

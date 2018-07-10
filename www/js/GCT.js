@@ -138,7 +138,7 @@
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfileSheet(this);' aria-hidden='true'>"
+            + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
             + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
@@ -713,6 +713,21 @@
         content = GCT.SetLinks(content);
         return content;
     },
+    userSheet: function (object) {
+        var content = "<div class='hold-all-card'>"
+            + "<div class='item-link item-content close-popup close-panel sheet-close' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");' aria-hidden='true'>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row no-padding-right'>"
+            + "</div>"
+            + "<div class='row ptm'>"
+            + "<div class='col-20 members-icon'><img src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
+            + "<div class='col-80 item-title reg-text'>" + object.name + "<div class='item-text more_text'>" + object.org + "</div> <div class='item-text more_text'> " + object.job + "</div></div>"
+            + "</div>"
+            + "</div>"
+            + "</div></div>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
 }
 
 GCTEach = {
@@ -931,7 +946,10 @@ GCTEach = {
             owner: value.owner_guid,
             liked: liked,
             likes: likes,
-            image: img
+            image: img,
+            userJob: value.userDetails.job,
+            userOrg: value.userDetails.organization,
+            userEmail: value.userDetails.email
         });
         return content;
     },
