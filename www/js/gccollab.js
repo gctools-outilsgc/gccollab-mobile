@@ -148,16 +148,12 @@ function ShowProfile(email) {
     if (isNaN(email)) {
         GCTrequests.GetUserProfile(email, function (data) {
             var profileData = data.result;
-            /* Temp ViewPost, replace with sheet modal of user profile eventaully */
-            mainView.router.navigate('/profile-template/user/' + profileData.id + '/');
+            email = profileData.id;
         }, function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
         });
-    } else {
-        console.log('skip');
-        mainView.router.navigate('/profile-template/user/' + email + '/');
     }
-    
+    mainView.router.navigate('/profile-template/user/' + email + '/');
 }
 
 $$(document).on('page:init', '.page[data-name="post-wire"]', function (e) {
