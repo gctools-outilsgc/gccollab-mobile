@@ -179,6 +179,7 @@
     "deleted": "Your post has been deleted.",
     "deletepost": "Delete this post?",
     "show-user": "Show User's Profile",
+    "view-user-summary": "View User's Summary",
     "view-post": "View Post",
     "view-group": "View Group",
 
@@ -305,6 +306,7 @@
     "tab": "tab",
     "content-loaded": "New content appended to page.",
     "more-options-opened": "More Options Menu Opened.",
+    "sheet-opened": "Profile Sheet Opened.",
     "more-tab-menu-opened": "More Tabs List",
     "main-menu": "Main Menu",
     "page": "Page ",
@@ -610,6 +612,7 @@ French = {
     "deleted": "Votre post a été supprimé.",
     "deletepost": "Supprimer ce post?",
     "show-user": "Afficher le profil de l'utilisateur",
+    "view-user-summary": "Voir le Résumé de l'utilisateur",
     "view-post": "Voir l'article",
     "view-group": "View le Groupe",
 
@@ -736,6 +739,7 @@ French = {
     "tab": "onglet",
     "content-loaded": "Nouveau contenu ajouté à la page.",
     "more-options-opened": "Plus d'options menu ouvert.",
+    "sheet-opened": "Feuille de profil ouverte.",
     "more-tab-menu-opened": "Plus de liste d'onglets",
     "main-menu": "Menu Principal",
     "page": "Page ",

@@ -93,8 +93,8 @@
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
             + "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
-            + "<div class='item-media rounded'><img aria-hidden='true' src='" + object.icon + "' /></div>"
+            + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
+            + "<div class='item-media rounded'><img class='icon' aria-hidden='true' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
             + "<div id='author-" + object.guid + "' class='author'>" + object.name + "</div>"
@@ -104,7 +104,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);' aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon +"' data-sheet='sheet' onclick='GCT.MoreOptions(this);' aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding-options' aria-hidden='true'>"
             + "<div role='article' id='text-" + object.guid + " 'class='text'><a onclick='ShowProfile(" + object.owner + ");'>" + object.name + "</a> " + object.description + " " + object.more + object.context 
@@ -138,8 +138,8 @@
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
-            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
+            + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
             + "<div class='author'>" + object.name + "</div>"
@@ -149,7 +149,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='list' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='"+object.icon+"' data-sheet='sheet' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content  card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div id='wire-" + object.guid + "' class='text-list' >" + object.description + "</div>"
@@ -168,8 +168,8 @@
     Wire: function (object) {
         var content = "<div id='post-" + object.guid + "' class='hold-all-card'>"
             + "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
-            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "'>"
+            + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
             + "<div class='author'>" + object.name + "</div>"
@@ -179,7 +179,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='post' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='post' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon +"' data-sheet='sheet' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content  card-content-padding'>"
             + "<div id='wire-" + object.guid + "' class='text-post'>" + object.description + "</div>"
@@ -199,8 +199,8 @@
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
-            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
+            + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
             + "<div class='author'>" + object.name + "</div>"
@@ -210,7 +210,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon +"' data-sheet='sheet' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div id='blog-" + object.guid + "' class='card-content-inner'>"
@@ -231,8 +231,8 @@
     Blog: function (object) {
         var content = "<div class='hold-all-card'>"
             + "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
-            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "'>"
+            + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
             + "<div class='author'>" + object.name + "</div>"
@@ -242,7 +242,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='post' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='post' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon +"' data-sheet='sheet' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding'>"
             + "<div id='blog-" + object.guid + "' class='card-content-inner'>"
@@ -299,8 +299,8 @@
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
-            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
+            + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
             + "<div class='author'>" + object.name + "</div>"
@@ -310,7 +310,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon +"' data-sheet='sheet' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='card-content-inner'>"
@@ -329,8 +329,8 @@
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.id + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div id='" + object.id + "' class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
-            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
+            + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
             + "<div class='author'>" + object.name + "</div>"
@@ -340,7 +340,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon +"' data-sheet='sheet' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div id='event-" + object.guid + "' class='card-content-inner'>"
@@ -361,8 +361,8 @@
     Event: function (object) {
         var content = "<div class='hold-all-card'>"
             + "<div id='" + object.id + "' class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
-            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "'>"
+            + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
             + "<div class='author'>" + object.name + "</div>"
@@ -372,7 +372,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='post' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='post' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon +"' data-sheet='sheet' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding'>"
             + "<div id='blog-" + object.guid + "' class='card-content-inner'>"
@@ -421,8 +421,8 @@
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
-            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
+            + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
             + "<div class='author'>" + object.name + "</div>"
@@ -432,7 +432,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='list' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon +"' data-sheet='sheet' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content  card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='card-content-inner'>"
@@ -452,8 +452,8 @@
     Bookmark: function (object) {
         var content = "<div class='hold-all-card'>"
             + "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
-            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "'>"
+            + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
             + "<div class='author'>" + object.name + "</div>"
@@ -463,7 +463,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='post' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='post' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon +"' data-sheet='sheet' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content  card-content-padding'>"
             + "<div class='card-content-inner'>"
@@ -485,8 +485,8 @@
             var content = "<div class='hold-all-card'>"
                 + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
                 + "<div class='card view view-main'>"
-                + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
-                + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+                + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
+                + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
                 + "<div class='item-inner'>"
                 + "<div class='item-title-row'>"
                 + "<div class='author'>" + object.name + "</div>"
@@ -496,7 +496,7 @@
                 + "</div>"
                 + "<div class='row'>"
                 + "<div class='col-85'></div>"
-                + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "'  data-container='" + object.owner + "' data-location='list' onclick='GCT.MoreOptions(this);' aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+                + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "'  data-container='" + object.owner + "' data-location='list' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon +"' data-sheet='sheet' onclick='GCT.MoreOptions(this);' aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
                 + "</div>"
                 + "<div class='card-content card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
                 + "<div class='card-content-inner'" + object.all_text + ">"
@@ -526,8 +526,8 @@
         if (object.state == 'posted') {
             var content = "<div class='hold-all-card'>"
                 + "<div class='card view view-main'>"
-                + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
-                + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+                + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
+                + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
                 + "<div class='item-inner'>"
                 + "<div class='item-title-row'>"
                 + "<div class='author'>" + object.name + "</div>"
@@ -537,7 +537,7 @@
                 + "</div>"
                 + "<div class='row'>"
                 + "<div class='col-85'></div>"
-                + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='post' onclick='GCT.MoreOptions(this);' aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+                + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='post' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon +"' data-sheet='sheet' onclick='GCT.MoreOptions(this);' aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
                 + "</div>"
                 + "<div class='card-content card-content-padding'>"
                 + "<div class='card-content-inner'" + object.all_text + ">"
@@ -592,8 +592,8 @@
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='list cards-list'>"
             + "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");' aria-hidden='true'>"
-            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
+            + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
             + "<div class='author'>" + object.name + "</div>"
@@ -603,7 +603,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='list' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon +"' data-sheet='sheet' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div class='blog-title'>" + object.title + "</div>"
@@ -622,8 +622,8 @@
         var content = "<div class='hold-all-card'>"
             + "<div class='list cards-list'>"
             + "<div class='card'>"
-            + "<div class='card-header' onclick='ShowProfile(" + object.owner + ");'>"
-            + "<div class='item-media rounded'><img alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
+            + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "'>"
+            + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row'>"
             + "<div class='author'>" + object.name + "</div>"
@@ -633,7 +633,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='post' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='post' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon +"' data-sheet='sheet' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content card-content-padding'>"
             + "<div class='blog-title'>" + object.title + "</div>"
@@ -681,7 +681,7 @@
             + "<div class='row'>"
             + "<div class='col-85'>"
             + '<div class="item-content" aria-hidden="true">'
-            + '<div class="item-media"> <img src="' + object.icon + '" onclick="ShowProfile(' + object.owner + ');" style="border-radius:100%" width="40" height="40" alt="Profile Picture"> </div>'
+            + '<div class="item-media"> <img class="icon" src="' + object.icon + '" onclick="ShowProfileSheet(this);" data-guid="' + object.owner + '" data-job="' + object.userJob + '" data-org="' + object.userOrg + '" data-name="' + object.name + '" data-email="' + object.userEmail + '" data-icon="' + object.icon + '" style="border-radius:100%" width="40" height="40" alt="Profile Picture"> </div>'
             + '<div class="item-inner">'
             + '<div class="item-title-row">'
             + '<div class="item-title author-comment">' + object.name + '</div>'
@@ -690,7 +690,7 @@
             + object.description
             + "<br><div class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='fa fa-thumbs-o-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTrequests.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
             + '</div></div></div>'
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-location='comment' onclick='GCT.MoreOptions(this);' aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.container + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon +"' data-sheet='sheet' data-location='comment' onclick='GCT.MoreOptions(this);' aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + '</div></div>'
             + '</li>';
         content = GCT.SetLinks(content);
@@ -710,6 +710,21 @@
             + "</div>"
             + "</div>"
             + "</div>";
+        content = GCT.SetLinks(content);
+        return content;
+    },
+    userSheet: function (object) {
+        var content = "<div class='hold-all-card'>"
+            + "<div class='item-link item-content close-popup close-panel sheet-close' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>"
+            + "<div class='item-inner'>"
+            + "<div class='item-title-row no-padding-right'>"
+            + "</div>"
+            + "<div class='row ptm'>"
+            + "<div class='col-20 members-icon'><img src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
+            + "<div class='col-80 item-title reg-text'>" + object.name + "<div class='item-text more_text'>" + object.org + "</div> <div class='item-text more_text'> " + object.job + "</div><div class='item-text more_text'> " + object.email + "</div></div>"
+            + "</div>"
+            + "</div>"
+            + "</div></div>";
         content = GCT.SetLinks(content);
         return content;
     },
@@ -830,7 +845,10 @@ GCTEach = {
             type: type,
             subtype: value.object.type,
             liked: liked,
-            likes: likes
+            likes: likes,
+            userJob: value.userDetails.job,
+            userOrg: value.userDetails.organization,
+            userEmail: value.userDetails.email
         });
         
         return content;
@@ -931,7 +949,10 @@ GCTEach = {
             owner: value.owner_guid,
             liked: liked,
             likes: likes,
-            image: img
+            image: img,
+            userJob: value.userDetails.job,
+            userOrg: value.userDetails.organization,
+            userEmail: value.userDetails.email
         });
         return content;
     },
@@ -968,7 +989,10 @@ GCTEach = {
             type: "gccollab_blog_post",
             replied: replied,
             liked: liked,
-            likes: likes
+            likes: likes,
+            userJob: value.userDetails.job,
+            userOrg: value.userDetails.organization,
+            userEmail: value.userDetails.email
         });
         return content;
 
@@ -1060,7 +1084,10 @@ GCTEach = {
             type: "gccollab_event",
             liked: liked,
             likes: likes,
-            fullview: fullview
+            fullview: fullview,
+            userJob: value.userDetails.job,
+            userOrg: value.userDetails.organization,
+            userEmail: value.userDetails.email
         });
         return content;
     },
@@ -1083,7 +1110,10 @@ GCTEach = {
             guid: value.guid,
             type: "gccollab_doc",
             liked: liked,
-            likes: likes
+            likes: likes,
+            userJob: value.userDetails.job,
+            userOrg: value.userDetails.organization,
+            userEmail: value.userDetails.email
         });
         return content;
     },
@@ -1117,7 +1147,10 @@ GCTEach = {
             guid: value.guid,
             action: action,
             liked: liked,
-            likes: likes
+            likes: likes,
+            userJob: value.userDetails.job,
+            userOrg: value.userDetails.organization,
+            userEmail: value.userDetails.email
         });
         return content;
     },
@@ -1167,7 +1200,10 @@ GCTEach = {
             liked: liked,
             likes: likes,
             state: state,
-            apply: apply
+            apply: apply,
+            userJob: value.userDetails.job,
+            userOrg: value.userDetails.organization,
+            userEmail: value.userDetails.email
         });
         return content;
 
@@ -1199,7 +1235,10 @@ GCTEach = {
             type: "gccollab_discussion_post",
             replied: replied,
             liked: liked,
-            likes: likes
+            likes: likes,
+            userJob: value.userDetails.job,
+            userOrg: value.userDetails.organization,
+            userEmail: value.userDetails.email
         });
         return content;
     },
@@ -1423,7 +1462,10 @@ GCTEach = {
             guid: value.guid,
             liked: liked,
             likes: likes,
-            label: label
+            label: label,
+            userJob: value.userDetails.job,
+            userOrg: value.userDetails.organization,
+            userEmail: value.userDetails.email
         });
         return content;
     },
@@ -3296,14 +3338,22 @@ GCT = {
         }
     },
     MoreOptions: function (obj) {
-        var owner = $(obj).data("owner") || '';
+        var user = {};
+        user.owner = $(obj).data("owner") || '';
         var guid = $(obj).data("guid") || '';
         var type = $(obj).data("type") || '';
         var container = $(obj).data("container") || '';
         var location = $(obj).data("location") || '';
-
-        var isOwner = (owner == GCTUser.Guid());
-        var inGroup = ((container && owner) && (container != owner));
+        var isOwner = (user.owner == GCTUser.Guid());
+        var inGroup = ((container && user.owner) && (container != user.owner));
+        var sheet = $(obj).data("sheet") || '';
+        if (sheet) {
+            user.job = $(obj).data("job") || '';
+            user.org = $(obj).data("org") || '';
+            user.name = $(obj).data("name") || '';
+            user.email = $(obj).data("email") || '';
+            user.icon = $(obj).data("icon") || '';
+        }
 
         var popoverHTML = '<div class="popover">'
             +'<div class="popover-inner">' 
@@ -3335,9 +3385,9 @@ GCT = {
             }
         }
         if (inGroup) { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + container + '" data-type="gccollab_group" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-group") + '</a></li>'; }
-        if (type === "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.SeeCalendar(this);">' + GCTLang.Trans('in-calendar') + '</a></li>'
-}
-        popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfile(' + owner + ');">' + GCTLang.Trans("show-user") + '</a></li>';
+        if (type === "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.SeeCalendar(this);">' + GCTLang.Trans('in-calendar') + '</a></li>' }
+        if (sheet) { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfileSheet(this); " data-guid="' + user.owner + '" data-job="' + user.job + '" data-org="' + user.org + '" data-name="' + user.name + '" data-email="' + user.email + '" data-icon="'+user.icon+'">' + GCTLang.Trans("view-user-summary") + '</a></li>'}
+        popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfile(' + user.owner + ');">' + GCTLang.Trans("show-user") + '</a></li>';
         popoverHTML += '<li><a href="#"  class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
         popoverHTML += '<li><a href="#" class="list-button item-link popover-close">' + GCTLang.Trans("close") + ' </a></li>';
         popoverHTML += '</ul>'

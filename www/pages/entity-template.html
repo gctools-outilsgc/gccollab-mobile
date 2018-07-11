@@ -112,7 +112,10 @@
                                     owner: value.owner_guid,
                                     liked: liked,
                                     likes: likes,
-                                    image: img
+                                    image: img,
+                                    userJob: value.userDetails.job,
+                                    userOrg: value.userDetails.organization,
+                                    userEmail: value.userDetails.email
                                 });
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
@@ -151,7 +154,10 @@
                                     type: "gccollab_blog_post",
                                     replied: replied,
                                     liked: liked,
-                                    likes: likes
+                                    likes: likes,
+                                    userJob: value.userDetails.job,
+                                    userOrg: value.userDetails.organization,
+                                    userEmail: value.userDetails.email
                                 });
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
@@ -187,7 +193,10 @@
                                         type: "gccollab_discussion_post",
                                         replied: replied,
                                         liked: liked,
-                                        likes: likes
+                                        likes: likes,
+                                        userJob: value.userDetails.job,
+                                        userOrg: value.userDetails.organization,
+                                        userEmail: value.userDetails.email
                                     });
                                 } else if (value.subtype == "discussion_reply") {
                                     //not needed
@@ -310,7 +319,10 @@
                                     action: action,
                                     owner: value.owner_guid,
                                     liked: liked,
-                                    likes: likes
+                                    likes: likes,
+                                    userJob: value.userDetails.job,
+                                    userOrg: value.userDetails.organization,
+                                    userEmail: value.userDetails.email
                                 });
                             });
 
@@ -348,7 +360,10 @@
                                     guid: value.guid,
                                     action: action,
                                     liked: liked,
-                                    likes: likes
+                                    likes: likes,
+                                    userJob: value.userDetails.job,
+                                    userOrg: value.userDetails.organization,
+                                    userEmail: value.userDetails.email
                                 });
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
@@ -429,7 +444,10 @@
                                     phone: phone,
                                     email: email,
                                     fee: fee,
-                                    eventLang: eventLang
+                                    eventLang: eventLang,
+                                    userJob: value.userDetails.job,
+                                    userOrg: value.userDetails.organization,
+                                    userEmail: value.userDetails.email
                                 });
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
