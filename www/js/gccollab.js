@@ -176,7 +176,7 @@ function ShowProfileSheet(obj) {
         email: (email) ? email : '',
     });
     // <div class="list media-list"><ul id="content-{{this.id}}"></ul></div>
-    var dynamicSheet = app.sheet.create({
+    var userSheet = app.sheet.create({
       content: '<div class="sheet-modal">'+
                   '<div class="toolbar">'+
                     '<div class="toolbar-inner">'+
@@ -191,18 +191,15 @@ function ShowProfileSheet(obj) {
                         '<div class="list media-list"><ul>' +
                             card +
                         '</ul></div>' +
-                        '<div class="block"> <div class="row">' +
-                            '<div class="col-50"><a href="#" class="button button-fill button-raised" data-name="' + name + '" data-guid="' + guid + '" onclick="GCTrequests.NewMessage(this);">' + GCTLang.Trans("message") + '</a></div>' +
-                            '<div class="col-50"><a href="#" class="button button-fill button-raised" onclick="ShowProfile(' + guid + ');">' + GCTLang.Trans("show-user") + '</a></div>' +
+                        '<div class="block tight-block"> <div class="row">' +
+                            '<div class="col-50"><a href="#" class="button button-fill button-raised sheet-close" data-name="' + name + '" data-guid="' + guid + '" onclick="GCTrequests.NewMessage(this);">' + GCTLang.Trans("message") + '</a></div>' +
+                            '<div class="col-50"><a href="#" class="button button-fill button-raised sheet-close" onclick="ShowProfile(' + guid + ');">' + GCTLang.Trans("show-user") + '</a></div>' +
                         '</div></div>'+
                       '<span class="reader-text sheet-close" tabindex="0">' + GCTLang.Trans('close') + '</span>' +
                     '</div>'+
                 '</div>',
       // Events
         on: {
-            open: function (sheet) {
-                console.log('Sheet open');
-            },
             opened: function (sheet) {
                 $('#sheet-focus-' + guid).focus();
             },
@@ -211,7 +208,7 @@ function ShowProfileSheet(obj) {
             },
         }
     });
-    dynamicSheet.open();
+    userSheet.open();
 }
 
 $$(document).on('page:init', '.page[data-name="post-wire"]', function (e) {
