@@ -180,21 +180,23 @@ function ShowProfileSheet(obj) {
       content: '<div class="sheet-modal">'+
                   '<div class="toolbar">'+
                     '<div class="toolbar-inner">'+
+                    '<span id="sheet-focus-' + guid + '" class="reader-text" tabindex="0">' + GCTLang.Trans('sheet-opened') + '</span>' +
                       '<div class="left"></div>'+
                       '<div class="right">'+
-                        '<a class="link sheet-close">Done</a>'+
+                        '<a class="link sheet-close">' + GCTLang.Trans('close') + '</a>'+
                       '</div>'+
                     '</div>'+
                   '</div>'+
                   '<div class="sheet-modal-inner">'+
-                    '<span id="sheet-focus-' + guid + '" class="reader-text" tabindex="0">' + GCTLang.Trans('sheet-opened') + '</span>' +
-                    '<div class="block">'+
                         '<div class="list media-list"><ul>' +
                             card +
                         '</ul></div>' +
-                      '<p><a href="#" class="link sheet-close">Close me</a></p>'+
+                        '<div class="block"> <div class="row">' +
+                            '<div class="col-50"><a href="#" class="button button-fill button-raised" data-name="' + name + '" data-guid="' + guid + '" onclick="GCTrequests.NewMessage(this);">' + GCTLang.Trans("message") + '</a></div>' +
+                            '<div class="col-50"><a href="#" class="button button-fill button-raised" onclick="ShowProfile(' + guid + ');">' + GCTLang.Trans("show-user") + '</a></div>' +
+                        '</div></div>'+
+                      '<span class="reader-text sheet-close" tabindex="0">' + GCTLang.Trans('close') + '</span>' +
                     '</div>'+
-                  '</div>'+
                 '</div>',
       // Events
         on: {
