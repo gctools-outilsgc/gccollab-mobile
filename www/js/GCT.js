@@ -721,7 +721,7 @@
             + "</div>"
             + "<div class='row ptm'>"
             + "<div class='col-20 members-icon'><img src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
-            + "<div class='col-80 item-title reg-text'>" + object.name + "<div class='item-text more_text'>" + object.org + "</div> <div class='item-text more_text'> " + object.job + "</div></div>"
+            + "<div class='col-80 item-title reg-text'>" + object.name + "<div class='item-text more_text'>" + object.org + "</div> <div class='item-text more_text'> " + object.job + "</div><div class='item-text more_text'> " + object.email + "</div></div>"
             + "</div>"
             + "</div>"
             + "</div></div>";
