@@ -179,6 +179,7 @@
     "deleted": "Your post has been deleted.",
     "deletepost": "Delete this post?",
     "show-user": "Show User's Profile",
+    "view-user-summary": "View User's Summary",
     "view-post": "View Post",
     "view-group": "View Group",
 
@@ -611,6 +612,7 @@ French = {
     "deleted": "Votre post a été supprimé.",
     "deletepost": "Supprimer ce post?",
     "show-user": "Afficher le profil de l'utilisateur",
+    "view-user-summary": "Voir le Résumé de l'utilisateur",
     "view-post": "Voir l'article",
     "view-group": "View le Groupe",
 

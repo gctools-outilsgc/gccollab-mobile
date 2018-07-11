@@ -161,19 +161,19 @@ function ShowProfile(email) {
 
 function ShowProfileSheet(obj) {
     var guid, job, org, name, email, card;
-    guid = $(obj).data("guid");
-    job = $(obj).data("job");
-    org = $(obj).data("org");
-    name = $(obj).data("name");
-    email = $(obj).data("email");
-    icon = $(obj).find('.icon').attr('src');
+    guid = $(obj).data("guid") || '';
+    job = $(obj).data("job") || '';
+    org = $(obj).data("org") || '';
+    name = $(obj).data("name") || '';
+    email = $(obj).data("email") || '';
+    icon = $(obj).data("icon") || $(obj).find('.icon').attr('src') || '';
     var card = GCTtxt.userSheet({
         guid: guid,
         icon: icon,
         name: name,
-        job: (job) ? job : '',
-        org: (org) ? org : '',
-        email: (email) ? email : '',
+        job: job,
+        org: org,
+        email: email,
     });
     // <div class="list media-list"><ul id="content-{{this.id}}"></ul></div>
     var userSheet = app.sheet.create({

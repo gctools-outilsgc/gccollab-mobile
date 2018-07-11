@@ -149,7 +149,7 @@
             + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'></div>"
-            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='list' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+            + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='list' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='"+object.icon+"' data-sheet='sheet' onclick='GCT.MoreOptions(this);'  aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
             + "</div>"
             + "<div class='card-content  card-content-padding-options item-link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' aria-hidden='true'>"
             + "<div id='wire-" + object.guid + "' class='text-list' >" + object.description + "</div>"
@@ -3314,14 +3314,22 @@ GCT = {
         }
     },
     MoreOptions: function (obj) {
-        var owner = $(obj).data("owner") || '';
+        var user = {};
+        user.owner = $(obj).data("owner") || '';
         var guid = $(obj).data("guid") || '';
         var type = $(obj).data("type") || '';
         var container = $(obj).data("container") || '';
         var location = $(obj).data("location") || '';
-
-        var isOwner = (owner == GCTUser.Guid());
-        var inGroup = ((container && owner) && (container != owner));
+        var isOwner = (user.owner == GCTUser.Guid());
+        var inGroup = ((container && user.owner) && (container != user.owner));
+        var sheet = $(obj).data("sheet") || '';
+        if (sheet) {
+            user.job = $(obj).data("job") || '';
+            user.org = $(obj).data("org") || '';
+            user.name = $(obj).data("name") || '';
+            user.email = $(obj).data("email") || '';
+            user.icon = $(obj).data("icon") || '';
+        }
 
         var popoverHTML = '<div class="popover">'
             +'<div class="popover-inner">' 
@@ -3353,9 +3361,9 @@ GCT = {
             }
         }
         if (inGroup) { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + container + '" data-type="gccollab_group" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-group") + '</a></li>'; }
-        if (type === "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.SeeCalendar(this);">' + GCTLang.Trans('in-calendar') + '</a></li>'
-}
-        popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfile(' + owner + ');">' + GCTLang.Trans("show-user") + '</a></li>';
+        if (type === "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.SeeCalendar(this);">' + GCTLang.Trans('in-calendar') + '</a></li>' }
+        if (sheet) { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfileSheet(this); " data-guid="' + user.owner + '" data-job="' + user.job + '" data-org="' + user.org + '" data-name="' + user.name + '" data-email="' + user.email + '" data-icon="'+user.icon+'">' + GCTLang.Trans("view-user-summary") + '</a></li>'}
+        popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfile(' + user.owner + ');">' + GCTLang.Trans("show-user") + '</a></li>';
         popoverHTML += '<li><a href="#"  class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
         popoverHTML += '<li><a href="#" class="list-button item-link popover-close">' + GCTLang.Trans("close") + ' </a></li>';
         popoverHTML += '</ul>'
