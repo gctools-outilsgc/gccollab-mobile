@@ -136,7 +136,7 @@
                                 var liked = (value.liked) ? "liked" : "";
                                 var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
                                 var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_blog_post' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
-                                if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); }
+                                if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
                                 content += GCTtxt.Blog({
                                     icon: value.userDetails.iconURL,
                                     name: value.userDetails.displayName,
@@ -175,7 +175,7 @@
                                     var liked = (value.liked) ? "liked" : "";
                                     var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
                                     var action = '';
-                                    if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); }
+                                    if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
                                     content += GCTtxt.Discussion({
                                         icon: value.userDetails.iconURL,
                                         name: value.userDetails.displayName,
@@ -344,7 +344,7 @@
                                     posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
                                 }
                                 var address = "<a class='external' data-type='gccollab_bookmark' href='" + value.address + "'>" + value.address + "</a> ";
-                                if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); }
+                                if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
                                 content += GCTtxt.Bookmark({
                                     icon: value.userDetails.iconURL,
                                     name: value.userDetails.displayName,
@@ -417,7 +417,7 @@
                                 var eventLang = GCTLang.Trans("lang");
                                 if (value.eventLang !== null && typeof value.eventLang !== 'undefined')
                                     eventLang += value.eventLang;
-                                if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); }
+                                if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
                                 content = GCTtxt.Event({
                                     icon: value.userDetails.iconURL,
                                     name: value.userDetails.displayName,
