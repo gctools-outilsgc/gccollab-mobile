@@ -28,7 +28,7 @@
                             </div>
                         </div>
                     </li>
-                   <!-- <li>
+                   <li>
                         <div class="item-content item-input">
                             <div class="item-inner">
                                 <div id="wire-body-label" class="item-title item-label" data-translate="attach-image"></div>
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                         </div>
-                    </li> -->
+                    </li>
                     <li>
                         <div class="item-content item-input">
                             <div class="item-inner">
@@ -64,7 +64,7 @@
                 $$('#submit-post-wire').on('click', function (e) {
                     var message = $("#post-wire-textarea").val();
                     if (message) {
-                        GCTrequests.ReplyWire(guid, message, function (data) {
+                        GCTrequests.ReplyWire(guid, message, imageURI, function (data) {
                             console.log(data);
                             app.dialog.alert(data.result, '', function () {
                                 mainView.router.navigate('/list-template/wires/');
@@ -84,7 +84,7 @@
                         }, function onFail(message) {
                             // myApp.alert('Failed because: ' + message);
                         }, {
-                                quality: 95,
+                                quality: 75,
                                 sourceType: Camera.PictureSourceType.CAMERA,
                                 destinationType: Camera.DestinationType.DATA_URL,
                                 encodingType: Camera.EncodingType.JPEG,

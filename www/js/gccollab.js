@@ -237,7 +237,7 @@ $$(document).on('page:init', '.page[data-name="post-wire"]', function (e) {
             }, function onFail(message) {
                 // myApp.alert('Failed because: ' + message);
             }, {
-                    quality: 95,
+                    quality: 75,
                     sourceType: Camera.PictureSourceType.CAMERA,
                     destinationType: Camera.DestinationType.DATA_URL,
                     encodingType: Camera.EncodingType.JPEG,

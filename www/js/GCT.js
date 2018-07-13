@@ -2176,7 +2176,7 @@ GCTrequests = {
             dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "post.wire", user: GCTUser.Email(), message: message, image: imageURI, api_key: api_key_gccollab, lang: GCTLang.Lang() },
-            timeout: 12000,
+            timeout: 45000,
             success: function (data) {
                 app.preloader.hide();
                 successCallback(data);
@@ -2184,6 +2184,7 @@ GCTrequests = {
             error: function (jqXHR, textStatus, errorThrown) {
                 app.preloader.hide();
                 errorCallback(jqXHR, textStatus, errorThrown);
+                alert(errorThrown);
             }
         });
     },
@@ -2192,18 +2193,22 @@ GCTrequests = {
         var type = $(obj).data("type");
         mainView.router.navigate('/wire/reply/' + guid + '/' + type + '/');
     },
-    ReplyWire: function (guid, message, successCallback, errorCallback) {
+    ReplyWire: function (guid, message, imageURI, successCallback, errorCallback) {
+        app.preloader.show();
         app.request({
             method: 'POST',
             dataType: 'json',
             url: GCT.GCcollabURL,
-            data: { method: "reply.wire", user: GCTUser.Email(), guid: guid, message: message, api_key: api_key_gccollab, lang: GCTLang.Lang() },
-            timeout: 12000,
+            data: { method: "reply.wire", user: GCTUser.Email(), guid: guid, message: message, image: imageURI, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            timeout: 45000,
             success: function (data) {
+                app.preloader.hide();
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
+                app.preloader.hide();
                 errorCallback(jqXHR, textStatus, errorThrown);
+                alert(errorThrown);
             }
         });
     },
