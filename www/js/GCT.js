@@ -1980,12 +1980,13 @@ GCTrequests = {
         limit = tabObject.limit || 12;
         offset = tabObject.offset || 0;
         target = target || '';
+        filters = tabObject.filters || '';
 
         app.request({
             method: 'POST',
             dataType: 'json',
             url: GCT.GCcollabURL,
-            data: { method: "get.blogpostsbyowner", user: GCTUser.Email(), limit: limit, offset: offset, target: target, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "get.blogpostsbyowner", user: GCTUser.Email(), limit: limit, offset: offset, filters: filters, target: target, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);
@@ -1998,11 +1999,12 @@ GCTrequests = {
     GetBlogsByColleagues: function (tabObject) {
         limit = tabObject.limit || 12;
         offset = tabObject.offset || 0;
+        filters = tabObject.filters || '';
         app.request({
             method: 'POST',
             dataType: 'json',
             url: GCT.GCcollabURL,
-            data: { method: "get.blogpostsbycolleague", user: GCTUser.Email(), limit: limit, offset: offset, api_key: api_key_gccollab, lang: GCTLang.Lang() },
+            data: { method: "get.blogpostsbycolleague", user: GCTUser.Email(), limit: limit, offset: offset, filters: filters, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
                 GCTEach.ContentSuccess(data, tabObject);
