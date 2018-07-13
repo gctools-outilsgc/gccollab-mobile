@@ -2176,7 +2176,7 @@ GCTrequests = {
             dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "post.wire", user: GCTUser.Email(), message: message, image: imageURI, api_key: api_key_gccollab, lang: GCTLang.Lang() },
-            timeout: 12000,
+            timeout: 45000,
             success: function (data) {
                 app.preloader.hide();
                 successCallback(data);
@@ -2184,6 +2184,7 @@ GCTrequests = {
             error: function (jqXHR, textStatus, errorThrown) {
                 app.preloader.hide();
                 errorCallback(jqXHR, textStatus, errorThrown);
+                alert(errorThrown);
             }
         });
     },
@@ -2199,7 +2200,7 @@ GCTrequests = {
             dataType: 'json',
             url: GCT.GCcollabURL,
             data: { method: "reply.wire", user: GCTUser.Email(), guid: guid, message: message, image: imageURI, api_key: api_key_gccollab, lang: GCTLang.Lang() },
-            timeout: 12000,
+            timeout: 45000,
             success: function (data) {
                 app.preloader.hide();
                 successCallback(data);
@@ -2207,6 +2208,7 @@ GCTrequests = {
             error: function (jqXHR, textStatus, errorThrown) {
                 app.preloader.hide();
                 errorCallback(jqXHR, textStatus, errorThrown);
+                alert(errorThrown);
             }
         });
     },
