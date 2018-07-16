@@ -279,7 +279,7 @@
         return content;
     },
     txtMember: function (object) {
-        var content = "<div class='hold-all-card'>"
+        var content = "<div class='hold-all-card' id='request-" + object.guid + "'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>" + object.label + "</div>"
             + "<div class='item-link item-content close-popup close-panel' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");' aria-hidden='true'>"
             + "<div class='item-inner'>"
@@ -1470,7 +1470,7 @@ GCTEach = {
         return content;
     },
     ColleagueRequest: function (value, obj) {
-        var description = '<div class="row"><div class="col-50"><span class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.ApproveColleague(this);">' + GCTLang.Trans("accept") + '</span></div><span class="col-50"><div class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.DeclineColleague(this);">' + GCTLang.Trans("decline") + '</span></div></div>';
+        var description = '<div class="row" id="request-actions-' + value.user_id+'"><div class="col-50"><span class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.ApproveColleague(this);">' + GCTLang.Trans("accept") + '</span></div><span class="col-50"><div class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.DeclineColleague(this);">' + GCTLang.Trans("decline") + '</span></div></div>';
 
         var content = GCTtxt.txtMember({
             guid: value.user_id,
@@ -1788,6 +1788,7 @@ GCTUser = {
             timeout: 12000,
             success: function (data) {
                 console.log(data);
+                if (data.result) { $$('#request-actions-' + guid).html(data.result); }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -1810,6 +1811,7 @@ GCTUser = {
             timeout: 12000,
             success: function (data) {
                 console.log(data);
+                if (data.result) { $$('#request-actions-' + guid).html(data.result); }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
