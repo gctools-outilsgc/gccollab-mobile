@@ -1773,6 +1773,11 @@ GCTUser = {
         });
     },
     ApproveColleague: function (obj) {
+        //Stops outer events (onclick to the whole post) from triggering if this was reached from a child to it
+        if (!e) var e = window.event;
+        e.cancelBubble = true;
+        if (e.stopPropagation) e.stopPropagation();
+
         var guid = $(obj).data("guid");
 
         app.request({
@@ -1783,7 +1788,6 @@ GCTUser = {
             timeout: 12000,
             success: function (data) {
                 console.log(data);
-                ShowColleagueRequests();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -1791,6 +1795,11 @@ GCTUser = {
         });
     },
     DeclineColleague: function (obj) {
+        //Stops outer events (onclick to the whole post) from triggering if this was reached from a child to it
+        if (!e) var e = window.event;
+        e.cancelBubble = true;
+        if (e.stopPropagation) e.stopPropagation();
+
         var guid = $(obj).data("guid");
 
         app.request({
@@ -1801,7 +1810,6 @@ GCTUser = {
             timeout: 12000,
             success: function (data) {
                 console.log(data);
-                ShowColleagueRequests();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
