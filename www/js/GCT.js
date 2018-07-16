@@ -1752,9 +1752,15 @@ GCTUser = {
             timeout: 12000,
             success: function (data) {
                 console.log(data);
+                if (data.result) {
+                    var result = toast(obj, "friends:add:successful");
+                } else if (data.message) {
+                    var result = toast(obj, "friends:add:pending");
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                var result = toast(obj, "friends:add:error");
             }
         });
     },
@@ -1769,9 +1775,11 @@ GCTUser = {
             timeout: 12000,
             success: function (data) {
                 console.log(data);
+                var result = toast(obj, "friends:removal:successful");
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                alert(errorThrown);
             }
         });
     },
@@ -3516,3 +3524,13 @@ function errorConsole(jqXHR, textStatus, errorThrown) {
 
 var endOfContent = '<div class="card"><div class="card-content card-content-padding"><div class="card-content-inner"><div class="item-text">' + GCTLang.Trans("end-of-content") + '</div></div></div></div>';
 
+function toast(obj, message) {
+    var result = app.toast.create({
+        text: GCTLang.Trans(message),
+        position: 'center',
+        closeTimeout: 2000,
+    });
+    result.open();
+    $$(obj).remove();
+    return result;
+}
