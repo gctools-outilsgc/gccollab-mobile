@@ -24,6 +24,9 @@
     txtFocusMessage: function (id) {
         return '<span id="focus-' + id + '" class="reader-text" tabindex="0">' + GCTLang.Trans('content-loaded') + '</span>';
     },
+    txtResultFeedback: function (id, message) {
+        return "<span id='focus-" + id + "' tabindex='0'>" + message + "</span>";
+    },
     txtAction: function (ref) {
         var action = '';
         switch (ref) {
@@ -1788,7 +1791,10 @@ GCTUser = {
             timeout: 12000,
             success: function (data) {
                 console.log(data);
-                if (data.result) { $$('#request-actions-' + guid).html(data.result); }
+                if (data.result) {
+                    $$('#request-actions-' + guid).html(GCTtxt.txtResultFeedback(guid, data.result));
+                    $('#focus-' + guid).focus();
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -1811,7 +1817,10 @@ GCTUser = {
             timeout: 12000,
             success: function (data) {
                 console.log(data);
-                if (data.result) { $$('#request-actions-' + guid).html(data.result); }
+                if (data.result) {
+                    $$('#request-actions-' + guid).html(GCTtxt.txtResultFeedback(guid, data.result));
+                    $('#focus-' + guid).focus();
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
