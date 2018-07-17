@@ -24,6 +24,9 @@
     txtFocusMessage: function (id) {
         return '<span id="focus-' + id + '" class="reader-text" tabindex="0">' + GCTLang.Trans('content-loaded') + '</span>';
     },
+    txtResultFeedback: function (id, message) {
+        return "<span id='focus-" + id + "' tabindex='0'>" + message + "</span>";
+    },
     txtAction: function (ref) {
         var action = '';
         switch (ref) {
@@ -279,7 +282,7 @@
         return content;
     },
     txtMember: function (object) {
-        var content = "<div class='hold-all-card'>"
+        var content = "<div class='hold-all-card' id='request-" + object.guid + "'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>" + object.label + "</div>"
             + "<div class='item-link item-content close-popup close-panel' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");' aria-hidden='true'>"
             + "<div class='item-inner'>"
@@ -1490,7 +1493,7 @@ GCTEach = {
         return content;
     },
     ColleagueRequest: function (value, obj) {
-        var description = '<div class="row"><div class="col-50"><span class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.ApproveColleague(this);">' + GCTLang.Trans("accept") + '</span></div><span class="col-50"><div class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.DeclineColleague(this);">' + GCTLang.Trans("decline") + '</span></div></div>';
+        var description = '<div class="row" id="request-actions-' + value.user_id+'"><div class="col-50"><span class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.ApproveColleague(this);">' + GCTLang.Trans("accept") + '</span></div><span class="col-50"><div class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.DeclineColleague(this);">' + GCTLang.Trans("decline") + '</span></div></div>';
 
         var content = GCTtxt.txtMember({
             guid: value.user_id,
@@ -1769,9 +1772,15 @@ GCTUser = {
             timeout: 12000,
             success: function (data) {
                 console.log(data);
+                if (data.result) {
+                    var result = toast(obj, "friends:add:successful");
+                } else if (data.message) {
+                    var result = toast(obj, "friends:add:pending");
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                var result = toast(obj, "friends:add:error");
             }
         });
     },
@@ -1786,13 +1795,20 @@ GCTUser = {
             timeout: 12000,
             success: function (data) {
                 console.log(data);
+                var result = toast(obj, "friends:removal:successful");
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                alert(errorThrown);
             }
         });
     },
     ApproveColleague: function (obj) {
+        //Stops outer events (onclick to the whole post) from triggering if this was reached from a child to it
+        if (!e) var e = window.event;
+        e.cancelBubble = true;
+        if (e.stopPropagation) e.stopPropagation();
+
         var guid = $(obj).data("guid");
 
         app.request({
@@ -1803,7 +1819,10 @@ GCTUser = {
             timeout: 12000,
             success: function (data) {
                 console.log(data);
-                ShowColleagueRequests();
+                if (data.result) {
+                    $$('#request-actions-' + guid).html(GCTtxt.txtResultFeedback(guid, data.result));
+                    $('#focus-' + guid).focus();
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -1811,6 +1830,11 @@ GCTUser = {
         });
     },
     DeclineColleague: function (obj) {
+        //Stops outer events (onclick to the whole post) from triggering if this was reached from a child to it
+        if (!e) var e = window.event;
+        e.cancelBubble = true;
+        if (e.stopPropagation) e.stopPropagation();
+
         var guid = $(obj).data("guid");
 
         app.request({
@@ -1821,7 +1845,10 @@ GCTUser = {
             timeout: 12000,
             success: function (data) {
                 console.log(data);
-                ShowColleagueRequests();
+                if (data.result) {
+                    $$('#request-actions-' + guid).html(GCTtxt.txtResultFeedback(guid, data.result));
+                    $('#focus-' + guid).focus();
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -3519,3 +3546,13 @@ function errorConsole(jqXHR, textStatus, errorThrown) {
 
 var endOfContent = '<div class="card"><div class="card-content card-content-padding"><div class="card-content-inner"><div class="item-text">' + GCTLang.Trans("end-of-content") + '</div></div></div></div>';
 
+function toast(obj, message) {
+    var result = app.toast.create({
+        text: GCTLang.Trans(message),
+        position: 'center',
+        closeTimeout: 2000,
+    });
+    result.open();
+    $$(obj).remove();
+    return result;
+}

@@ -428,7 +428,12 @@
     "event-contact": "Contact",
     "contact_email": "E-mail address",
     "contact_phone": "Phone number",
-    "event-language": "Event Language"
+    "event-language": "Event Language",
+
+    "friends:add:successful": "Successfully added as a colleague.",
+    "friends:add:pending": "Requested to be colleagues.",
+    "friends:add:error": "We couldn't add as a colleague.",
+    "friends:removal:successful": "Successfully removed from your colleagues.",
 }
 
 French = {
@@ -864,5 +869,10 @@ French = {
     "event-contact": "Personne ressource",
     "contact_email": "Adresse courriel",
     "contact_phone": "Numéro de téléphone",
-    "event-language": "Langue de l'événement"
+    "event-language": "Langue de l'événement",
+
+    "friends:add:successful": "Ajouté à vos collègues.",
+    "friends:add:pending": "Demandé d'être des collègues.",
+    "friends:add:error": "N'a pas pu être ajouté(e) à vos collègues",
+    "friends:removal:successful": "Retiré de vos collègues.",
 }
