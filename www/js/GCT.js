@@ -446,7 +446,7 @@
             + "</div>"
             + "</div>"
             + "<div class='card-footer' aria-hidden='true'>"
-            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTrequests.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             + object.action
             + "</div></div></div>";
         content = GCT.SetLinks(content);
@@ -477,7 +477,7 @@
             + "</div>"
             + "</div>"
             + "<div class='card-footer'>"
-            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTrequests.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             + object.action
             + "</div></div></div>";
         content = GCT.SetLinks(content);
@@ -614,7 +614,7 @@
             + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
             + "</div>"
             + "<div class='card-footer' aria-hidden='true'>"
-            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTrequests.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
             + "</div></div></div></div>";
@@ -644,7 +644,7 @@
             + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
             + "</div>"
             + "<div class='card-footer'>"
-            + "<div  class='link like " + object.liked + "'><a href='#' aria-label='like aimer' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i></a> <a href='#' aria-label='See who liked this Voir qui a aimer' data-guid=" + object.guid + " onclick='GCTrequests.GetLikeUsers(this);'><span class='like-count'>" + object.likes + "</span></a></div>"
+            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
             // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
             + "</div></div></div></div>";
