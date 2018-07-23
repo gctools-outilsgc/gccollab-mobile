@@ -3466,11 +3466,13 @@ GCT = {
             on: {
                 open: function (popover) {
                     console.log('Popover open');
+                    $$('.page-current').attr('aria-hidden', 'true');
                 },
                 opened: function (popover) {
                     console.log('Popover opened');
                 },
                 closed: function (popover) {
+                    $$('.page-current').attr('aria-hidden', 'false');
                     $(obj).focus();
                 },
             }
@@ -3558,7 +3560,22 @@ function toast(obj, message) {
     var result = app.toast.create({
         text: GCTLang.Trans(message),
         position: 'center',
+        text: 'Toast with additional close button',
+        closeButton: true,
         closeTimeout: 2000,
+        on: {
+                open: function (popover) {
+                    console.log('Popover open');
+                    $$('.page-current').attr('aria-hidden', 'true');
+                },
+                opened: function (popover) {
+                    console.log('Popover opened');
+                },
+                closed: function (popover) {
+                    $$('.page-current').attr('aria-hidden', 'false');
+                    $(obj).focus();
+                },
+            }
     });
     result.open();
     $$(obj).remove();
