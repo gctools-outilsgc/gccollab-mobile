@@ -1780,9 +1780,11 @@ GCTUser = {
             success: function (data) {
                 console.log(data);
                 if (data.result) {
-                    var result = toast(obj, "friends:add:successful");
+                    var result = toastText(obj, "friends:add:successful");
+                    $('#toast-sr').focus();
                 } else if (data.message) {
-                    var result = toast(obj, "friends:add:pending");
+                    var result = toastText(obj, "friends:add:pending");
+                    $('#toast-sr').focus();
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -3560,7 +3562,6 @@ function toast(obj, message) {
     var result = app.toast.create({
         text: GCTLang.Trans(message),
         position: 'center',
-        text: 'Toast with additional close button',
         closeButton: true,
         closeTimeout: 2000,
         on: {
@@ -3579,5 +3580,17 @@ function toast(obj, message) {
     });
     result.open();
     $$(obj).remove();
+    return result;
+}
+
+function toastText(obj, message) {
+    var result = app.toast.create({
+        text: GCTLang.Trans(message),
+        position: 'center',
+        closeTimeout: 3000,
+    });
+    result.open();
+    $$('#toast-sr').remove(); // remove old toast-sr content
+    $$(obj).parent().html('<span id="toast-sr" class="reader-text" tabindex="0">' + GCTLang.Trans(message) + '</span>');
     return result;
 }
