@@ -1780,8 +1780,7 @@ GCTUser = {
             success: function (data) {
                 console.log(data);
                 if (data.result) {
-                    //notificationToastSR(obj, 'friends:add:successful', 'parent');
-                    notificationTempToast(obj, 'friends:add:successful');
+                    notificationToastSR(obj, 'friends:add:successful', 'parent-button');
                 } else if (data.message) {
                     notificationToastSR(obj, 'friends:add:pending', 'parent');
                 }
@@ -3596,6 +3595,14 @@ function notificationToastSR(obj, message, remove) {
     $$('#toast-sr').remove();
     if (remove === 'parent') {
         $$(obj).parent().html('<span id="toast-sr" class="reader-text" tabindex="0">' + GCTLang.Trans(message) + '</span>');
+    } else if (remove === 'button') {
+        $$(obj).addClass('disabled');
+        $$('<span id="toast-sr" class="reader-text" tabindex="0">' + GCTLang.Trans(message) + '</span>').appendTo(obj);
+    } else if (remove === 'parent-button') {
+        //disable object, aria-hide, and append SR text to parent. 
+        $$(obj).addClass('disabled');
+        $$(obj).attr('aria-hidden', 'true');
+        $$('<span id="toast-sr" class="reader-text" tabindex="0">' + GCTLang.Trans(message) + '</span>').appendTo($$(obj).parent());
     }
     $('#toast-sr').focus();
 }
