@@ -1780,16 +1780,15 @@ GCTUser = {
             success: function (data) {
                 console.log(data);
                 if (data.result) {
-                    var result = toastText(obj, "friends:add:successful");
-                    $('#toast-sr').focus();
+                    //notificationToastSR(obj, 'friends:add:successful', 'parent');
+                    notificationTempToast(obj, 'friends:add:successful');
                 } else if (data.message) {
-                    var result = toastText(obj, "friends:add:pending");
-                    $('#toast-sr').focus();
+                    notificationToastSR(obj, 'friends:add:pending', 'parent');
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
-                var result = toast(obj, "friends:add:error");
+                notificationTempToast(obj, 'friends:add:error');
             }
         });
     },
@@ -1803,8 +1802,7 @@ GCTUser = {
             data: { method: "remove.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                console.log(data);
-                var result = toast(obj, "friends:removal:successful");
+                notificationToastSR(obj, 'friends:removal:successful', 'parent');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -3583,14 +3581,48 @@ function toast(obj, message) {
     return result;
 }
 
-function toastText(obj, message) {
-    var result = app.toast.create({
+function cToast(message) {
+    var toast = app.toast.create({
         text: GCTLang.Trans(message),
         position: 'center',
         closeTimeout: 3000,
     });
+    return toast;
+}
+
+function notificationToastSR(obj, message, remove) {
+    var result = cToast(message);
     result.open();
-    $$('#toast-sr').remove(); // remove old toast-sr content
-    $$(obj).parent().html('<span id="toast-sr" class="reader-text" tabindex="0">' + GCTLang.Trans(message) + '</span>');
-    return result;
+    $$('#toast-sr').remove();
+    if (remove === 'parent') {
+        $$(obj).parent().html('<span id="toast-sr" class="reader-text" tabindex="0">' + GCTLang.Trans(message) + '</span>');
+    }
+    $('#toast-sr').focus();
+}
+
+function notificationTempToast(obj, message) {
+    $$('<span id="toast-sr" class="reader-text" tabindex="0">' + GCTLang.Trans(message) + '</span>').appendTo(obj);
+    var toast = srToast(message, '#toast-sr', obj);
+    toast.open();
+}
+
+function srToast(message, sr, obj) {
+    var toast = app.toast.create({
+        text: GCTLang.Trans(message),
+        position: 'center',
+        closeTimeout: 3000,
+        on: {
+            open: function (popover) {
+                $(sr).focus();
+            },
+            opened: function (popover) {
+                console.log('Popover opened');
+            },
+            closed: function (popover) {
+                $$(sr).remove();
+                $(obj).focus();
+            },
+        }
+    });
+    return toast;
 }
