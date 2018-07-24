@@ -1780,14 +1780,14 @@ GCTUser = {
             success: function (data) {
                 console.log(data);
                 if (data.result) {
-                    notificationToastSR(obj, 'friends:add:successful', 'parent-button');
+                    notificationToastSR(obj, GCTLang.Trans('friends:add:successful'), 'button');
                 } else if (data.message) {
-                    notificationToastSR(obj, 'friends:add:pending', 'parent');
+                    notificationToastSR(obj, GCTLang.Trans('friends:add:pending'), 'button');
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
-                notificationTempToast(obj, 'friends:add:error');
+                notificationTempToastSR(obj, 'friends:add:error');
             }
         });
     },
@@ -1801,7 +1801,7 @@ GCTUser = {
             data: { method: "remove.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                notificationToastSR(obj, 'friends:removal:successful', 'parent');
+                notificationToastSR(obj, GCTLang.Trans('friends:removal:successful'), 'button');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -3555,64 +3555,39 @@ function errorConsole(jqXHR, textStatus, errorThrown) {
 
 var endOfContent = '<div class="card"><div class="card-content card-content-padding"><div class="card-content-inner"><div class="item-text">' + GCTLang.Trans("end-of-content") + '</div></div></div></div>';
 
-function toast(obj, message) {
-    var result = app.toast.create({
-        text: GCTLang.Trans(message),
-        position: 'center',
-        closeButton: true,
-        closeTimeout: 2000,
-        on: {
-                open: function (popover) {
-                    console.log('Popover open');
-                    $$('.page-current').attr('aria-hidden', 'true');
-                },
-                opened: function (popover) {
-                    console.log('Popover opened');
-                },
-                closed: function (popover) {
-                    $$('.page-current').attr('aria-hidden', 'false');
-                    $(obj).focus();
-                },
-            }
-    });
-    result.open();
-    $$(obj).remove();
-    return result;
-}
-
+ // returns basic center toast
 function cToast(message) {
     var toast = app.toast.create({
-        text: GCTLang.Trans(message),
+        text: message,
         position: 'center',
         closeTimeout: 3000,
     });
     return toast;
 }
 
-function notificationToastSR(obj, message, remove) {
+ // creates center toast(cToast), extra/sr-text based on input, and focuses toast-sr text.
+function notificationToastSR(obj, message, extra) {
     var result = cToast(message);
     result.open();
-    $$('#toast-sr').remove();
-    if (remove === 'parent') {
-        $$(obj).parent().html('<span id="toast-sr" class="reader-text" tabindex="0">' + GCTLang.Trans(message) + '</span>');
-    } else if (remove === 'button') {
-        $$(obj).addClass('disabled');
-        $$('<span id="toast-sr" class="reader-text" tabindex="0">' + GCTLang.Trans(message) + '</span>').appendTo(obj);
-    } else if (remove === 'parent-button') {
+    $$('#toast-sr').remove(); //remove any old toast message
+    if (extra === 'button') {
         //disable object, aria-hide, and append SR text to parent. 
         $$(obj).addClass('disabled');
         $$(obj).attr('aria-hidden', 'true');
-        $$('<span id="toast-sr" class="reader-text" tabindex="0">' + GCTLang.Trans(message) + '</span>').appendTo($$(obj).parent());
+        $$('<span id="toast-sr" class="reader-text" tabindex="0">' + message + '</span>').appendTo($$(obj).parent());
     }
     $('#toast-sr').focus();
 }
 
-function notificationTempToast(obj, message) {
+ // Append SR to obj. Create srToast, which has lifecycle hooks to set focus to SR object while open, then back to original object.
+function notificationTempToastSR(obj, message) {
+    $$('#toast-sr').remove(); //remove any old toast message
     $$('<span id="toast-sr" class="reader-text" tabindex="0">' + GCTLang.Trans(message) + '</span>').appendTo(obj);
     var toast = srToast(message, '#toast-sr', obj);
     toast.open();
 }
 
+// Toast with lifecycle hooks to set focus to SR object while open, then back to original object.
 function srToast(message, sr, obj) {
     var toast = app.toast.create({
         text: GCTLang.Trans(message),
@@ -3621,9 +3596,6 @@ function srToast(message, sr, obj) {
         on: {
             open: function (popover) {
                 $(sr).focus();
-            },
-            opened: function (popover) {
-                console.log('Popover opened');
             },
             closed: function (popover) {
                 $$(sr).remove();
