@@ -1787,7 +1787,7 @@ GCTUser = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
-                notificationTempToastSR(obj, 'friends:add:error');
+                notificationTempToastSR(obj, GCTLang.Trans('friends:add:error'));
             }
         });
     },
@@ -1831,6 +1831,7 @@ GCTUser = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                notificationTempToastSR(obj, errorThrown);
             }
         });
     },
@@ -3579,14 +3580,14 @@ function notificationToastSR(obj, message, extra) {
  // Append SR to obj. Create srToast, which has lifecycle hooks to set focus to SR object while open, then back to original object.
 function notificationTempToastSR(obj, message) {
     $$('#toast-sr').remove(); //remove any old toast message
-    $$('<span id="toast-sr" class="reader-text" tabindex="0">' + GCTLang.Trans(message) + '</span>').appendTo(obj);
+    $$('<span id="toast-sr" class="reader-text" tabindex="0">' + message + '</span>').appendTo(obj);
     var toast = srToast(message, '#toast-sr', obj);
     toast.open();
 }
 // Toast with lifecycle hooks to set focus to SR object while open, then back to original object.
 function srToast(message, sr, obj) {
     var toast = app.toast.create({
-        text: GCTLang.Trans(message),
+        text: message,
         position: 'center',
         closeTimeout: 3000,
         on: {
