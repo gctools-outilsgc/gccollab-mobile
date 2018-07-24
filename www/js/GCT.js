@@ -25,7 +25,7 @@
         return '<span id="focus-' + id + '" class="reader-text" tabindex="0">' + GCTLang.Trans('content-loaded') + '</span>';
     },
     txtResultFeedback: function (id, message) {
-        return "<span id='focus-" + id + "' tabindex='0'>" + message + "</span>";
+        return "<span id='focus-" + id + "' class='feedback-text' tabindex='0'>" + message + "</span>";
     },
     txtAction: function (ref) {
         var action = '';
@@ -1780,9 +1780,9 @@ GCTUser = {
             success: function (data) {
                 console.log(data);
                 if (data.result) {
-                    notificationToastSR(obj, GCTLang.Trans('friends:add:successful'), 'button');
+                    notificationToastSR(obj, GCTLang.Trans('friends:add:successful'), 'disable-parent');
                 } else if (data.message) {
-                    notificationToastSR(obj, GCTLang.Trans('friends:add:pending'), 'button');
+                    notificationToastSR(obj, GCTLang.Trans('friends:add:pending'), 'disable-parent');
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1801,7 +1801,7 @@ GCTUser = {
             data: { method: "remove.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                notificationToastSR(obj, GCTLang.Trans('friends:removal:successful'), 'button');
+                notificationToastSR(obj, GCTLang.Trans('friends:removal:successful'), 'disable-parent');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
@@ -1826,8 +1826,7 @@ GCTUser = {
             success: function (data) {
                 console.log(data);
                 if (data.result) {
-                    $$('#request-actions-' + guid).html(GCTtxt.txtResultFeedback(guid, data.result));
-                    $('#focus-' + guid).focus();
+                    notificationCardText(data.result, guid, 'request-actions-' + guid);
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1852,8 +1851,7 @@ GCTUser = {
             success: function (data) {
                 console.log(data);
                 if (data.result) {
-                    $$('#request-actions-' + guid).html(GCTtxt.txtResultFeedback(guid, data.result));
-                    $('#focus-' + guid).focus();
+                    notificationCardText(data.result, guid, 'request-actions-' + guid);
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -3564,13 +3562,12 @@ function cToast(message) {
     });
     return toast;
 }
-
  // creates center toast(cToast), extra/sr-text based on input, and focuses toast-sr text.
 function notificationToastSR(obj, message, extra) {
     var result = cToast(message);
     result.open();
     $$('#toast-sr').remove(); //remove any old toast message
-    if (extra === 'button') {
+    if (extra === 'disable-parent') {
         //disable object, aria-hide, and append SR text to parent. 
         $$(obj).addClass('disabled');
         $$(obj).attr('aria-hidden', 'true');
@@ -3586,7 +3583,6 @@ function notificationTempToastSR(obj, message) {
     var toast = srToast(message, '#toast-sr', obj);
     toast.open();
 }
-
 // Toast with lifecycle hooks to set focus to SR object while open, then back to original object.
 function srToast(message, sr, obj) {
     var toast = app.toast.create({
@@ -3604,4 +3600,11 @@ function srToast(message, sr, obj) {
         }
     });
     return toast;
+}
+
+// visual text notification
+function notificationCardText(message, guid, container) {
+    $$('#' + container).html(GCTtxt.txtResultFeedback(guid, message));
+    $$('#' + container).addClass('card notification-success item-content');
+    $('#focus-' + guid).focus();
 }
