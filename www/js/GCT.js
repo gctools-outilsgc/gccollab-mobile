@@ -284,17 +284,16 @@
     txtMember: function (object) {
         var content = "<div class='hold-all-card' id='request-" + object.guid + "'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>" + object.label + "</div>"
-            + "<div class='item-link item-content close-popup close-panel' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");' aria-hidden='true'>"
+            + "<div class='item-link item-content close-popup close-panel' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row no-padding-right'>"
             + "</div>"
-            + "<div class='row ptm'>"
+            + "<div class='row ptm' aria-hidden='true'>"
             + "<div class='col-20 members-icon'><img src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
             + "<div class='col-80 item-title reg-text'>" + object.name + "<div class='item-text more_text'>" + object.organization + "</div> <div class='item-text more_text'> " + object.job + "</div></div>"
             + "</div>";
         (object.colleaguerequest == true) ? content += object.description : content += '';
-        content += "</div>"
-            + "</div></div>";
+        content +=  "</div></div></div>";
         content = GCT.SetLinks(content);
         return content;
     },
@@ -1031,17 +1030,19 @@ GCTEach = {
         return content;
     },
     Member: function (value) {
-        var label = value.displayName + ': ' + value.job + '. ' + value.organization;
+        var job = value.job || '';
+        var org = value.organization || '';
+        var label = value.displayName + ': ' + job + '. ' + org;
         var description = value.about || GCTLang.Trans('no-profile');
         var content = GCTtxt.txtMember({
             guid: value.user_id,
             icon: value.iconURL,
             name: value.displayName,
-            job: (value.job) ? value.job : '',
+            job: job,
             label: label,
             date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
             description: description,
-            organization: (value.organization) ? value.organization : '',
+            organization: org,
         });
         return content;
     },
@@ -1501,15 +1502,18 @@ GCTEach = {
     },
     ColleagueRequest: function (value, obj) {
         var description = '<div class="row" id="request-actions-' + value.user_id+'"><div class="col-50"><span class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.ApproveColleague(this);">' + GCTLang.Trans("accept") + '</span></div><span class="col-50"><div class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.DeclineColleague(this);">' + GCTLang.Trans("decline") + '</span></div></div>';
-
+        var job = value.job || '';
+        var org = value.organization || '';
+        var label = value.displayName + ': ' + job + '. ' + org;
         var content = GCTtxt.txtMember({
             guid: value.user_id,
             icon: value.iconURL,
             name: value.displayName,
+            label: label,
             date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
             description: description,
-            organization: value.organization,
-            job: (value.job) ? value.job : '',
+            organization: org,
+            job: job,
             colleaguerequest: true
         });
         return content;
@@ -3552,7 +3556,7 @@ function errorConsole(jqXHR, textStatus, errorThrown) {
     app.preloader.hide();
 }
 
-var endOfContent = '<div class="card notification-info item-content"><span class="feedback-text" tabindex="0">' + GCTLang.Trans("end-of-content") + '</span></div>';
+var endOfContent = '<div class="notification-info item-content"><span class="feedback-text" tabindex="0">' + GCTLang.Trans("end-of-content") + '</span></div>';
 // "<span id='focus-" + id + "' class='feedback-text' tabindex='0'>" + message + "</span>";
 
  // returns basic center toast
