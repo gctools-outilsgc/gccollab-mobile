@@ -25,7 +25,7 @@
         return '<span id="focus-' + id + '" class="reader-text" tabindex="0">' + GCTLang.Trans('content-loaded') + '</span>';
     },
     txtResultFeedback: function (id, message) {
-        return "<span id='focus-" + id + "' tabindex='0'>" + message + "</span>";
+        return "<span id='focus-" + id + "' class='feedback-text' tabindex='0'>" + message + "</span>";
     },
     txtAction: function (ref) {
         var action = '';
@@ -284,17 +284,16 @@
     txtMember: function (object) {
         var content = "<div class='hold-all-card' id='request-" + object.guid + "'>"
             + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>" + object.label + "</div>"
-            + "<div class='item-link item-content close-popup close-panel' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");' aria-hidden='true'>"
+            + "<div class='item-link item-content close-popup close-panel' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row no-padding-right'>"
             + "</div>"
-            + "<div class='row ptm'>"
+            + "<div class='row ptm' aria-hidden='true'>"
             + "<div class='col-20 members-icon'><img src='" + object.icon + "' width='50' alt='" + object.name + "'></div>"
             + "<div class='col-80 item-title reg-text'>" + object.name + "<div class='item-text more_text'>" + object.organization + "</div> <div class='item-text more_text'> " + object.job + "</div></div>"
             + "</div>";
         (object.colleaguerequest == true) ? content += object.description : content += '';
-        content += "</div>"
-            + "</div></div>";
+        content +=  "</div></div></div>";
         content = GCT.SetLinks(content);
         return content;
     },
@@ -1031,17 +1030,19 @@ GCTEach = {
         return content;
     },
     Member: function (value) {
-        var label = value.displayName + ': ' + value.job + '. ' + value.organization;
+        var job = value.job || '';
+        var org = value.organization || '';
+        var label = value.displayName + ': ' + job + '. ' + org;
         var description = value.about || GCTLang.Trans('no-profile');
         var content = GCTtxt.txtMember({
             guid: value.user_id,
             icon: value.iconURL,
             name: value.displayName,
-            job: (value.job) ? value.job : '',
+            job: job,
             label: label,
             date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
             description: description,
-            organization: (value.organization) ? value.organization : '',
+            organization: org,
         });
         return content;
     },
@@ -1279,8 +1280,12 @@ GCTEach = {
         }
         if (group.member) {
             $("#leave-group-" + obj.id).show();
+            $("#join-group-" + obj.id).hide();
+            $$("#leave-group-" + obj.id).removeClass('disabled');
         } else {
             $("#join-group-" + obj.id).show();
+            $("#leave-group-" + obj.id).hide();
+            $$("#join-group-" + obj.id).removeClass('disabled');
         }
         access = group.access;
         $("#group-description-" + obj.id).html(group.description);
@@ -1501,15 +1506,18 @@ GCTEach = {
     },
     ColleagueRequest: function (value, obj) {
         var description = '<div class="row" id="request-actions-' + value.user_id+'"><div class="col-50"><span class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.ApproveColleague(this);">' + GCTLang.Trans("accept") + '</span></div><span class="col-50"><div class="button button-fill button-raised" data-guid="' + value.user_id + '" onclick="GCTUser.DeclineColleague(this);">' + GCTLang.Trans("decline") + '</span></div></div>';
-
+        var job = value.job || '';
+        var org = value.organization || '';
+        var label = value.displayName + ': ' + job + '. ' + org;
         var content = GCTtxt.txtMember({
             guid: value.user_id,
             icon: value.iconURL,
             name: value.displayName,
+            label: label,
             date: GCTLang.Trans("join-date") + "<em>" + prettyDate(value.dateJoined) + "</em>",
             description: description,
-            organization: value.organization,
-            job: (value.job) ? value.job : '',
+            organization: org,
+            job: job,
             colleaguerequest: true
         });
         return content;
@@ -1780,14 +1788,14 @@ GCTUser = {
             success: function (data) {
                 console.log(data);
                 if (data.result) {
-                    var result = toast(obj, "friends:add:successful");
+                    notificationToastSR(obj, GCTLang.Trans('friends:add:successful'), 'disable-parent', 'success');
                 } else if (data.message) {
-                    var result = toast(obj, "friends:add:pending");
+                    notificationToastSR(obj, GCTLang.Trans('friends:add:pending'), 'disable-parent', 'success');
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
-                var result = toast(obj, "friends:add:error");
+                notificationTempToastSR(obj, GCTLang.Trans('friends:add:error'), 'error');
             }
         });
     },
@@ -1801,12 +1809,11 @@ GCTUser = {
             data: { method: "remove.colleague", user: GCTUser.Email(), profileemail: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                console.log(data);
-                var result = toast(obj, "friends:removal:successful");
+                notificationToastSR(obj, GCTLang.Trans('friends:removal:successful'), 'disable-parent', 'success');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
-                alert(errorThrown);
+                notificationTempToastSR(obj, errorThrown, 'error');
             }
         });
     },
@@ -1827,12 +1834,12 @@ GCTUser = {
             success: function (data) {
                 console.log(data);
                 if (data.result) {
-                    $$('#request-actions-' + guid).html(GCTtxt.txtResultFeedback(guid, data.result));
-                    $('#focus-' + guid).focus();
+                    notificationCardText(data.result, guid, 'request-actions-' + guid);
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                notificationTempToastSR(obj, errorThrown, 'error');
             }
         });
     },
@@ -1853,8 +1860,7 @@ GCTUser = {
             success: function (data) {
                 console.log(data);
                 if (data.result) {
-                    $$('#request-actions-' + guid).html(GCTtxt.txtResultFeedback(guid, data.result));
-                    $('#focus-' + guid).focus();
+                    notificationCardText(data.result, guid, 'request-actions-' + guid);
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1893,11 +1899,12 @@ GCTUser = {
             data: { method: "group.join", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                $("#join-group-profile-"+guid+"-profile").hide();
-                $("#leave-group-profile-" + guid + "-profile").show();
+                var response = data.result || '';
+                notificationToastSR(obj, response , 'disable-parent', 'success');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                notificationTempToastSR(obj, errorThrown, 'error');
             }
         });
     },
@@ -1911,11 +1918,12 @@ GCTUser = {
             data: { method: "group.leave", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                $("#leave-group-profile-" + guid + "-profile").hide();
-                $("#join-group-profile-" + guid + "-profile").show();
+                var response = data.result || '';
+                notificationToastSR(obj, response, 'disable-parent', 'success');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                notificationTempToastSR(obj, errorThrown, 'error');
             }
         });
     },
@@ -3466,11 +3474,13 @@ GCT = {
             on: {
                 open: function (popover) {
                     console.log('Popover open');
+                    $$('.page-current').attr('aria-hidden', 'true');
                 },
                 opened: function (popover) {
                     console.log('Popover opened');
                 },
                 closed: function (popover) {
+                    $$('.page-current').attr('aria-hidden', 'false');
                     $(obj).focus();
                 },
             }
@@ -3552,15 +3562,64 @@ function errorConsole(jqXHR, textStatus, errorThrown) {
     app.preloader.hide();
 }
 
-var endOfContent = '<div class="card"><div class="card-content card-content-padding"><div class="card-content-inner"><div class="item-text">' + GCTLang.Trans("end-of-content") + '</div></div></div></div>';
+var endOfContent = '<div class="notification-info item-content"><span class="feedback-text" tabindex="0">' + GCTLang.Trans("end-of-content") + '</span></div>';
 
-function toast(obj, message) {
-    var result = app.toast.create({
-        text: GCTLang.Trans(message),
+ // returns basic center toast
+function cToast(message, type) {
+    var notificationType = type || 'info'; //defaults to info
+    var toast = app.toast.create({
+        text: message,
         position: 'center',
-        closeTimeout: 2000,
+        closeTimeout: 4000,
+        cssClass: 'notification-' + notificationType
     });
+    return toast;
+}
+ // creates center toast(cToast), extra/sr-text based on input, and focuses toast-sr text.
+function notificationToastSR(obj, message, extra, type) {
+    var result = cToast(message, type);
     result.open();
-    $$(obj).remove();
-    return result;
+    $$('#toast-sr').remove(); //remove any old toast message
+    if (extra === 'disable-parent') {
+        //disable object, aria-hide, and append SR text to parent. 
+        $$(obj).addClass('disabled');
+        $$(obj).attr('aria-hidden', 'true');
+        $$('<span id="toast-sr" class="reader-text" tabindex="0">' + message + '</span>').appendTo($$(obj).parent());
+    }
+    $('#toast-sr').focus();
+}
+
+ // Append SR to obj. Create srToast, which has lifecycle hooks to set focus to SR object while open, then back to original object.
+function notificationTempToastSR(obj, message, type) {
+    $$('#toast-sr').remove(); //remove any old toast message
+    $$('<span id="toast-sr" class="reader-text" tabindex="0">' + message + '</span>').appendTo(obj);
+    var toast = srToast(message, '#toast-sr', obj, type);
+    toast.open();
+}
+// Toast with lifecycle hooks to set focus to SR object while open, then back to original object.
+function srToast(message, sr, obj, type) {
+    var notificationType = type || 'info'; //defaults to info
+    var toast = app.toast.create({
+        text: message,
+        position: 'center',
+        closeTimeout: 4000,
+        cssClass: 'notification-' + notificationType,
+        on: {
+            open: function (popover) {
+                $(sr).focus();
+            },
+            closed: function (popover) {
+                $$(sr).remove();
+                $(obj).focus();
+            },
+        }
+    });
+    return toast;
+}
+
+// visual text notification
+function notificationCardText(message, guid, container) {
+    $$('#' + container).html(GCTtxt.txtResultFeedback(guid, message));
+    $$('#' + container).addClass('card notification-success item-content');
+    $('#focus-' + guid).focus();
 }

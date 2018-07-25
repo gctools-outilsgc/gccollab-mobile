@@ -182,18 +182,22 @@
                     });
                 });
                 $$('.popover-links-' + guid).on('popover:close', function () {
+                    $$('.page-current').attr('aria-hidden', 'false');
                     var focusNow = document.getElementById('profile-menu-' + guid);
                     if (focusNow) { focusNow.focus(); }
                 });
                 $$('.popover-links-' + guid).on('popover:open', function () {
+                    $$('.page-current').attr('aria-hidden', 'true');
                     var focusNow = document.getElementById('focus-links-popover-' + guid);
                     if (focusNow) { focusNow.focus(); }
                 });
                 $$('.popover-actions-' + guid).on('popover:open', function () {
+                    $$('.page-current').attr('aria-hidden', 'true');
                     var focusNow = document.getElementById(guid + '-actions-title');
                     if (focusNow) { focusNow.focus(); }
                 });
                 $$('.popover-actions-' + guid).on('popover:close', function () {
+                    $$('.page-current').attr('aria-hidden', 'false');
                     var focusNow = document.getElementById('actions-' + guid);
                     if (focusNow) { focusNow.focus(); }
                 });

@@ -432,7 +432,7 @@
 
     "friends:add:successful": "Successfully added as a colleague.",
     "friends:add:pending": "Requested to be colleagues.",
-    "friends:add:error": "We couldn't add as a colleague.",
+    "friends:add:error": "Could not add as a colleague.",
     "friends:removal:successful": "Successfully removed from your colleagues.",
 }
 

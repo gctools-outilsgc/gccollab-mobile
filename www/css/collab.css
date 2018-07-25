@@ -106,6 +106,24 @@ ul > li{padding-bottom:10px}
     -webkit-hyphens: auto;
     hyphens: auto;
 }
+/* notifcation & toast notifcations */
+.notification-success .toast-content,
+.notification-success {
+    background-color: #278400;
+    color: #FAFAFA;
+}
+
+.notification-info .toast-content,
+.notification-info {
+    background-color: #245269;
+    color: #FAFAFA;
+}
+
+.notification-error .toast-content,
+.notification-error {
+    background-color: #D3080C;
+    color: #FAFAFA;
+}
 /* Basic Padding */
 .vertical-padding {
     padding-top: 5%;

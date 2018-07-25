@@ -202,9 +202,11 @@ function ShowProfileSheet(obj) {
         on: {
             opened: function (sheet) {
                 $('#sheet-focus-' + guid).focus();
+                $$('.page-current').attr('aria-hidden', 'true');
             },
             closed: function (sheet) {
                 $(obj).focus();
+                $$('.page-current').attr('aria-hidden', 'false');
             },
         }
     });
@@ -393,6 +395,10 @@ $$(document).on('page:init', '.page[data-name="post-opp"]', function (e) {
 })
 
 $$('.panel-left').on('panel:open', function () {
+    $$('.page-current').attr('aria-hidden', 'true');
     var focusTitle = document.getElementById('menu-panel');
     if (focusTitle) { focusTitle.focus(); }
+});
+$$('.panel-left').on('panel:close', function () {
+    $$('.page-current').attr('aria-hidden', 'false');
 });
