@@ -3561,7 +3561,7 @@ function cToast(message, type) {
     var toast = app.toast.create({
         text: message,
         position: 'center',
-        closeTimeout: 3000,
+        closeTimeout: 4000,
         cssClass: 'notification-' + notificationType
     });
     return toast;
@@ -3593,7 +3593,7 @@ function srToast(message, sr, obj, type) {
     var toast = app.toast.create({
         text: message,
         position: 'center',
-        closeTimeout: 3000,
+        closeTimeout: 4000,
         cssClass: 'notification-' + notificationType,
         on: {
             open: function (popover) {
