@@ -248,10 +248,12 @@
                 }
                 if (page === 'home') {
                     $$('.popover-actions-home').on('popover:opened', function (e, popover) {
+                        $$('.page-current').attr('aria-hidden', 'true');
                         var focusTitle = document.getElementById('home-actions-title');
                         if (focusTitle) { focusTitle.focus(); }
                     });
                     $$('.popover-actions-home').on('popover:close', function () {
+                        $$('.page-current').attr('aria-hidden', 'false');
                         var focusNow = document.getElementById(page + '-actions');
                         if (focusNow) { focusNow.focus(); }
                     });

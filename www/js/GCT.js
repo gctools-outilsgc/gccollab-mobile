@@ -1280,8 +1280,12 @@ GCTEach = {
         }
         if (group.member) {
             $("#leave-group-" + obj.id).show();
+            $("#join-group-" + obj.id).hide();
+            $$("#leave-group-" + obj.id).removeClass('disabled');
         } else {
             $("#join-group-" + obj.id).show();
+            $("#leave-group-" + obj.id).hide();
+            $$("#join-group-" + obj.id).removeClass('disabled');
         }
         access = group.access;
         $("#group-description-" + obj.id).html(group.description);
@@ -1809,7 +1813,7 @@ GCTUser = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
-                alert(errorThrown);
+                notificationTempToastSR(obj, errorThrown, 'error');
             }
         });
     },
@@ -1895,11 +1899,12 @@ GCTUser = {
             data: { method: "group.join", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                $("#join-group-profile-"+guid+"-profile").hide();
-                $("#leave-group-profile-" + guid + "-profile").show();
+                var response = data.result || '';
+                notificationToastSR(obj, response , 'disable-parent', 'success');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                notificationTempToastSR(obj, errorThrown, 'error');
             }
         });
     },
@@ -1913,11 +1918,12 @@ GCTUser = {
             data: { method: "group.leave", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
-                $("#leave-group-profile-" + guid + "-profile").hide();
-                $("#join-group-profile-" + guid + "-profile").show();
+                var response = data.result || '';
+                notificationToastSR(obj, response, 'disable-parent', 'success');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                notificationTempToastSR(obj, errorThrown, 'error');
             }
         });
     },
@@ -3557,7 +3563,6 @@ function errorConsole(jqXHR, textStatus, errorThrown) {
 }
 
 var endOfContent = '<div class="notification-info item-content"><span class="feedback-text" tabindex="0">' + GCTLang.Trans("end-of-content") + '</span></div>';
-// "<span id='focus-" + id + "' class='feedback-text' tabindex='0'>" + message + "</span>";
 
  // returns basic center toast
 function cToast(message, type) {
