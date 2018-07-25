@@ -76,10 +76,6 @@ ul > li{padding-bottom:10px}
     border-radius: 8px;
 }
 /* Text Containers */
-.notification-success {
-    background-color: #278400;
-    color: white;
-}
 .more_text {
     max-height: 60px !important;
     -webkit-line-clamp: 3 !important;
@@ -109,6 +105,24 @@ ul > li{padding-bottom:10px}
     -moz-hyphens: auto;
     -webkit-hyphens: auto;
     hyphens: auto;
+}
+/* notifcation & toast notifcations */
+.notification-success .toast-content,
+.notification-success {
+    background-color: #278400;
+    color: #FAFAFA;
+}
+
+.notification-info .toast-content,
+.notification-info {
+    background-color: #245269;
+    color: #FAFAFA;
+}
+
+.notification-error .toast-content,
+.notification-error {
+    background-color: #D3080C;
+    color: #FAFAFA;
 }
 /* Basic Padding */
 .vertical-padding {
