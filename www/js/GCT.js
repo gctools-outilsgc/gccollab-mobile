@@ -94,7 +94,7 @@
     },
     txtNewsfeed: function (object) {
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
-            + "<div id='label-" + object.guid + "' class='reader-text'>" + object.label + "</div>"
+            + "<div id='label-" + object.guid + "' class='reader-text' tabindex='0'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
             + "<div class='item-media rounded'><img class='icon' aria-hidden='true' src='" + object.icon + "' /></div>"
@@ -139,7 +139,7 @@
     },
     txtWire: function (object) {
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
-            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'  tabindex='0'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
             + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
@@ -200,7 +200,7 @@
     },
     txtBlog: function (object) {
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
-            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);' tabindex='0'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
             + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
@@ -265,7 +265,7 @@
     },
     txtGroup: function (object) {
         var content = "<li><div class='hold-all-card'> "
-            + "<div id='label-" + object.owner + "' class='reader-text' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+            + "<div id='label-" + object.owner + "' class='reader-text' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);' tabindex='0'>" + object.label + "</div>"
             + "<div class='item-link item-content' data-guid='" + object.owner + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);' > "
             + "<div class='item-inner'>"
             + "<div class='item-title-row no-padding-right'>"
@@ -283,7 +283,7 @@
     },
     txtMember: function (object) {
         var content = "<div class='hold-all-card' id='request-" + object.guid + "'>"
-            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>" + object.label + "</div>"
+            + "<div id='label-" + object.guid + "' tabindex='0' class='reader-text' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>" + object.label + "</div>"
             + "<div class='item-link item-content close-popup close-panel' data-guid='" + object.guid + "' data-type='gccollab_user' onclick='ShowProfile(" + object.guid + ");'>"
             + "<div class='item-inner'>"
             + "<div class='item-title-row no-padding-right'>"
@@ -299,7 +299,7 @@
     },
     txtDoc: function (object) {
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
-            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+            + "<div id='label-" + object.guid + "' tabindex='0' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
             + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
@@ -330,7 +330,7 @@
     },
     txtEvent: function (object) {
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
-            + "<div id='label-" + object.id + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+            + "<div id='label-" + object.id + "' tabindex='0' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div id='" + object.id + "' class='card'>"
             + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
             + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
@@ -422,7 +422,7 @@
     },
     txtBookmark: function (object) {
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
-            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+            + "<div id='label-" + object.guid + "' tabindex='0' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
             + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
@@ -486,7 +486,7 @@
     txtOpps: function (object) {
         if (object.state == 'posted') {
             var content = "<div class='hold-all-card'>"
-                + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+                + "<div id='label-" + object.guid + "' tabindex='0' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
                 + "<div class='card view view-main'>"
                 + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
                 + "<div class='item-media rounded'><img class='icon' alt='Profile Image of " + object.name + "' src='" + object.icon + "' /></div>"
@@ -592,7 +592,7 @@
     },
     txtDiscussion: function (object) {
         var content = "<div id='list-" + object.guid + "' class='hold-all-card'>"
-            + "<div id='label-" + object.guid + "' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
+            + "<div id='label-" + object.guid + "' tabindex='0' class='reader-text' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'>" + object.label + "</div>"
             + "<div class='list cards-list'>"
             + "<div class='card'>"
             + "<div class='card-header' onclick='ShowProfileSheet(this);' data-guid='" + object.owner + "' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' aria-hidden='true'>"
@@ -680,7 +680,7 @@
     txtComment: function (object) {
         var content = '<li id="list-' + object.guid + '">'
             + "<div class='hold-all-card'>"
-            + "<div id='label-" + object.guid + "' class='col-85 reader-text'>" + object.label + "</div>"
+            + "<div id='label-" + object.guid + "' tabindex='0' class='col-85 reader-text'>" + object.label + "</div>"
             + "<div class='row'>"
             + "<div class='col-85'>"
             + '<div class="item-content" aria-hidden="true">'
@@ -3458,7 +3458,7 @@ GCT = {
         }
         if (inGroup) { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + container + '" data-type="gccollab_group" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-group") + '</a></li>'; }
         if (type === "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.SeeCalendar(this);">' + GCTLang.Trans('in-calendar') + '</a></li>' }
-        if (sheet) { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfileSheet(this); " data-guid="' + user.owner + '" data-job="' + user.job + '" data-org="' + user.org + '" data-name="' + user.name + '" data-email="' + user.email + '" data-icon="'+user.icon+'">' + GCTLang.Trans("view-user-summary") + '</a></li>'}
+        if (sheet) { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfileSheet(this); " data-guid="' + user.owner + '" data-job="' + user.job + '" data-org="' + user.org + '" data-name="' + user.name + '" data-email="' + user.email + '" data-icon="' + user.icon + '" data-location="' + location + '" data-fallback="' + guid + '">' + GCTLang.Trans("view-user-summary") + '</a></li>' }
         popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfile(' + user.owner + ');">' + GCTLang.Trans("show-user") + '</a></li>';
         popoverHTML += '<li><a href="#"  class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
         popoverHTML += '<li><a href="#" class="list-button item-link popover-close">' + GCTLang.Trans("close") + ' </a></li>';
