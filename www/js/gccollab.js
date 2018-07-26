@@ -160,13 +160,15 @@ function ShowProfile(email) {
 }
 
 function ShowProfileSheet(obj) {
-    var guid, job, org, name, email, card;
+    var guid, job, org, name, email, card, location, fallback;
     guid = $(obj).data("guid") || '';
     job = $(obj).data("job") || '';
     org = $(obj).data("org") || '';
     name = $(obj).data("name") || '';
     email = $(obj).data("email") || '';
     icon = $(obj).data("icon") || $(obj).find('.icon').attr('src') || '';
+    location = $(obj).data("location") || '';
+    fallback = $(obj).data("fallback") || '';
     var card = GCTtxt.userSheet({
         guid: guid,
         icon: icon,
@@ -204,9 +206,19 @@ function ShowProfileSheet(obj) {
                 $('#sheet-focus-' + guid).focus();
                 $$('.page-current').attr('aria-hidden', 'true');
             },
-            closed: function (sheet) {
-                $(obj).focus();
+            close: function (sheet) {
                 $$('.page-current').attr('aria-hidden', 'false');
+            },
+            closed: function (sheet) {
+                var focusTarget;
+                if (location === 'list') {
+                    focusTarget = document.getElementById('label-' + fallback);
+                } else if (location === 'post') {
+                    focusTarget = obj; // change when entity pages setup for SR
+                } else {
+                    focusTarget = obj;
+                }
+                $(focusTarget).focus();
             },
         }
     });
