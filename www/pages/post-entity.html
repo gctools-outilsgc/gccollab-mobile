@@ -344,10 +344,12 @@
                                 obj.href = data.result;
                                 GCT.FireLink(obj);
                             } else {
-                                alert(data.result);
+                                notificationTempToastSR('#submit-' + id, data.result, 'info');
                             }
                         }, function (jqXHR, textStatus, errorThrown) {
                             console.log(jqXHR, textStatus, errorThrown);
+                            notificationTempToastSR('#submit-' + id, errorThrown, 'error');
+
                         }, function (feedback) {
                             var feedbackmsg = '<p class="item-content" style="padding-top: 0;padding-bottom: 0;" id="' + id + '-FeedbackMsg">' + GCTLang.Trans('issue') + feedback + '</p>';
                             $(feedbackmsg).hide().appendTo('#' + id + '-Feedback').fadeIn(500);
@@ -396,10 +398,11 @@
                                 obj.href = data.result;
                                 GCT.FireLink(obj);
                             } else {
-                                alert(data.result);
+                                notificationTempToastSR('#submit-' + id, data.result, 'info');
                             }
                         }, function (jqXHR, textStatus, errorThrown) {
                             console.log(jqXHR, textStatus, errorThrown);
+                            notificationTempToastSR('#submit-' + id, errorThrown, 'error');
                         }, function (feedback) {
                             var feedbackmsg = '<p class="card-content-inner" style="padding-top: 0;padding-bottom: 0;" id="' + id + '-FeedbackMsg">' + GCTLang.Trans('issue') + feedback + '</p>';
                             $(feedbackmsg).hide().appendTo('#' + id + '-Feedback').fadeIn(500);
@@ -464,10 +467,10 @@
                         } else { contact_checkbox = 1; }
                         var picker_language = $('#picker-language').val();
                         GCTrequests.PostEvent('', '', title, body, startdate, starttime, enddate, endtime, venue, room, allday, web_conference, url, additionnal, fees, contact_checkbox, contact_text, contact_email_text, contact_phone_text, picker_language, comment, access, status, function (data) {
-                            alert(data.result);
                             mainView.router.navigate('/list-template/events/');
                         }, function (jqXHR, textStatus, errorThrown) {
                             console.log(jqXHR, textStatus, errorThrown);
+                            notificationTempToastSR('#submit-' + id, errorThrown, 'error');
                         }, function (feedback) {
                             var feedbackmsg = '<p class="item-content" style="padding-top: 0;padding-bottom: 0;" id="' + id + '-FeedbackMsg">' + GCTLang.Trans('issue') + feedback + '</p>';
                             $(feedbackmsg).hide().appendTo('#' + id + '-Feedback').fadeIn(500);
