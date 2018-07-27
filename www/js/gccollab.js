@@ -233,14 +233,13 @@ $$(document).on('page:init', '.page[data-name="post-wire"]', function (e) {
         if (message) {
             GCTrequests.PostWire(message, imageURI, function (data) {
                 console.log(data);
-                app.dialog.alert(data.result, '', function () {
-                    mainView.router.navigate('/list-template/wires/');
-                });
+                mainView.router.navigate('/list-template/wires/');
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                notificationTempToastSR('#submit-post-wire', errorThrown, 'error');
             });
         } else {
-            app.dialog.alert("Cannot post wire with no text.");
+            notificationTempToastSR('#post-wire-textarea', GCTLang.Trans('require-wire-text'), 'error');
         }
     });
     $$('#camera-camera').on('click', function (e) {
@@ -324,7 +323,7 @@ $$(document).on('page:init', '.page[data-name="post-opp"]', function (e) {
             });
 
         } else {
-            app.dialog.alert(message_validation);
+            notificationTempToastSR('.next-form1', message_validation, 'error');
         }
     });
 
@@ -352,7 +351,7 @@ $$(document).on('page:init', '.page[data-name="post-opp"]', function (e) {
             });
 
         } else {
-            app.dialog.alert(message_validation);
+            notificationTempToastSR('.next-form2', message_validation, 'error');
         }
     });
 
@@ -378,11 +377,11 @@ $$(document).on('page:init', '.page[data-name="post-opp"]', function (e) {
 
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
-                app.dialog.alert(textStatus, 'Error');
+                notificationTempToastSR('.next-form3', errorThrown, 'error');
             });
 
         } else {
-            app.dialog.alert(message_validation);
+            notificationTempToastSR('.next-form3', message_validation, 'error');
         }
     });
 
@@ -412,5 +411,12 @@ $$('.panel-left').on('panel:open', function () {
     if (focusTitle) { focusTitle.focus(); }
 });
 $$('.panel-left').on('panel:close', function () {
+    $$('.page-current').attr('aria-hidden', 'false');
+});
+
+$$(document).on('dialog:open', function () {
+    $$('.page-current').attr('aria-hidden', 'true');
+});
+$$(document).on('dialog:close', function () {
     $$('.page-current').attr('aria-hidden', 'false');
 });

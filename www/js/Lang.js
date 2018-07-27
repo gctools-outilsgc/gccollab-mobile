@@ -150,6 +150,7 @@
     "require-venue": "Content requires a location.",
     "require-dates": "Content requires dates.",
     "wire-text": "Wire Text",
+    "require-wire-text": "Requires wire text.",
 
     "messagecentre": "Message Centre",
     "colleague-requests": "Colleague Requests",
@@ -588,6 +589,7 @@ French = {
     "require-venue": "Le contenu nécessite un emplacement",
     "require-dates": "Le contenu nécessite une date.",
     "wire-text": "Texte Filaire",
+    "require-wire-text": "Nécessite un texte filaire.",
     
     "messagecentre": "Centre de Message",
     "colleague-requests": "Demande de collègues",

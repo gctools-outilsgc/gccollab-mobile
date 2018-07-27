@@ -2272,7 +2272,7 @@ GCTrequests = {
             error: function (jqXHR, textStatus, errorThrown) {
                 app.preloader.hide();
                 errorCallback(jqXHR, textStatus, errorThrown);
-                alert(errorThrown);
+                notificationTempToastSR(obj, errorThrown, 'error');
             }
         });
     },
@@ -2689,7 +2689,18 @@ GCTrequests = {
         });
     },
     AddCalendar: function (obj) {
-        var guid = $(obj).data("guid");
+        var guid, location, target;
+        guid = $(obj).data("guid");
+        location = $(obj).data("location") || '';
+        if (location === 'list') {
+            target = $$('.page-current').find('.tab-active').find('#list-' + guid).find('.reader-text');
+            console.log(target);
+        } else if (location === 'post') {
+            target = obj; // change when entity pages setup for SR
+        } else {
+            target = obj;
+        }
+
         app.request({
             api_key: api_key_gccollab,
             method: 'POST',
@@ -2699,10 +2710,12 @@ GCTrequests = {
             timeout: 12000,
             success: function (data) {
                 data = JSON.parse(data);
-                app.dialog.alert(data.result);
+                var response = data.result || '';
+                notificationTempToastSR(target, response, 'success');
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                notificationTempToastSR(target, errorThrown, 'error');
             }
         });
     },
@@ -3090,17 +3103,19 @@ GCTrequests = {
                 timeout: 12000,
                 success: function (data) {
                     app.preloader.hide();
-                    app.dialog.alert(GCTLang.Trans("deleted"));
-                    if (location === "list" || location === "comment") {
-                        $$("#list-" + guid).remove();
+                    if (location === "comment") {
+                        notificationCardText(GCTLang.Trans('deleted'), guid, "list-" + guid);
+                    } else if (location === "list") {
+                        notificationCardTextTabs(GCTLang.Trans('deleted'), guid, "#list-" + guid);
                     } else {
                         mainView.router.back();
-                        $$("#list-" + guid).remove();
+                        notificationCardTextTabs(GCTLang.Trans('deleted'), guid, "#list-" + guid);
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     app.preloader.hide();
                     console.log(jqXHR, textStatus, errorThrown);
+                    notificationTempToastSR(obj, errorThrown, 'error');
                 }
             });
         }, '');
@@ -3440,10 +3455,10 @@ GCT = {
         if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post' || type == "gccollab_event") {
             popoverHTML += '<li><a href="#" class="item-link popover-close list-button social-share" data-guid="' + guid + '" data-type="' + type + '" onclick="SocialShare(this);">' + GCTLang.Trans("share") + '</a></li>';
         }
-        if (type == "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("add-calendar") + '</a></li>'; }
+        if (type == "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-location="' + location + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("add-calendar") + '</a></li>'; }
         if (type == 'gccollab_wire_post') { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + location + '" onclick="GCTrequests.ReplyWirePost(this);">' + GCTLang.Trans("reply") + '</a></li>'; }
         if (isOwner) {
-            if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
+            // if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
             if (type == "gccollab_discussion_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.EditDiscussionPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
             if (type == "gccollab_blog_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.EditBlogPost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
             if (type != "gccollab_opportunity") {
@@ -3609,8 +3624,8 @@ function srToast(message, sr, obj, type) {
                 $(sr).focus();
             },
             closed: function (popover) {
-                $$(sr).remove();
                 $(obj).focus();
+                $$(sr).remove();
             },
         }
     });
@@ -3622,4 +3637,9 @@ function notificationCardText(message, guid, container) {
     $$('#' + container).html(GCTtxt.txtResultFeedback(guid, message));
     $$('#' + container).addClass('card notification-success item-content');
     $('#focus-' + guid).focus();
+}
+function notificationCardTextTabs(message, guid, container) {
+    $$('.page-current').find('.tab-active').find(container).html(GCTtxt.txtResultFeedback(guid, message));
+    $$('.page-current').find('.tab-active').find(container).addClass('card notification-success item-content');
+    $$('.page-current').find('.tab-active').find('#focus-' + guid).focus();
 }
