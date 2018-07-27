@@ -3622,8 +3622,8 @@ function srToast(message, sr, obj, type) {
                 $(sr).focus();
             },
             closed: function (popover) {
-                $$(sr).remove();
                 $(obj).focus();
+                $$(sr).remove();
             },
         }
     });

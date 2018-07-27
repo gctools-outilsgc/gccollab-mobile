@@ -233,14 +233,13 @@ $$(document).on('page:init', '.page[data-name="post-wire"]', function (e) {
         if (message) {
             GCTrequests.PostWire(message, imageURI, function (data) {
                 console.log(data);
-                app.dialog.alert(data.result, '', function () {
-                    mainView.router.navigate('/list-template/wires/');
-                });
+                mainView.router.navigate('/list-template/wires/');
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
+                notificationTempToastSR('#submit-post-wire', errorThrown, 'error');
             });
         } else {
-            app.dialog.alert("Cannot post wire with no text.");
+            notificationTempToastSR('#wire-body-label', GCTLang.Trans('require-wire-text'), 'error');
         }
     });
     $$('#camera-camera').on('click', function (e) {
