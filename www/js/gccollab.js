@@ -414,3 +414,10 @@ $$('.panel-left').on('panel:open', function () {
 $$('.panel-left').on('panel:close', function () {
     $$('.page-current').attr('aria-hidden', 'false');
 });
+
+$$(document).on('dialog:open', function () {
+    $$('.page-current').attr('aria-hidden', 'true');
+});
+$$(document).on('dialog:close', function () {
+    $$('.page-current').attr('aria-hidden', 'false');
+});
