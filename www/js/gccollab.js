@@ -323,7 +323,7 @@ $$(document).on('page:init', '.page[data-name="post-opp"]', function (e) {
             });
 
         } else {
-            app.dialog.alert(message_validation);
+            notificationTempToastSR('.next-form1', message_validation, 'error');
         }
     });
 
@@ -351,7 +351,7 @@ $$(document).on('page:init', '.page[data-name="post-opp"]', function (e) {
             });
 
         } else {
-            app.dialog.alert(message_validation);
+            notificationTempToastSR('.next-form2', message_validation, 'error');
         }
     });
 
@@ -377,11 +377,11 @@ $$(document).on('page:init', '.page[data-name="post-opp"]', function (e) {
 
             }, function (jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR, textStatus, errorThrown);
-                app.dialog.alert(textStatus, 'Error');
+                notificationTempToastSR('.next-form3', errorThrown, 'error');
             });
 
         } else {
-            app.dialog.alert(message_validation);
+            notificationTempToastSR('.next-form3', message_validation, 'error');
         }
     });
 
