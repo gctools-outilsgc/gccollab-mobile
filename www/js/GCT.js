@@ -3103,11 +3103,13 @@ GCTrequests = {
                 timeout: 12000,
                 success: function (data) {
                     app.preloader.hide();
-                    if (location === "list" || location === "comment") {
+                    if (location === "comment") {
                         notificationCardText(GCTLang.Trans('deleted'), guid, "list-" + guid);
+                    } else if (location === "list") {
+                        notificationCardTextTabs(GCTLang.Trans('deleted'), guid, "#list-" + guid);
                     } else {
                         mainView.router.back();
-                        notificationCardText(GCTLang.Trans('deleted'), guid, "list-" + guid);
+                        notificationCardTextTabs(GCTLang.Trans('deleted'), guid, "#list-" + guid);
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -3635,4 +3637,9 @@ function notificationCardText(message, guid, container) {
     $$('#' + container).html(GCTtxt.txtResultFeedback(guid, message));
     $$('#' + container).addClass('card notification-success item-content');
     $('#focus-' + guid).focus();
+}
+function notificationCardTextTabs(message, guid, container) {
+    $$('.page-current').find('.tab-active').find(container).html(GCTtxt.txtResultFeedback(guid, message));
+    $$('.page-current').find('.tab-active').find(container).addClass('card notification-success item-content');
+    $$('.page-current').find('.tab-active').find('#focus-' + guid).focus();
 }
