@@ -3103,17 +3103,17 @@ GCTrequests = {
                 timeout: 12000,
                 success: function (data) {
                     app.preloader.hide();
-                    app.dialog.alert(GCTLang.Trans("deleted"));
                     if (location === "list" || location === "comment") {
-                        $$("#list-" + guid).remove();
+                        notificationCardText(GCTLang.Trans('deleted'), guid, "list-" + guid);
                     } else {
                         mainView.router.back();
-                        $$("#list-" + guid).remove();
+                        notificationCardText(GCTLang.Trans('deleted'), guid, "list-" + guid);
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     app.preloader.hide();
                     console.log(jqXHR, textStatus, errorThrown);
+                    notificationTempToastSR(obj, errorThrown, 'error');
                 }
             });
         }, '');
