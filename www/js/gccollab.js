@@ -239,7 +239,7 @@ $$(document).on('page:init', '.page[data-name="post-wire"]', function (e) {
                 notificationTempToastSR('#submit-post-wire', errorThrown, 'error');
             });
         } else {
-            notificationTempToastSR('#wire-body-label', GCTLang.Trans('require-wire-text'), 'error');
+            notificationTempToastSR('#post-wire-textarea', GCTLang.Trans('require-wire-text'), 'error');
         }
     });
     $$('#camera-camera').on('click', function (e) {

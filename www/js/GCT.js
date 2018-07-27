@@ -2272,7 +2272,7 @@ GCTrequests = {
             error: function (jqXHR, textStatus, errorThrown) {
                 app.preloader.hide();
                 errorCallback(jqXHR, textStatus, errorThrown);
-                alert(errorThrown);
+                notificationTempToastSR(obj, errorThrown, 'error');
             }
         });
     },
