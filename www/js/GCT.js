@@ -190,7 +190,10 @@
             + object.source
             + "</div>"
             + "<div class='card-footer'>"
-            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
+            + '<a href="#" class="item-link" data-guid="' + object.guid + '" onclick="GCTrequests.GetLikeUsers(this);">' + object.likes +'</a>'
+            + "</div>"
+            + "<div class='card-footer'>"
+            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + GCTLang.Trans("like") + "</span></a>"
             + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='post' onclick='GCTrequests.ReplyWirePost(this);'><i class='fas fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
             + "</div>"
