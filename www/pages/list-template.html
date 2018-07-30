@@ -238,10 +238,12 @@
                         });
                     });
                     $$('.filters-' + page).on('popup:open', function () {
+                        $$('.page-current').attr('aria-hidden', 'true');
                         var focusNow = document.getElementById(page + '-filters-title');
                         if (focusNow) { focusNow.focus(); }
                     });
                     $$('.filters-' + page).on('popup:close', function () {
+                        $$('.page-current').attr('aria-hidden', 'false');
                         var focusNow = document.getElementById('filters-button-' + page);
                         if (focusNow) { focusNow.focus(); }
                     });
