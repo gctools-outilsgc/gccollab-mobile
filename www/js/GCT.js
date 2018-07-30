@@ -3103,13 +3103,11 @@ GCTrequests = {
                 timeout: 12000,
                 success: function (data) {
                     app.preloader.hide();
-                    if (location === "comment") {
-                        notificationCardText(GCTLang.Trans('deleted'), guid, "list-" + guid);
-                    } else if (location === "list") {
-                        notificationCardTextTabs(GCTLang.Trans('deleted'), guid, "#list-" + guid);
+                    if (location === "comment" || location === "list") {
+                        notificationCardText(GCTLang.Trans('deleted'), guid, "#list-" + guid);
                     } else {
                         mainView.router.back();
-                        notificationCardTextTabs(GCTLang.Trans('deleted'), guid, "#list-" + guid);
+                        notificationCardText(GCTLang.Trans('deleted'), guid, "#list-" + guid);
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -3634,12 +3632,13 @@ function srToast(message, sr, obj, type) {
 
 // visual text notification
 function notificationCardText(message, guid, container) {
-    $$('#' + container).html(GCTtxt.txtResultFeedback(guid, message));
-    $$('#' + container).addClass('card notification-success item-content');
-    $('#focus-' + guid).focus();
-}
-function notificationCardTextTabs(message, guid, container) {
-    $$('.page-current').find('.tab-active').find(container).html(GCTtxt.txtResultFeedback(guid, message));
-    $$('.page-current').find('.tab-active').find(container).addClass('card notification-success item-content');
-    $$('.page-current').find('.tab-active').find('#focus-' + guid).focus();
+    while ($$(container).is(container)) {
+        $$(container).html(GCTtxt.txtResultFeedback(guid, message));
+        $$(container).addClass('card notification-success item-content');
+        $$(container).attr('id', 'deleted-' + guid);
+    }
+    if ($$('.page-current').find('.tab-active').is('.tab-active'))
+        $$('.page-current').find('.tab-active').find('#focus-' + guid).focus();
+    else
+        $$('.page-current').find('#focus-' + guid).focus();
 }
