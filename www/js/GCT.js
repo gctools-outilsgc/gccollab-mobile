@@ -3639,7 +3639,10 @@ function notificationCardText(message, guid, container) {
     $('#focus-' + guid).focus();
 }
 function notificationCardTextTabs(message, guid, container) {
-    $$('.page-current').find('.tab-active').find(container).html(GCTtxt.txtResultFeedback(guid, message));
-    $$('.page-current').find('.tab-active').find(container).addClass('card notification-success item-content');
+    while ($$(container).is(container)) {
+        $$(container).html(GCTtxt.txtResultFeedback(guid, message));
+        $$(container).addClass('card notification-success item-content');
+        $$(container).attr('id', 'deleted-' + guid);
+    }
     $$('.page-current').find('.tab-active').find('#focus-' + guid).focus();
 }
