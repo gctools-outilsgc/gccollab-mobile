@@ -97,6 +97,9 @@
                                 var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
                                 var likon = (value.liked) ? "fas" : "far";
                                 var action = '';
+                                var actionBar = {};
+                                actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                actionBar = GCTtxt.txtActionBar(actionBar);
 
                                 content += GCTtxt.Wire({
                                     guid: value.guid,
@@ -115,7 +118,8 @@
                                     image: img,
                                     userJob: value.userDetails.job,
                                     userOrg: value.userDetails.organization,
-                                    userEmail: value.userDetails.email
+                                    userEmail: value.userDetails.email,
+                                    actionBar: actionBar
                                 });
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);

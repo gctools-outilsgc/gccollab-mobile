@@ -49,6 +49,22 @@
         }
         return action;
     },
+    txtActionBar: function (actions) {
+        if (!actions.reply) { actions.reply = ''; }
+        if (!actions.extra) { actions.extra = ''; }
+        if (!actions.like) { actions.like = ''; }
+        if (!actions.share) { actions.share = ''; }
+        var actionBar = "<hr><div class='row action-bar card-content-padding'>"
+                            + "<div class='col-25 center'>" + actions.reply + "</div>"
+                            + "<div class='col-25 center'>" + actions.extra + "</div>"
+                            + "<div class='col-25 center'>" + actions.like + "</div>"
+                            + "<div class='col-25 center'>" + actions.share + "</div>"
+                        + "</div>";
+        return actionBar;
+    },
+    txtLikeButton: function (object) {
+        return "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + GCTLang.Trans("like") + "</span></a>";
+    },
     txtFilterButton: function (ref) {
         var filterButton = '<a id="filters-button-'+ref+'" href="#" data-popup=".filters-' + ref + '" class="popup-open link icon-only" data-translate-target="aria-label" data-translate="filter-options"><i class="fas fa-search fa-2x"></i></a>';
         return filterButton;
@@ -197,6 +213,7 @@
             + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='post' onclick='GCTrequests.ReplyWirePost(this);'><i class='fas fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
             + object.action
             + "</div>"
+            + object.actionBar
             + "</div><div>";
         content = GCT.SetLinks(content);
         return content;
