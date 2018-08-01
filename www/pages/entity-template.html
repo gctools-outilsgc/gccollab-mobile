@@ -99,6 +99,7 @@
                                 var action = '';
                                 var actionBar = {};
                                 actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                actionBar.reply = GCTtxt.txtWireReplyButton({ replied: replied, guid: guid});
                                 actionBar = GCTtxt.txtActionBar(actionBar);
 
                                 content += GCTtxt.Wire({
