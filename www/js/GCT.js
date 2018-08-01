@@ -54,7 +54,7 @@
         if (!actions.extra) { actions.extra = ''; }
         if (!actions.like) { actions.like = ''; }
         if (!actions.share) { actions.share = ''; }
-        var actionBar = "<hr><div class='row action-bar card-content-padding'>"
+        var actionBar = "<hr class='margin-0'><div class='row action-bar'>"
                             + "<div class='col-25 center'>" + actions.reply + "</div>"
                             + "<div class='col-25 center'>" + actions.extra + "</div>"
                             + "<div class='col-25 center'>" + actions.like + "</div>"
@@ -211,8 +211,8 @@
             + "<div class='item-media'>" + object.image + "</div>"
             + object.source
             + "</div>"
-            + "<div class='card-footer'>"
-            + '<a href="#" class="item-link" data-guid="' + object.guid + '" onclick="GCTrequests.GetLikeUsers(this);">' + object.likes +'</a>'
+            + "<hr class='margin-0'><div class='count-bar'>"
+            + '<a href="#" class="link icon-only" data-guid="' + object.guid + '" onclick="GCTrequests.GetLikeUsers(this);">' + object.likes +'</a>'
             + "</div>"
             + object.actionBar
             + "</div><div>";
