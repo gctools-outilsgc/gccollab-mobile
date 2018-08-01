@@ -63,12 +63,13 @@
         return actionBar;
     },
     txtLikeButton: function (object) {
-        return "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + GCTLang.Trans("like") + "</span></a>";
+        return "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);' aria-label='" + GCTLang.Trans("like") + "'><i class='" + object.likon + " fa-thumbs-up'></i></a>";
     },
     txtShareButton: function (object) {
+        return '<a href="#" class="link social-share" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="SocialShare(this);" aria-label="' + GCTLang.Trans("share") + '"><i class="fas fa-share-alt"></i></a>';
     },
     txtWireReplyButton: function (object) {
-        return "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='post' onclick='GCTrequests.ReplyWirePost(this);'><i class='fas fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>";
+        return "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='post' onclick='GCTrequests.ReplyWirePost(this); aria-label='" + GCTLang.Trans("reply") + "'><i class='fas fa-reply'></i></a>";
     },
     txtFilterButton: function (ref) {
         var filterButton = '<a id="filters-button-'+ref+'" href="#" data-popup=".filters-' + ref + '" class="popup-open link icon-only" data-translate-target="aria-label" data-translate="filter-options"><i class="fas fa-search fa-2x"></i></a>';
