@@ -275,11 +275,10 @@
             + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-footer'>"
-            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-            // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
-            + object.action
+            + "<hr class='margin-0'><div class='count-bar'>"
+            + '<a href="#" class="link icon-only" data-guid="' + object.guid + '" onclick="GCTrequests.GetLikeUsers(this);">' + object.likes + '</a>'
             + "</div>"
+            + object.actionBar
             + "</div>";
         content = GCT.SetLinks(content);
         return content;
@@ -417,11 +416,13 @@
                 + "<div class='item-text large'>" + object.eventLang + "</div>"
                 + "</div>"
             + "</div>"
-            + "<div class='card-footer'>"
-            + "<a href='#' aria-label='like aimer' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-            + '<a href="#" class="item-link list-button" data-guid="' + object.guid + '" onclick="GCTrequests.SeeCalendar(this);" data-type="' + object.type + '">' + GCTLang.Trans('in-calendar') + '</a>'
-            + object.action
-            + "</div></div></div>";
+            + "<hr class='margin-0'><div class='count-bar'>"
+            + '<a href="#" class="link icon-only" data-guid="' + object.guid + '" onclick="GCTrequests.GetLikeUsers(this);">' + object.likes + '</a>'
+            + ' | '
+            + '<a href="#" class="link" data-guid="' + object.guid + '" onclick="GCTrequests.SeeCalendar(this);" data-type="' + object.type + '">' + GCTLang.Trans('in-calendar') + '</a>'
+            + "</div>"
+            + object.actionBar
+            + "</div></div>";
         content = GCT.SetLinks(content);
         return content;
     },
@@ -497,10 +498,11 @@
             + "<div class='blog-group'>" + "Link: " + object.address + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-footer'>"
-            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-            + object.action
-            + "</div></div></div>";
+            + "<hr class='margin-0'><div class='count-bar'>"
+            + '<a href="#" class="link icon-only" data-guid="' + object.guid + '" onclick="GCTrequests.GetLikeUsers(this);">' + object.likes + '</a>'
+            + "</div>"
+            + object.actionBar
+            + "</div></div>";
         content = GCT.SetLinks(content);
         return content;
     },
@@ -561,48 +563,49 @@
                 + "</div>"
                 + "<div class='row'>"
                 + "<div class='col-85'></div>"
-                + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='post' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon +"' data-sheet='sheet' onclick='GCT.MoreOptions(this);' aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
+                + "<a href='#' class='col-15 link pull-right more-options' data-owner='" + object.owner + "' data-guid='" + object.guid + "' data-type='" + object.type + "' data-container='" + object.owner + "' data-location='post' data-job='" + object.userJob + "' data-org='" + object.userOrg + "' data-name='" + object.name + "' data-email='" + object.userEmail + "' data-icon='" + object.icon + "' data-sheet='sheet' onclick='GCT.MoreOptions(this);' aria-label='" + GCTLang.Trans('more-options') + "'><i class='fas fa-ellipsis-h fa-2x'></i></a>"
                 + "</div>"
                 + "<div class='card-content card-content-padding'>"
                 + "<div class='card-content-inner'" + object.all_text + ">"
                 + "<div class='blog-title'>" + object.title + "</div>"
                 + "<div class='title'> <b>" + object.jobtype + "(" + object.roletype + ")" + "</b></div>"
                 + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
-                     + "<div class='item-text large'>" + "" + "</div>" //placeholder for text after desc
-                    + "</div>"
-                    + "</div>"
+                + "<div class='item-text large'>" + "" + "</div>" //placeholder for text after desc
+                + "</div>"
+                + "</div>"
                 + "<div class='card-content card-content-padding'>" + "<hr>"
-                    + "<div class='card-content-inner'>"
-                    + "<div class='blog-title'>" + object.additionalTitle + "</div>" //change from 'blog' title later
-                    + "<div class='item-text'>" + object.programArea + "</div>"
-                    + "<div class='item-text'>" + object.numOpportunities + "</div>"
-                    + "<div class='item-text'>" + object.idealComplete + "</div>"
-                    + "<div class='item-text large'>" + object.deadline + "</div>"
-                    + "<div class='item-text large'>" + object.oppVirtual + "</div>"
-                    + "<div class='item-text large'>" + object.oppOnlyIn + "</div>"
-                    + "<div class='item-text large'>" + object.location + "</div>"
-                    + "<div class='item-text large'>" + object.security + "</div>"
-                    + "<div class='item-text large'>" + object.skills + "</div>"
-                    + "<br>"
-                    + "<div class='blog-title'>" + GCTLang.Trans('opportunity-language-requirements') + "</div>" //change to smaller title later
-                    + "<div class='item-text large'>" + object.languageReq + "</div>"
-                    + "<br>"
-                    + "<div class='blog-title'>" + GCTLang.Trans("opportunity-scheduling-requirements") + "</div>" //change to smaller title later
-                    + "<div class='item-text large'>" + object.timecommitment + "</div>"
-                    + "<div class='item-text large'>" + object.timezone + "</div>"
-                    + "<div class='item-text large'>" + object.schedulingReq + "</div>"
-                    + "<br>"
-                    + "<div class='item-text large'>" + object.participants + "</div>"
-                    + "<div class='item-text large'>" + object.applicants + "</div>"
+                + "<div class='card-content-inner'>"
+                + "<div class='blog-title'>" + object.additionalTitle + "</div>" //change from 'blog' title later
+                + "<div class='item-text'>" + object.programArea + "</div>"
+                + "<div class='item-text'>" + object.numOpportunities + "</div>"
+                + "<div class='item-text'>" + object.idealComplete + "</div>"
+                + "<div class='item-text large'>" + object.deadline + "</div>"
+                + "<div class='item-text large'>" + object.oppVirtual + "</div>"
+                + "<div class='item-text large'>" + object.oppOnlyIn + "</div>"
+                + "<div class='item-text large'>" + object.location + "</div>"
+                + "<div class='item-text large'>" + object.security + "</div>"
+                + "<div class='item-text large'>" + object.skills + "</div>"
+                + "<br>"
+                + "<div class='blog-title'>" + GCTLang.Trans('opportunity-language-requirements') + "</div>" //change to smaller title later
+                + "<div class='item-text large'>" + object.languageReq + "</div>"
+                + "<br>"
+                + "<div class='blog-title'>" + GCTLang.Trans("opportunity-scheduling-requirements") + "</div>" //change to smaller title later
+                + "<div class='item-text large'>" + object.timecommitment + "</div>"
+                + "<div class='item-text large'>" + object.timezone + "</div>"
+                + "<div class='item-text large'>" + object.schedulingReq + "</div>"
+                + "<br>"
+                + "<div class='item-text large'>" + object.participants + "</div>"
+                + "<div class='item-text large'>" + object.applicants + "</div>"
                 + "</div>"
                 + "</div>"
-                + "<div class='card-footer'>"
-            content += object.action
+                + "<div class='card-footer'>";
+            content += object.action;
             if (object.apply == 'mission_apply') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ApplyPost(this);'> <span>" + GCTLang.Trans('apply-opt') + "</span></a>"; }
             else if (object.apply == 'withdraw') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('withdrawn-opt') + "</span></a>"; }
             else if (object.apply == 'offered') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.AcceptPost(this);'> <span>" + GCTLang.Trans('accept-opt') + "</span></a><a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('decline-opt') + "</span></a>"; }
 
             content += "</div>"
+                + object.actionBar
                 + "</div></div>";
         } else {
             var content = "<div class='swiper-slide list-block cards-list'>";// need something hidden 
@@ -664,11 +667,11 @@
             + "<div class='blog-group'>" + object.group + "</div>"
             + "<div class='item-text large " + object.all_text + "'>" + object.description + "</div>"
             + "</div>"
-            + "<div class='card-footer'>"
-            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-            // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
-            + object.action
-            + "</div></div></div></div>";
+            + "<hr class='margin-0'><div class='count-bar'>"
+            + '<a href="#" class="link icon-only" data-guid="' + object.guid + '" onclick="GCTrequests.GetLikeUsers(this);">' + object.likes + '</a>'
+            + "</div>"
+            + object.actionBar
+            + "</div></div></div>";
         content = GCT.SetLinks(content);
         return content;
     },

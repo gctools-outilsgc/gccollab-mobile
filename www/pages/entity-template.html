@@ -111,12 +111,9 @@
                                     description: text,
                                     source: source,
                                     type: "gccollab_wire_post",
-                                    replied: replied,
                                     action: action,
                                     owner: value.owner_guid,
-                                    liked: liked,
                                     likes: likes,
-                                    likon: likon,
                                     image: img,
                                     userJob: value.userDetails.job,
                                     userOrg: value.userDetails.organization,
@@ -144,8 +141,13 @@
                                 var liked = (value.liked) ? "liked" : "";
                                 var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
                                 var likon = (value.liked) ? "fas" : "far";
-                                var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_blog_post' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
                                 if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
+
+                                var actionBar = {};
+                                actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
+                                actionBar = GCTtxt.txtActionBar(actionBar);
+
                                 content += GCTtxt.Blog({
                                     icon: value.userDetails.iconURL,
                                     name: value.userDetails.displayName,
@@ -155,17 +157,14 @@
                                     description: text,
                                     title: value.title,
                                     all_text: "all_text",
-                                    action: action,
                                     owner: value.owner_guid,
                                     guid: value.guid,
                                     type: "gccollab_blog_post",
-                                    replied: replied,
-                                    liked: liked,
                                     likes: likes,
-                                    likon: likon,
                                     userJob: value.userDetails.job,
                                     userOrg: value.userDetails.organization,
-                                    userEmail: value.userDetails.email
+                                    userEmail: value.userDetails.email,
+                                    actionBar: actionBar,
                                 });
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
@@ -187,6 +186,10 @@
                                     var likon = (value.liked) ? "fas" : "far";
                                     var action = '';
                                     if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
+                                    var actionBar = {};
+                                    actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                    actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
+                                    actionBar = GCTtxt.txtActionBar(actionBar);
                                     content += GCTtxt.Discussion({
                                         icon: value.userDetails.iconURL,
                                         name: value.userDetails.displayName,
@@ -206,7 +209,8 @@
                                         likon: likon,
                                         userJob: value.userDetails.job,
                                         userOrg: value.userDetails.organization,
-                                        userEmail: value.userDetails.email
+                                        userEmail: value.userDetails.email,
+                                        actionBar: actionBar
                                     });
                                 } else if (value.subtype == "discussion_reply") {
                                     //not needed
@@ -294,6 +298,13 @@
                                 var state = '';
                                 if (value.state) { state += value.state; }
 
+                                var apply = '';
+                                if (value.apply) { apply = value.apply };
+
+                                var actionBar = {};
+                                actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
+                                actionBar = GCTtxt.txtActionBar(actionBar);
+
                                 content += GCTtxt.Opps({
                                     guid: value.guid,
                                     icon: value.userDetails.iconURL,
@@ -334,7 +345,9 @@
                                     likon: likon,
                                     userJob: value.userDetails.job,
                                     userOrg: value.userDetails.organization,
-                                    userEmail: value.userDetails.email
+                                    userEmail: value.userDetails.email,
+                                    apply: apply,
+                                    actionBar: actionBar
                                 });
                             });
 
@@ -360,6 +373,10 @@
                                 }
                                 var address = "<a class='external' data-type='gccollab_bookmark' href='" + value.address + "'>" + value.address + "</a> ";
                                 if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
+                                var actionBar = {};
+                                actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
+                                actionBar = GCTtxt.txtActionBar(actionBar);
                                 content += GCTtxt.Bookmark({
                                     icon: value.userDetails.iconURL,
                                     name: value.userDetails.displayName,
@@ -378,7 +395,8 @@
                                     likon: likon,
                                     userJob: value.userDetails.job,
                                     userOrg: value.userDetails.organization,
-                                    userEmail: value.userDetails.email
+                                    userEmail: value.userDetails.email,
+                                    actionBar: actionBar
                                 });
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
@@ -435,6 +453,10 @@
                                 if (value.eventLang !== null && typeof value.eventLang !== 'undefined')
                                     eventLang += value.eventLang;
                                 if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
+                                var actionBar = {};
+                                actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
+                                actionBar = GCTtxt.txtActionBar(actionBar);
                                 content = GCTtxt.Event({
                                     icon: value.userDetails.iconURL,
                                     name: value.userDetails.displayName,
@@ -464,7 +486,8 @@
                                     eventLang: eventLang,
                                     userJob: value.userDetails.job,
                                     userOrg: value.userDetails.organization,
-                                    userEmail: value.userDetails.email
+                                    userEmail: value.userDetails.email,
+                                    actionBar: actionBar
                                 });
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
