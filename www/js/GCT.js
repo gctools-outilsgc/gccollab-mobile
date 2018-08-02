@@ -1855,7 +1855,7 @@ GCTUser = {
             success: function (data) {
                 console.log(data);
                 if (data.result) {
-                    notificationCardText(data.result, guid, 'request-actions-' + guid);
+                    notificationCardText(data.result, guid, '#request-actions-' + guid);
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -1881,7 +1881,7 @@ GCTUser = {
             success: function (data) {
                 console.log(data);
                 if (data.result) {
-                    notificationCardText(data.result, guid, 'request-actions-' + guid);
+                    notificationCardText(data.result, guid, '#request-actions-' + guid);
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
