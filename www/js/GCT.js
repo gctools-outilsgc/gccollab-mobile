@@ -49,12 +49,13 @@
         }
         return action;
     },
-    txtActionBar: function (actions) {
+    txtActionBar: function (actions, location) {
         if (!actions.reply) { actions.reply = ''; }
         if (!actions.extra) { actions.extra = ''; }
         if (!actions.like) { actions.like = ''; }
         if (!actions.share) { actions.share = ''; }
-        var actionBar = "<hr class='margin-0'><div class='row action-bar'>"
+        if (!location) { location = ''; }
+        var actionBar = "<hr class='margin-0'><div class='row action-bar' " + location + ">"
                             + "<div class='col-25 center'>" + actions.reply + "</div>"
                             + "<div class='col-25 center'>" + actions.extra + "</div>"
                             + "<div class='col-25 center'>" + actions.like + "</div>"
@@ -62,8 +63,11 @@
                         + "</div>";
         return actionBar;
     },
-    txtLikeButton: function (object) {
+    LikeButton: function (object) {
         return "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);' aria-label='" + GCTLang.Trans("like") + "'><i class='" + object.likon + " fa-thumbs-up'></i></a>";
+    },
+    txtLikeButton: function (object) {
+        return "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);' aria-label='" + GCTLang.Trans("like") + "'><i class='" + object.likon + " fa-thumbs-up'></i><span class='like-count'>" + object.likes + "</span></a>";
     },
     txtShareButton: function (object) {
         return '<a href="#" class="link social-share" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="SocialShare(this);" aria-label="' + GCTLang.Trans("share") + '"><i class="fas fa-share-alt"></i></a>';
@@ -181,11 +185,7 @@
             + "<div class='item-media'>" + object.image + "</div>"
             + object.source
             + "</div>"
-            + "<div class='card-footer' aria-hidden='true'>"
-            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-            + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='list' onclick='GCTrequests.ReplyWirePost(this);'><i class='fas fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
-            + object.action
-            + "</div>"
+            + object.actionBar
             + "</div><div>";
         content = GCT.SetLinks(content);
         return content;
@@ -960,11 +960,15 @@ GCTEach = {
 
         var replied = (value.replied) ? "replied" : "";
         var liked = (value.liked) ? "liked" : "";
-        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var likes = (value.likes >= 0) ? '(' + value.likes + ')' : '';
         var likon = (value.liked) ? "fas" : "far";
         var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
         // var action = (value.thread) ? "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>" : "";
-
+        var actionBar = {};
+        actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: value.guid, type: "gccollab_wire_post", likon: likon, likes: likes });
+        actionBar.reply = GCTtxt.txtWireReplyButton({ replied: replied, guid: value.guid });
+        actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_wire_post", guid: value.guid });
+        actionBar = GCTtxt.txtActionBar(actionBar, "aria-hidden='true'");
         var content = GCTtxt.txtWire({
             guid: value.guid,
             icon: value.userDetails.iconURL,
@@ -983,7 +987,8 @@ GCTEach = {
             image: img,
             userJob: value.userDetails.job,
             userOrg: value.userDetails.organization,
-            userEmail: value.userDetails.email
+            userEmail: value.userDetails.email,
+            actionBar: actionBar
         });
         return content;
     },

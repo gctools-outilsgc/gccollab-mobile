@@ -98,7 +98,7 @@
                                 var likon = (value.liked) ? "fas" : "far";
                                 var action = '';
                                 var actionBar = {};
-                                actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
                                 actionBar.reply = GCTtxt.txtWireReplyButton({ replied: replied, guid: guid });
                                 actionBar.share = GCTtxt.txtShareButton({type: type, guid:guid});
                                 actionBar = GCTtxt.txtActionBar(actionBar);
@@ -144,7 +144,7 @@
                                 if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
 
                                 var actionBar = {};
-                                actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
                                 actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
                                 actionBar = GCTtxt.txtActionBar(actionBar);
 
@@ -187,7 +187,7 @@
                                     var action = '';
                                     if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
                                     var actionBar = {};
-                                    actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                    actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
                                     actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
                                     actionBar = GCTtxt.txtActionBar(actionBar);
                                     content += GCTtxt.Discussion({
@@ -204,9 +204,7 @@
                                         guid: value.guid,
                                         type: "gccollab_discussion_post",
                                         replied: replied,
-                                        liked: liked,
                                         likes: likes,
-                                        likon: likon,
                                         userJob: value.userDetails.job,
                                         userOrg: value.userDetails.organization,
                                         userEmail: value.userDetails.email,
@@ -368,7 +366,7 @@
                                 var address = "<a class='external' data-type='gccollab_bookmark' href='" + value.address + "'>" + value.address + "</a> ";
                                 if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
                                 var actionBar = {};
-                                actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
                                 actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
                                 actionBar = GCTtxt.txtActionBar(actionBar);
                                 content += GCTtxt.Bookmark({
@@ -384,9 +382,7 @@
                                     type: "gccollab_bookmark",
                                     guid: value.guid,
                                     action: action,
-                                    liked: liked,
                                     likes: likes,
-                                    likon: likon,
                                     userJob: value.userDetails.job,
                                     userOrg: value.userDetails.organization,
                                     userEmail: value.userDetails.email,
@@ -448,7 +444,7 @@
                                     eventLang += value.eventLang;
                                 if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
                                 var actionBar = {};
-                                actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
                                 actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
                                 actionBar = GCTtxt.txtActionBar(actionBar);
                                 content = GCTtxt.Event({
@@ -468,9 +464,7 @@
                                     guid: value.guid,
                                     all_text: "all_text",
                                     type: "gccollab_event",
-                                    liked: liked,
                                     likes: likes,
-                                    likon: likon,
                                     fullview: fullview,
                                     additionalTitle: additionalTitle,
                                     org: org,
