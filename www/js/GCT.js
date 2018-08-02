@@ -460,10 +460,8 @@
             + "<div class='blog-group'>" + "Link: " + object.address + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-footer' aria-hidden='true'>"
-            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-            + object.action
-            + "</div></div></div>";
+            + object.actionBar
+            + "</div></div>";
         content = GCT.SetLinks(content);
         return content;
     },
@@ -1174,7 +1172,7 @@ GCTEach = {
         var label = '';
         var date = prettyDate(value.time_created);
         var liked = (value.liked) ? "liked" : "";
-        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var likes = (value.likes >= 0) ? '(' + value.likes + ')' : '';
         var likon = (value.liked) ? "fas" : "far";
         var action = '';
         var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_bookmark' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
@@ -1186,6 +1184,10 @@ GCTEach = {
         }
         var address = "<a class='external' data-type='gccollab_bookmark' href='" + value.address + "'>" + value.address + "</a> ";
         label += value.userDetails.displayName + ': ' + date + '. ' + value.title;
+        var actionBar = {};
+        actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: value.guid, type: "gccollab_bookmark", likon: likon, likes: likes });
+        actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_bookmark", guid: value.guid });
+        actionBar = GCTtxt.txtActionBar(actionBar, "aria-hidden='true'");
         var content = GCTtxt.txtBookmark({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
@@ -1205,7 +1207,8 @@ GCTEach = {
             likon: likon,
             userJob: value.userDetails.job,
             userOrg: value.userDetails.organization,
-            userEmail: value.userDetails.email
+            userEmail: value.userDetails.email,
+            actionBar: actionBar
         });
         return content;
     },
