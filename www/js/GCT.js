@@ -336,11 +336,8 @@
             + "<div class='blog-group'>" + object.posted + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-footer' aria-hidden='true'>"
-            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-            // + "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ReplyToPost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>"
-            + object.action
-            + "</div></div></div>";
+            + object.actionBar
+            + "</div></div>";
         content = GCT.SetLinks(content);
         return content;
     },
@@ -1141,7 +1138,7 @@ GCTEach = {
         var date = prettyDate(value.time_created);
         var label = value.userDetails.displayName + ': ' + date + '. ' + value.title ;
         var liked = (value.liked) ? "liked" : "";
-        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var likes = (value.likes >= 0) ? '(' + value.likes + ')' : '';
         var likon = (value.liked) ? "fas" : "far";
         var action = "<a class='link' data-title='" + value.title + "' data-guid='" + value.guid + "' data-type='gccollab_doc' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
         var posted = '';
@@ -1150,6 +1147,10 @@ GCTEach = {
         } else {
             posted = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
         }
+        var actionBar = {};
+        actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: value.guid, type: "gccollab_doc", likon: likon, likes: likes });
+        actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_doc", guid: value.guid });
+        actionBar = GCTtxt.txtActionBar(actionBar, "aria-hidden='true'");
         var content = GCTtxt.txtDoc({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
@@ -1167,7 +1168,8 @@ GCTEach = {
             likon: likon,
             userJob: value.userDetails.job,
             userOrg: value.userDetails.organization,
-            userEmail: value.userDetails.email
+            userEmail: value.userDetails.email,
+            actionBar: actionBar
         });
         return content;
     },
