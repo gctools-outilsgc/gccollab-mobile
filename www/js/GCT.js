@@ -366,11 +366,8 @@
             + "<div class='item-text large " + object.all_text + "'>" + "<br>" + object.description + "</div>"
             + "</div>"
             + "</div>"
-            + "<div class='card-footer' aria-hidden='true'>"
-            + "<a href='#' aria-label='like aimer' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='" + object.likon + " fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-            + '<a href="#" class="item-link list-button" data-guid="' + object.guid + '" onclick="GCTrequests.SeeCalendar(this);" data-type="' + object.type + '">' + GCTLang.Trans('in-calendar') + '</a>'
-            + object.action
-            + "</div></div></div>";
+            + object.actionBar
+            + "</div></div>";
         content = GCT.SetLinks(content);
         return content;
     },
@@ -1074,7 +1071,7 @@ GCTEach = {
         var text = (value.description !== null) ? $($.parseHTML(value.description)).text() : "";
 
         var liked = (value.liked) ? "liked" : "";
-        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var likes = (value.likes >= 0) ? '(' + value.likes + ')' : '';
         var likon = (value.liked) ? "fas" : "far";
         var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_event' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
@@ -1101,7 +1098,12 @@ GCTEach = {
         var fullview = false;
 
         label += startDate + '. ' + endDate + '. ' + GCTLang.Trans("location") + ': ' + value.location;
-        
+
+        var actionBar = {};
+        actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: value.guid, type: "gccollab_event", likon: likon, likes: likes });
+        actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_event", guid: value.guid });
+        actionBar = GCTtxt.txtActionBar(actionBar, "aria-hidden='true'");
+
         var content = GCTtxt.txtEvent({
             icon: value.userDetails.iconURL,
             name: value.userDetails.displayName,
@@ -1125,7 +1127,8 @@ GCTEach = {
             fullview: fullview,
             userJob: value.userDetails.job,
             userOrg: value.userDetails.organization,
-            userEmail: value.userDetails.email
+            userEmail: value.userDetails.email,
+            actionBar: actionBar,
         });
         return content;
     },
