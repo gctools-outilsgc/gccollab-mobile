@@ -418,7 +418,7 @@
             + "</div>"
             + "<hr class='margin-0'><div class='count-bar'>"
             + '<a href="#" class="link icon-only" data-guid="' + object.guid + '" onclick="GCTrequests.GetLikeUsers(this);">' + object.likes + '</a>'
-            + ' | '
+            + '  ·  '
             + '<a href="#" class="link" data-guid="' + object.guid + '" onclick="GCTrequests.SeeCalendar(this);" data-type="' + object.type + '">' + GCTLang.Trans('in-calendar') + '</a>'
             + "</div>"
             + object.actionBar
