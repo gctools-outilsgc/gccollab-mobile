@@ -73,7 +73,7 @@
         return '<a href="#" class="link social-share" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="SocialShare(this);" aria-label="' + GCTLang.Trans("share") + '"><i class="fas fa-share-alt"></i></a>';
     },
     txtWireReplyButton: function (object) {
-        return "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='post' onclick='GCTrequests.ReplyWirePost(this);' aria-label='" + GCTLang.Trans("reply") + "'><i class='fas fa-reply'></i></a>";
+        return "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.location + "' onclick='GCTrequests.ReplyWirePost(this);' aria-label='" + GCTLang.Trans("reply") + "'><i class='fas fa-reply'></i></a>";
     },
     txtCommentButton: function (object) {
         if (object.count) {
@@ -940,7 +940,7 @@ GCTEach = {
         // var action = (value.thread) ? "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>" : "";
         var actionBar = {};
         actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: value.guid, type: "gccollab_wire_post", likon: likon, likes: likes });
-        actionBar.reply = GCTtxt.txtWireReplyButton({ replied: replied, guid: value.guid });
+        actionBar.reply = GCTtxt.txtWireReplyButton({ replied: replied, guid: value.guid, location: 'list' });
         actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_wire_post", guid: value.guid });
         actionBar = GCTtxt.txtActionBar(actionBar, "aria-hidden='true'");
         var content = GCTtxt.txtWire({
