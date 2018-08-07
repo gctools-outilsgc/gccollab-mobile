@@ -198,17 +198,7 @@ function SocialShare(obj) {
     var files = [];
     var url = '';
     var chooserTitle = 'Pick an app';
-
-    if (type == 'gccollab_wire_post') {
-        message = $("#wire-" + guid).text();
-        subject = 'GCcollab Wire Post';
-    } else if (type == 'gccollab_blog_post') {
-        message = $("#blog-" + guid + ' .blog-title').text();
-        subject = 'GCcollab Blog';
-    } else if (type == 'gccollab_event') {
-        message = $("#event-" + guid + ' .blog-title').text();
-        subject = 'GCcollab Event';
-    }
+    
     switch (type) {
         case 'gccollab_wire_post':
             message = $("#wire-" + guid).text();
@@ -225,6 +215,18 @@ function SocialShare(obj) {
         case 'gccollab_doc':
             message = $("#doc-" + guid + ' .blog-title').text();
             subject = 'GCcollab Doc';
+            break;
+        case 'gccollab_bookmark':
+            message = $$('.page-current').find("#bookmark-" + guid + ' .blog-title').text();
+            subject = 'GCcollab Bookmark';
+            break;
+        case 'gccollab_opportunity':
+            message = $$('.page-current').find("#opp-" + guid + ' .blog-title').text();
+            subject = 'GCcollab Opportunity';
+            break;
+        case 'gccollab_discussion_post':
+            message = $$('.page-current').find("#discussion-" + guid + ' .blog-title').text();
+            subject = 'GCcollab Discussion';
             break;
         default:
             console.log('Worked, but type not handled yet.');

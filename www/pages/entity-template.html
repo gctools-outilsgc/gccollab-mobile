@@ -100,7 +100,7 @@
                                 var actionBar = {};
                                 actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
                                 actionBar.reply = GCTtxt.txtWireReplyButton({ replied: replied, guid: guid, location: 'post' });
-                                actionBar.share = GCTtxt.txtShareButton({type: type, guid:guid});
+                                actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_wire_post", guid:guid});
                                 actionBar = GCTtxt.txtActionBar(actionBar);
 
                                 content += GCTtxt.Wire({
@@ -145,7 +145,7 @@
 
                                 var actionBar = {};
                                 actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
-                                actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
+                                actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_blog_post", guid: guid });
                                 actionBar = GCTtxt.txtActionBar(actionBar);
 
                                 content += GCTtxt.Blog({
@@ -188,7 +188,7 @@
                                     if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
                                     var actionBar = {};
                                     actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
-                                    actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
+                                    actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_discussion_post", guid: guid });
                                     actionBar = GCTtxt.txtActionBar(actionBar);
                                     content += GCTtxt.Discussion({
                                         icon: value.userDetails.iconURL,
@@ -300,7 +300,7 @@
                                 else if (apply == 'offered') { apply = "<a href='#' class='link' data-guid='" + guid + "' data-type='" + type + "' onclick='GCTUser.AcceptPost(this);'> <span>" + GCTLang.Trans('accept-opt') + "</span></a><a href='#' class='link' data-guid='" + guid + "' data-type='" + type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('decline-opt') + "</span></a>"; }
 
                                 var actionBar = {};
-                                actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
+                                actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_opportunity", guid: guid });
                                 // actionBar.reply = apply;
                                 actionBar = GCTtxt.txtActionBar(actionBar);
 
@@ -371,7 +371,7 @@
                                 if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
                                 var actionBar = {};
                                 actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
-                                actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
+                                actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_bookmark", guid: guid });
                                 actionBar = GCTtxt.txtActionBar(actionBar);
                                 content += GCTtxt.Bookmark({
                                     icon: value.userDetails.iconURL,
@@ -450,7 +450,7 @@
 
                                 var actionBar = {};
                                 actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
-                                actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
+                                actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_event", guid: guid });
                                 actionBar.extra = '<a href="#" class="link" data-guid="' + guid + '" data-location="' + location + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("attend") + '</a>'
                                 actionBar = GCTtxt.txtActionBar(actionBar);
 
