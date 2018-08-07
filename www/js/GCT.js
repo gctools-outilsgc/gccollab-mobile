@@ -3493,10 +3493,6 @@ GCT = {
         } else {
             popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + type + '" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-post") + '</a></li>';
         }
-        if (type == 'gccollab_wire_post' || type == 'gccollab_blog_post' || type == "gccollab_event") {
-            popoverHTML += '<li><a href="#" class="item-link popover-close list-button social-share" data-guid="' + guid + '" data-type="' + type + '" onclick="SocialShare(this);">' + GCTLang.Trans("share") + '</a></li>';
-        }
-        if (type == "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-location="' + location + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("add-calendar") + '</a></li>'; }
         if (type == 'gccollab_wire_post') { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + location + '" onclick="GCTrequests.ReplyWirePost(this);">' + GCTLang.Trans("reply") + '</a></li>'; }
         if (isOwner) {
             // if (type == "gccollab_wire_post") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.EditWirePost(this);">' + GCTLang.Trans("edit") + '</a></li>'; }
@@ -3506,14 +3502,7 @@ GCT = {
                 popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + type + '" data-location="' + location + '" onclick="GCTrequests.Delete(this);">' + GCTLang.Trans("delete") + '</a></li>';
             }
         }
-        if (type === "gccollab_wire_post" || type === "gccollab_blog_post" || type === "gccollab_discussion_post" || type === "gccollab_comment" || type === "gccollab_bookmark" || type === "gccollab_event" || type === "gccollab_group") {
-            popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + type + '" onclick="GCTrequests.LikePost(this);">' + GCTLang.Trans("like") + '</a></li>';
-            if (location === 'post') {
-                popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.GetLikeUsers(this);">' + GCTLang.Trans("likes") + '</a></li>';
-            }
-        }
         if (inGroup) { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + container + '" data-type="gccollab_group" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-group") + '</a></li>'; }
-        if (type === "gccollab_event") { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.SeeCalendar(this);">' + GCTLang.Trans('in-calendar') + '</a></li>' }
         if (sheet) { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfileSheet(this); " data-guid="' + user.owner + '" data-job="' + user.job + '" data-org="' + user.org + '" data-name="' + user.name + '" data-email="' + user.email + '" data-icon="' + user.icon + '" data-location="' + location + '" data-fallback="' + guid + '">' + GCTLang.Trans("view-user-summary") + '</a></li>' }
         popoverHTML += '<li><a href="#" class="item-link list-button popover-close" onclick="ShowProfile(' + user.owner + ');">' + GCTLang.Trans("show-user") + '</a></li>';
         popoverHTML += '<li><a href="#"  class="item-link list-button popover-close" data-guid="' + guid + '" onclick="GCTrequests.Report(this);">' + GCTLang.Trans("report") + '</a></li>';
