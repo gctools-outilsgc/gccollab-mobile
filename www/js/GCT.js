@@ -1084,6 +1084,7 @@ GCTEach = {
         var actionBar = {};
         actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: value.guid, type: "gccollab_event", likon: likon, likes: likes });
         actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_event", guid: value.guid });
+        actionBar.extra = '<a href="#" class="link" data-guid="' + value.guid + '" data-location="' + location + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + value.type + '">' + GCTLang.Trans("attend") + '</a>'
         actionBar = GCTtxt.txtActionBar(actionBar, "aria-hidden='true'");
 
         var content = GCTtxt.txtEvent({

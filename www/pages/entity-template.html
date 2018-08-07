@@ -447,10 +447,13 @@
                                 if (value.eventLang !== null && typeof value.eventLang !== 'undefined')
                                     eventLang += value.eventLang;
                                 if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
+
                                 var actionBar = {};
                                 actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
                                 actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
+                                actionBar.extra = '<a href="#" class="link" data-guid="' + guid + '" data-location="' + location + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("attend") + '</a>'
                                 actionBar = GCTtxt.txtActionBar(actionBar);
+
                                 content = GCTtxt.Event({
                                     icon: value.userDetails.iconURL,
                                     name: value.userDetails.displayName,
