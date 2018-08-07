@@ -201,19 +201,19 @@ function SocialShare(obj) {
     
     switch (type) {
         case 'gccollab_wire_post':
-            message = $("#wire-" + guid).text();
+            message = $$('.page-current').find("#wire-" + guid).text();
             subject = 'GCcollab Wire Post';
             break;
         case 'gccollab_blog_post':
-            message = $("#blog-" + guid + ' .blog-title').text();
+            message = $$('.page-current').find("#blog-" + guid + ' .blog-title').text();
             subject = 'GCcollab Blog';
             break;
         case 'gccollab_event':
-            message = $("#event-" + guid + ' .blog-title').text();
+            message = $$('.page-current').find("#event-" + guid + ' .blog-title').text();
             subject = 'GCcollab Event';
             break;
         case 'gccollab_doc':
-            message = $("#doc-" + guid + ' .blog-title').text();
+            message = $$('.page-current').find("#doc-" + guid + ' .blog-title').text();
             subject = 'GCcollab Doc';
             break;
         case 'gccollab_bookmark':
