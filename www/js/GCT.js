@@ -128,7 +128,7 @@
             + "<div class='item-title-row'>"
             + "<div id='author-" + object.guid + "' class='author'>" + object.name + "</div>"
             + "</div>"
-            + "<div class='time-" + object.guid + "' tabindex='-1'>" + object.date + "</div>"
+            + "<div class='time-" + object.guid + " time' tabindex='-1'>" + object.date + "</div>"
             + "</div>"
             + "</div>"
             + "<div class='row'>"
@@ -140,11 +140,6 @@
             + object.text
             + object.source
             + "</div></div>"
-            + "<div class='card-footer' aria-hidden='true'>"
-            + "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);'><i class='far fa-thumbs-up'></i> <span class='like-count'>" + object.likes + "</span></a>"
-            + object.reply
-            + object.action
-            + "</div>"
             + "</div></div> </div>";
         return GCT.SetLinks(content);
     },
