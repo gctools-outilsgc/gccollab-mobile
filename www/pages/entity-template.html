@@ -295,9 +295,13 @@
 
                                 var apply = '';
                                 if (value.apply) { apply = value.apply };
+                                if (apply == 'mission_apply') { apply = "<a href='#' class='link' data-guid='" + guid + "' data-type='" + type + "' onclick='GCTUser.ApplyPost(this);'> <span>" + GCTLang.Trans('apply-opt') + "</span></a>"; }
+                                else if (apply == 'withdraw') { apply = "<a href='#' class='link' data-guid='" + guid + "' data-type='" + type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('withdrawn-opt') + "</span></a>"; }
+                                else if (apply == 'offered') { apply = "<a href='#' class='link' data-guid='" + guid + "' data-type='" + type + "' onclick='GCTUser.AcceptPost(this);'> <span>" + GCTLang.Trans('accept-opt') + "</span></a><a href='#' class='link' data-guid='" + guid + "' data-type='" + type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('decline-opt') + "</span></a>"; }
 
                                 var actionBar = {};
                                 actionBar.share = GCTtxt.txtShareButton({ type: type, guid: guid });
+                                actionBar.reply = apply;
                                 actionBar = GCTtxt.txtActionBar(actionBar);
 
                                 content += GCTtxt.Opps({

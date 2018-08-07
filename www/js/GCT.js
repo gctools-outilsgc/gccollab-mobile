@@ -521,13 +521,7 @@
                 + "<div class='item-text'>" + object.programArea + "</div>"
                 + "</div>"
                 + "</div>"
-                + "<div class='card-footer' aria-hidden='true'>"
-                + object.action;
-            if (object.apply == 'mission_apply') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ApplyPost(this);'> <span>" + GCTLang.Trans('apply-opt') + "</span></a>"; }
-            else if (object.apply == 'withdraw') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('withdrawn-opt') + "</span></a>"; }
-            else if (object.apply == 'offered') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.AcceptPost(this);'> <span>" + GCTLang.Trans('accept-opt') + "</span></a><a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('decline-opt') + "</span></a>"; }
-
-            content += "</div>"
+                + object.actionBar
                 + "</div></div>";
         } else {
             var content = "<div class='swiper-slide list-block cards-list'>";// need something hidden 
@@ -586,13 +580,6 @@
                 + "<div class='item-text large'>" + object.applicants + "</div>"
                 + "</div>"
                 + "</div>"
-                + "<div class='card-footer'>";
-            content += object.action;
-            if (object.apply == 'mission_apply') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.ApplyPost(this);'> <span>" + GCTLang.Trans('apply-opt') + "</span></a>"; }
-            else if (object.apply == 'withdraw') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('withdrawn-opt') + "</span></a>"; }
-            else if (object.apply == 'offered') { content += "<a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.AcceptPost(this);'> <span>" + GCTLang.Trans('accept-opt') + "</span></a><a href='#' class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('decline-opt') + "</span></a>"; }
-
-            content += "</div>"
                 + object.actionBar
                 + "</div></div>";
         } else {
@@ -1222,7 +1209,7 @@ GCTEach = {
         var date = prettyDate(value.time_created);
         var replied = (value.replied) ? "replied" : "";
         var liked = (value.liked) ? "liked" : "";
-        var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+        var likes = (value.likes >= 0) ? '(' + value.likes + ')' : '';
         var likon = (value.liked) ? "fas" : "far";
         var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_opportunity' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
         
@@ -1243,6 +1230,15 @@ GCTEach = {
 
         var apply = '';
         if (value.apply) { apply = value.apply };
+        if (apply == 'mission_apply') { apply = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='" + value.type + "' onclick='GCTUser.ApplyPost(this);'> <span>" + GCTLang.Trans('apply-opt') + "</span></a>"; }
+        else if (apply == 'withdraw') { apply = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='" + value.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('withdrawn-opt') + "</span></a>"; }
+        else if (apply == 'offered') { apply = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='" + value.type + "' onclick='GCTUser.AcceptPost(this);'> <span>" + GCTLang.Trans('accept-opt') + "</span></a><a href='#' class='link' data-guid='" + value.guid + "' data-type='" + value.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('decline-opt') + "</span></a>"; }
+
+        var actionBar = {};
+        actionBar.share = GCTtxt.txtShareButton({ type: value.type, guid: value.guid });
+        actionBar.reply = apply;
+        actionBar = GCTtxt.txtActionBar(actionBar);
+
         var content = GCTtxt.txtOpps({
             guid: value.guid,
             icon: value.userDetails.iconURL,
@@ -1266,7 +1262,8 @@ GCTEach = {
             apply: apply,
             userJob: value.userDetails.job,
             userOrg: value.userDetails.organization,
-            userEmail: value.userDetails.email
+            userEmail: value.userDetails.email,
+            actionBar: actionBar
         });
         return content;
 
