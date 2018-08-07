@@ -75,6 +75,13 @@
     txtWireReplyButton: function (object) {
         return "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='post' onclick='GCTrequests.ReplyWirePost(this);' aria-label='" + GCTLang.Trans("reply") + "'><i class='fas fa-reply'></i></a>";
     },
+    txtCommentButton: function (object) {
+        if (object.count) {
+            return "<a class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'><i class='far fa-comments'><span class='like-count'> (" + object.count + ")</span></i></a>";
+        } else {
+            return "<a class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'><i class='far fa-comments'></i></a>";
+        }
+    },
     txtFilterButton: function (ref) {
         var filterButton = '<a id="filters-button-'+ref+'" href="#" data-popup=".filters-' + ref + '" class="popup-open link icon-only" data-translate-target="aria-label" data-translate="filter-options"><i class="fas fa-search fa-2x"></i></a>';
         return filterButton;
@@ -976,10 +983,11 @@ GCTEach = {
         var likes = (value.likes >= 0) ? '(' + value.likes + ')' : '';
         var likon = (value.liked) ? "fas" : "far";
         var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_blog_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-
+        var commentCount = value.commentCount || '';
         var actionBar = {};
         actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: value.guid, type: "gccollab_blog_post", likon: likon, likes: likes });
         actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_blog_post", guid: value.guid });
+        actionBar.reply = GCTtxt.txtCommentButton({ type: "gccollab_blog_post", guid: value.guid, count: commentCount});
         actionBar = GCTtxt.txtActionBar(actionBar, "aria-hidden='true'");
 
         var content = GCTtxt.txtBlog({
@@ -1233,7 +1241,7 @@ GCTEach = {
         var actionBar = {};
         actionBar.share = GCTtxt.txtShareButton({ type: value.type, guid: value.guid });
         actionBar.reply = apply;
-        actionBar = GCTtxt.txtActionBar(actionBar);
+        actionBar = GCTtxt.txtActionBar(actionBar, "aria-hidden='true'");
 
         var content = GCTtxt.txtOpps({
             guid: value.guid,
