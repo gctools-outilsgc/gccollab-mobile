@@ -1243,7 +1243,7 @@ GCTEach = {
 
         var actionBar = {};
         actionBar.share = GCTtxt.txtShareButton({ type: value.type, guid: value.guid });
-        actionBar.reply = apply;
+        // actionBar.reply = apply;
         actionBar = GCTtxt.txtActionBar(actionBar, "aria-hidden='true'");
 
         var content = GCTtxt.txtOpps({
