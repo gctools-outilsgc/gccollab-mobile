@@ -3214,8 +3214,7 @@ GCTrequests = {
                     $(obj).addClass('liked');
                     $$(obj).find('i').removeClass('far').addClass('fas');
                 }
-
-                var likes = (count > 0) ? count + (count == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                var likes = (count > 0) ? '(' + count + ')' : '';
                 $(obj).find('.like-count').text(likes);
             },
             error: function (jqXHR, textStatus, errorThrown) {
