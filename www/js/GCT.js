@@ -2166,6 +2166,7 @@ GCTrequests = {
                 if (typeof data.result === "string") {
                     console.log(data.result);
                     app.preloader.hide();
+                    $$('.page-current').find('#content-entity-' + guid).append(GCTtxt.txtResultFeedback(guid, data.result));
                     return;
                 }
                 successCallback(data);
