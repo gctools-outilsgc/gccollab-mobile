@@ -94,9 +94,13 @@
 
                                 var replied = (value.replied) ? "replied" : "";
                                 var liked = (value.liked) ? "liked" : "";
-                                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                                var likes = (value.likes >= 0) ? value.likes + (value.likes === 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : '';
                                 var likon = (value.liked) ? "fas" : "far";
-                                var action = '';
+                                var actionBar = {};
+                                actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                actionBar.reply = GCTtxt.txtWireReplyButton({ replied: replied, guid: guid, location: 'post' });
+                                actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_wire_post", guid:guid});
+                                actionBar = GCTtxt.txtActionBar(actionBar);
 
                                 content += GCTtxt.Wire({
                                     guid: value.guid,
@@ -106,16 +110,13 @@
                                     description: text,
                                     source: source,
                                     type: "gccollab_wire_post",
-                                    replied: replied,
-                                    action: action,
                                     owner: value.owner_guid,
-                                    liked: liked,
                                     likes: likes,
-                                    likon: likon,
                                     image: img,
                                     userJob: value.userDetails.job,
                                     userOrg: value.userDetails.organization,
-                                    userEmail: value.userDetails.email
+                                    userEmail: value.userDetails.email,
+                                    actionBar: actionBar
                                 });
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
@@ -136,10 +137,15 @@
                                 }
                                 var replied = (value.replied) ? "replied" : "";
                                 var liked = (value.liked) ? "liked" : "";
-                                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                                var likes = (value.likes >= 0) ? value.likes + (value.likes === 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : '';
                                 var likon = (value.liked) ? "fas" : "far";
-                                var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_blog_post' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
                                 if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
+
+                                var actionBar = {};
+                                actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_blog_post", guid: guid });
+                                actionBar = GCTtxt.txtActionBar(actionBar);
+
                                 content += GCTtxt.Blog({
                                     icon: value.userDetails.iconURL,
                                     name: value.userDetails.displayName,
@@ -149,17 +155,14 @@
                                     description: text,
                                     title: value.title,
                                     all_text: "all_text",
-                                    action: action,
                                     owner: value.owner_guid,
                                     guid: value.guid,
                                     type: "gccollab_blog_post",
-                                    replied: replied,
-                                    liked: liked,
                                     likes: likes,
-                                    likon: likon,
                                     userJob: value.userDetails.job,
                                     userOrg: value.userDetails.organization,
-                                    userEmail: value.userDetails.email
+                                    userEmail: value.userDetails.email,
+                                    actionBar: actionBar,
                                 });
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
@@ -177,10 +180,13 @@
                                     var group = GCTLang.Trans("posted-user") + " <a onclick='ShowProfile(" + value.owner_guid + ")' >" + value.userDetails.displayName + "</a>";
                                     var replied = (value.replied) ? "replied" : "";
                                     var liked = (value.liked) ? "liked" : "";
-                                    var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                                    var likes = (value.likes >= 0) ? value.likes + (value.likes === 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : '';
                                     var likon = (value.liked) ? "fas" : "far";
-                                    var action = '';
                                     if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
+                                    var actionBar = {};
+                                    actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                    actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_discussion_post", guid: guid });
+                                    actionBar = GCTtxt.txtActionBar(actionBar);
                                     content += GCTtxt.Discussion({
                                         icon: value.userDetails.iconURL,
                                         name: value.userDetails.displayName,
@@ -190,17 +196,15 @@
                                         description: text,
                                         title: value.title,
                                         all_text: "all_text",
-                                        action: action,
                                         owner: value.owner_guid,
                                         guid: value.guid,
                                         type: "gccollab_discussion_post",
                                         replied: replied,
-                                        liked: liked,
                                         likes: likes,
-                                        likon: likon,
                                         userJob: value.userDetails.job,
                                         userOrg: value.userDetails.organization,
-                                        userEmail: value.userDetails.email
+                                        userEmail: value.userDetails.email,
+                                        actionBar: actionBar
                                     });
                                 } else if (value.subtype == "discussion_reply") {
                                     //not needed
@@ -278,15 +282,22 @@
 
                                 var applicants = "<b>" + GCTLang.Trans("applicants") + "</b>";
                                 if (value.applicants) { applicants += value.applicants; }
-
-                                var liked = (value.liked) ? "liked" : "";
-                                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
-                                var likon = (value.liked) ? "fas" : "far";
-                                var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_opportunity' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
+                                
                                 var fullview = true;
 
                                 var state = '';
                                 if (value.state) { state += value.state; }
+
+                                var apply = '';
+                                if (value.apply) { apply = value.apply };
+                                if (apply == 'mission_apply') { apply = "<a href='#' class='link' data-guid='" + guid + "' data-type='" + type + "' onclick='GCTUser.ApplyPost(this);'> <span>" + GCTLang.Trans('apply-opt') + "</span></a>"; }
+                                else if (apply == 'withdraw') { apply = "<a href='#' class='link' data-guid='" + guid + "' data-type='" + type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('withdrawn-opt') + "</span></a>"; }
+                                else if (apply == 'offered') { apply = "<a href='#' class='link' data-guid='" + guid + "' data-type='" + type + "' onclick='GCTUser.AcceptPost(this);'> <span>" + GCTLang.Trans('accept-opt') + "</span></a><a href='#' class='link' data-guid='" + guid + "' data-type='" + type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('decline-opt') + "</span></a>"; }
+
+                                var actionBar = {};
+                                actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_opportunity", guid: guid });
+                                // actionBar.reply = apply;
+                                actionBar = GCTtxt.txtActionBar(actionBar);
 
                                 content += GCTtxt.Opps({
                                     guid: value.guid,
@@ -321,14 +332,12 @@
                                     applicants: applicants,
                                     state: state,
                                     type: "gccollab_opportunity",
-                                    action: action,
                                     owner: value.owner_guid,
-                                    liked: liked,
-                                    likes: likes,
-                                    likon: likon,
                                     userJob: value.userDetails.job,
                                     userOrg: value.userDetails.organization,
-                                    userEmail: value.userDetails.email
+                                    userEmail: value.userDetails.email,
+                                    apply: apply,
+                                    actionBar: actionBar
                                 });
                             });
 
@@ -342,10 +351,8 @@
                             var content = "";
                             $(bookmark).each(function (key, value) {
                                 var liked = (value.liked) ? "liked" : "";
-                                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                                var likes = (value.likes >= 0) ? value.likes + (value.likes === 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : '';
                                 var likon = (value.liked) ? "fas" : "far";
-                                var action = '';
-                                var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_bookmark' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
                                 var posted = '';
                                 if (value.group_guid) {
                                     posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.group_guid + "' data-type='gccollab_group' onclick='GCTUser.ViewPost(this);'>" + value.group + "</a>";
@@ -354,6 +361,10 @@
                                 }
                                 var address = "<a class='external' data-type='gccollab_bookmark' href='" + value.address + "'>" + value.address + "</a> ";
                                 if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
+                                var actionBar = {};
+                                actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_bookmark", guid: guid });
+                                actionBar = GCTtxt.txtActionBar(actionBar);
                                 content += GCTtxt.Bookmark({
                                     icon: value.userDetails.iconURL,
                                     name: value.userDetails.displayName,
@@ -366,13 +377,11 @@
                                     address: address,
                                     type: "gccollab_bookmark",
                                     guid: value.guid,
-                                    action: action,
-                                    liked: liked,
                                     likes: likes,
-                                    likon: likon,
                                     userJob: value.userDetails.job,
                                     userOrg: value.userDetails.organization,
-                                    userEmail: value.userDetails.email
+                                    userEmail: value.userDetails.email,
+                                    actionBar: actionBar
                                 });
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
@@ -388,9 +397,8 @@
                                 var text = (value.description !== null) ? value.description : "";
 
                                 var liked = (value.liked) ? "liked" : "";
-                                var likes = (value.likes > 0) ? value.likes + (value.likes == 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : GCTLang.Trans("like");
+                                var likes = (value.likes >= 0) ? value.likes + (value.likes === 1 ? GCTLang.Trans("like") : GCTLang.Trans("likes")) : '';
                                 var likon = (value.liked) ? "fas" : "far";
-                                var action = " <a class='link' onclick='GCT.SiteLink(this);' data-type='gccollab_event' href='" + value.url + "'>" + GCTLang.Trans("web-view") + "</a>";
 
                                 var date = (value.startDate).split(" ")[0];
                                 var split = date.split("-");
@@ -429,6 +437,13 @@
                                 if (value.eventLang !== null && typeof value.eventLang !== 'undefined')
                                     eventLang += value.eventLang;
                                 if (value.comment_count) { $$('#comment-count-' + guid).append(' (' + value.comment_count.toString() + ')'); } else { $$('#comment-count-' + guid).append(' (0)'); }
+
+                                var actionBar = {};
+                                actionBar.like = GCTtxt.LikeButton({ liked: liked, guid: guid, type: type, likon: likon });
+                                actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_event", guid: guid });
+                                actionBar.extra = '<a href="#" class="link" data-guid="' + guid + '" data-location="' + location + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + type + '">' + GCTLang.Trans("attend") + '</a>'
+                                actionBar = GCTtxt.txtActionBar(actionBar);
+
                                 content = GCTtxt.Event({
                                     icon: value.userDetails.iconURL,
                                     name: value.userDetails.displayName,
@@ -440,15 +455,12 @@
                                     description: text,
                                     title: value.title,
                                     id: id,
-                                    action: action,
                                     owner: value.owner_guid,
                                     container: value.container_guid,
                                     guid: value.guid,
                                     all_text: "all_text",
                                     type: "gccollab_event",
-                                    liked: liked,
                                     likes: likes,
-                                    likon: likon,
                                     fullview: fullview,
                                     additionalTitle: additionalTitle,
                                     org: org,
@@ -458,7 +470,8 @@
                                     eventLang: eventLang,
                                     userJob: value.userDetails.job,
                                     userOrg: value.userDetails.organization,
-                                    userEmail: value.userDetails.email
+                                    userEmail: value.userDetails.email,
+                                    actionBar: actionBar
                                 });
                             });
                             $(content).hide().appendTo('#content-entity-' + guid).fadeIn(500);
