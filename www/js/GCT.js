@@ -2009,6 +2009,12 @@ GCTrequests = {
             data: { method: "get.blogpost", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
+                if (typeof data.result === "string") {
+                    console.log(data.result);
+                    app.preloader.hide();
+                    $$('.page-current').find('#content-entity-' + guid).append(GCTtxt.txtResultFeedback(guid, data.result));
+                    return;
+                }
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -2439,6 +2445,12 @@ GCTrequests = {
             data: { method: "get.discussion", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
+                if (typeof data.result === "string") {
+                    console.log(data.result);
+                    app.preloader.hide();
+                    $$('.page-current').find('#content-entity-' + guid).append(GCTtxt.txtResultFeedback(guid, data.result));
+                    return;
+                }
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -2563,6 +2575,12 @@ GCTrequests = {
             data: { method: "get.event", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
+                if (typeof data.result === "string") {
+                    console.log(data.result);
+                    app.preloader.hide();
+                    $$('.page-current').find('#content-entity-' + guid).append(GCTtxt.txtResultFeedback(guid, data.result));
+                    return;
+                }
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -2765,6 +2783,12 @@ GCTrequests = {
             data: { method: "get.bookmark", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
+                if (typeof data.result === "string") {
+                    console.log(data.result);
+                    app.preloader.hide();
+                    $$('.page-current').find('#content-entity-' + guid).append(GCTtxt.txtResultFeedback(guid, data.result));
+                    return;
+                }
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -2835,6 +2859,12 @@ GCTrequests = {
             data: { method: "get.opportunity", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
+                if (typeof data.result === "string") {
+                    console.log(data.result);
+                    app.preloader.hide();
+                    $$('.page-current').find('#content-entity-' + guid).append(GCTtxt.txtResultFeedback(guid, data.result));
+                    return;
+                }
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
