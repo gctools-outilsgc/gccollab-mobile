@@ -17,40 +17,42 @@
             <div class="page-content" style="overflow-x: hidden;">
                 <div id="content-entity-{{guid}}" class='list cards-list'></div>
                 {{#js_if "this.comments"}}
-                <div id="comment-card-{{guid}}">
-                    <div class="block small comment">
-                        <div class="row no-gutter">
-                            <div class="col">
-                                <div id="comment-count-{{guid}}" class="left number-comment" data-translate="comments">comments</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="list">
-                    <ul class="message-comment">
-                        <li class="align-top">
-                            <div class="item-content">
-                                <div class="item-inner">
-                                     <textarea id="message-{{guid}}" class="comment-textarea" data-translate-target="placeholder" data-translate="write-comment" placeholder="write a comment"></textarea>
+                <div class="comment-hold">
+                    <div id="comment-card-{{guid}}">
+                        <div class="block small comment">
+                            <div class="row no-gutter">
+                                <div class="col">
+                                    <div id="comment-count-{{guid}}" class="left number-comment" data-translate="comments">comments</div>
                                 </div>
                             </div>
-                        </li>
-                    </ul>
-                    <div class="block">
-                        <div class="row">
-                            <a id="comments-submit-{{guid}}" class="col button button-big button-fill" data-translate="comment">Comment</a>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <a id="comments-view-{{guid}}" class="col button button-big button-fill" data-translate="view-comments">VIEW COMMENTS</a>
                         </div>
                     </div>
-                </div>
-                <div id="comment-head" class="list media-list comment">
-                    <ul id="entity-comments-{{guid}}" class="comment"></ul>
-                    <div class="block">
-                        <div class="row">
-                            <a id="comments-more-{{guid}}" class="col button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+                    <div class="list">
+                        <ul class="message-comment">
+                            <li class="align-top">
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <textarea id="message-{{guid}}" class="comment-textarea" data-translate-target="placeholder" data-translate="write-comment" placeholder="write a comment"></textarea>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="block">
+                            <div class="row">
+                                <a id="comments-submit-{{guid}}" class="col button button-big button-fill" data-translate="comment">Comment</a>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <a id="comments-view-{{guid}}" class="col button button-big button-fill" data-translate="view-comments">VIEW COMMENTS</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="comment-head" class="list media-list comment">
+                        <ul id="entity-comments-{{guid}}" class="comment"></ul>
+                        <div class="block">
+                            <div class="row">
+                                <a id="comments-more-{{guid}}" class="col button button-big button-fill" data-translate="view-more">VIEW MORE</a>
+                            </div>
                         </div>
                     </div>
                 </div>

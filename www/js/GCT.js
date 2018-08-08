@@ -2013,6 +2013,7 @@ GCTrequests = {
                     console.log(data.result);
                     app.preloader.hide();
                     $$('.page-current').find('#content-entity-' + guid).append(GCTtxt.txtResultFeedback(guid, data.result));
+                    $$('.page-current').find('.comment-hold').html('');
                     return;
                 }
                 successCallback(data);
@@ -2449,6 +2450,7 @@ GCTrequests = {
                     console.log(data.result);
                     app.preloader.hide();
                     $$('.page-current').find('#content-entity-' + guid).append(GCTtxt.txtResultFeedback(guid, data.result));
+                    $$('.page-current').find('.comment-hold').html('');
                     return;
                 }
                 successCallback(data);
@@ -2579,6 +2581,7 @@ GCTrequests = {
                     console.log(data.result);
                     app.preloader.hide();
                     $$('.page-current').find('#content-entity-' + guid).append(GCTtxt.txtResultFeedback(guid, data.result));
+                    $$('.page-current').find('.comment-hold').html('');
                     return;
                 }
                 successCallback(data);
@@ -2787,6 +2790,7 @@ GCTrequests = {
                     console.log(data.result);
                     app.preloader.hide();
                     $$('.page-current').find('#content-entity-' + guid).append(GCTtxt.txtResultFeedback(guid, data.result));
+                    $$('.page-current').find('.comment-hold').html('');
                     return;
                 }
                 successCallback(data);
