@@ -818,15 +818,7 @@ GCTEach = {
         if (value.shareText && value.shareURL) {
             source = "<blockquote>" + GCTLang.Trans("source") + "<a onclick='GCT.FireLink(this);' href='" + value.shareURL + "'>" + value.shareText + "</a></blockquote>";
         }
-
-        var action = "";
-        var reply = "";
-        if (value.object.type == "wire") {
-            action = "<a class='link' data-guid='" + value.object_guid + "' data-type='gccollab_wire_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-            reply = "<a href='#' class='link' data-guid='" + value.object_guid + "' data-type='list' onclick='GCTrequests.ReplyWirePost(this);'><i class='fa fa-reply'></i> <span>" + GCTLang.Trans("reply") + "</span></a>";
-        } else if (value.object.type == "blog") {
-            action = "<a class='link' data-guid='" + value.object_guid + "' data-type='gccollab_blog_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-        }
+        
         
         
         var content = GCTtxt.txtNewsfeed({
@@ -839,16 +831,11 @@ GCTEach = {
             text: text,
             source: source,
             label: label,
-            action: action,
-            reply: reply,
             owner: value.subject_guid,
             container: container,
             guid: value.object_guid,
             type: type,
             subtype: value.object.type,
-            liked: liked,
-            likes: likes,
-            likon: likon,
             userJob: value.userDetails.job,
             userOrg: value.userDetails.organization,
             userEmail: value.userDetails.email
@@ -936,8 +923,7 @@ GCTEach = {
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes >= 0) ? '(' + value.likes + ')' : '';
         var likon = (value.liked) ? "fas" : "far";
-        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
-        // var action = (value.thread) ? "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_wire_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>" : "";
+
         var actionBar = {};
         actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: value.guid, type: "gccollab_wire_post", likon: likon, likes: likes });
         actionBar.reply = GCTtxt.txtWireReplyButton({ replied: replied, guid: value.guid, location: 'list' });
@@ -953,11 +939,7 @@ GCTEach = {
             source: source,
             type: "gccollab_wire_post",
             replied: replied,
-            action: action,
             owner: value.owner_guid,
-            liked: liked,
-            likes: likes,
-            likon: likon,
             image: img,
             userJob: value.userDetails.job,
             userOrg: value.userDetails.organization,
@@ -982,7 +964,6 @@ GCTEach = {
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes >= 0) ? '(' + value.likes + ')' : '';
         var likon = (value.liked) ? "fas" : "far";
-        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_blog_post' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
         var commentCount = value.commentCount || '';
         var actionBar = {};
         actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: value.guid, type: "gccollab_blog_post", likon: likon, likes: likes });
@@ -1000,14 +981,10 @@ GCTEach = {
             label: label,
             title: value.title,
             all_text: 'all_text',
-            action: action,
             owner: value.owner_guid,
             guid: value.guid,
             type: "gccollab_blog_post",
             replied: replied,
-            liked: liked,
-            likes: likes,
-            likon: likon,
             userJob: value.userDetails.job,
             userOrg: value.userDetails.organization,
             userEmail: value.userDetails.email,
@@ -1063,7 +1040,6 @@ GCTEach = {
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes >= 0) ? '(' + value.likes + ')' : '';
         var likon = (value.liked) ? "fas" : "far";
-        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_event' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
 
         var date = (value.startDate).split(" ")[0];
         var split = date.split("-");
@@ -1108,14 +1084,10 @@ GCTEach = {
             label: label,
             title: value.title,
             id: id,
-            action: action,
             owner: value.owner_guid,
             container: value.container_guid,
             guid: value.guid,
             type: "gccollab_event",
-            liked: liked,
-            likes: likes,
-            likon: likon,
             fullview: fullview,
             userJob: value.userDetails.job,
             userOrg: value.userDetails.organization,
@@ -1130,7 +1102,6 @@ GCTEach = {
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes >= 0) ? '(' + value.likes + ')' : '';
         var likon = (value.liked) ? "fas" : "far";
-        var action = "<a class='link' data-title='" + value.title + "' data-guid='" + value.guid + "' data-type='gccollab_doc' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
         var posted = '';
         if (value.group_guid) {
             posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.group_guid + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + value.group + "</a>";
@@ -1149,13 +1120,9 @@ GCTEach = {
             posted: posted,
             date: date,
             title: value.title,
-            action: action,
             owner: value.owner_guid,
             guid: value.guid,
             type: "gccollab_doc",
-            liked: liked,
-            likes: likes,
-            likon: likon,
             userJob: value.userDetails.job,
             userOrg: value.userDetails.organization,
             userEmail: value.userDetails.email,
@@ -1169,8 +1136,6 @@ GCTEach = {
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes >= 0) ? '(' + value.likes + ')' : '';
         var likon = (value.liked) ? "fas" : "far";
-        var action = '';
-        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_bookmark' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
         var posted = '';
         if (value.group_guid) {
             posted = GCTLang.Trans("posted-group") + "<a class='link' data-guid='" + value.group_guid + "' data-type='gccollab_group' onclick='GCT.ViewPost(this);'>" + value.group + "</a>";
@@ -1198,10 +1163,6 @@ GCTEach = {
             address: address,
             type: "gccollab_bookmark",
             guid: value.guid,
-            action: action,
-            liked: liked,
-            likes: likes,
-            likon: likon,
             userJob: value.userDetails.job,
             userOrg: value.userDetails.organization,
             userEmail: value.userDetails.email,
@@ -1218,7 +1179,6 @@ GCTEach = {
         var liked = (value.liked) ? "liked" : "";
         var likes = (value.likes >= 0) ? '(' + value.likes + ')' : '';
         var likon = (value.liked) ? "fas" : "far";
-        var action = "<a class='link' data-guid='" + value.guid + "' data-type='gccollab_opportunity' onclick='GCT.ViewPost(this);'>" + GCTLang.Trans("view") + "</a>";
         
         var programArea = "<b>" + GCTLang.Trans("program-area") + "</b>";
         if (value.programArea) { programArea += value.programArea; }
@@ -1258,13 +1218,9 @@ GCTEach = {
             deadline: deadline,
             type: "gccollab_opportunity",
             replied: replied,
-            action: action,
             owner: value.owner_guid,
             title: value.title,
             label: label,
-            liked: liked,
-            likes: likes,
-            likon: likon,
             state: state,
             apply: apply,
             userJob: value.userDetails.job,
@@ -1305,9 +1261,6 @@ GCTEach = {
             guid: value.guid,
             type: "gccollab_discussion_post",
             replied: replied,
-            liked: liked,
-            likes: likes,
-            likon: likon,
             userJob: value.userDetails.job,
             userOrg: value.userDetails.organization,
             userEmail: value.userDetails.email,
