@@ -3488,10 +3488,12 @@ GCT = {
             +'<div class="list">' 
             +'<ul>' 
             + '<span id="focus-new-popover" class="reader-text" tabindex="0">' + GCTLang.Trans("more-options-opened") + '</span>';
-        if (type === "gccollab_discussion_reply") { //comments view post will probably use this too
-            popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + container + '" data-type="' + type + '" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-post") + '</a></li>';
-        } else {
-            popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + type + '" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-post") + '</a></li>';
+        if (location === 'list') {
+            if (type === "gccollab_discussion_reply") { //comments view post will probably use this too
+                popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + container + '" data-type="' + type + '" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-post") + '</a></li>';
+            } else {
+                popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + type + '" onclick="GCT.ViewPost(this);">' + GCTLang.Trans("view-post") + '</a></li>';
+            }
         }
         if (type == 'gccollab_wire_post') { popoverHTML += '<li><a href="#" class="item-link list-button popover-close" data-guid="' + guid + '" data-type="' + location + '" onclick="GCTrequests.ReplyWirePost(this);">' + GCTLang.Trans("reply") + '</a></li>'; }
         if (isOwner) {
