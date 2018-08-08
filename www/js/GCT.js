@@ -2163,11 +2163,17 @@ GCTrequests = {
             data: { method: "get.wirepost", user: GCTUser.Email(), guid: guid, thread: thread, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
+                if (typeof data.result === "string") {
+                    console.log(data.result);
+                    app.preloader.hide();
+                    return;
+                }
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
+                app.preloader.hide();
                 errorConsole(jqXHR, textStatus, errorThrown);
-            }
+            },
         });
     },
     GetWires: function (tabObject) {
