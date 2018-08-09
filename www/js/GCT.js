@@ -2009,6 +2009,7 @@ GCTrequests = {
             data: { method: "get.blogpost", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
+                if (getErrored(data, guid)) { return; }
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -2163,11 +2164,13 @@ GCTrequests = {
             data: { method: "get.wirepost", user: GCTUser.Email(), guid: guid, thread: thread, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
+                if (getErrored(data, guid)) { return; }
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
+                app.preloader.hide();
                 errorConsole(jqXHR, textStatus, errorThrown);
-            }
+            },
         });
     },
     GetWires: function (tabObject) {
@@ -2432,6 +2435,7 @@ GCTrequests = {
             data: { method: "get.discussion", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
+                if (getErrored(data, guid)) { return; }
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -2556,6 +2560,7 @@ GCTrequests = {
             data: { method: "get.event", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
+                if (getErrored(data, guid)) { return; }
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -2758,6 +2763,7 @@ GCTrequests = {
             data: { method: "get.bookmark", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
+                if (getErrored(data, guid)) { return; }
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -2828,6 +2834,7 @@ GCTrequests = {
             data: { method: "get.opportunity", user: GCTUser.Email(), guid: guid, api_key: api_key_gccollab, lang: GCTLang.Lang() },
             timeout: 12000,
             success: function (data) {
+                if (getErrored(data, guid)) { return; }
                 successCallback(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -3628,4 +3635,16 @@ function notificationCardText(message, guid, container) {
         $$('.page-current').find('.tab-active').find('#focus-' + guid).focus();
     else
         $$('.page-current').find('#focus-' + guid).focus();
+}
+
+//error handle for deleted entities
+function getErrored(data, guid) {
+    if (typeof data.result === "string") {
+        console.log(data.result);
+        app.preloader.hide();
+        $$('.page-current').find('#content-entity-' + guid).append(GCTtxt.txtResultFeedback(guid, data.result));
+        $$('.page-current').find('.comment-hold').html('');
+        return true;
+    }
+    return false;
 }
