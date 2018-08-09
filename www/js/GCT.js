@@ -67,19 +67,19 @@
         return "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);' aria-label='" + GCTLang.Trans("like") + "'><i class='" + object.likon + " fa-thumbs-up'></i></a>";
     },
     txtLikeButton: function (object) {
-        return "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);' aria-label='" + GCTLang.Trans("like") + "'><i class='" + object.likon + " fa-thumbs-up'></i><span class='like-count'>" + object.likes + "</span></a>";
+        return "<button href='#' class='link button like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);' aria-label='" + GCTLang.Trans("like") + "'><i class='" + object.likon + " fa-thumbs-up'></i><span class='like-count'>" + object.likes + "</span></button>";
     },
     txtShareButton: function (object) {
-        return '<a href="#" class="link social-share" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="SocialShare(this);" aria-label="' + GCTLang.Trans("share") + '"><i class="fas fa-share-alt"></i></a>';
+        return '<button href="#" class="link button social-share" data-guid="' + object.guid + '" data-type="' + object.type + '" onclick="SocialShare(this);" aria-label="' + GCTLang.Trans("share") + '"><i class="fas fa-share-alt"></i></button>';
     },
     txtWireReplyButton: function (object) {
-        return "<a href='#' class='link " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.location + "' onclick='GCTrequests.ReplyWirePost(this);' aria-label='" + GCTLang.Trans("reply") + "'><i class='fas fa-reply'></i></a>";
+        return "<a href='#' class='link button " + object.replied + "' data-guid='" + object.guid + "' data-type='" + object.location + "' onclick='GCTrequests.ReplyWirePost(this);' aria-label='" + GCTLang.Trans("reply") + "'><i class='fas fa-reply'></i></a>";
     },
     txtCommentButton: function (object) {
         if (object.count) {
-            return "<a class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'><i class='far fa-comments'><span class='like-count'> (" + object.count + ")</span></i></a>";
+            return "<a class='link button' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'><i class='far fa-comments'><span class='like-count'> (" + object.count + ")</span></i></a>";
         } else {
-            return "<a class='link' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'><i class='far fa-comments'></i></a>";
+            return "<a class='link button' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCT.ViewPost(this);'><i class='far fa-comments'></i></a>";
         }
     },
     txtFilterButton: function (ref) {
@@ -1068,7 +1068,7 @@ GCTEach = {
         var actionBar = {};
         actionBar.like = GCTtxt.txtLikeButton({ liked: liked, guid: value.guid, type: "gccollab_event", likon: likon, likes: likes });
         actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_event", guid: value.guid });
-        actionBar.extra = '<a href="#" class="link" data-guid="' + value.guid + '" data-location="' + location + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + value.type + '">' + GCTLang.Trans("attend") + '</a>'
+        actionBar.extra = '<button href="#" class="link button" data-guid="' + value.guid + '" data-location="' + location + '" onclick="GCTrequests.AddCalendar(this);" data-type="' + value.type + '">' + GCTLang.Trans("attend") + '</button>'
         actionBar.reply = GCTtxt.txtCommentButton({ type: "gccollab_event", guid: value.guid, count: commentCount });
         actionBar = GCTtxt.txtActionBar(actionBar, "aria-hidden='true'");
 
@@ -1197,9 +1197,9 @@ GCTEach = {
 
         var apply = '';
         if (value.apply) { apply = value.apply };
-        if (apply == 'mission_apply') { apply = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='" + value.type + "' onclick='GCTUser.ApplyPost(this);'> <span>" + GCTLang.Trans('apply-opt') + "</span></a>"; }
-        else if (apply == 'withdraw') { apply = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='" + value.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('withdrawn-opt') + "</span></a>"; }
-        else if (apply == 'offered') { apply = "<a href='#' class='link' data-guid='" + value.guid + "' data-type='" + value.type + "' onclick='GCTUser.AcceptPost(this);'> <span>" + GCTLang.Trans('accept-opt') + "</span></a><a href='#' class='link' data-guid='" + value.guid + "' data-type='" + value.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('decline-opt') + "</span></a>"; }
+        if (apply == 'mission_apply') { apply = "<a href='#' class='link button' data-guid='" + value.guid + "' data-type='" + value.type + "' onclick='GCTUser.ApplyPost(this);'> <span>" + GCTLang.Trans('apply-opt') + "</span></a>"; }
+        else if (apply == 'withdraw') { apply = "<a href='#' class='link button' data-guid='" + value.guid + "' data-type='" + value.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('withdrawn-opt') + "</span></a>"; }
+        else if (apply == 'offered') { apply = "<a href='#' class='link button' data-guid='" + value.guid + "' data-type='" + value.type + "' onclick='GCTUser.AcceptPost(this);'> <span>" + GCTLang.Trans('accept-opt') + "</span></a><a href='#' class='link button' data-guid='" + value.guid + "' data-type='" + value.type + "' onclick='GCTUser.WithdrawPost(this);'> <span>" + GCTLang.Trans('decline-opt') + "</span></a>"; }
 
         var actionBar = {};
         actionBar.share = GCTtxt.txtShareButton({ type: "gccollab_opportunity", guid: value.guid });
