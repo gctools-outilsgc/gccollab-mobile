@@ -484,7 +484,7 @@
             + "<div id='bookmark-" + object.guid + "' class='card-content-inner'>"
             + "<div class='blog-title'>" + object.title + "</div>"
             + "<div class='blog-group'>" + object.posted + "</div>"
-            + "<div class='item-text large'>" + object.description + "</div>"
+            + "<div class='text-post'>" + object.description + "</div>"
             + "<div class='blog-group'>" + "Link: " + object.address + "</div>"
             + "</div>"
             + "</div>"
