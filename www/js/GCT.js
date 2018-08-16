@@ -64,7 +64,7 @@
         return actionBar;
     },
     LikeButton: function (object) {
-        return "<a href='#' class='link like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);' aria-label='" + GCTLang.Trans("like") + "'><i class='" + object.likon + " fa-thumbs-up'></i></a>";
+        return "<button href='#' class='link button like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);' aria-label='" + GCTLang.Trans("like") + "'><i class='" + object.likon + " fa-thumbs-up'></i></button>";
     },
     txtLikeButton: function (object) {
         return "<button href='#' class='link button like " + object.liked + "' data-guid='" + object.guid + "' data-type='" + object.type + "' onclick='GCTrequests.LikePost(this);' aria-label='" + GCTLang.Trans("like") + "'><i class='" + object.likon + " fa-thumbs-up'></i><span class='like-count'>" + object.likes + "</span></button>";
